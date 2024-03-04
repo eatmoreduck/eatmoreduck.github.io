@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Feb 2024 16:27:01 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml"/><item><title>hugo+obsidian打造最强博客</title><link>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2/</link><pubDate>Tue, 20 Feb 2024 16:27:01 +0800</pubDate><guid>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2/</guid><description>&lt;h1 id="笔记软件选择原则">笔记软件选择原则&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Feb 2024 16:27:01 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml"/><item><title>hugo+obsidian打造最强博客</title><link>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2/</link><pubDate>Tue, 20 Feb 2024 16:27:01 +0800</pubDate><guid>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2/</guid><description>&lt;h2 id="笔记软件选择原则">笔记软件选择原则&lt;/h2>
 &lt;ol>
 &lt;li>拒绝云服务，数据留存本地，本机运行，使用github/gitee 私仓来进行笔记储存&lt;/li>
 &lt;li>拒绝专有格式，使用通用的标记型语言&lt;/li>
 &lt;li>开源&lt;/li>
 &lt;li>跨平台&lt;/li>
 &lt;/ol>
-&lt;h1 id="本地笔记格式选择">本地笔记格式选择&lt;/h1>
+&lt;h2 id="本地笔记格式选择">本地笔记格式选择&lt;/h2>
 &lt;p>这个自是不必多说，首选MarkDown格式，方便各类软件编辑，关于此格式，参见wiki &lt;a class="link" href="https://zh.wikipedia.org/wiki/Markdown" target="_blank" rel="noopener"
 >https://zh.wikipedia.org/wiki/Markdown&lt;/a>&lt;/p>
 &lt;p>&lt;strong>Markdown&lt;/strong>是一种&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80" title="轻量级标记语言"
@@ -40,7 +40,7 @@ target="_blank" rel="noopener"
 >简书&lt;/a>等，甚至还能被用来撰写&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E6%9B%B8" title="电子书"
 target="_blank" rel="noopener"
 >电子书&lt;/a>。&lt;/p>
-&lt;h1 id="笔记格式软件选择">笔记格式软件选择&lt;/h1>
+&lt;h2 id="笔记格式软件选择">笔记格式软件选择&lt;/h2>
 &lt;p>截止2024年2月20日，比较流行的MarkDown 编辑软件有如下几个选项&lt;/p>
 &lt;ol>
 &lt;li>语雀&lt;/li>
