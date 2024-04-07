@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>软件 on eatmoreduck</title><link>/categories/%E8%BD%AF%E4%BB%B6/</link><description>Recent content in 软件 on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 07 Apr 2024 15:46:48 +0800</lastBuildDate><atom:link href="/categories/%E8%BD%AF%E4%BB%B6/index.xml" rel="self" type="application/rss+xml"/><item><title>常用软件推荐</title><link>/p/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</link><pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate><guid>/p/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</guid><description>&lt;p>推荐一波MacOS 常用开发类软件，也为自己做一个备份，方便日后查找&lt;/p>
+&lt;h2 id="开发工具类">开发工具类&lt;/h2>
+&lt;ol>
+&lt;li>jetbrain 全家桶 [[https://www.jetbrains.com/]] 非开源&lt;/li>
+&lt;li>vscode &lt;a class="link" href="https://code.visualstudio.com/" target="_blank" rel="noopener"
+>https://code.visualstudio.com/&lt;/a>&lt;/li>
+&lt;li>curosr &lt;a class="link" href="https://cursor.sh/" target="_blank" rel="noopener"
+>https://cursor.sh/&lt;/a>&lt;/li>
+&lt;li>Another Redis Desktop Manager &lt;a class="link" href="https://github.com/qishibo/AnotherRedisDesktopManager" target="_blank" rel="noopener"
+>https://github.com/qishibo/AnotherRedisDesktopManager&lt;/a>&lt;/li>
+&lt;li>navicat &lt;a class="link" href="https://navicat.com/" target="_blank" rel="noopener"
+>https://navicat.com/&lt;/a> 非开源&lt;/li>
+&lt;li>sublime text &lt;a class="link" href="https://www.sublimetext.com/" target="_blank" rel="noopener"
+>https://www.sublimetext.com/&lt;/a>&lt;/li>
+&lt;li>docker &lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
+>https://www.docker.com/&lt;/a>&lt;/li>
+&lt;li>DevToys &lt;a class="link" href="https://devtoys.app/" target="_blank" rel="noopener"
+>https://devtoys.app/&lt;/a>&lt;/li>
+&lt;li>EasyDevo &lt;a class="link" href="https://easydevo.boringboring.design/" target="_blank" rel="noopener"
+>https://easydevo.boringboring.design/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="实用工具类">实用工具类&lt;/h2>
+&lt;ol>
+&lt;li>安卓文件传输 &lt;a class="link" href="https://www.android.com/filetransfer/" target="_blank" rel="noopener"
+>https://www.android.com/filetransfer/&lt;/a>&lt;/li>
+&lt;li>Neat Download Manager &lt;a class="link" href="https://www.neatdownloadmanager.com/index.php/en/" target="_blank" rel="noopener"
+>https://www.neatdownloadmanager.com/index.php/en/&lt;/a>&lt;/li>
+&lt;li>Mounty &lt;a class="link" href="https://mounty.app/" target="_blank" rel="noopener"
+>https://mounty.app/&lt;/a>&lt;/li>
+&lt;li>keka &lt;a class="link" href="https://www.keka.io/en/" target="_blank" rel="noopener"
+>https://www.keka.io/en/&lt;/a>&lt;/li>
+&lt;li>easydict &lt;a class="link" href="https://github.com/tisfeng/Easydict" target="_blank" rel="noopener"
+>https://github.com/tisfeng/Easydict&lt;/a>&lt;/li>
+&lt;li>iina &lt;a class="link" href="https://iina.io/" target="_blank" rel="noopener"
+>https://iina.io/&lt;/a>&lt;/li>
+&lt;li>karabiner &lt;a class="link" href="https://karabiner-elements.pqrs.org/" target="_blank" rel="noopener"
+>https://karabiner-elements.pqrs.org/&lt;/a>&lt;/li>
+&lt;li>monitor control &lt;a class="link" href="https://github.com/MonitorControl/MonitorControl" target="_blank" rel="noopener"
+>https://github.com/MonitorControl/MonitorControl&lt;/a>&lt;/li>
+&lt;li>hidden bar &lt;a class="link" href="https://github.com/dwarvesf/hidden" target="_blank" rel="noopener"
+>https://github.com/dwarvesf/hidden&lt;/a>&lt;/li>
+&lt;li>ToothFairy &lt;a class="link" href="https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12" target="_blank" rel="noopener"
+>https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12&lt;/a>&lt;/li>
+&lt;li>Mac Mouse Fix &lt;a class="link" href="https://macmousefix.com/" target="_blank" rel="noopener"
+>https://macmousefix.com/&lt;/a>&lt;/li>
+&lt;li>PicList &lt;a class="link" href="https://github.com/Kuingsmile/PicList" target="_blank" rel="noopener"
+>https://github.com/Kuingsmile/PicList&lt;/a>&lt;/li>
+&lt;li>Loop &lt;a class="link" href="https://github.com/MrKai77/Loop" target="_blank" rel="noopener"
+>https://github.com/MrKai77/Loop&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="效率类">效率类&lt;/h2>
+&lt;ol>
+&lt;li>alfred &lt;a class="link" href="https://www.alfredapp.com/" target="_blank" rel="noopener"
+>https://www.alfredapp.com/&lt;/a> 非开源&lt;/li>
+&lt;li>滴答清单 &lt;a class="link" href="https://dida365.com/" target="_blank" rel="noopener"
+>https://dida365.com/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="终端">终端&lt;/h2>
+&lt;ol>
+&lt;li>iTerm2 &lt;a class="link" href="https://iterm2.com/" target="_blank" rel="noopener"
+>https://iterm2.com/&lt;/a>&lt;/li>
+&lt;li>SecureCRT &lt;a class="link" href="https://www.vandyke.com/products/securecrt/" target="_blank" rel="noopener"
+>https://www.vandyke.com/products/securecrt/&lt;/a> 非开源&lt;/li>
+&lt;li>lux &lt;a class="link" href="https://github.com/iawia002/lux" target="_blank" rel="noopener"
+>https://github.com/iawia002/lux&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="chrome-插件">Chrome 插件&lt;/h2>
+&lt;ol>
+&lt;li>Proxy SwitchOmega &lt;a class="link" href="https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="noopener"
+>https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif&lt;/a>&lt;/li>
+&lt;li>ZeroOmega &lt;a class="link" href="https://chromewebstore.google.com/detail/zeroomega-proxy-switchy-m/pfnededegaaopdmhkdmcofjmoldfiped" target="_blank" rel="noopener"
+>https://chromewebstore.google.com/detail/zeroomega-proxy-switchy-m/pfnededegaaopdmhkdmcofjmoldfiped&lt;/a>&lt;/li>
+&lt;li>Adblock Plus &lt;a class="link" href="https://chromewebstore.google.com/detail/adblock-plus-%E5%85%8D%E8%B4%B9%E7%9A%84%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/cfhdojbkjhnklbpkdaibdccddilifddb" target="_blank" rel="noopener"
+>https://chromewebstore.google.com/detail/adblock-plus-%E5%85%8D%E8%B4%B9%E7%9A%84%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/cfhdojbkjhnklbpkdaibdccddilifddb&lt;/a>&lt;/li>
+&lt;li>简阅 &lt;a class="link" href="https://simpread.pro/" target="_blank" rel="noopener"
+>https://simpread.pro/&lt;/a>&lt;/li>
+&lt;li>Simple Allow Copy &lt;a class="link" href="https://chrome.google.com/webstore/detail/aefehdhdciieocakfobpaaolhipkcpgc" target="_blank" rel="noopener"
+>https://chrome.google.com/webstore/detail/aefehdhdciieocakfobpaaolhipkcpgc&lt;/a>&lt;/li>
+&lt;li>XSwitch &lt;a class="link" href="https://chrome.google.com/webstore/detail/idkjhjggpffolpidfkikidcokdkdaogg" target="_blank" rel="noopener"
+>https://chrome.google.com/webstore/detail/idkjhjggpffolpidfkikidcokdkdaogg&lt;/a>&lt;/li>
+&lt;li>Axure RP &lt;a class="link" href="https://chrome.google.com/webstore/detail/dogkpdfcklifaemcdfbildhcofnopogp" target="_blank" rel="noopener"
+>https://chrome.google.com/webstore/detail/dogkpdfcklifaemcdfbildhcofnopogp&lt;/a>&lt;/li>
+&lt;/ol></description></item></channel></rss>
