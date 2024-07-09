@@ -8,11 +8,11 @@
 >https://cursor.sh/&lt;/a>&lt;/li>
 &lt;li>Another Redis Desktop Manager &lt;a class="link" href="https://github.com/qishibo/AnotherRedisDesktopManager" target="_blank" rel="noopener"
 >https://github.com/qishibo/AnotherRedisDesktopManager&lt;/a>&lt;/li>
-&lt;li>navicat &lt;a class="link" href="https://navicat.com/" target="_blank" rel="noopener"
->https://navicat.com/&lt;/a> 非开源&lt;/li>
+&lt;li>Navicat &lt;a class="link" href="https://www.navicat.com.cn/products#navicat-premium-lite" target="_blank" rel="noopener"
+>https://www.navicat.com.cn/products#navicat-premium-lite&lt;/a> 官方免费版本，无需破解&lt;/li>
 &lt;li>sublime text &lt;a class="link" href="https://www.sublimetext.com/" target="_blank" rel="noopener"
 >https://www.sublimetext.com/&lt;/a>&lt;/li>
-&lt;li>docker &lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
+&lt;li>Docker &lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
 >https://www.docker.com/&lt;/a>&lt;/li>
 &lt;li>DevToys &lt;a class="link" href="https://devtoys.app/" target="_blank" rel="noopener"
 >https://devtoys.app/&lt;/a>&lt;/li>
@@ -46,7 +46,9 @@
 &lt;li>PicList &lt;a class="link" href="https://github.com/Kuingsmile/PicList" target="_blank" rel="noopener"
 >https://github.com/Kuingsmile/PicList&lt;/a>&lt;/li>
 &lt;li>Loop &lt;a class="link" href="https://github.com/MrKai77/Loop" target="_blank" rel="noopener"
->https://github.com/MrKai77/Loop&lt;/a>&lt;/li>
+>https://github.com/MrKai77/Loop&lt;/a> 窗口快捷放大缩小&lt;/li>
+&lt;li>mos &lt;a class="link" href="https://github.com/Caldis/Mos" target="_blank" rel="noopener"
+>https://github.com/Caldis/Mos&lt;/a> 鼠标平滑滚动利器&lt;/li>
 &lt;/ol>
 &lt;h2 id="效率类">效率类&lt;/h2>
 &lt;ol>
@@ -63,6 +65,8 @@
 >https://www.vandyke.com/products/securecrt/&lt;/a> 非开源&lt;/li>
 &lt;li>lux &lt;a class="link" href="https://github.com/iawia002/lux" target="_blank" rel="noopener"
 >https://github.com/iawia002/lux&lt;/a>&lt;/li>
+&lt;li>Termius &lt;a class="link" href="https://termius.com/s" target="_blank" rel="noopener"
+>https://termius.com/s&lt;/a>&lt;/li>
 &lt;/ol>
 &lt;h2 id="chrome-插件">Chrome 插件&lt;/h2>
 &lt;ol>
@@ -236,7 +240,7 @@ loading="lazy"
 &lt;blockquote>
 &lt;p>实用、好用的 &lt;a class="link" href="https://sspai.com/mall" target="_blank" rel="noopener"
 >正版软件&lt;/a>，少数派为你呈现🚀%% %%&lt;/p>
-&lt;/blockquote></description></item><item><title>hugo+obsidian打造最强博客</title><link>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2/</link><pubDate>Tue, 20 Feb 2024 16:27:01 +0800</pubDate><guid>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2/</guid><description>&lt;h2 id="笔记软件选择原则">笔记软件选择原则&lt;/h2>
+&lt;/blockquote></description></item><item><title>hugo+obsidian打造最强博客（一）</title><link>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2%E4%B8%80/</link><pubDate>Tue, 20 Feb 2024 16:27:01 +0800</pubDate><guid>/p/hugo-obsidian%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E5%8D%9A%E5%AE%A2%E4%B8%80/</guid><description>&lt;h2 id="笔记软件选择原则">笔记软件选择原则&lt;/h2>
 &lt;ol>
 &lt;li>拒绝云服务，数据留存本地，本机运行，使用github/gitee 私仓来进行笔记储存&lt;/li>
 &lt;li>拒绝专有格式，使用通用的标记型语言&lt;/li>
