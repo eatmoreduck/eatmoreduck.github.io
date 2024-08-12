@@ -1,4 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>后端 on eatmoreduck</title><link>/categories/%E5%90%8E%E7%AB%AF/</link><description>Recent content in 后端 on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 07 Apr 2024 15:46:48 +0800</lastBuildDate><atom:link href="/categories/%E5%90%8E%E7%AB%AF/index.xml" rel="self" type="application/rss+xml"/><item><title>常用软件推荐</title><link>/p/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</link><pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate><guid>/p/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</guid><description>&lt;p>推荐一波MacOS 常用开发类软件，也为自己做一个备份，方便日后查找&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>后端 on eatmoreduck</title><link>/categories/%E5%90%8E%E7%AB%AF/</link><description>Recent content in 后端 on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 12 Aug 2024 14:24:33 +0800</lastBuildDate><atom:link href="/categories/%E5%90%8E%E7%AB%AF/index.xml" rel="self" type="application/rss+xml"/><item><title>大善人 AI 食用指南</title><link>/p/%E5%A4%A7%E5%96%84%E4%BA%BA-ai-%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/%E5%A4%A7%E5%96%84%E4%BA%BA-ai-%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
+&lt;p>登录之后，打开
+&lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
+>https://dash.cloudflare.com/&lt;/a> ,保存/之后的字符串为 accountId&lt;/p>
+&lt;p>再打开
+&lt;a class="link" href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener"
+>https://dash.cloudflare.com/profile/api-tokens&lt;/a>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>这一步完成后会看到如下图，保存好自己的 Workers AI API token&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># 用户 API 令牌
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#### Workers AI API 令牌已成功创建
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后去 one-api 添加新渠道
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>添加完成后即可进行测试，后续可以再 next-chatgpt中直接使用
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121436437.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p></description></item><item><title>常用软件推荐</title><link>/p/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</link><pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate><guid>/p/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</guid><description>&lt;p>推荐一波MacOS 常用开发类软件，也为自己做一个备份，方便日后查找&lt;/p>
 &lt;h2 id="开发工具类">开发工具类&lt;/h2>
 &lt;ol>
 &lt;li>jetbrain 全家桶 [[https://www.jetbrains.com/]] 非开源&lt;/li>

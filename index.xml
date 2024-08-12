@@ -1,4 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>eatmoreduck</title><link>/</link><description>Recent content on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Jul 2024 23:52:31 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>七月随感</title><link>/p/%E4%B8%83%E6%9C%88%E9%9A%8F%E6%84%9F/</link><pubDate>Mon, 22 Jul 2024 23:52:31 +0800</pubDate><guid>/p/%E4%B8%83%E6%9C%88%E9%9A%8F%E6%84%9F/</guid><description>&lt;p>近期父母和弟弟都来上海，此行目的有两个，一是给父母做体检复查，二是给弟弟做眼睛手术。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>eatmoreduck</title><link>/</link><description>Recent content on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 12 Aug 2024 14:24:33 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>大善人 AI 食用指南</title><link>/p/%E5%A4%A7%E5%96%84%E4%BA%BA-ai-%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/%E5%A4%A7%E5%96%84%E4%BA%BA-ai-%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
+&lt;p>登录之后，打开
+&lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
+>https://dash.cloudflare.com/&lt;/a> ,保存/之后的字符串为 accountId&lt;/p>
+&lt;p>再打开
+&lt;a class="link" href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener"
+>https://dash.cloudflare.com/profile/api-tokens&lt;/a>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>这一步完成后会看到如下图，保存好自己的 Workers AI API token&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># 用户 API 令牌
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#### Workers AI API 令牌已成功创建
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后去 one-api 添加新渠道
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>添加完成后即可进行测试，后续可以再 next-chatgpt中直接使用
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121436437.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p></description></item><item><title>七月随感</title><link>/p/%E4%B8%83%E6%9C%88%E9%9A%8F%E6%84%9F/</link><pubDate>Mon, 22 Jul 2024 23:52:31 +0800</pubDate><guid>/p/%E4%B8%83%E6%9C%88%E9%9A%8F%E6%84%9F/</guid><description>&lt;p>近期父母和弟弟都来上海，此行目的有两个，一是给父母做体检复查，二是给弟弟做眼睛手术。&lt;/p>
 &lt;p>看着已经年迈的父母，心里有些许不是滋味，不知道身为长子，有些地方我做的是否不妥。父母都年事已高，可弟弟还毫不懂事，这次在未经过父母完全同意的情况下，直接从母亲手机里转钱买了 IPhone14plus ,在我看来无异于偷。或许是因为我小时候有过类似的经历，小学时从家里偷拿钱断断续续有半年，在某天也不知是被同学告发还是被父母发现，总之最后换来一顿毒打，所以对这次的事情才更为重视。人总是要为自己的行为负责，无论是父母或者是当事者本人。&lt;/p>
 &lt;p>最近天气炎热，已经连续三天高温橙色预警，确实也没心思陪着父母在外面闲逛，之前来的两次，能玩能去的地方几乎已经去的差不多了，所以这次没有单独请假陪他们，只是让他们白天在家休息，晚上陪他们逛逛。客观来讲，我觉得这次我做的一般，行为上或许说的过去，妻子安排酒店，我们给父亲过生日，带他们出去逛圈溜达，但是在内心深处，总是在说父母和弟弟不沟通，不多问，想当然，有的时候也有一种哀其不幸怒其不争的感觉；或许有点夸张，但是看着弟弟的时候，总觉得完全不懂事，又呆头呆脑，问的问题大多都是废话比如这个灯是在哪，那个是在哪，这个皮搋子是通马桶还是通下水道的，理解能力有问题还不认真听。我在想或许自己 18 岁的时候，也是这样？ 又或者比他更甚。&lt;/p>
 &lt;p>看见弟弟和父亲坐着躺着的姿势千奇百怪，而我每次说他们的语气总是特别冷淡，像是针对谁，希望他们不要介意，套用许多年前的话，我也是为了你们好😁。总是希望在有限的时间内教会弟弟为人处事生存之道，可是确实我说的似乎他都没认真听，我所说所做的成效甚微，大概是我方法不对，还需要针对性练习把。&lt;/p>
