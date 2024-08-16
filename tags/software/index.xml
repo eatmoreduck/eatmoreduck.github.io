@@ -1,4 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>software on eatmoreduck</title><link>/tags/software/</link><description>Recent content in software on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 12 Aug 2024 14:24:33 +0800</lastBuildDate><atom:link href="/tags/software/index.xml" rel="self" type="application/rss+xml"/><item><title>大善人 AI 食用指南</title><link>/p/cloudflare-worker-ai/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/cloudflare-worker-ai/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>software on eatmoreduck</title><link>/tags/software/</link><description>Recent content in software on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Aug 2024 10:07:54 +0800</lastBuildDate><atom:link href="/tags/software/index.xml" rel="self" type="application/rss+xml"/><item><title>VScode进入报错</title><link>/p/vscode-code-9-error/</link><pubDate>Fri, 16 Aug 2024 10:07:54 +0800</pubDate><guid>/p/vscode-code-9-error/</guid><description>&lt;p>进入 Vscode 时，出现报错&lt;br>
+Unable to resolve your shell environment: Un&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png"
+loading="lazy"
+alt="image.png"
+>expected exit code from spawned shell (code 9, signal null)
+查证go 和 go env 之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，
+NODE_OPTIONS 注释掉后解决&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">#node
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export PATH=&amp;#34;/opt/homebrew/opt/node@20/bin:$PATH&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export LDFLAGS=&amp;#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export CPPFLAGS=&amp;#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export NODE_OPTIONS=--openssl-legacy-provider
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>大善人 AI 食用指南</title><link>/p/cloudflare-worker-ai/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/cloudflare-worker-ai/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
 &lt;p>登录之后，打开
 &lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
 >https://dash.cloudflare.com/&lt;/a> ,保存/之后的字符串为 accountId&lt;/p>
