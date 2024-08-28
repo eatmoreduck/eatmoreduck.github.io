@@ -46,31 +46,35 @@ NODE_OPTIONS 注释掉后解决&lt;/p>
 &lt;li>安卓文件传输 &lt;a class="link" href="https://www.android.com/filetransfer/" target="_blank" rel="noopener"
 >https://www.android.com/filetransfer/&lt;/a>&lt;/li>
 &lt;li>Neat Download Manager &lt;a class="link" href="https://www.neatdownloadmanager.com/index.php/en/" target="_blank" rel="noopener"
->https://www.neatdownloadmanager.com/index.php/en/&lt;/a>&lt;/li>
+>https://www.neatdownloadmanager.com/index.php/en/&lt;/a> 下载器&lt;/li>
 &lt;li>Mounty &lt;a class="link" href="https://mounty.app/" target="_blank" rel="noopener"
 >https://mounty.app/&lt;/a>&lt;/li>
 &lt;li>keka &lt;a class="link" href="https://www.keka.io/en/" target="_blank" rel="noopener"
->https://www.keka.io/en/&lt;/a>&lt;/li>
+>https://www.keka.io/en/&lt;/a> 解压缩软件&lt;/li>
 &lt;li>easydict &lt;a class="link" href="https://github.com/tisfeng/Easydict" target="_blank" rel="noopener"
->https://github.com/tisfeng/Easydict&lt;/a>&lt;/li>
+>https://github.com/tisfeng/Easydict&lt;/a> 词典软件&lt;/li>
 &lt;li>iina &lt;a class="link" href="https://iina.io/" target="_blank" rel="noopener"
->https://iina.io/&lt;/a>&lt;/li>
+>https://iina.io/&lt;/a> 全能视频播放器&lt;/li>
 &lt;li>karabiner &lt;a class="link" href="https://karabiner-elements.pqrs.org/" target="_blank" rel="noopener"
->https://karabiner-elements.pqrs.org/&lt;/a>&lt;/li>
+>https://karabiner-elements.pqrs.org/&lt;/a> 按键修改&lt;/li>
 &lt;li>monitor control &lt;a class="link" href="https://github.com/MonitorControl/MonitorControl" target="_blank" rel="noopener"
->https://github.com/MonitorControl/MonitorControl&lt;/a>&lt;/li>
+>https://github.com/MonitorControl/MonitorControl&lt;/a> 外接显示器亮度调节&lt;/li>
 &lt;li>hidden bar &lt;a class="link" href="https://github.com/dwarvesf/hidden" target="_blank" rel="noopener"
->https://github.com/dwarvesf/hidden&lt;/a>&lt;/li>
+>https://github.com/dwarvesf/hidden&lt;/a> 菜单折叠&lt;/li>
 &lt;li>ToothFairy &lt;a class="link" href="https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12" target="_blank" rel="noopener"
->https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12&lt;/a>&lt;/li>
+>https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12&lt;/a> 窗口管理&lt;/li>
 &lt;li>Mac Mouse Fix &lt;a class="link" href="https://macmousefix.com/" target="_blank" rel="noopener"
->https://macmousefix.com/&lt;/a>&lt;/li>
+>https://macmousefix.com/&lt;/a> 鼠标平滑滚动&lt;/li>
 &lt;li>PicList &lt;a class="link" href="https://github.com/Kuingsmile/PicList" target="_blank" rel="noopener"
->https://github.com/Kuingsmile/PicList&lt;/a>&lt;/li>
+>https://github.com/Kuingsmile/PicList&lt;/a> 图床工具&lt;/li>
 &lt;li>Loop &lt;a class="link" href="https://github.com/MrKai77/Loop" target="_blank" rel="noopener"
 >https://github.com/MrKai77/Loop&lt;/a> 窗口快捷放大缩小&lt;/li>
 &lt;li>mos &lt;a class="link" href="https://github.com/Caldis/Mos" target="_blank" rel="noopener"
 >https://github.com/Caldis/Mos&lt;/a> 鼠标平滑滚动利器&lt;/li>
+&lt;li>ShortcutDetective &lt;a class="link" href="https://formulae.brew.sh/cask/shortcutdetective" target="_blank" rel="noopener"
+>https://formulae.brew.sh/cask/shortcutdetective&lt;/a> 快捷键冲突排查软件&lt;/li>
+&lt;li>Macs Fan Control &lt;a class="link" href="https://crystalidea.com/macs-fan-control" target="_blank" rel="noopener"
+>https://crystalidea.com/macs-fan-control&lt;/a> 风扇转速调节&lt;/li>
 &lt;/ol>
 &lt;h2 id="效率类">效率类&lt;/h2>
 &lt;ol>
@@ -78,17 +82,26 @@ NODE_OPTIONS 注释掉后解决&lt;/p>
 >https://www.alfredapp.com/&lt;/a> 非开源&lt;/li>
 &lt;li>滴答清单 &lt;a class="link" href="https://dida365.com/" target="_blank" rel="noopener"
 >https://dida365.com/&lt;/a>&lt;/li>
+&lt;li>RayCast &lt;a class="link" href="https://www.raycast.com/" target="_blank" rel="noopener"
+>https://www.raycast.com/&lt;/a> 免费神作，可以作为 alfred 的替代&lt;/li>
 &lt;/ol>
 &lt;h2 id="终端">终端&lt;/h2>
 &lt;ol>
 &lt;li>iTerm2 &lt;a class="link" href="https://iterm2.com/" target="_blank" rel="noopener"
->https://iterm2.com/&lt;/a>&lt;/li>
+>https://iterm2.com/&lt;/a> 终端&lt;/li>
 &lt;li>SecureCRT &lt;a class="link" href="https://www.vandyke.com/products/securecrt/" target="_blank" rel="noopener"
 >https://www.vandyke.com/products/securecrt/&lt;/a> 非开源&lt;/li>
 &lt;li>lux &lt;a class="link" href="https://github.com/iawia002/lux" target="_blank" rel="noopener"
->https://github.com/iawia002/lux&lt;/a>&lt;/li>
+>https://github.com/iawia002/lux&lt;/a> 免费下载器&lt;/li>
 &lt;li>Termius &lt;a class="link" href="https://termius.com/s" target="_blank" rel="noopener"
->https://termius.com/s&lt;/a>&lt;/li>
+>https://termius.com/s&lt;/a> 免费终端&lt;/li>
+&lt;li>htop &lt;a class="link" href="https://htop.dev/" target="_blank" rel="noopener"
+>https://htop.dev/&lt;/a> 升级版 top&lt;/li>
+&lt;/ol>
+&lt;h2 id="网络类">网络类&lt;/h2>
+&lt;ol>
+&lt;li>lulu &lt;a class="link" href="https://objective-see.org/products/lulu.html" target="_blank" rel="noopener"
+>https://objective-see.org/products/lulu.html&lt;/a>&lt;/li>
 &lt;/ol>
 &lt;h2 id="chrome-插件">Chrome 插件&lt;/h2>
 &lt;ol>
@@ -106,4 +119,11 @@ NODE_OPTIONS 注释掉后解决&lt;/p>
 >https://chrome.google.com/webstore/detail/idkjhjggpffolpidfkikidcokdkdaogg&lt;/a>&lt;/li>
 &lt;li>Axure RP &lt;a class="link" href="https://chrome.google.com/webstore/detail/dogkpdfcklifaemcdfbildhcofnopogp" target="_blank" rel="noopener"
 >https://chrome.google.com/webstore/detail/dogkpdfcklifaemcdfbildhcofnopogp&lt;/a>&lt;/li>
-&lt;/ol></description></item></channel></rss>
+&lt;li>沉浸式翻译 &lt;a class="link" href="https://immersivetranslate.com/zh-Hans/" target="_blank" rel="noopener"
+>https://immersivetranslate.com/zh-Hans/&lt;/a>&lt;/li>
+&lt;li>Save All Resourcese &lt;a class="link" href="https://chromewebstore.google.com/detail/save-all-resources/abpdnfjocnmdomablahdcfnoggeeiedb?pli=1" target="_blank" rel="noopener"
+>https://chromewebstore.google.com/detail/save-all-resources/abpdnfjocnmdomablahdcfnoggeeiedb?pli=1&lt;/a> 扒网站插件&lt;/li>
+&lt;/ol>
+&lt;h2 id="推荐网站">推荐网站&lt;/h2>
+&lt;p>&lt;a class="link" href="https://wangchujiang.com/awesome-mac/README-zh.html" target="_blank" rel="noopener"
+>https://wangchujiang.com/awesome-mac/README-zh.html&lt;/a>&lt;/p></description></item></channel></rss>
