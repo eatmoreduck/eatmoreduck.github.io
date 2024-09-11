@@ -2,25 +2,7 @@
 Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)&lt;/p>
 &lt;p>![image.png](&lt;a class="link" href="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png" target="_blank" rel="noopener"
 >https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&lt;/a> =600x)&lt;/p>
-&lt;p>查证go 和 go env 之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202409101059530.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">vi ~/.bash_profile
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202409101100157.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>将NODE_OPTIONS 注释掉后解决&lt;/p>
+&lt;p>查证go 和 go env 之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 &lt;strong>export NODE_OPTIONS=&amp;ndash;openssl-legacy-provider&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -37,4 +19,43 @@ alt="image.png"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export NODE_OPTIONS=--openssl-legacy-provider
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item></channel></rss>
+&lt;/div>&lt;p>使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">vi ~/.bash_profile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">按i进入编辑模式
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">找到export NODE_OPTIONS=--openssl-legacy-provider 所在行
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">在 export NODE_OPTIONS=--openssl-legacy-provider 前加#
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">最后那行变成
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#export NODE_OPTIONS=--openssl-legacy-provider
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">再按 esc 退出编辑模式
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">:wq!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">然后回车
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果不会使用 vi 可以直接终端执行&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">cd $HOME &amp;amp; open .
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后用喜欢的文本编辑器打开.bash_profile 更改所在行&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202409101100157.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>将NODE_OPTIONS 注释掉后，重新进入 VScode 解决&lt;/p></description></item></channel></rss>
