@@ -56,7 +56,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://github.com/miskcoo/ugreen_leds_controller
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;ol>
+&lt;/div>&lt;ol start="5">
 &lt;li>群晖信息显示监控 ，ssh 安装 sensors 插件即可，&lt;a class="link" href="https://post.smzdm.com/p/a8xze450/" target="_blank" rel="noopener"
 >https://post.smzdm.com/p/a8xze450/&lt;/a>，后期使用hertzbeat 统一监控（11 月 1 日解决问题 3 后，重建索引时，发现 cpu 温度跟面板温度似乎一样&lt;/li>
 &lt;li>风扇问题，风扇无法自定义调节转速，暂时直接拉风速到 100 参见连接
