@@ -1,4 +1,99 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cloudflare on eatmoreduck</title><link>/tags/cloudflare/</link><description>Recent content in cloudflare on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 12 Aug 2024 14:24:33 +0800</lastBuildDate><atom:link href="/tags/cloudflare/feed.xml" rel="self" type="application/rss+xml"/><item><title>大善人 AI 食用指南</title><link>/p/cloudflare-worker-ai/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/cloudflare-worker-ai/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cloudflare on eatmoreduck</title><link>/tags/cloudflare/</link><description>Recent content in cloudflare on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 01 Nov 2024 11:52:06 +0800</lastBuildDate><atom:link href="/tags/cloudflare/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Fri, 01 Nov 2024 11:52:06 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">绿联nas 关闭watchdog 及修改启动方式教程
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[https://post.smzdm.com/p/a3xnev8n/](https://post.smzdm.com/p/a3xnev8n/)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">绿联黑群晖
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[https://post.smzdm.com/p/a07nw4zr/](https://post.smzdm.com/p/a07nw4zr/)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">黑群晖安装教程
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[https://post.smzdm.com/p/akk9vpkr/](https://post.smzdm.com/p/akk9vpkr/)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2024 年就 10 月黑群晖 nas 教程
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a](https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="已解决">已解决&lt;/h4>
+&lt;ol>
+&lt;li>解决视频HEIC不能播放问题，需要安装 AME 套件并激活，参见 &lt;a class="link" href="https://post.smzdm.com/p/a7pw05r9/" target="_blank" rel="noopener"
+>https://post.smzdm.com/p/a7pw05r9/&lt;/a>&lt;/li>
+&lt;li>更新小红点问题： 更改/etc/host,增加127.0.0.1 update.synology.com（未解决，后续再做）&lt;/li>
+&lt;li>MOV 视频封面不显示问题，升级ffmpeg 套件，从 4 升级到 6 后重建索引解决 ，参见 &lt;a class="link" href="https://blog.csdn.net/qq_44726883/article/details/140429626" target="_blank" rel="noopener"
+>https://blog.csdn.net/qq_44726883/article/details/140429626&lt;/a>&lt;/li>
+&lt;li>硬盘灯闪烁问题，不影响使用，故暂不解决，参见&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">https://www.langog.com/?p=0f263caf-d8a0-4627-b458-7f1df146b88a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://github.com/miskcoo/ugreen_leds_controller
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol>
+&lt;li>群晖信息显示监控 ，ssh 安装 sensors 插件即可，&lt;a class="link" href="https://post.smzdm.com/p/a8xze450/" target="_blank" rel="noopener"
+>https://post.smzdm.com/p/a8xze450/&lt;/a>，后期使用hertzbeat 统一监控（11 月 1 日解决问题 3 后，重建索引时，发现 cpu 温度跟面板温度似乎一样&lt;/li>
+&lt;li>风扇问题，风扇无法自定义调节转速，暂时直接拉风速到 100 参见连接
+&lt;a class="link" href="https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments" target="_blank" rel="noopener"
+>https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments&lt;/a>&lt;/li>
+&lt;li>外网访问,zerotier 已打通内外网访问，自建 planet 来搞定外网访问问题&lt;/li>
+&lt;li>公网 ip v4 已开通，ddns-go + 端口转发 + Let’s Encrypt 完成整个网络搭建&lt;/li>
+&lt;li>软件问题，主要设备平台为Android + mac 常用软件下载参考&lt;a class="link" href="https://www.synology.cn/zh-cn/support/download?version=7.2#utilities" target="_blank" rel="noopener"
+>https://www.synology.cn/zh-cn/support/download?version=7.2#utilities&lt;/a>&lt;/li>
+&lt;li>nas 内置docker 容器跑
+&lt;ol>
+&lt;li>&lt;del>immich作为群晖相册补充&lt;/del> （因群晖相册已足够，暂时不用）&lt;/li>
+&lt;li>jellyfin&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>2015mac docker容器
+&lt;ol>
+&lt;li>heatzbeat 做为整个局域网的监控&lt;/li>
+&lt;li>alist 挂百度网盘，夸克网盘，阿里云网盘&lt;/li>
+&lt;li>gitlab&lt;/li>
+&lt;li>gitlab-runner&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;p>经过一系列折腾之后，目前公网访问已经无问题，如果 ddns 挂了，也有自建 zerotier 能作为补充使用，后续考虑加一个 UPS 及两条 512 的 SSD 组 raid1 作为 docker 及虚拟机盘&lt;/p>
+&lt;h4 id="待办">待办&lt;/h4>
+&lt;ol>
+&lt;li>因使用内置ddns 时出现过梅林固件上的 clash 规则问题，导致 ddns 出现错误的 ip（实际为代理的 ip），后续考虑增加一个软路由&lt;/li>
+&lt;li>公网 ipv4 访问不是很安全，考虑后续将 ddns 迁移到群晖中，直接开ipv6 访问&lt;/li>
+&lt;li>群晖链路聚合开启&lt;/li>
+&lt;li>时间机器构建&lt;/li>
+&lt;li>mac 常用文件自动备份到群晖任务构建&lt;/li>
+&lt;li>冷备份任务构建&lt;/li>
+&lt;li>2015mac docker容器配置及配置文件备份&lt;/li>
+&lt;li>7 中的关键任务自动同步到群晖防丢失&lt;/li>
+&lt;li>考虑将此次黑裙关键步骤细化，落为文档，防丢失&lt;/li>
+&lt;/ol></description></item><item><title>大善人 AI 食用指南</title><link>/p/cloudflare-worker-ai/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/cloudflare-worker-ai/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
 &lt;p>登录之后，打开
 &lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
 >https://dash.cloudflare.com/&lt;/a> ,保存/之后的字符串为 accountId&lt;/p>
