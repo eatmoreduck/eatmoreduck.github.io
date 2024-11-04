@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>go on eatmoreduck</title><link>/tags/go/</link><description>Recent content in go on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 01 Nov 2024 11:52:06 +0800</lastBuildDate><atom:link href="/tags/go/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Fri, 01 Nov 2024 11:52:06 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>go on eatmoreduck</title><link>/tags/go/</link><description>Recent content in go on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="/tags/go/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Sun, 03 Nov 2024 00:00:00 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -35,7 +35,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a](https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h4 id="已解决">已解决&lt;/h4>
+&lt;/div>&lt;h2 id="已解决">已解决&lt;/h2>
 &lt;ol>
 &lt;li>解决视频HEIC不能播放问题，需要安装 AME 套件并激活，参见 &lt;a class="link" href="https://post.smzdm.com/p/a7pw05r9/" target="_blank" rel="noopener"
 >https://post.smzdm.com/p/a7pw05r9/&lt;/a>&lt;/li>
@@ -82,18 +82,312 @@
 &lt;/li>
 &lt;/ol>
 &lt;p>经过一系列折腾之后，目前公网访问已经无问题，如果 ddns 挂了，也有自建 zerotier 能作为补充使用，后续考虑加一个 UPS 及两条 512 的 SSD 组 raid1 作为 docker 及虚拟机盘&lt;/p>
-&lt;h4 id="待办">待办&lt;/h4>
+&lt;h2 id="待办">待办&lt;/h2>
 &lt;ol>
-&lt;li>因使用内置ddns 时出现过梅林固件上的 clash 规则问题，导致 ddns 出现错误的 ip（实际为代理的 ip），后续考虑增加一个软路由&lt;/li>
+&lt;li>&lt;del>因使用内置ddns 时出现过梅林固件上的 clash 规则问题，导致 ddns 出现错误的 ip（实际为代理的 ip），后续考虑增加一个软路由&lt;/del> （新版 Merlin Clash已支持自定义规则，可以在访问 api.cloudflare.com 时不使用代理）&lt;/li>
 &lt;li>公网 ipv4 访问不是很安全，考虑后续将 ddns 迁移到群晖中，直接开ipv6 访问&lt;/li>
-&lt;li>群晖链路聚合开启&lt;/li>
+&lt;li>&lt;del>群晖链路聚合开启&lt;/del> （RAX50 不支持链路聚合，lan 口只能到千兆，跑不满绿联 2.5G 带宽）&lt;/li>
 &lt;li>时间机器构建&lt;/li>
 &lt;li>mac 常用文件自动备份到群晖任务构建&lt;/li>
 &lt;li>冷备份任务构建&lt;/li>
 &lt;li>2015mac docker容器配置及配置文件备份&lt;/li>
 &lt;li>7 中的关键任务自动同步到群晖防丢失&lt;/li>
 &lt;li>考虑将此次黑裙关键步骤细化，落为文档，防丢失&lt;/li>
-&lt;/ol></description></item><item><title>VScode进入报错code 9, signal null error</title><link>/p/vscode-code-9-error/</link><pubDate>Fri, 16 Aug 2024 10:07:54 +0800</pubDate><guid>/p/vscode-code-9-error/</guid><description>&lt;p>进入 Vscode 时，出现报错&lt;br>
+&lt;li>风扇自动调速脚本配置，目前弄了个简版，后续再配置和优化&lt;/li>
+&lt;/ol>
+&lt;h2 id="风扇转速脚本待测试">风扇转速脚本（待测试）&lt;/h2>
+&lt;p>保存为 fan_control.sh，然后执行脚本&lt;/p>
+&lt;p>chmod +x fan_control.sh
+sudo ./fan_control.sh&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;span class="lnt">138
+&lt;/span>&lt;span class="lnt">139
+&lt;/span>&lt;span class="lnt">140
+&lt;/span>&lt;span class="lnt">141
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">FAN_CONTROL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/sys/devices/platform/it87.2608/hwmon/hwmon2/pwm3&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 检查必要的命令是否存在&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">command&lt;/span> -v sensors &amp;gt;/dev/null 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;需要安装 lm-sensors，请先运行: apt-get install lm-sensors&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nb">exit&lt;/span> 1&lt;span class="p">;&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">command&lt;/span> -v bc &amp;gt;/dev/null 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;需要安装 bc，请先运行: apt-get install bc&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nb">exit&lt;/span> 1&lt;span class="p">;&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 检查文件权限和路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> ! -w &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$FAN_CONTROL&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;错误: 无法写入风扇控制文件 &lt;/span>&lt;span class="nv">$FAN_CONTROL&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;请确保以root权限运行此脚本&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 检查风扇控制模式设置是否成功&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> ! &lt;span class="nb">echo&lt;/span> &lt;span class="m">1&lt;/span> &amp;gt; /sys/devices/platform/it87.2608/hwmon/hwmon2/pwm3_enable&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;错误: 无法设置风扇控制模式&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 初始化变量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">declare&lt;/span> -a &lt;span class="nv">temp_history&lt;/span>&lt;span class="o">=()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">current_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">85&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">NORMAL_INTERVAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">15&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">HIGH_TEMP_INTERVAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">TEMP_THRESHOLD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">45&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">MIN_PWM&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">55&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">MAX_PWM&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">255&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/var/log/fan_control.log&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建日志文件（如果不存在）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 2&amp;gt;/dev/null &lt;span class="o">||&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;错误: 无法创建日志文件&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nb">exit&lt;/span> 1&lt;span class="p">;&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 温度读取函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">get_temp&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">local&lt;/span> temp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">temp&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>sensors &lt;span class="p">|&lt;/span> grep &lt;span class="s2">&amp;#34;Package id 0:&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $4}&amp;#39;&lt;/span> &lt;span class="p">|&lt;/span> tr -d &lt;span class="s1">&amp;#39;+°C&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 检查温度读取是否成功&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! &lt;span class="nv">$temp&lt;/span> &lt;span class="o">=&lt;/span>~ ^&lt;span class="o">[&lt;/span>0-9&lt;span class="o">]&lt;/span>+&lt;span class="o">(&lt;/span>&lt;span class="se">\.&lt;/span>&lt;span class="o">[&lt;/span>0-9&lt;span class="o">]&lt;/span>+&lt;span class="o">)&lt;/span>?$ &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;错误: 无法正确读取温度&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 检查温度是否在合理范围内 (-20到100度)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$temp&lt;/span>&lt;span class="s2"> &amp;lt; -20 || &lt;/span>&lt;span class="nv">$temp&lt;/span>&lt;span class="s2"> &amp;gt; 100&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;警告: 温度读数异常: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">temp&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">°C&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$temp&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置风扇转速函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">set_fan_speed&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">local&lt;/span> &lt;span class="nv">pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 确保PWM值在有效范围内&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$pwm&lt;/span> -lt &lt;span class="nv">$MIN_PWM&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$MIN_PWM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$pwm&lt;/span> -gt &lt;span class="nv">$MAX_PWM&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$MAX_PWM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 尝试设置风扇转速&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> ! &lt;span class="nb">echo&lt;/span> &lt;span class="nv">$pwm&lt;/span> &amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$FAN_CONTROL&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;错误: 设置风扇转速失败: &lt;/span>&lt;span class="nv">$pwm&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 主循环&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> true&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 获取CPU温度&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">TEMP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>get_temp&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$?&lt;/span> -ne &lt;span class="m">0&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 温度读取失败，使用保守的风扇设置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;警告: 温度读取失败，使用默认风扇设置&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> set_fan_speed &lt;span class="m">150&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep &lt;span class="nv">$NORMAL_INTERVAL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 根据温度设置检测间隔&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= &lt;/span>&lt;span class="nv">$TEMP_THRESHOLD&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">sleep_interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HIGH_TEMP_INTERVAL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">sleep_interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$NORMAL_INTERVAL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 设置目标风扇转速&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 30&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$MIN_PWM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= 30 &amp;amp;&amp;amp; &lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 35&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">85&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= 35 &amp;amp;&amp;amp; &lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 40&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">120&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= 40 &amp;amp;&amp;amp; &lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 45&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">150&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= 45 &amp;amp;&amp;amp; &lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 50&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">180&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= 50 &amp;amp;&amp;amp; &lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 55&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;gt;= 55 &amp;amp;&amp;amp; &lt;/span>&lt;span class="nv">$TEMP&lt;/span>&lt;span class="s2"> &amp;lt; 60&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bc -l&lt;span class="k">)&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">225&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">target_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$MAX_PWM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 平滑过渡&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$target_pwm&lt;/span> -gt &lt;span class="nv">$current_pwm&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">current_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$((&lt;/span> current_pwm &lt;span class="o">+&lt;/span> &lt;span class="m">8&lt;/span> &lt;span class="k">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$target_pwm&lt;/span> -lt &lt;span class="nv">$current_pwm&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">current_pwm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$((&lt;/span> current_pwm &lt;span class="o">-&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="k">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 确保PWM值在有效范围内并设置风扇转速&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> ! set_fan_speed &lt;span class="nv">$current_pwm&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;错误: 风扇控制失败，等待下次尝试&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep &lt;span class="nv">$NORMAL_INTERVAL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 记录日志，同时检查日志文件大小&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">log_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>stat -f %z &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 2&amp;gt;/dev/null &lt;span class="o">||&lt;/span> &lt;span class="nb">echo&lt;/span> 0&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="nv">$log_size&lt;/span> -gt &lt;span class="m">10485760&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span> &lt;span class="c1"># 10MB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mv &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.old&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> touch &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date &lt;span class="s1">&amp;#39;+%Y-%m-%d %H:%M:%S&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2"> - Temp: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">TEMP&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">°C, PWM: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">current_pwm&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">, Interval: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">sleep_interval&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">s&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$LOG_FILE&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 使用trap捕获信号&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">trap&lt;/span> &lt;span class="s1">&amp;#39;echo &amp;#34;收到终止信号，设置风扇为默认值并退出...&amp;#34;; set_fan_speed 150; exit 0&amp;#39;&lt;/span> SIGTERM SIGINT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep &lt;span class="nv">$sleep_interval&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>VScode进入报错code 9, signal null error</title><link>/p/vscode-code-9-error/</link><pubDate>Fri, 16 Aug 2024 10:07:54 +0800</pubDate><guid>/p/vscode-code-9-error/</guid><description>&lt;p>进入 Vscode 时，出现报错&lt;br>
 Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)&lt;/p>
 &lt;p>![image.png](&lt;a class="link" href="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png" target="_blank" rel="noopener"
 >https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&lt;/a> =600x)&lt;/p>
