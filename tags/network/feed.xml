@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>network on eatmoreduck</title><link>/tags/network/</link><description>Recent content in network on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 06 Nov 2024 10:25:04 +0800</lastBuildDate><atom:link href="/tags/network/feed.xml" rel="self" type="application/rss+xml"/><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ip/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ip/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >DXP4800-黑群晖小记&lt;/a>](&lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >https://blog.xiaohuangyu.space/p/dxp4800-synology/&lt;/a>) 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
-网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问&lt;/p>
+网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列&lt;/p>
 &lt;h1 id="远程访问方案梳理">远程访问方案梳理&lt;/h1>
-&lt;h2 id="1-基于公网-ip-的直接访问方案">1. 基于公网 IP 的直接访问方案&lt;/h2>
+&lt;h3 id="1-基于公网-ip-的直接访问方案">1. 基于公网 IP 的直接访问方案&lt;/h3>
 &lt;ul>
 &lt;li>&lt;strong>优点&lt;/strong>：直接利用公网 IP 访问，无需中转，速度快。支持 ipv4/ipv6。&lt;/li>
 &lt;li>&lt;strong>缺点&lt;/strong>：依赖运营商分配公网 IP，安全风险高。&lt;/li>
 &lt;li>&lt;strong>适用场景&lt;/strong>：有公网 IP 的网络环境，如部分企业专线、有公网 IP 的家庭网络。&lt;/li>
 &lt;/ul>
-&lt;h2 id="2-vpn虚拟专用网络方案">2. VPN（虚拟专用网络）方案&lt;/h2>
+&lt;h3 id="2-vpn虚拟专用网络方案">2. VPN（虚拟专用网络）方案&lt;/h3>
 &lt;ul>
 &lt;li>&lt;strong>优点&lt;/strong>：安全加密，可完整访问内网。&lt;/li>
 &lt;li>&lt;strong>缺点&lt;/strong>：需服务器或依赖 Cloudflare 服务，配置复杂。&lt;/li>
 &lt;li>&lt;strong>适用场景&lt;/strong>：企业办公环境。&lt;/li>
 &lt;li>&lt;strong>软件推荐&lt;/strong>：OpenVPN、WireGuard。&lt;/li>
 &lt;/ul>
-&lt;h2 id="3-内网穿透方案">3. 内网穿透方案&lt;/h2>
+&lt;h3 id="3-内网穿透方案">3. 内网穿透方案&lt;/h3>
 &lt;ul>
 &lt;li>&lt;strong>优点&lt;/strong>：无需公网 IP，配置灵活。&lt;/li>
 &lt;li>&lt;strong>缺点&lt;/strong>：依赖中转服务器，且访问速度与中转服务器带宽有关，需要额外付费，并且可能有延迟。&lt;/li>
 &lt;li>&lt;strong>适用场景&lt;/strong>：临时远程访问，如开发测试。&lt;/li>
 &lt;li>&lt;strong>软件推荐&lt;/strong>：frp、ngrok。&lt;/li>
 &lt;/ul>
-&lt;h2 id="4-zerotier-异地组网方案">4. ZeroTier 异地组网方案&lt;/h2>
+&lt;h3 id="4-zerotier-异地组网方案">4. ZeroTier 异地组网方案&lt;/h3>
 &lt;ul>
 &lt;li>&lt;strong>优点&lt;/strong>：P2P 连接，配置简单。&lt;/li>
 &lt;li>&lt;strong>缺点&lt;/strong>：免费版限制设备数量，且存在打洞失败几率，但可使用自建 planet 一类的来突破限制（需要服务器）。&lt;/li>
 &lt;li>&lt;strong>适用场景&lt;/strong>：小型组网，如家庭网络。&lt;/li>
 &lt;/ul>
-&lt;h2 id="5-cloudflare-tunnel-方案">5. Cloudflare Tunnel 方案&lt;/h2>
+&lt;h3 id="5-cloudflare-tunnel-方案">5. Cloudflare Tunnel 方案&lt;/h3>
 &lt;ul>
 &lt;li>&lt;strong>优点&lt;/strong>：安全性高，配置简单。&lt;/li>
 &lt;li>&lt;strong>缺点&lt;/strong>：依赖 Cloudflare 服务，因众所周知的原因速度访问巨慢。&lt;/li>
@@ -42,6 +42,7 @@
 &lt;li>打通之后，需要少量配置或无需配置即可实现多设备访问&lt;/li>
 &lt;/ol>
 &lt;p>本文先介绍如何使用公网 ip 来进行远程访问，具体操作步骤如下&lt;/p>
+&lt;h1 id="基于公网-ip-的直接访问方案">基于公网 IP 的直接访问方案&lt;/h1>
 &lt;h2 id="一获取公网ip">一、获取公网IP&lt;/h2>
 &lt;h3 id="1-申请公网ip">1. 申请公网IP&lt;/h3>
 &lt;ul>
