@@ -1,4 +1,277 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Synology on eatmoreduck</title><link>/tags/synology/</link><description>Recent content in Synology on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="/tags/synology/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Sun, 03 Nov 2024 00:00:00 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Synology on eatmoreduck</title><link>/tags/synology/</link><description>Recent content in Synology on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 06 Nov 2024 10:25:04 +0800</lastBuildDate><atom:link href="/tags/synology/feed.xml" rel="self" type="application/rss+xml"/><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ip/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ip/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
+>DXP4800-黑群晖小记&lt;/a>](&lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
+>https://blog.xiaohuangyu.space/p/dxp4800-synology/&lt;/a>) 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
+网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问&lt;/p>
+&lt;h1 id="远程访问方案梳理">远程访问方案梳理&lt;/h1>
+&lt;h2 id="1-基于公网-ip-的直接访问方案">1. 基于公网 IP 的直接访问方案&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>优点&lt;/strong>：直接利用公网 IP 访问，无需中转，速度快。支持 ipv4/ipv6。&lt;/li>
+&lt;li>&lt;strong>缺点&lt;/strong>：依赖运营商分配公网 IP，安全风险高。&lt;/li>
+&lt;li>&lt;strong>适用场景&lt;/strong>：有公网 IP 的网络环境，如部分企业专线、有公网 IP 的家庭网络。&lt;/li>
+&lt;/ul>
+&lt;h2 id="2-vpn虚拟专用网络方案">2. VPN（虚拟专用网络）方案&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>优点&lt;/strong>：安全加密，可完整访问内网。&lt;/li>
+&lt;li>&lt;strong>缺点&lt;/strong>：需服务器或依赖 Cloudflare 服务，配置复杂。&lt;/li>
+&lt;li>&lt;strong>适用场景&lt;/strong>：企业办公环境。&lt;/li>
+&lt;li>&lt;strong>软件推荐&lt;/strong>：OpenVPN、WireGuard。&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-内网穿透方案">3. 内网穿透方案&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>优点&lt;/strong>：无需公网 IP，配置灵活。&lt;/li>
+&lt;li>&lt;strong>缺点&lt;/strong>：依赖中转服务器，且访问速度与中转服务器带宽有关，需要额外付费，并且可能有延迟。&lt;/li>
+&lt;li>&lt;strong>适用场景&lt;/strong>：临时远程访问，如开发测试。&lt;/li>
+&lt;li>&lt;strong>软件推荐&lt;/strong>：frp、ngrok。&lt;/li>
+&lt;/ul>
+&lt;h2 id="4-zerotier-异地组网方案">4. ZeroTier 异地组网方案&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>优点&lt;/strong>：P2P 连接，配置简单。&lt;/li>
+&lt;li>&lt;strong>缺点&lt;/strong>：免费版限制设备数量，且存在打洞失败几率，但可使用自建 planet 一类的来突破限制（需要服务器）。&lt;/li>
+&lt;li>&lt;strong>适用场景&lt;/strong>：小型组网，如家庭网络。&lt;/li>
+&lt;/ul>
+&lt;h2 id="5-cloudflare-tunnel-方案">5. Cloudflare Tunnel 方案&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>优点&lt;/strong>：安全性高，配置简单。&lt;/li>
+&lt;li>&lt;strong>缺点&lt;/strong>：依赖 Cloudflare 服务，因众所周知的原因速度访问巨慢。&lt;/li>
+&lt;li>&lt;strong>适用场景&lt;/strong>：Web 服务、应用访问。&lt;/li>
+&lt;/ul>
+&lt;p>个人比较推荐方案 1和方案 4，理由如下&lt;/p>
+&lt;ol>
+&lt;li>付费少&lt;/li>
+&lt;li>配置相对简单&lt;/li>
+&lt;li>打通之后，需要少量配置或无需配置即可实现多设备访问&lt;/li>
+&lt;/ol>
+&lt;p>本文先介绍如何使用公网 ip 来进行远程访问，具体操作步骤如下&lt;/p>
+&lt;h2 id="一获取公网ip">一、获取公网IP&lt;/h2>
+&lt;h3 id="1-申请公网ip">1. 申请公网IP&lt;/h3>
+&lt;ul>
+&lt;li>联系宽带运营商客服申请开通公网IP&lt;/li>
+&lt;li>根据运营商政策可能需要更换套餐或支付额外费用&lt;/li>
+&lt;li>可能获得的公网IP类型：
+&lt;ul>
+&lt;li>固定IPv4（地址不变，费用较高，一般申请不到）&lt;/li>
+&lt;li>动态IPv4（光猫重启后地址可能会变化，所以需要域名配合ddns 解析）&lt;/li>
+&lt;li>动态IPv6（现在运营商普遍支持，但需要配合动态 dns 解析）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-验证公网ip">2. 验证公网IP&lt;/h3>
+&lt;ul>
+&lt;li>访问 &lt;a class="link" href="https://ip138.com/" target="_blank" rel="noopener"
+>https://ip138.com/&lt;/a> 或直接百度搜 ip 查询当前 ip&lt;/li>
+&lt;li>使用命令行工具检查：
+&lt;ul>
+&lt;li>Windows: ipconfig /all&lt;/li>
+&lt;li>Linux/Mac: ifconfig 或 ip addr&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>注意区分内网IP（192.168.x.x、10.x.x.x等）和公网IP，且注意路由器或光猫是否响应 ping 命令&lt;/li>
+&lt;/ul>
+&lt;h2 id="二网络环境配置">二、网络环境配置&lt;/h2>
+&lt;h3 id="1-光猫设置">1. 光猫设置&lt;/h3>
+&lt;ul>
+&lt;li>理想情况：直接在光猫配置端口转发
+&lt;ul>
+&lt;li>需要运营商提供超级管理员密码&lt;/li>
+&lt;li>配置较简单，性能较好&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>现实情况：多数无法获取超级管理员权限，且光猫性能垃圾，多设备连接了之后会异常卡
+&lt;ul>
+&lt;li>需要将光猫改为桥接模式，自己额外接路由器&lt;/li>
+&lt;li>可能需要运营商远程协助设置&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="可能遇到的问题及解决方案">可能遇到的问题及解决方案&lt;/h4>
+&lt;ol>
+&lt;li>运营商不给开公网ip =&amp;gt; 投诉&lt;/li>
+&lt;li>运营商不给开桥接 =》 投诉&lt;/li>
+&lt;/ol>
+&lt;h3 id="2-路由器配置">2. 路由器配置&lt;/h3>
+&lt;ul>
+&lt;li>选购支持端口转发的路由器&lt;/li>
+&lt;li>设置路由器PPPoE拨号
+&lt;ul>
+&lt;li>输入宽带账号密码&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>配置端口转发
+&lt;ul>
+&lt;li>选择需要转发的内部端口&lt;/li>
+&lt;li>设置对应的外部端口&lt;/li>
+&lt;li>指定内网设备IP地址&lt;/li>
+&lt;li>选择协议类型（TCP/UDP）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="可能遇到的问题及解决方案-1">可能遇到的问题及解决方案&lt;/h4>
+&lt;ol>
+&lt;li>拿不到宽带账号密码 =》 投诉&lt;/li>
+&lt;li>验证自己的路由器是否获取到公网 ip =》 &lt;a class="link" href="https://ip138.com" target="_blank" rel="noopener"
+>https://ip138.com&lt;/a> 看ip 是否与路由器后台 ip 一致，且不为192.168.xxx.xxx ，不为 10.xx.xx.xx&lt;/li>
+&lt;li>验证端口转发是否生效 =&amp;gt; 假定获取到的公网ip 为 222.71.193.9 配置的转发为 9999 端口转发到内网 192.168.1.200 机器的 5001 端口，则执行命令&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;gt; telnet 222.71.193.9 9999 回车
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Trying 222.71.193.9...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Connected to 222.71.193.9.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Escape character is &amp;#39;^]&amp;#39;. (出现这行表示正常，如果没出现则依次排查应用状态，防火墙状态，端口转发是否正确)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="3-防火墙设置">3. 防火墙设置&lt;/h3>
+&lt;ul>
+&lt;li>路由器防火墙配置
+&lt;ul>
+&lt;li>开放必要端口&lt;/li>
+&lt;li>设置访问控制规则&lt;/li>
+&lt;li>启用基本安全防护&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>内网设备防火墙配置
+&lt;ul>
+&lt;li>允许相关端口访问&lt;/li>
+&lt;li>配置访问白名单&lt;/li>
+&lt;li>启用安全防护措施&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>完成上述配置之后，在外网可以直接通过 http://公网ip:端口转发外部port 访问相关的 web 应用,此处的 ip 为公网 ip，port 为配置的外网端口转发，假定获取到的公网ip 为 222.71.193.9 配置的转发为 9999 端口转发到内网 192.168.1.200 机器的 5000 端口（群晖默认端口），则访问地址为
+http://222.71.193.9:9999 ，但运营商给的是动态 ip，可能会在某些特定的时候自动改变，或者是在路由器重启时重新分配，重新分配之后，就原来的方式就不能访问了，所以为了使用方便，都希望直接使用某个域名来远程访问内部服务，接下来就需要介绍后续DDNS 了&lt;/p>
+&lt;p>DDNS （Dynamic DNS), 熟悉 DNS 的小伙伴都知道 DNS 是将域名转为 IP 地址的服务，直接复习下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> DDNS（动态域名系统）和DNS（域名系统）是两个相关但不同的概念。以下是它们的主要区别：
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">### DNS（域名系统）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **全球性服务**：DNS是一个全球性的服务，它将人类易于记忆的域名转换为计算机使用的IP地址。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **静态解析**：传统的DNS服务通常用于静态IP地址，即域名与IP地址的映射是固定的，不会随时间变化。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **分布式系统**：DNS是一个分层的分布式系统，包括根服务器、顶级域名服务器、权威名称服务器和递归服务器。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **缓存机制**：DNS查询结果通常被缓存，以提高解析速度和减轻DNS服务器的负载。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **适用于静态IP**：对于拥有静态公网IP的用户或企业来说，传统的DNS服务是合适的。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">### DDNS（动态域名系统）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **动态IP支持**：DDNS服务允许用户将一个固定的域名与动态变化的IP地址关联起来，特别适用于家庭用户和小型办公室，他们的公网IP地址可能会因为重新连接互联网而变化。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **自动更新**：DDNS服务会自动检测IP地址的变化，并更新DNS记录，确保域名始终指向当前的IP地址。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **依赖第三方服务**：DDNS服务通常由第三方提供商提供，用户需要在服务提供商的平台上注册域名，并配置DDNS服务。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **客户端软件**：用户通常需要在本地网络设备上安装客户端软件，该软件会监测IP地址的变化，并与DDNS服务提供商的服务器通信以更新DNS记录。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- **适用于动态IP**：对于没有静态公网IP的用户来说，DDNS服务是必要的，以便他们能够通过一个固定的域名来访问或管理他们的网络设备。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">总结来说，DNS是一个全球性的域名解析服务，而DDNS是DNS服务的一个扩展，专门为动态IP地址提供域名解析服务。DDNS解决了动态IP地址环境下域名解析的问题，使得用户可以通过一个固定的域名来访问他们的设备，即使这些设备的IP地址可能会变化。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>DDNS是直接将域名转化为动态 ip，这样我们配置好之后就直接能用固定的域名访问内网中的各种服务了&lt;/p>
+&lt;h2 id="三域名解析配置可选">三、域名解析配置（可选）&lt;/h2>
+&lt;h3 id="1-域名准备">1. 域名准备&lt;/h3>
+&lt;ul>
+&lt;li>购买域名&lt;/li>
+&lt;li>配置DNS服务器&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-ddns配置">2. DDNS配置&lt;/h3>
+&lt;ul>
+&lt;li>选择DDNS软件
+&lt;ul>
+&lt;li>DDNS-GO&lt;/li>
+&lt;li>Lucky&lt;/li>
+&lt;li>NO-IP&lt;/li>
+&lt;li>花生壳&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>软件配置
+&lt;ul>
+&lt;li>设置域名提供商API，网上教程太多 不过多赘述，参考各个软件官方文档即可&lt;/li>
+&lt;li>配置更新间隔&lt;/li>
+&lt;li>选择需要解析的域名&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>运行方式
+&lt;ul>
+&lt;li>物理机直接运行&lt;/li>
+&lt;li>Docker容器运行&lt;/li>
+&lt;li>路由器插件运行&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-解析验证">3. 解析验证&lt;/h3>
+&lt;ul>
+&lt;li>测试域名解析是否正确&lt;/li>
+&lt;/ul>
+&lt;h4 id="可能遇到的问题及解决方案-2">可能遇到的问题及解决方案&lt;/h4>
+&lt;ol>
+&lt;li>测试域名解析是否正确 =&amp;gt;&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">❯ ping 你配置在 ddns 软件里的域名 比如
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ping nas.abcdefg.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">PING nas.abcdefg.com (222.71.193.9): 56 data bytes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">64 bytes from 222.71.193.9: icmp_seq=0 ttl=50 time=12.410 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">64 bytes from 222.71.193.9: icmp_seq=1 ttl=50 time=13.020 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">64 bytes from 222.71.193.9: icmp_seq=2 ttl=50 time=15.120 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">重复出现的 ip与自己公网 ip 一致即可
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>如果在配置 ddns 之前如果都没问题，但是 ddns 解析有问题，可能需要关注下自己是否使用了相关代理软件，修改代理规则，我曾经遇到过使用 cloudflare 的 dns，同时在路由器上配置了代理，再使用 ddns 时发现 cloudflare 上的 dns 解析一直是解析到某海外 ip，排查之后发现是规则设置的问题&lt;/strong>&lt;/p>
+&lt;h2 id="四测试验证">四、测试验证&lt;/h2>
+&lt;p>测试部分，不做过多数据测试，能满足自己要求即可&lt;/p>
+&lt;h3 id="1-基础连通性测试">1. 基础连通性测试&lt;/h3>
+&lt;ul>
+&lt;li>Ping测试
+&lt;ul>
+&lt;li>ping 公网IP&lt;/li>
+&lt;li>ping 域名（如果配置了域名）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>端口检测
+&lt;ul>
+&lt;li>使用在线端口检测工具&lt;/li>
+&lt;li>telnet测试端口连通性&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-性能测试">2. 性能测试&lt;/h3>
+&lt;ul>
+&lt;li>带宽测试&lt;/li>
+&lt;li>延迟测试&lt;/li>
+&lt;li>稳定性测试&lt;/li>
+&lt;/ul></description></item><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Sun, 03 Nov 2024 00:00:00 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
