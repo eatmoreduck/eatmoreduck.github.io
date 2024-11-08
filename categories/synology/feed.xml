@@ -1,4 +1,59 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Synology on eatmoreduck</title><link>/categories/synology/</link><description>Recent content in Synology on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 06 Nov 2024 10:25:04 +0800</lastBuildDate><atom:link href="/categories/synology/feed.xml" rel="self" type="application/rss+xml"/><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ip/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ip/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Synology on eatmoreduck</title><link>/categories/synology/</link><description>Recent content in Synology on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Nov 2024 20:12:54 +0800</lastBuildDate><atom:link href="/categories/synology/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
+&lt;li>关机&lt;/li>
+&lt;li>开盖&lt;/li>
+&lt;li>装 SSD&lt;/li>
+&lt;li>创建 basic 类型储存池
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>创建 basic 类型储存空间，选择Btrfs &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>设置新安装套件到储存池 2 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png"
+loading="lazy"
+>&lt;/li>
+&lt;li>通过 hyper backup先完成 docker homes 目录的备份 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;/ol>
+&lt;p>备份 docker homes 下的文件到共享文件夹
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png"
+loading="lazy"
+alt="image.png"
+>
+8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。
+如下图所示
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png"
+loading="lazy"
+alt="image.png"
+>
+先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082144024.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>备份完了按原流程弄回去就行&lt;/p>
+&lt;ol start="9">
+&lt;li>原有历史套件搬家，找了个 &lt;a class="link" href="https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x" target="_blank" rel="noopener"
+>https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x&lt;/a>
+最后发现还是无法使用，最近才开始用套件，目前装的也不多，直接把原来卸载的都重新来一次，以下页面的服务其实是没法使用的
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082220473.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;/ol>
+&lt;p>完成以上所有操作之后，后续的套件都安装到ssd，无论是打开还是安装的速度都快了许多，后续再配置一个定时任务，定时将 docker 从 SSD 备份到 HHD 即可&lt;/p></description></item><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ipv4/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ipv4/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >DXP4800-黑群晖小记&lt;/a>](&lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >https://blog.xiaohuangyu.space/p/dxp4800-synology/&lt;/a>) 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
 网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列&lt;/p>
@@ -41,8 +96,8 @@
 &lt;li>配置相对简单&lt;/li>
 &lt;li>打通之后，需要少量配置或无需配置即可实现多设备访问&lt;/li>
 &lt;/ol>
-&lt;p>本文先介绍如何使用公网 ip 来进行远程访问，具体操作步骤如下&lt;/p>
-&lt;h1 id="基于公网-ip-的直接访问方案">基于公网 IP 的直接访问方案&lt;/h1>
+&lt;p>本文先介绍如何使用公网 ip 来进行远程访问，本文先假定能够开通 ipv4,具体操作步骤如下&lt;/p>
+&lt;h1 id="基于公网-ipv4-的直接访问方案">基于公网 IPV4 的直接访问方案&lt;/h1>
 &lt;h2 id="一获取公网ip">一、获取公网IP&lt;/h2>
 &lt;h3 id="1-申请公网ip">1. 申请公网IP&lt;/h3>
 &lt;ul>

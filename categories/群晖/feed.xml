@@ -1,4 +1,59 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>群晖 on eatmoreduck</title><link>/categories/%E7%BE%A4%E6%99%96/</link><description>Recent content in 群晖 on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="/categories/%E7%BE%A4%E6%99%96/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Sun, 03 Nov 2024 00:00:00 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>群晖 on eatmoreduck</title><link>/categories/%E7%BE%A4%E6%99%96/</link><description>Recent content in 群晖 on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Nov 2024 20:12:54 +0800</lastBuildDate><atom:link href="/categories/%E7%BE%A4%E6%99%96/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
+&lt;li>关机&lt;/li>
+&lt;li>开盖&lt;/li>
+&lt;li>装 SSD&lt;/li>
+&lt;li>创建 basic 类型储存池
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>创建 basic 类型储存空间，选择Btrfs &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>设置新安装套件到储存池 2 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png"
+loading="lazy"
+>&lt;/li>
+&lt;li>通过 hyper backup先完成 docker homes 目录的备份 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;/ol>
+&lt;p>备份 docker homes 下的文件到共享文件夹
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png"
+loading="lazy"
+alt="image.png"
+>
+8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。
+如下图所示
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png"
+loading="lazy"
+alt="image.png"
+>
+先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082144024.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>备份完了按原流程弄回去就行&lt;/p>
+&lt;ol start="9">
+&lt;li>原有历史套件搬家，找了个 &lt;a class="link" href="https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x" target="_blank" rel="noopener"
+>https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x&lt;/a>
+最后发现还是无法使用，最近才开始用套件，目前装的也不多，直接把原来卸载的都重新来一次，以下页面的服务其实是没法使用的
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082220473.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;/ol>
+&lt;p>完成以上所有操作之后，后续的套件都安装到ssd，无论是打开还是安装的速度都快了许多，后续再配置一个定时任务，定时将 docker 从 SSD 备份到 HHD 即可&lt;/p></description></item><item><title>DXP4800-黑群晖小记</title><link>/p/dxp4800-synology/</link><pubDate>Sun, 03 Nov 2024 00:00:00 +0800</pubDate><guid>/p/dxp4800-synology/</guid><description>&lt;p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
