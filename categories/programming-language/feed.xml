@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>programming language,Software,other,Daily life on eatmoreduck</title><link>/categories/programming-languagesoftwareotherdaily-life/</link><description>Recent content in programming language,Software,other,Daily life on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 18 Mar 2025 14:53:23 +0800</lastBuildDate><atom:link href="/categories/programming-languagesoftwareotherdaily-life/feed.xml" rel="self" type="application/rss+xml"/><item><title>install-immortalwrt-in-Synology</title><link>/p/install-immortalwrt-in-synology/</link><pubDate>Tue, 18 Mar 2025 14:53:23 +0800</pubDate><guid>/p/install-immortalwrt-in-synology/</guid><description>&lt;ol>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>programming language on eatmoreduck</title><link>/categories/programming-language/</link><description>Recent content in programming language on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 18 Mar 2025 14:53:23 +0800</lastBuildDate><atom:link href="/categories/programming-language/feed.xml" rel="self" type="application/rss+xml"/><item><title>install-immortalwrt-in-Synology</title><link>/p/install-immortalwrt-in-synology/</link><pubDate>Tue, 18 Mar 2025 14:53:23 +0800</pubDate><guid>/p/install-immortalwrt-in-synology/</guid><description>&lt;ol>
 &lt;li>
 &lt;p>download a iso in &lt;a class="link" href="https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/" target="_blank" rel="noopener"
 >https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&lt;/a>&lt;/p>
@@ -29,36 +29,42 @@ loading="lazy"
 alt="image.png"
 >&lt;/p>
 &lt;ol start="5">
-&lt;li>set vm params &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318152426468.png"
-loading="lazy"
-alt="image.png"
->
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png"
+&lt;li>set vm params &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232345769.png"
 loading="lazy"
 alt="image.png"
 >&lt;/li>
 &lt;/ol>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
 &lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png"
 loading="lazy"
 alt="image.png"
 >&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318152816954.png"
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232412484.png"
 loading="lazy"
 alt="image.png"
->
-6. &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318152910391.png"
+>&lt;/p>
+&lt;ol start="6">
+&lt;li>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232433502.png"
 loading="lazy"
 alt="image.png"
->
-vi /etc/config/network
+>&lt;/p>
+&lt;p>vi /etc/config/network
 set ipaddr to the address of the same network segment as the router and reboot
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318153342615.png"
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232451643.png"
 loading="lazy"
 alt="image.png"
->
-7. after reboot , login immortalwrt in web browser by http://192.168.5.100
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>after reboot , login immortalwrt in web browser by http://192.168.5.100
 the default user is root, and the default password is password
 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png"
 loading="lazy"
 alt="image.png"
->&lt;/p></description></item></channel></rss>
+>&lt;/p>
+&lt;/li>
+&lt;/ol></description></item></channel></rss>

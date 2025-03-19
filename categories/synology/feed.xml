@@ -1,4 +1,73 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Synology on eatmoreduck</title><link>/categories/synology/</link><description>Recent content in Synology on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Nov 2024 20:12:54 +0800</lastBuildDate><atom:link href="/categories/synology/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Synology on eatmoreduck</title><link>/categories/synology/</link><description>Recent content in Synology on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 18 Mar 2025 14:53:23 +0800</lastBuildDate><atom:link href="/categories/synology/feed.xml" rel="self" type="application/rss+xml"/><item><title>install-immortalwrt-in-Synology</title><link>/p/install-immortalwrt-in-synology/</link><pubDate>Tue, 18 Mar 2025 14:53:23 +0800</pubDate><guid>/p/install-immortalwrt-in-synology/</guid><description>&lt;ol>
+&lt;li>
+&lt;p>download a iso in &lt;a class="link" href="https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/" target="_blank" rel="noopener"
+>https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>add new hard disk image &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164340052.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Wait for the image to be imported &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164427257.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>import a new Virtual Machine &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164514424.png"
+loading="lazy"
+alt="image.png"
+>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164530509.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164750558.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;ol start="5">
+&lt;li>set vm params &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232345769.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232412484.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;ol start="6">
+&lt;li>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232433502.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>vi /etc/config/network
+set ipaddr to the address of the same network segment as the router and reboot
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232451643.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>after reboot , login immortalwrt in web browser by http://192.168.5.100
+the default user is root, and the default password is password
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;/ol></description></item><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
 &lt;li>关机&lt;/li>
 &lt;li>开盖&lt;/li>
 &lt;li>装 SSD&lt;/li>
