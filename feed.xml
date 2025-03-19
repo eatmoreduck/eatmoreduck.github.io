@@ -1,4 +1,105 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>eatmoreduck</title><link>/</link><description>Recent content on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Nov 2024 20:12:54 +0800</lastBuildDate><atom:link href="/feed.xml" rel="self" type="application/rss+xml"/><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>eatmoreduck</title><link>/</link><description>Recent content on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 18 Mar 2025 14:53:23 +0800</lastBuildDate><atom:link href="/feed.xml" rel="self" type="application/rss+xml"/><item><title>install-immortalwrt-in-Synology</title><link>/p/install-immortalwrt-in-synology/</link><pubDate>Tue, 18 Mar 2025 14:53:23 +0800</pubDate><guid>/p/install-immortalwrt-in-synology/</guid><description>&lt;ol>
+&lt;li>
+&lt;p>download a iso in &lt;a class="link" href="https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/" target="_blank" rel="noopener"
+>https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>add new hard disk image &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164340052.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Wait for the image to be imported &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164427257.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>import a new Virtual Machine &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164514424.png"
+loading="lazy"
+alt="image.png"
+>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164530509.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164750558.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;ol start="5">
+&lt;li>set vm params &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318152426468.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318152816954.png"
+loading="lazy"
+alt="image.png"
+>
+6. &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318152910391.png"
+loading="lazy"
+alt="image.png"
+>
+vi /etc/config/network
+set ipaddr to the address of the same network segment as the router and reboot
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250318153342615.png"
+loading="lazy"
+alt="image.png"
+>
+7. after reboot , login immortalwrt in web browser by http://192.168.5.100
+the default user is root, and the default password is password
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p></description></item><item><title>Create-Virtual-machine-by-UTM</title><link>/p/create-virtual-machine-by-utm/</link><pubDate>Mon, 17 Mar 2025 16:35:30 +0800</pubDate><guid>/p/create-virtual-machine-by-utm/</guid><description>&lt;ol>
+&lt;li>下载 App 安装 &lt;a class="link" href="https://mac.getutm.app/" target="_blank" rel="noopener"
+>https://mac.getutm.app/&lt;/a> 并打开&lt;/li>
+&lt;li>创建新的虚拟机 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163729210.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>M1 芯片安装 x86 win10 ,因 cpu 为 arm 架构，故只能选择模拟 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163804627.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>创建 windows 虚拟机&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164215439.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>选择自己喜欢的 win10 版本镜像（需提前下载）
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164344728.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>配置硬件参数&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164412790.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164431605.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164609153.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317173946665.png"
+loading="lazy"
+alt="image.png"
+>
+注意将此处 UEFI 启动关闭，否则每次开机都是重新引导安装&lt;/li>
+&lt;li>后面就是一步步按操作来就行&lt;/li>
+&lt;/ol></description></item><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
 &lt;li>关机&lt;/li>
 &lt;li>开盖&lt;/li>
 &lt;li>装 SSD&lt;/li>
@@ -1084,95 +1185,4 @@ loading="lazy"
 &lt;blockquote>
 &lt;p>实用、好用的 &lt;a class="link" href="https://sspai.com/mall" target="_blank" rel="noopener"
 >正版软件&lt;/a>，少数派为你呈现🚀%% %%&lt;/p>
-&lt;/blockquote></description></item><item><title>hugo+obsidian打造最强博客（一）</title><link>/p/hugo-obsidian-stagic-blog1/</link><pubDate>Tue, 20 Feb 2024 16:27:01 +0800</pubDate><guid>/p/hugo-obsidian-stagic-blog1/</guid><description>&lt;h2 id="笔记软件选择原则">笔记软件选择原则&lt;/h2>
-&lt;ol>
-&lt;li>拒绝云服务，数据留存本地，本机运行，使用github/gitee 私仓来进行笔记储存&lt;/li>
-&lt;li>拒绝专有格式，使用通用的标记型语言&lt;/li>
-&lt;li>开源&lt;/li>
-&lt;li>跨平台&lt;/li>
-&lt;/ol>
-&lt;h2 id="本地笔记格式选择">本地笔记格式选择&lt;/h2>
-&lt;p>这个自是不必多说，首选MarkDown格式，方便各类软件编辑，关于此格式，参见wiki &lt;a class="link" href="https://zh.wikipedia.org/wiki/Markdown" target="_blank" rel="noopener"
->https://zh.wikipedia.org/wiki/Markdown&lt;/a>&lt;/p>
-&lt;p>&lt;strong>Markdown&lt;/strong>是一种&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80" title="轻量级标记语言"
-target="_blank" rel="noopener"
->轻量级标记语言&lt;/a>，创始人为&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E7%B4%84%E7%BF%B0%C2%B7%E6%A0%BC%E9%AD%AF%E4%BC%AF" title="约翰·格鲁伯"
-target="_blank" rel="noopener"
->约翰·格鲁伯&lt;/a>。它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的&lt;a class="link" href="https://zh.wikipedia.org/wiki/XHTML" target="_blank" rel="noopener"
->XHTML&lt;/a>（或者&lt;a class="link" href="https://zh.wikipedia.org/wiki/HTML" title="HTML"
-target="_blank" rel="noopener"
->HTML&lt;/a>）文档。&lt;a class="link" href="https://zh.wikipedia.org/wiki/Markdown#cite_note-md-4" target="_blank" rel="noopener"
->[4]&lt;/a>这种语言吸收了很多在&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6" title="电子邮件"
-target="_blank" rel="noopener"
->电子邮件&lt;/a>中已有的纯文本标记的特性。&lt;/p>
-&lt;p>由于Markdown的轻量化、易读易写特性，并且对于图片，图表、数学式都有支持，目前许多网站都广泛使用Markdown来撰写帮助文档或是用于&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E8%AE%BA%E5%9D%9B" title="网络论坛"
-target="_blank" rel="noopener"
->论坛&lt;/a>上发表消息。如&lt;a class="link" href="https://zh.wikipedia.org/wiki/GitHub" title="GitHub"
-target="_blank" rel="noopener"
->GitHub&lt;/a>、&lt;a class="link" href="https://zh.wikipedia.org/wiki/Reddit" title="Reddit"
-target="_blank" rel="noopener"
->Reddit&lt;/a>、&lt;a class="link" href="https://zh.wikipedia.org/wiki/Discord" title="Discord"
-target="_blank" rel="noopener"
->Discord&lt;/a>、&lt;a class="link" href="https://zh.wikipedia.org/wiki/Diaspora_%28%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%29" title="Diaspora (社交网络)"
-target="_blank" rel="noopener"
->Diaspora&lt;/a>、&lt;a class="link" href="https://zh.wikipedia.org/wiki/Stack_Exchange" title="Stack Exchange"
-target="_blank" rel="noopener"
->Stack Exchange&lt;/a>、&lt;a class="link" href="https://zh.wikipedia.org/wiki/OpenStreetMap" title="OpenStreetMap"
-target="_blank" rel="noopener"
->OpenStreetMap&lt;/a> 、&lt;a class="link" href="https://zh.wikipedia.org/wiki/SourceForge" title="SourceForge"
-target="_blank" rel="noopener"
->SourceForge&lt;/a>、&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E7%AE%80%E4%B9%A6" title="简书"
-target="_blank" rel="noopener"
->简书&lt;/a>等，甚至还能被用来撰写&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E6%9B%B8" title="电子书"
-target="_blank" rel="noopener"
->电子书&lt;/a>。&lt;/p>
-&lt;h2 id="笔记格式软件选择">笔记格式软件选择&lt;/h2>
-&lt;p>截止2024年2月20日，比较流行的MarkDown 编辑软件有如下几个选项&lt;/p>
-&lt;ol>
-&lt;li>语雀&lt;/li>
-&lt;li>Typora&lt;/li>
-&lt;li>VSCode&lt;/li>
-&lt;li>Obsidian&lt;/li>
-&lt;/ol>
-&lt;h2 id="逐个分析不选用软件的原因">逐个分析不选用软件的原因&lt;/h2>
-&lt;h4 id="语雀">语雀&lt;/h4>
-&lt;p>语雀导入MarkDown方便，但导出功能并不是特别强大，MarkDown导入后，基本与语雀编辑器绑定，语雀官方文档上，有同学提出了希望能直接导出全知识库，但语雀团队并未提供相关支持。
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041502909.png"
-loading="lazy"
-alt="image.png"
->
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041502909.png"
-loading="lazy"
-alt="image.png"
->
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041503941.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>原本我是语雀深度用户，团队内部使用语雀写文档，平时也是使用语雀做笔记，再配合chrome 的SimpRead 插件，方便的进行网上文章摘抄&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041523141.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>但2023年10月23日，语雀挂了8小时，我为此还发了朋友圈，那时候就想切换到其他笔记软件，墨迹了几个月，终于开始干这事儿了
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/WechatIMG5.jpg"
-loading="lazy"
-alt="WechatIMG5.jpg"
->&lt;/p>
-&lt;h4 id="typora">Typora&lt;/h4>
-&lt;p>1.0.0 之后开始收费，付费用户也可以选择此方案&lt;/p>
-&lt;h4 id="vscode">VSCode&lt;/h4>
-&lt;p>严格来说不是专为markdown 准备的，但配合插件使用可以实现较强的功能，开源，安装插件之后也能实现很好的写作效果，但个人习惯原因，不是很喜欢此方式，还是更偏向于使用专门的编辑器来进行编辑&lt;/p>
-&lt;h4 id="obsidian">Obsidian&lt;/h4>
-&lt;p>接下来Obsidian 隆重登场，Obsidian的优势&lt;/p>
-&lt;ol>
-&lt;li>开源&lt;/li>
-&lt;li>原生Markdown 编辑，就算倒闭了，或者收费了，也方便迁移到其他平台&lt;/li>
-&lt;li>插件市场活跃，配合Template插件，Image auto update plugin 以及Picgo 图床软件能实现不输语雀的编辑体验&lt;/li>
-&lt;li>配合github 的workflow ，推送完代码之后，自动构建静态博客&lt;/li>
-&lt;li>配合vercel 及自定义域名，代码推送到github 之后，自动部署到自己的网站&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041432583.png"
-loading="lazy"
-alt="image.png"
->&lt;/p></description></item><item><title>Archives</title><link>/archives/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0800</pubDate><guid>/archives/</guid><description/></item></channel></rss>
+&lt;/blockquote></description></item></channel></rss>
