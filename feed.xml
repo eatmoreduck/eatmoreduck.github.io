@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>eatmoreduck</title><link>/</link><description>Recent content on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 23 Apr 2025 00:11:26 +0800</lastBuildDate><atom:link href="/feed.xml" rel="self" type="application/rss+xml"/><item><title>4 月碎碎念</title><link>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link><pubDate>Wed, 23 Apr 2025 00:11:26 +0800</pubDate><guid>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid><description>&lt;h3 id="工作">工作&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>eatmoreduck</title><link>/</link><description>Recent content on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 10 Jul 2025 23:49:46 +0800</lastBuildDate><atom:link href="/feed.xml" rel="self" type="application/rss+xml"/><item><title>56月小结</title><link>/p/56%E6%9C%88%E5%B0%8F%E7%BB%93/</link><pubDate>Thu, 10 Jul 2025 23:49:46 +0800</pubDate><guid>/p/56%E6%9C%88%E5%B0%8F%E7%BB%93/</guid><description>&lt;h3 id="工作">工作&lt;/h3>
+&lt;ol>
+&lt;li>核心系统做了一次性能优化，凌晨批量数据任务时间从3 小时缩短到 2 小时&lt;/li>
+&lt;li>接手的模型相关服务，离线环境也做了性能优化，原本批量 30 万订单回溯的时间由报错跑不出缩短到2-3 天&lt;/li>
+&lt;li>模型回溯自动化代码已完成，终于从破事当中走出来&lt;/li>
+&lt;li>开始自己写些 k8s 的配置，现有项目在慢慢切到 k8s&lt;/li>
+&lt;li>公司采购单上支持选择 cursor 了(原来是垃圾 copilot)，自费购买了三个月的 cursor 无需再续费，又省一笔&lt;/li>
+&lt;/ol>
+&lt;p>希望继续平安无事故&lt;/p>
+&lt;h3 id="生活">生活&lt;/h3>
+&lt;p>5 月又因为点小事闹了些矛盾，有娃之后，矛盾日益增多。我还是不够聪明，这些方面的事对我来说有点棘手。不过不管咋样，生活还得继续，坦诚相待，遇到问题解决问题就好。&lt;/p>
+&lt;h3 id="折腾">折腾&lt;/h3>
+&lt;p>折腾还在继续&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>刀片机 R630 卖给某位群友公司了，3700 买的，用了两年 3500 卖掉，一点没亏，只是打包机器的时候有种大玩具卖掉的失落&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/143fae1c87e3de070b6364865840dd04.jpg"
+loading="lazy"
+alt="143fae1c87e3de070b6364865840dd04.jpg"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>15-mid macpro 清灰换硅脂，重装系统三四次，最终确定比较合适的版本为macOS Monterey 12.7.6, 为了当做服务器，花了 30 块买了 USB 千兆网卡，为了避免盒盖休眠，花5 块买了 HDMI 诱骗器。中途有个小插曲，用WD40 清洗机器时，不小心喷到屏幕里产生了大量亮斑，放了一段时间之后不症状稍微减轻，现在让他安静的躺在角落做为开发小主机
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20250711000405775.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>绿联 dxp4800 换装了一条 32G 内存，配合 N100 处理器，属实吕布骑狗。
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20250711005611057.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>夏天来了，工作用的 m1pro 近期频繁异响，在v2ex上终于遇到个症状类似的。最终确定右侧风扇大概率在出厂时就坏掉了。在需要右侧风扇工作时会自检异常，发出规律的咔咔声（macfans control 手动拉高转速时能稳定复现），五一重装系统了之后有两周的阵痛，且仍然没解决（胆大没备份），最终送修 350块，解决了忍受了三年的问题（以前m1风扇是根本不转的，极少遇到异响，最近夏天到了，干重活了）。不过出厂风扇就是坏的着实出乎我意料，在电脑上我能忍这么久，的的确确是因为95%时候右侧不转，转的时候我手动拉高左侧风扇很快就能解决问题。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="总结">总结&lt;/h3>
+&lt;p>这两个月不管是生活还是工作都经历不少，自己也慢慢适应这种节奏的生活，不过拖延问题虽得到缓解，但仍然严重，期望自己能每日小结，多反思并修正，才能更快进步&lt;/p></description></item><item><title>4 月碎碎念</title><link>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link><pubDate>Wed, 23 Apr 2025 00:11:26 +0800</pubDate><guid>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid><description>&lt;h3 id="工作">工作&lt;/h3>
 &lt;p>工作上一如往常，没什么特别出彩的，也没翻车，只是自己在看数据时，发现自己新写的代码里，有一处致命 bug，长期运行可能会导致线上 redis 爆掉，恰好测试没发现，又避免了一次事故报告。上次 CTO 点完一些现有团队存在的问题之后，大一点的改动都心里很发虚，有些问题还真的 code review 才发现的了，这个季度打算把一些历史遗留问题解决一下，顺便把历史没迁移的服务迁移掉。还是对自己要求高一些，犯错的可能性才能降低些（虽然犯错成本不高）。&lt;/p>
 &lt;h3 id="生活">生活&lt;/h3>
 &lt;p>生活已经几乎被小娃填满，小娃最近开始睡眠倒退，常常要哄很久才睡的着并且睡不久，哄 30 分钟，睡 30 分钟几乎成了日常。好在妻子给力，几乎能 cover 住，翻了翻手机相册里，近几个月拍的几乎都是跟娃有关的照片。手机上看还好，电脑上看总是感觉他怎么那么可爱。睡着刚醒的时候可爱，爆哭的时候看起来又可怜。
@@ -948,110 +987,4 @@ alt="image.png"
 &lt;p>最近天气炎热，已经连续三天高温橙色预警，确实也没心思陪着父母在外面闲逛，之前来的两次，能玩能去的地方几乎已经去的差不多了，所以这次没有单独请假陪他们，只是让他们白天在家休息，晚上陪他们逛逛。客观来讲，我觉得这次我做的一般，行为上或许说的过去，妻子安排酒店，我们给父亲过生日，带他们出去逛圈溜达，但是在内心深处，总是在说父母和弟弟不沟通，不多问，想当然，有的时候也有一种哀其不幸怒其不争的感觉；或许有点夸张，但是看着弟弟的时候，总觉得完全不懂事，又呆头呆脑，问的问题大多都是废话比如这个灯是在哪，那个是在哪，这个皮搋子是通马桶还是通下水道的，理解能力有问题还不认真听。我在想或许自己 18 岁的时候，也是这样？ 又或者比他更甚。&lt;/p>
 &lt;p>看见弟弟和父亲坐着躺着的姿势千奇百怪，而我每次说他们的语气总是特别冷淡，像是针对谁，希望他们不要介意，套用许多年前的话，我也是为了你们好😁。总是希望在有限的时间内教会弟弟为人处事生存之道，可是确实我说的似乎他都没认真听，我所说所做的成效甚微，大概是我方法不对，还需要针对性练习把。&lt;/p>
 &lt;p>我很努力的想要维持一个平衡，既不想因为说的话太重而影响母亲的心情，又想要通过温和的语言达到我心中所想的效果，每次说的时候总是想这样会不会不好？ 有没有更好更委婉的措辞？ 这样的方式实在过于内耗，妈妈和姨妈都是一类人，容易想很多的人，或许做生意的人都这样把，在这方面我也就和弟弟一样呆头呆脑。&lt;/p>
-&lt;p>我努力在做一个好儿子，不过仍然还有很多需要向妻子学习的。以后要继续加油努力了，肩上的责任和担子会越来越重。希望我的孩子我能教育好，也希望他/她能成为一个有责任心，有同理心，正直，乐观，积极的人。&lt;/p></description></item><item><title>常用软件推荐</title><link>/p/recommend-hot-software/</link><pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate><guid>/p/recommend-hot-software/</guid><description>&lt;p>推荐一波MacOS 常用开发类软件，也为自己做一个备份，方便日后查找&lt;/p>
-&lt;h2 id="开发工具类">开发工具类&lt;/h2>
-&lt;ol>
-&lt;li>jetbrain 全家桶 [[https://www.jetbrains.com/]] 非开源&lt;/li>
-&lt;li>vscode &lt;a class="link" href="https://code.visualstudio.com/" target="_blank" rel="noopener"
->https://code.visualstudio.com/&lt;/a>&lt;/li>
-&lt;li>curosr &lt;a class="link" href="https://cursor.sh/" target="_blank" rel="noopener"
->https://cursor.sh/&lt;/a>&lt;/li>
-&lt;li>Another Redis Desktop Manager &lt;a class="link" href="https://github.com/qishibo/AnotherRedisDesktopManager" target="_blank" rel="noopener"
->https://github.com/qishibo/AnotherRedisDesktopManager&lt;/a>&lt;/li>
-&lt;li>Navicat &lt;a class="link" href="https://www.navicat.com.cn/products#navicat-premium-lite" target="_blank" rel="noopener"
->https://www.navicat.com.cn/products#navicat-premium-lite&lt;/a> 官方免费版本，无需破解&lt;/li>
-&lt;li>sublime text &lt;a class="link" href="https://www.sublimetext.com/" target="_blank" rel="noopener"
->https://www.sublimetext.com/&lt;/a>&lt;/li>
-&lt;li>Docker &lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
->https://www.docker.com/&lt;/a>&lt;/li>
-&lt;li>DevToys &lt;a class="link" href="https://devtoys.app/" target="_blank" rel="noopener"
->https://devtoys.app/&lt;/a>&lt;/li>
-&lt;li>EasyDevo &lt;a class="link" href="https://easydevo.boringboring.design/" target="_blank" rel="noopener"
->https://easydevo.boringboring.design/&lt;/a>&lt;/li>
-&lt;/ol>
-&lt;h2 id="实用工具类">实用工具类&lt;/h2>
-&lt;ol>
-&lt;li>安卓文件传输 &lt;a class="link" href="https://www.android.com/filetransfer/" target="_blank" rel="noopener"
->https://www.android.com/filetransfer/&lt;/a>&lt;/li>
-&lt;li>Neat Download Manager &lt;a class="link" href="https://www.neatdownloadmanager.com/index.php/en/" target="_blank" rel="noopener"
->https://www.neatdownloadmanager.com/index.php/en/&lt;/a> 下载器&lt;/li>
-&lt;li>Mounty &lt;a class="link" href="https://mounty.app/" target="_blank" rel="noopener"
->https://mounty.app/&lt;/a>&lt;/li>
-&lt;li>keka &lt;a class="link" href="https://www.keka.io/en/" target="_blank" rel="noopener"
->https://www.keka.io/en/&lt;/a> 解压缩软件&lt;/li>
-&lt;li>easydict &lt;a class="link" href="https://github.com/tisfeng/Easydict" target="_blank" rel="noopener"
->https://github.com/tisfeng/Easydict&lt;/a> 词典软件&lt;/li>
-&lt;li>iina &lt;a class="link" href="https://iina.io/" target="_blank" rel="noopener"
->https://iina.io/&lt;/a> 全能视频播放器&lt;/li>
-&lt;li>karabiner &lt;a class="link" href="https://karabiner-elements.pqrs.org/" target="_blank" rel="noopener"
->https://karabiner-elements.pqrs.org/&lt;/a> 按键修改&lt;/li>
-&lt;li>monitor control &lt;a class="link" href="https://github.com/MonitorControl/MonitorControl" target="_blank" rel="noopener"
->https://github.com/MonitorControl/MonitorControl&lt;/a> 外接显示器亮度调节&lt;/li>
-&lt;li>hidden bar &lt;a class="link" href="https://github.com/dwarvesf/hidden" target="_blank" rel="noopener"
->https://github.com/dwarvesf/hidden&lt;/a> 菜单折叠&lt;/li>
-&lt;li>ToothFairy &lt;a class="link" href="https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12" target="_blank" rel="noopener"
->https://apps.apple.com/us/app/toothfairy/id1191449274?mt=12&lt;/a> 窗口管理&lt;/li>
-&lt;li>Mac Mouse Fix &lt;a class="link" href="https://macmousefix.com/" target="_blank" rel="noopener"
->https://macmousefix.com/&lt;/a> 鼠标平滑滚动&lt;/li>
-&lt;li>PicList &lt;a class="link" href="https://github.com/Kuingsmile/PicList" target="_blank" rel="noopener"
->https://github.com/Kuingsmile/PicList&lt;/a> 图床工具&lt;/li>
-&lt;li>Loop &lt;a class="link" href="https://github.com/MrKai77/Loop" target="_blank" rel="noopener"
->https://github.com/MrKai77/Loop&lt;/a> 窗口快捷放大缩小&lt;/li>
-&lt;li>mos &lt;a class="link" href="https://github.com/Caldis/Mos" target="_blank" rel="noopener"
->https://github.com/Caldis/Mos&lt;/a> 鼠标平滑滚动利器&lt;/li>
-&lt;li>ShortcutDetective &lt;a class="link" href="https://formulae.brew.sh/cask/shortcutdetective" target="_blank" rel="noopener"
->https://formulae.brew.sh/cask/shortcutdetective&lt;/a> 快捷键冲突排查软件&lt;/li>
-&lt;li>Macs Fan Control &lt;a class="link" href="https://crystalidea.com/macs-fan-control" target="_blank" rel="noopener"
->https://crystalidea.com/macs-fan-control&lt;/a> 风扇转速调节&lt;/li>
-&lt;/ol>
-&lt;h2 id="效率类">效率类&lt;/h2>
-&lt;ol>
-&lt;li>alfred &lt;a class="link" href="https://www.alfredapp.com/" target="_blank" rel="noopener"
->https://www.alfredapp.com/&lt;/a> 非开源&lt;/li>
-&lt;li>滴答清单 &lt;a class="link" href="https://dida365.com/" target="_blank" rel="noopener"
->https://dida365.com/&lt;/a>&lt;/li>
-&lt;li>RayCast &lt;a class="link" href="https://www.raycast.com/" target="_blank" rel="noopener"
->https://www.raycast.com/&lt;/a> 免费神作，可以作为 alfred 的替代&lt;/li>
-&lt;/ol>
-&lt;h2 id="终端">终端&lt;/h2>
-&lt;ol>
-&lt;li>iTerm2 &lt;a class="link" href="https://iterm2.com/" target="_blank" rel="noopener"
->https://iterm2.com/&lt;/a> 终端&lt;/li>
-&lt;li>SecureCRT &lt;a class="link" href="https://www.vandyke.com/products/securecrt/" target="_blank" rel="noopener"
->https://www.vandyke.com/products/securecrt/&lt;/a> 非开源&lt;/li>
-&lt;li>lux &lt;a class="link" href="https://github.com/iawia002/lux" target="_blank" rel="noopener"
->https://github.com/iawia002/lux&lt;/a> 免费下载器&lt;/li>
-&lt;li>Termius &lt;a class="link" href="https://termius.com/s" target="_blank" rel="noopener"
->https://termius.com/s&lt;/a> 免费终端&lt;/li>
-&lt;li>htop &lt;a class="link" href="https://htop.dev/" target="_blank" rel="noopener"
->https://htop.dev/&lt;/a> 升级版 top&lt;/li>
-&lt;/ol>
-&lt;h2 id="网络类">网络类&lt;/h2>
-&lt;ol>
-&lt;li>lulu &lt;a class="link" href="https://objective-see.org/products/lulu.html" target="_blank" rel="noopener"
->https://objective-see.org/products/lulu.html&lt;/a>&lt;/li>
-&lt;/ol>
-&lt;h2 id="chrome-插件">Chrome 插件&lt;/h2>
-&lt;ol>
-&lt;li>Proxy SwitchOmega &lt;a class="link" href="https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="noopener"
->https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif&lt;/a>&lt;/li>
-&lt;li>ZeroOmega &lt;a class="link" href="https://chromewebstore.google.com/detail/zeroomega-proxy-switchy-m/pfnededegaaopdmhkdmcofjmoldfiped" target="_blank" rel="noopener"
->https://chromewebstore.google.com/detail/zeroomega-proxy-switchy-m/pfnededegaaopdmhkdmcofjmoldfiped&lt;/a>&lt;/li>
-&lt;li>Adblock Plus &lt;a class="link" href="https://chromewebstore.google.com/detail/adblock-plus-%E5%85%8D%E8%B4%B9%E7%9A%84%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/cfhdojbkjhnklbpkdaibdccddilifddb" target="_blank" rel="noopener"
->https://chromewebstore.google.com/detail/adblock-plus-%E5%85%8D%E8%B4%B9%E7%9A%84%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/cfhdojbkjhnklbpkdaibdccddilifddb&lt;/a>&lt;/li>
-&lt;li>简阅 &lt;a class="link" href="https://simpread.pro/" target="_blank" rel="noopener"
->https://simpread.pro/&lt;/a>&lt;/li>
-&lt;li>Simple Allow Copy &lt;a class="link" href="https://chrome.google.com/webstore/detail/aefehdhdciieocakfobpaaolhipkcpgc" target="_blank" rel="noopener"
->https://chrome.google.com/webstore/detail/aefehdhdciieocakfobpaaolhipkcpgc&lt;/a>&lt;/li>
-&lt;li>XSwitch &lt;a class="link" href="https://chrome.google.com/webstore/detail/idkjhjggpffolpidfkikidcokdkdaogg" target="_blank" rel="noopener"
->https://chrome.google.com/webstore/detail/idkjhjggpffolpidfkikidcokdkdaogg&lt;/a>&lt;/li>
-&lt;li>Axure RP &lt;a class="link" href="https://chrome.google.com/webstore/detail/dogkpdfcklifaemcdfbildhcofnopogp" target="_blank" rel="noopener"
->https://chrome.google.com/webstore/detail/dogkpdfcklifaemcdfbildhcofnopogp&lt;/a>&lt;/li>
-&lt;li>沉浸式翻译 &lt;a class="link" href="https://immersivetranslate.com/zh-Hans/" target="_blank" rel="noopener"
->https://immersivetranslate.com/zh-Hans/&lt;/a>&lt;/li>
-&lt;li>Save All Resourcese &lt;a class="link" href="https://chromewebstore.google.com/detail/save-all-resources/abpdnfjocnmdomablahdcfnoggeeiedb?pli=1" target="_blank" rel="noopener"
->https://chromewebstore.google.com/detail/save-all-resources/abpdnfjocnmdomablahdcfnoggeeiedb?pli=1&lt;/a> 扒网站插件&lt;/li>
-&lt;/ol>
-&lt;h2 id="推荐网站">推荐网站&lt;/h2>
-&lt;p>&lt;a class="link" href="https://wangchujiang.com/awesome-mac/README-zh.html" target="_blank" rel="noopener"
->https://wangchujiang.com/awesome-mac/README-zh.html&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;p>我努力在做一个好儿子，不过仍然还有很多需要向妻子学习的。以后要继续加油努力了，肩上的责任和担子会越来越重。希望我的孩子我能教育好，也希望他/她能成为一个有责任心，有同理心，正直，乐观，积极的人。&lt;/p></description></item></channel></rss>

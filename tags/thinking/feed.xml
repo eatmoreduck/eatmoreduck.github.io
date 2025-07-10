@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>thinking on eatmoreduck</title><link>/tags/thinking/</link><description>Recent content in thinking on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 23 Apr 2025 00:11:26 +0800</lastBuildDate><atom:link href="/tags/thinking/feed.xml" rel="self" type="application/rss+xml"/><item><title>4 月碎碎念</title><link>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link><pubDate>Wed, 23 Apr 2025 00:11:26 +0800</pubDate><guid>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid><description>&lt;h3 id="工作">工作&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>thinking on eatmoreduck</title><link>/tags/thinking/</link><description>Recent content in thinking on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 10 Jul 2025 23:49:46 +0800</lastBuildDate><atom:link href="/tags/thinking/feed.xml" rel="self" type="application/rss+xml"/><item><title>56月小结</title><link>/p/56%E6%9C%88%E5%B0%8F%E7%BB%93/</link><pubDate>Thu, 10 Jul 2025 23:49:46 +0800</pubDate><guid>/p/56%E6%9C%88%E5%B0%8F%E7%BB%93/</guid><description>&lt;h3 id="工作">工作&lt;/h3>
+&lt;ol>
+&lt;li>核心系统做了一次性能优化，凌晨批量数据任务时间从3 小时缩短到 2 小时&lt;/li>
+&lt;li>接手的模型相关服务，离线环境也做了性能优化，原本批量 30 万订单回溯的时间由报错跑不出缩短到2-3 天&lt;/li>
+&lt;li>模型回溯自动化代码已完成，终于从破事当中走出来&lt;/li>
+&lt;li>开始自己写些 k8s 的配置，现有项目在慢慢切到 k8s&lt;/li>
+&lt;li>公司采购单上支持选择 cursor 了(原来是垃圾 copilot)，自费购买了三个月的 cursor 无需再续费，又省一笔&lt;/li>
+&lt;/ol>
+&lt;p>希望继续平安无事故&lt;/p>
+&lt;h3 id="生活">生活&lt;/h3>
+&lt;p>5 月又因为点小事闹了些矛盾，有娃之后，矛盾日益增多。我还是不够聪明，这些方面的事对我来说有点棘手。不过不管咋样，生活还得继续，坦诚相待，遇到问题解决问题就好。&lt;/p>
+&lt;h3 id="折腾">折腾&lt;/h3>
+&lt;p>折腾还在继续&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>刀片机 R630 卖给某位群友公司了，3700 买的，用了两年 3500 卖掉，一点没亏，只是打包机器的时候有种大玩具卖掉的失落&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/143fae1c87e3de070b6364865840dd04.jpg"
+loading="lazy"
+alt="143fae1c87e3de070b6364865840dd04.jpg"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>15-mid macpro 清灰换硅脂，重装系统三四次，最终确定比较合适的版本为macOS Monterey 12.7.6, 为了当做服务器，花了 30 块买了 USB 千兆网卡，为了避免盒盖休眠，花5 块买了 HDMI 诱骗器。中途有个小插曲，用WD40 清洗机器时，不小心喷到屏幕里产生了大量亮斑，放了一段时间之后不症状稍微减轻，现在让他安静的躺在角落做为开发小主机
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20250711000405775.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>绿联 dxp4800 换装了一条 32G 内存，配合 N100 处理器，属实吕布骑狗。
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20250711005611057.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>夏天来了，工作用的 m1pro 近期频繁异响，在v2ex上终于遇到个症状类似的。最终确定右侧风扇大概率在出厂时就坏掉了。在需要右侧风扇工作时会自检异常，发出规律的咔咔声（macfans control 手动拉高转速时能稳定复现），五一重装系统了之后有两周的阵痛，且仍然没解决（胆大没备份），最终送修 350块，解决了忍受了三年的问题（以前m1风扇是根本不转的，极少遇到异响，最近夏天到了，干重活了）。不过出厂风扇就是坏的着实出乎我意料，在电脑上我能忍这么久，的的确确是因为95%时候右侧不转，转的时候我手动拉高左侧风扇很快就能解决问题。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="总结">总结&lt;/h3>
+&lt;p>这两个月不管是生活还是工作都经历不少，自己也慢慢适应这种节奏的生活，不过拖延问题虽得到缓解，但仍然严重，期望自己能每日小结，多反思并修正，才能更快进步&lt;/p></description></item><item><title>4 月碎碎念</title><link>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link><pubDate>Wed, 23 Apr 2025 00:11:26 +0800</pubDate><guid>/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid><description>&lt;h3 id="工作">工作&lt;/h3>
 &lt;p>工作上一如往常，没什么特别出彩的，也没翻车，只是自己在看数据时，发现自己新写的代码里，有一处致命 bug，长期运行可能会导致线上 redis 爆掉，恰好测试没发现，又避免了一次事故报告。上次 CTO 点完一些现有团队存在的问题之后，大一点的改动都心里很发虚，有些问题还真的 code review 才发现的了，这个季度打算把一些历史遗留问题解决一下，顺便把历史没迁移的服务迁移掉。还是对自己要求高一些，犯错的可能性才能降低些（虽然犯错成本不高）。&lt;/p>
 &lt;h3 id="生活">生活&lt;/h3>
 &lt;p>生活已经几乎被小娃填满，小娃最近开始睡眠倒退，常常要哄很久才睡的着并且睡不久，哄 30 分钟，睡 30 分钟几乎成了日常。好在妻子给力，几乎能 cover 住，翻了翻手机相册里，近几个月拍的几乎都是跟娃有关的照片。手机上看还好，电脑上看总是感觉他怎么那么可爱。睡着刚醒的时候可爱，爆哭的时候看起来又可怜。
