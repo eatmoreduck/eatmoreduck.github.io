@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Planet on eatmoreduck</title><link>/tags/planet/</link><description>Recent content in Planet on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 05 Nov 2025 10:00:00 +0800</lastBuildDate><atom:link href="/tags/planet/feed.xml" rel="self" type="application/rss+xml"/><item><title>ZeroTier Planet 组网完全指南：从原理到实践</title><link>/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</link><pubDate>Wed, 05 Nov 2025 10:00:00 +0800</pubDate><guid>/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</guid><description>&lt;p>在当今时代，远程访问和跨地域网络连接已成为工作和生活的必需品。无论是远程办公访问公司资源，还是在家控制智能设备，抑或承担不起云上高额费用，想让家中旧设备焕发活力，我们都需要一种安全、高效且稳定，且高性价比的网络解决方案。ZeroTier就是一款强大的工具，它能让我们轻松搭建跨越互联网的虚拟局域网。&lt;/p>
+&lt;h2 id="为什么需要组网">为什么需要组网？&lt;/h2>
+&lt;h3 id="zerotier简介">ZeroTier简介&lt;/h3>
+&lt;p>ZeroTier是一款基于P2P技术的虚拟局域网（VPN）工具，它能够将分布在全球各地的设备连接在一个虚拟的局域网中。通过ZeroTier，您可以实现：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>远程访问&lt;/strong>：在公司用手机直接访问家里的NAS设备&lt;/li>
+&lt;li>&lt;strong>设备互联&lt;/strong>：让分布在不同地理位置的设备如同在同一个局域网内一样通信&lt;/li>
+&lt;li>&lt;strong>点对点直连&lt;/strong>：设备间直接通信，无需经过中转服务器，既快速又安全&lt;/li>
+&lt;/ol>
+&lt;h3 id="工作原理">工作原理&lt;/h3>
+&lt;p>ZeroTier的工作原理涉及三个关键概念：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>PLANET（行星服务器）&lt;/strong>：ZeroTier网络的核心根服务器，负责网络发现和初始连接，相当于整个网络的&amp;quot;中枢&amp;quot;&lt;/li>
+&lt;li>&lt;strong>MOON（卫星服务器）&lt;/strong>：用户可以自建的私有根服务器，作为区域性的代理节点，帮助就近的设备更快地建立连接&lt;/li>
+&lt;li>&lt;strong>LEAF（叶子节点）&lt;/strong>：所有接入ZeroTier网络的终端设备，如电脑、手机、服务器等&lt;/li>
+&lt;/ul>
+&lt;p>设备之间的连接过程是：首先通过PLANET或MOON进行发现和协商，然后尽可能建立P2P直连，只有在无法直连的情况下才会通过中转方式进行通信。&lt;/p>
+&lt;h2 id="为什么自建planet服务器">为什么自建Planet服务器？&lt;/h2>
+&lt;p>虽然ZeroTier官方提供了免费的PLANET服务器，但在实际使用中存在以下问题：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>网络延迟&lt;/strong>：官方服务器位于海外，国内用户访问延迟高且不稳定&lt;/li>
+&lt;li>&lt;strong>连接速度&lt;/strong>：本地化的PLANET服务器可以显著加快设备间的连接建立速度&lt;/li>
+&lt;li>&lt;strong>网络控制&lt;/strong>：自建服务器让您完全掌控网络配置，可根据需求进行优化调整&lt;/li>
+&lt;li>&lt;strong>安全性&lt;/strong>：私有化部署意味着网络流量不经过第三方服务器，更加安全可靠&lt;/li>
+&lt;li>&lt;strong>独立性&lt;/strong>：避免因官方服务器故障或网络波动影响业务正常运行&lt;/li>
+&lt;/ol>
+&lt;h2 id="如何自建planet服务器">如何自建Planet服务器？&lt;/h2>
+&lt;p>我们将使用&lt;a class="link" href="https://github.com/xubiaolin/docker-zerotier-planet" target="_blank" rel="noopener"
+>xubiaolin/docker-zerotier-planet&lt;/a>项目，通过Docker容器快速部署私有的Planet服务器。&lt;/p>
+&lt;h3 id="环境准备">环境准备&lt;/h3>
+&lt;p>在开始安装之前，请确保您的服务器满足以下条件：&lt;/p>
+&lt;ol>
+&lt;li>拥有公网IP地址&lt;/li>
+&lt;li>开放以下端口：
+&lt;ul>
+&lt;li>3443/tcp（管理面板，默认可调整）&lt;/li>
+&lt;li>9994/tcp（ZeroTier通信，默认可调整）&lt;/li>
+&lt;li>9994/udp（ZeroTier通信，默认可调整）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>安装必要的软件依赖：
+&lt;ul>
+&lt;li>Docker（容器运行环境）&lt;/li>
+&lt;li>Git（获取项目代码）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="部署步骤">部署步骤&lt;/h3>
+&lt;ol>
+&lt;li>&lt;strong>安装依赖软件&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Debian/Ubuntu系统&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt install git docker.io -y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># CentOS/Rocky Linux系统&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> yum install git docker -y
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>&lt;strong>克隆项目代码&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 官方地址&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git clone https://github.com/xubiaolin/docker-zerotier-planet.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果网络受限，可使用加速地址&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git clone https://ghproxy.imoyuapp.win/https://github.com/xubiaolin/docker-zerotier-planet.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>&lt;strong>运行部署脚本&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> docker-zerotier-planet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x deploy.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./deploy.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>根据提示选择&amp;quot;安装&amp;quot;选项，脚本将自动完成部署过程，通常需要1-3分钟。&lt;/p>
+&lt;ol start="4">
+&lt;li>&lt;strong>获取配置文件&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;p>部署完成后，会在&lt;code>./data/zerotier/dist&lt;/code>目录下生成&lt;code>planet&lt;/code>和&lt;code>moon&lt;/code>配置文件。您可以通过安装完成后提供的URL直接下载，或使用SCP等工具从服务器下载。&lt;/p>
+&lt;ol start="5">
+&lt;li>&lt;strong>访问管理面板&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;p>部署完成后，可通过&lt;code>http://服务器IP:3443&lt;/code>访问管理面板，默认账号为&lt;code>admin&lt;/code>，默认密码为&lt;code>password&lt;/code>。&lt;/p>
+&lt;h2 id="使用自建planet服务器组网">使用自建Planet服务器组网&lt;/h2>
+&lt;h3 id="创建网络">创建网络&lt;/h3>
+&lt;ol>
+&lt;li>登录管理面板后，点击&amp;quot;Networks&amp;quot;菜单&lt;/li>
+&lt;li>点击&amp;quot;Add Network&amp;quot;按钮创建新网络&lt;/li>
+&lt;li>输入网络名称，其他选项保持默认&lt;/li>
+&lt;li>记录生成的网络ID，后续客户端配置需要用到&lt;/li>
+&lt;/ol>
+&lt;h3 id="客户端配置">客户端配置&lt;/h3>
+&lt;h4 id="windows客户端">Windows客户端&lt;/h4>
+&lt;ol>
+&lt;li>从ZeroTier官网下载并安装客户端&lt;/li>
+&lt;li>将&lt;code>planet&lt;/code>文件复制到&lt;code>C:\ProgramData\ZeroTier\One&lt;/code>目录（需要显示隐藏目录）&lt;/li>
+&lt;li>重启ZeroTier服务：
+&lt;ul>
+&lt;li>Win+S搜索&amp;quot;服务&amp;quot;&lt;/li>
+&lt;li>找到ZeroTier One并重启&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>使用管理员身份打开PowerShell，执行：
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">zerotier-cli&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">bat&lt;/span> &lt;span class="n">join&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">网络ID&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>在管理面板中授权该设备&lt;/li>
+&lt;/ol>
+&lt;h4 id="linux客户端">Linux客户端&lt;/h4>
+&lt;ol>
+&lt;li>安装ZeroTier客户端&lt;/li>
+&lt;li>进入目录&lt;code>/var/lib/zerotier-one&lt;/code>&lt;/li>
+&lt;li>替换目录下的&lt;code>planet&lt;/code>文件&lt;/li>
+&lt;li>重启服务：
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">service zerotier-one restart
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>加入网络：
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">zerotier-cli join &lt;span class="o">[&lt;/span>网络ID&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>在管理面板中授权该设备&lt;/li>
+&lt;/ol>
+&lt;h4 id="macos客户端">macOS客户端&lt;/h4>
+&lt;ol>
+&lt;li>进入&lt;code>/Library/Application\ Support/ZeroTier/One/&lt;/code>目录&lt;/li>
+&lt;li>替换目录下的&lt;code>planet&lt;/code>文件&lt;/li>
+&lt;li>重启服务：
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">cat /Library/Application&lt;span class="se">\ &lt;/span>Support/ZeroTier/One/zerotier-one.pid &lt;span class="p">|&lt;/span> sudo xargs &lt;span class="nb">kill&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>加入网络：
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">zerotier-cli join &lt;span class="o">[&lt;/span>网络ID&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>在管理面板中授权该设备&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20251105205603736.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;h3 id="验证连接">验证连接&lt;/h3>
+&lt;p>在任意客户端执行以下命令验证连接状态：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">zerotier-cli peers
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果看到PLANET角色且连接方式为DIRECT（直连），则表示配置成功。&lt;/p>
+&lt;h2 id="常见问题与解决方案">常见问题与解决方案&lt;/h2>
+&lt;h3 id="连接问题">连接问题&lt;/h3>
+&lt;ol>
+&lt;li>&lt;strong>检查防火墙设置&lt;/strong>：确保服务器和客户端都开放了相应端口&lt;/li>
+&lt;li>&lt;strong>云服务商安全组&lt;/strong>：在阿里云、腾讯云等平台后台放行端口&lt;/li>
+&lt;li>&lt;strong>网络类型限制&lt;/strong>：某些网络环境下UDP可能被QoS限制，可考虑使用OpenVPN等替代方案&lt;/li>
+&lt;/ol>
+&lt;h3 id="权限问题">权限问题&lt;/h3>
+&lt;ol>
+&lt;li>&lt;strong>客户端未授权&lt;/strong>：确保在管理面板中勾选了设备的&amp;quot;Authorized&amp;quot;&lt;/li>
+&lt;li>&lt;strong>文件权限错误&lt;/strong>：确保&lt;code>planet&lt;/code>文件具有正确的读取权限&lt;/li>
+&lt;/ol>
+&lt;h3 id="性能优化">性能优化&lt;/h3>
+&lt;ol>
+&lt;li>&lt;strong>部署Moon服务器&lt;/strong>：对于大规模部署，可以在不同地区部署Moon服务器以提高连接效率&lt;/li>
+&lt;li>&lt;strong>监控连接状态&lt;/strong>：定期检查&lt;code>zerotier-cli peers&lt;/code>输出，确保设备间维持DIRECT连接&lt;/li>
+&lt;/ol>
+&lt;h2 id="安全建议">安全建议&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>及时修改默认密码&lt;/strong>：部署完成后应立即修改管理面板的默认账号密码&lt;/li>
+&lt;li>&lt;strong>启用HTTPS&lt;/strong>：为管理面板配置SSL证书，提高安全性&lt;/li>
+&lt;li>&lt;strong>定期备份配置&lt;/strong>：妥善保管生成的配置文件，特别是&lt;code>planet&lt;/code>和&lt;code>moon&lt;/code>文件&lt;/li>
+&lt;li>&lt;strong>访问控制&lt;/strong>：严格控制网络成员，仅授权可信设备加入&lt;/li>
+&lt;/ol>
+&lt;h2 id="实际应用场景">实际应用场景&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>远程办公&lt;/strong>：员工在家访问公司内部系统和资源&lt;/li>
+&lt;li>&lt;strong>家庭网络&lt;/strong>：在外随时访问家中的NAS、智能家居设备&lt;/li>
+&lt;li>&lt;strong>游戏联机&lt;/strong>：为分布式的游戏服务器建立专用网络&lt;/li>
+&lt;li>&lt;strong>开发测试&lt;/strong>：为开发团队提供隔离的测试网络环境&lt;/li>
+&lt;li>&lt;strong>IoT设备管理&lt;/strong>：统一管理分布在全球各地的物联网设备&lt;/li>
+&lt;/ol>
+&lt;p>搭建好 planet 之后，在阿里云服务器上想要直接访问远程设备，也需要加入搭建好的 planet 网络，因 planet 和 peer 在同一台机器，可能会出现端口冲突的情况（默认用 9993），需要自定义 zerotier-cli 的端口&lt;/p>
+&lt;p>编辑 &lt;code>/var/lib/zerotier-one/local.conf&lt;/code>文件（如果不存在则创建）：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;settings&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;primaryPort&amp;#34;: 9994
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>配置完成后，使用&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">zerotier-cli join [网络ID]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>s
+即可在页面看到已经加入的阿里云机器，及家中局域网的机器&lt;/p></description></item></channel></rss>
