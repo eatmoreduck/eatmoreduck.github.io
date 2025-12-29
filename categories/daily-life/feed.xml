@@ -1,4 +1,75 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Daily life on eatmoreduck</title><link>/categories/daily-life/</link><description>Recent content in Daily life on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 11 Oct 2025 23:01:31 +0800</lastBuildDate><atom:link href="/categories/daily-life/feed.xml" rel="self" type="application/rss+xml"/><item><title>New beginning</title><link>/p/new-beginning/</link><pubDate>Sat, 11 Oct 2025 23:01:31 +0800</pubDate><guid>/p/new-beginning/</guid><description>&lt;p>最近行业里的波动有点让人措手不及，同业群里的状态简直像开盲盒 —— 有人抱着 “等个 N+1 也不错” 的心态彻底躺平，有人已经急着改简历四处投，还有些大佬稳得很，该唱歌该聚会一点不耽误。​&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Daily life on eatmoreduck</title><link>/categories/daily-life/</link><description>Recent content in Daily life on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 29 Dec 2025 14:28:17 +0800</lastBuildDate><atom:link href="/categories/daily-life/feed.xml" rel="self" type="application/rss+xml"/><item><title>屏蔽macOS更新</title><link>/p/block-macos-updates/</link><pubDate>Mon, 29 Dec 2025 14:28:17 +0800</pubDate><guid>/p/block-macos-updates/</guid><description>&lt;h2 id="为什么要屏蔽更新">为什么要屏蔽更新&lt;/h2>
+&lt;p>macOS 26 出新之后，隔三岔五的弹窗更新，总让我担心手滑点到「立即更新」，虽然有二次确认。但最近更新频繁，我想找个一劳永逸的办法。&lt;/p>
+&lt;p>我想要屏蔽更新的几个原因：&lt;/p>
+&lt;ul>
+&lt;li>强迫症看着那个红点难受&lt;/li>
+&lt;li>新系统老机器带不动，怕更新了变卡&lt;/li>
+&lt;li>工作环境需要稳定，不想瞎折腾，更新后担心开发环境炸掉&lt;/li>
+&lt;li>macOS 26 的液态玻璃风格我很讨厌，同时也担心更新后部分 app 不能匹配&lt;/li>
+&lt;/ul>
+&lt;p>遂决定升级到 macOS 15.7.3 之后，彻底屏蔽 macOS 更新，同时消除小红点&lt;/p>
+&lt;h2 id="第一步ui屏蔽软件更新及自动下载">第一步：UI屏蔽软件更新及自动下载&lt;/h2>
+&lt;ol>
+&lt;li>打开「设置」-「通用」-「软件更新」&lt;/li>
+&lt;li>点击右边的 ⓘ 图标&lt;/li>
+&lt;li>把「自动保持我的 Mac 最新」关掉&lt;/li>
+&lt;/ol>
+&lt;h2 id="第二步修改host-屏蔽更新">第二步：修改host 屏蔽更新&lt;/h2>
+&lt;p>这一步的操作是为了禁止连接到macOS更新服务器&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo vim /etc/hosts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">并且在下面加入以下行
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swscan.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swdist.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swdownload.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swcdn.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 updates-http.cdn-apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 updates.cdn-apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 gdmf.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 xp.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 mesu.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">然后刷新dns缓存
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dscacheutil -flushcache
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo killall -HUP mDNSResponder
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="第三步消除小红点">第三步：消除小红点&lt;/h2>
+&lt;p>完成上一步之后，依然能看到 macOS 26 的更新提示，但点击更新会失败。此时先点击更新，在弹出的界面&lt;strong>不要点击「检测更新」&lt;/strong>，然后按 &lt;code>command+option+esc&lt;/code> 打开「强制退出」窗口，将「系统设置」强制退出，小红点就会消失
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20251229144404126.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;h2 id="怎么恢复">怎么恢复&lt;/h2>
+&lt;p>哪天想更新了，直接将hosts里的相关行注释掉，重新点击检查更新即可&lt;/p>
+&lt;h2 id="写在最后">写在最后&lt;/h2>
+&lt;p>以前我也喜欢追新，软件更到最新，经历过多次开发环境崩溃重建之后，逐渐对折腾失去了兴趣，自从 21 年入了 arm 的 mac 之后，过去4年，每隔1-2年就要有一次开发环境崩溃，我为自己过于激进导致的浪费时间感到后悔。&lt;/p>
+&lt;p>今年正式用上了Time Machine，同时此次屏蔽了更新，再也不怕手抖了&lt;/p>
+&lt;p>动动小手，五分钟，免除烦人更新小红点困扰&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/bb5f15ed5150f7a9a3e5b2042e6612cd.jpg"
+loading="lazy"
+alt="bb5f15ed5150f7a9a3e5b2042e6612cd.jpg"
+>&lt;/p></description></item><item><title>New beginning</title><link>/p/new-beginning/</link><pubDate>Sat, 11 Oct 2025 23:01:31 +0800</pubDate><guid>/p/new-beginning/</guid><description>&lt;p>最近行业里的波动有点让人措手不及，同业群里的状态简直像开盲盒 —— 有人抱着 “等个 N+1 也不错” 的心态彻底躺平，有人已经急着改简历四处投，还有些大佬稳得很，该唱歌该聚会一点不耽误。​&lt;/p>
 &lt;p>我自己也从最初的慌得不行，慢慢沉下心来坦然面对了。前阵子是真焦虑：白天刷着群消息上蹿下跳，晚上躺着想未来翻来覆去睡不着；现在能稳住，一方面是知道还有段缓冲期，不用逼自己立刻做决定，另一方面也多亏家里经济压力没那么大，给了我喘口气的空间。​&lt;/p>
 &lt;p>也是这阵儿，终于能静下心来想：我到底想要什么样的生活？​&lt;/p>
 &lt;p>自从有了娃，这个答案越来越清晰 —— 还是现在的远程办公节奏最适配我。我们团队核心成员都在外地，本地办公室就我一个开发，这几年早摸清了异步办公的门道，甚至有点享受这种自由：不用挤早高峰地铁，中午能陪娃吃顿饭，晚上还能哄他睡了再回电脑前干活。尤其今年，越来越觉得 “工作地点不被绑住” 对我来说太重要了，所以下份工作，远程岗还是我的首选。​&lt;/p>

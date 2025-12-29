@@ -1,4 +1,75 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 05 Nov 2025 10:00:00 +0800</lastBuildDate><atom:link href="/post/feed.xml" rel="self" type="application/rss+xml"/><item><title>ZeroTier Planet 组网完全指南：从原理到实践</title><link>/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</link><pubDate>Wed, 05 Nov 2025 10:00:00 +0800</pubDate><guid>/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</guid><description>&lt;p>在当今时代，远程访问和跨地域网络连接已成为工作和生活的必需品。无论是远程办公访问公司资源，还是在家控制智能设备，抑或承担不起云上高额费用，想让家中旧设备焕发活力，我们都需要一种安全、高效且稳定，且高性价比的网络解决方案。ZeroTier就是一款强大的工具，它能让我们轻松搭建跨越互联网的虚拟局域网。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 29 Dec 2025 14:28:17 +0800</lastBuildDate><atom:link href="/post/feed.xml" rel="self" type="application/rss+xml"/><item><title>屏蔽macOS更新</title><link>/p/block-macos-updates/</link><pubDate>Mon, 29 Dec 2025 14:28:17 +0800</pubDate><guid>/p/block-macos-updates/</guid><description>&lt;h2 id="为什么要屏蔽更新">为什么要屏蔽更新&lt;/h2>
+&lt;p>macOS 26 出新之后，隔三岔五的弹窗更新，总让我担心手滑点到「立即更新」，虽然有二次确认。但最近更新频繁，我想找个一劳永逸的办法。&lt;/p>
+&lt;p>我想要屏蔽更新的几个原因：&lt;/p>
+&lt;ul>
+&lt;li>强迫症看着那个红点难受&lt;/li>
+&lt;li>新系统老机器带不动，怕更新了变卡&lt;/li>
+&lt;li>工作环境需要稳定，不想瞎折腾，更新后担心开发环境炸掉&lt;/li>
+&lt;li>macOS 26 的液态玻璃风格我很讨厌，同时也担心更新后部分 app 不能匹配&lt;/li>
+&lt;/ul>
+&lt;p>遂决定升级到 macOS 15.7.3 之后，彻底屏蔽 macOS 更新，同时消除小红点&lt;/p>
+&lt;h2 id="第一步ui屏蔽软件更新及自动下载">第一步：UI屏蔽软件更新及自动下载&lt;/h2>
+&lt;ol>
+&lt;li>打开「设置」-「通用」-「软件更新」&lt;/li>
+&lt;li>点击右边的 ⓘ 图标&lt;/li>
+&lt;li>把「自动保持我的 Mac 最新」关掉&lt;/li>
+&lt;/ol>
+&lt;h2 id="第二步修改host-屏蔽更新">第二步：修改host 屏蔽更新&lt;/h2>
+&lt;p>这一步的操作是为了禁止连接到macOS更新服务器&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo vim /etc/hosts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">并且在下面加入以下行
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swscan.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swdist.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swdownload.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 swcdn.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 updates-http.cdn-apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 updates.cdn-apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 gdmf.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 xp.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1 mesu.apple.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">然后刷新dns缓存
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dscacheutil -flushcache
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo killall -HUP mDNSResponder
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="第三步消除小红点">第三步：消除小红点&lt;/h2>
+&lt;p>完成上一步之后，依然能看到 macOS 26 的更新提示，但点击更新会失败。此时先点击更新，在弹出的界面&lt;strong>不要点击「检测更新」&lt;/strong>，然后按 &lt;code>command+option+esc&lt;/code> 打开「强制退出」窗口，将「系统设置」强制退出，小红点就会消失
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20251229144404126.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;h2 id="怎么恢复">怎么恢复&lt;/h2>
+&lt;p>哪天想更新了，直接将hosts里的相关行注释掉，重新点击检查更新即可&lt;/p>
+&lt;h2 id="写在最后">写在最后&lt;/h2>
+&lt;p>以前我也喜欢追新，软件更到最新，经历过多次开发环境崩溃重建之后，逐渐对折腾失去了兴趣，自从 21 年入了 arm 的 mac 之后，过去4年，每隔1-2年就要有一次开发环境崩溃，我为自己过于激进导致的浪费时间感到后悔。&lt;/p>
+&lt;p>今年正式用上了Time Machine，同时此次屏蔽了更新，再也不怕手抖了&lt;/p>
+&lt;p>动动小手，五分钟，免除烦人更新小红点困扰&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/bb5f15ed5150f7a9a3e5b2042e6612cd.jpg"
+loading="lazy"
+alt="bb5f15ed5150f7a9a3e5b2042e6612cd.jpg"
+>&lt;/p></description></item><item><title>ZeroTier Planet 组网完全指南：从原理到实践</title><link>/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</link><pubDate>Wed, 05 Nov 2025 10:00:00 +0800</pubDate><guid>/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</guid><description>&lt;p>在当今时代，远程访问和跨地域网络连接已成为工作和生活的必需品。无论是远程办公访问公司资源，还是在家控制智能设备，抑或承担不起云上高额费用，想让家中旧设备焕发活力，我们都需要一种安全、高效且稳定，且高性价比的网络解决方案。ZeroTier就是一款强大的工具，它能让我们轻松搭建跨越互联网的虚拟局域网。&lt;/p>
 &lt;h2 id="为什么需要组网">为什么需要组网？&lt;/h2>
 &lt;h3 id="zerotier简介">ZeroTier简介&lt;/h3>
 &lt;p>ZeroTier是一款基于P2P技术的虚拟局域网（VPN）工具，它能够将分布在全球各地的设备连接在一个虚拟的局域网中。通过ZeroTier，您可以实现：&lt;/p>
@@ -1172,64 +1243,4 @@ sudo ./fan_control.sh&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>VScode进入报错code 9, signal null error</title><link>/p/vscode-code-9-error/</link><pubDate>Fri, 16 Aug 2024 10:07:54 +0800</pubDate><guid>/p/vscode-code-9-error/</guid><description>&lt;p>进入 Vscode 时，出现报错&lt;br>
-Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)&lt;/p>
-&lt;p>![image.png](&lt;a class="link" href="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png" target="_blank" rel="noopener"
->https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&lt;/a> =600x)&lt;/p>
-&lt;p>查证go 和 go env 之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 &lt;strong>export NODE_OPTIONS=&amp;ndash;openssl-legacy-provider&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">#node
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export PATH=&amp;#34;/opt/homebrew/opt/node@20/bin:$PATH&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export LDFLAGS=&amp;#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export CPPFLAGS=&amp;#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&amp;#34;
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">export NODE_OPTIONS=--openssl-legacy-provider
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;span class="lnt">9
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">vi ~/.bash_profile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">按i进入编辑模式
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">找到export NODE_OPTIONS=--openssl-legacy-provider 所在行
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">在 export NODE_OPTIONS=--openssl-legacy-provider 前加#
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">最后那行变成
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#export NODE_OPTIONS=--openssl-legacy-provider
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">再按 esc 退出编辑模式
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">:wq!
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">然后回车
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>如果不会使用 vi 可以直接终端执行&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">cd $HOME &amp;amp; open .
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>然后用喜欢的文本编辑器打开.bash_profile 更改所在行&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202409101100157.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>将NODE_OPTIONS 注释掉后，重新进入 VScode 解决&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
