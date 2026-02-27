@@ -1,4 +1,167 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tools on eatmoreduck</title><link>/categories/tools/</link><description>Recent content in Tools on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 06 Nov 2024 10:25:04 +0800</lastBuildDate><atom:link href="/categories/tools/feed.xml" rel="self" type="application/rss+xml"/><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ipv4/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ipv4/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tools on eatmoreduck</title><link>/categories/tools/</link><description>Recent content in Tools on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Feb 2026 23:26:51 +0800</lastBuildDate><atom:link href="/categories/tools/feed.xml" rel="self" type="application/rss+xml"/><item><title>openclaw-from-zero-to-one</title><link>/p/openclaw-from-zero-to-one/</link><pubDate>Thu, 26 Feb 2026 23:26:51 +0800</pubDate><guid>/p/openclaw-from-zero-to-one/</guid><description>&lt;p>记录下openclaw安装流程，以macOS为例&lt;/p>
+&lt;h3 id="安装node">安装node&lt;/h3>
+&lt;ol>
+&lt;li>安装brew install node 可指定版本，但openclaw 要求大于22&lt;/li>
+&lt;li>验证 node &amp;ndash;version 出现版本号，版本号大于20即可&lt;/li>
+&lt;/ol>
+&lt;h3 id="安装git">安装git&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">brew install git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">输出有值即可
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git version 2.39.5 (Apple Git-154)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="安装并配置openclaw">安装并配置openclaw&lt;/h3>
+&lt;ol>
+&lt;li>安装openclaw&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">luna&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="nx">ppmac&lt;/span> &lt;span class="err">&lt;/span> &lt;span class="err">~&lt;/span> &lt;span class="err">&lt;/span> &lt;span class="nx">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="nx">fsSL&lt;/span> &lt;span class="nx">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="c1">//openclaw.ai/install.sh | bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">🦞&lt;/span> &lt;span class="nx">OpenClaw&lt;/span> &lt;span class="nx">Installer&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Because&lt;/span> &lt;span class="nx">texting&lt;/span> &lt;span class="nx">yourself&lt;/span> &lt;span class="nx">reminders&lt;/span> &lt;span class="nx">is&lt;/span> &lt;span class="nx">so&lt;/span> &lt;span class="mf">2024.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Detected&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">macos&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">Install&lt;/span> &lt;span class="nx">plan&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">OS&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">macos&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">Install&lt;/span> &lt;span class="nx">method&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">npm&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">Requested&lt;/span> &lt;span class="nx">version&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">latest&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="nx">Preparing&lt;/span> &lt;span class="nx">environment&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Homebrew&lt;/span> &lt;span class="nx">already&lt;/span> &lt;span class="nx">installed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Node&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">js&lt;/span> &lt;span class="nx">v25&lt;/span>&lt;span class="mf">.6.1&lt;/span> &lt;span class="nx">found&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Active&lt;/span> &lt;span class="nx">Node&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">js&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">v25&lt;/span>&lt;span class="mf">.6.1&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">homebrew&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">node&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Active&lt;/span> &lt;span class="nx">npm&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mf">11.9.0&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">homebrew&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">npm&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="nx">Installing&lt;/span> &lt;span class="nx">OpenClaw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Git&lt;/span> &lt;span class="nx">already&lt;/span> &lt;span class="nx">installed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Installing&lt;/span> &lt;span class="nx">OpenClaw&lt;/span> &lt;span class="nx">v2026&lt;/span>&lt;span class="mf">.2.26&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">OpenClaw&lt;/span> &lt;span class="nx">npm&lt;/span> &lt;span class="kn">package&lt;/span> &lt;span class="nx">installed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">OpenClaw&lt;/span> &lt;span class="nx">installed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="nx">Finalizing&lt;/span> &lt;span class="nx">setup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Refreshing&lt;/span> &lt;span class="nx">loaded&lt;/span> &lt;span class="nx">gateway&lt;/span> &lt;span class="nx">service&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Gateway&lt;/span> &lt;span class="nx">service&lt;/span> &lt;span class="nx">metadata&lt;/span> &lt;span class="nx">refreshed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Gateway&lt;/span> &lt;span class="nx">service&lt;/span> &lt;span class="nx">restarted&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✗&lt;/span> &lt;span class="nx">Probing&lt;/span> &lt;span class="nx">gateway&lt;/span> &lt;span class="nx">service&lt;/span> &lt;span class="nx">failed&lt;/span> &lt;span class="err">—&lt;/span> &lt;span class="nx">re&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">run&lt;/span> &lt;span class="nx">with&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="nx">verbose&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="nx">details&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">error&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">unknown&lt;/span> &lt;span class="nx">option&lt;/span> &lt;span class="err">&amp;#39;&lt;/span>&lt;span class="o">--&lt;/span>&lt;span class="nx">probe&lt;/span>&lt;span class="err">&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nx">Did&lt;/span> &lt;span class="nx">you&lt;/span> &lt;span class="nx">mean&lt;/span> &lt;span class="nx">one&lt;/span> &lt;span class="nx">of&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="nx">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">probe&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="nx">profile&lt;/span>&lt;span class="err">?&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">🦞&lt;/span> &lt;span class="nx">OpenClaw&lt;/span> &lt;span class="nx">installed&lt;/span> &lt;span class="nf">successfully&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">2026.2.26&lt;/span>&lt;span class="p">)!&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">I&lt;/span>&lt;span class="err">&amp;#39;&lt;/span>&lt;span class="nx">m&lt;/span> &lt;span class="nx">in&lt;/span>&lt;span class="p">.&lt;/span> &lt;span class="nx">Let&lt;/span>&lt;span class="err">&amp;#39;&lt;/span>&lt;span class="nx">s&lt;/span> &lt;span class="nx">cause&lt;/span> &lt;span class="nx">some&lt;/span> &lt;span class="nx">responsible&lt;/span> &lt;span class="nx">chaos&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Config&lt;/span> &lt;span class="nx">already&lt;/span> &lt;span class="nx">present&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">running&lt;/span> &lt;span class="nx">doctor&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Running&lt;/span> &lt;span class="nx">doctor&lt;/span> &lt;span class="nx">to&lt;/span> &lt;span class="nx">migrate&lt;/span> &lt;span class="nx">settings&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">✓&lt;/span> &lt;span class="nx">Doctor&lt;/span> &lt;span class="nx">complete&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Config&lt;/span> &lt;span class="nx">already&lt;/span> &lt;span class="nx">present&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">skipping&lt;/span> &lt;span class="nx">onboarding&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">·&lt;/span> &lt;span class="nx">Starting&lt;/span> &lt;span class="nx">setup&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>
+&lt;p>配置openclaw&lt;/p>
+&lt;ol>
+&lt;li>安装好后会自动开始这步&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260226233356873.png"
+loading="lazy"
+alt="image.png"
+>选yes&lt;/li>
+&lt;li>先quickstart 后面可配置 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094239665.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>模型选择自己想要的模型即可，我这里选用z.ai 使用智谱模型（需要先去生成apikey 并且填入，其他模型也是一样）&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094530465.png"
+loading="lazy"
+alt="image.png"
+>&lt;/li>
+&lt;li>channel官方推荐telegram 这里自行选择，需要准备上网工具增加proxy配置后，粘贴bot的token ，机器上需要加配置 &amp;ldquo;proxy&amp;rdquo;:&amp;ldquo;http://127.0.0.1:7890&amp;rdquo;, 给机器人发消息 ，/start 之后会收到回复的code 然后在终端使用。openclaw pairing approve telegram QRNT5UUY(code)&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094753872.png"
+loading="lazy"
+alt="image.png"
+>
+至此已经配置完，可以开始使用了openclaw&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="给openclaw操控浏览器的能力">给openclaw操控浏览器的能力&lt;/h3>
+&lt;p>macOS&lt;/p>
+&lt;ol>
+&lt;li>安装extension，命令执行后会自动下载extension包到对应文件夹下 /Users/{你的用户名}/.openclaw/browser/chrome-extension&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">openclaw browser extension install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>
+&lt;p>在chrome里地址栏输入 chrome://extensions/ 打开开发者模式 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100923737.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>点击加载未打包的扩展程序，然后选中extension文件夹即可 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100909783.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>linux 可参照 &lt;a class="link" href="https://cloud.tencent.com/developer/article/2626186" target="_blank" rel="noopener"
+>https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p></description></item><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ipv4/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ipv4/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >DXP4800-黑群晖小记&lt;/a>](&lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >https://blog.xiaohuangyu.space/p/dxp4800-synology/&lt;/a>) 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
 网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列&lt;/p>
