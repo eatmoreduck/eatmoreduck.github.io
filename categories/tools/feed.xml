@@ -161,7 +161,12 @@ alt="image.png"
 &lt;/li>
 &lt;/ol>
 &lt;p>linux 可参照 &lt;a class="link" href="https://cloud.tencent.com/developer/article/2626186" target="_blank" rel="noopener"
->https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p></description></item><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ipv4/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ipv4/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
+>https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p>
+&lt;h3 id="遇到的坑">遇到的坑&lt;/h3>
+&lt;ol>
+&lt;li>最初用nvm 安装node ，node全局安装后总时不时出现闪退问题，后面直接采用brew install node，官方脚本安装的openclaw&lt;/li>
+&lt;li>nvm安装后，卸载时，重新运行openclaw gatway install的plist .nvm路径，导致openclaw doctor始终有问题 原因是清理了.zshr后当前终端没有source 导致读取的环境变量是旧的，要么source ，要么重连一下ssh&lt;/li>
+&lt;/ol></description></item><item><title>远程访问系列（一）公网IP</title><link>/p/wan-to-lan-via-public-ipv4/</link><pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate><guid>/p/wan-to-lan-via-public-ipv4/</guid><description>&lt;p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >DXP4800-黑群晖小记&lt;/a>](&lt;a class="link" href="https://blog.xiaohuangyu.space/p/dxp4800-synology/" target="_blank" rel="noopener"
 >https://blog.xiaohuangyu.space/p/dxp4800-synology/&lt;/a>) 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
 网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列&lt;/p>

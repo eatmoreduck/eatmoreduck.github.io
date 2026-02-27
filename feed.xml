@@ -161,7 +161,12 @@ alt="image.png"
 &lt;/li>
 &lt;/ol>
 &lt;p>linux 可参照 &lt;a class="link" href="https://cloud.tencent.com/developer/article/2626186" target="_blank" rel="noopener"
->https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p></description></item><item><title>how-to-fix-your-entire-life-in-1-day</title><link>/p/how-to-fix-your-entire-life-in-1-day/</link><pubDate>Wed, 25 Feb 2026 14:47:48 +0800</pubDate><guid>/p/how-to-fix-your-entire-life-in-1-day/</guid><description>&lt;p>摘抄自 &lt;a class="link" href="https://x.com/thedankoe/status/2010751592346030461" target="_blank" rel="noopener"
+>https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p>
+&lt;h3 id="遇到的坑">遇到的坑&lt;/h3>
+&lt;ol>
+&lt;li>最初用nvm 安装node ，node全局安装后总时不时出现闪退问题，后面直接采用brew install node，官方脚本安装的openclaw&lt;/li>
+&lt;li>nvm安装后，卸载时，重新运行openclaw gatway install的plist .nvm路径，导致openclaw doctor始终有问题 原因是清理了.zshr后当前终端没有source 导致读取的环境变量是旧的，要么source ，要么重连一下ssh&lt;/li>
+&lt;/ol></description></item><item><title>how-to-fix-your-entire-life-in-1-day</title><link>/p/how-to-fix-your-entire-life-in-1-day/</link><pubDate>Wed, 25 Feb 2026 14:47:48 +0800</pubDate><guid>/p/how-to-fix-your-entire-life-in-1-day/</guid><description>&lt;p>摘抄自 &lt;a class="link" href="https://x.com/thedankoe/status/2010751592346030461" target="_blank" rel="noopener"
 >https://x.com/thedankoe/status/2010751592346030461&lt;/a>
 使用沉浸式翻译插件翻译，2026伊始，收藏，学习，自用&lt;/p>
 &lt;p>If you&amp;rsquo;re anything like me, you think new years resolutions are stupid.&lt;br>

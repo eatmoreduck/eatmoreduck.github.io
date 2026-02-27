@@ -161,7 +161,12 @@ alt="image.png"
 &lt;/li>
 &lt;/ol>
 &lt;p>linux 可参照 &lt;a class="link" href="https://cloud.tencent.com/developer/article/2626186" target="_blank" rel="noopener"
->https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p></description></item><item><title>大善人 AI 食用指南</title><link>/p/cloudflare-worker-ai/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/cloudflare-worker-ai/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
+>https://cloud.tencent.com/developer/article/2626186&lt;/a>&lt;/p>
+&lt;h3 id="遇到的坑">遇到的坑&lt;/h3>
+&lt;ol>
+&lt;li>最初用nvm 安装node ，node全局安装后总时不时出现闪退问题，后面直接采用brew install node，官方脚本安装的openclaw&lt;/li>
+&lt;li>nvm安装后，卸载时，重新运行openclaw gatway install的plist .nvm路径，导致openclaw doctor始终有问题 原因是清理了.zshr后当前终端没有source 导致读取的环境变量是旧的，要么source ，要么重连一下ssh&lt;/li>
+&lt;/ol></description></item><item><title>大善人 AI 食用指南</title><link>/p/cloudflare-worker-ai/</link><pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate><guid>/p/cloudflare-worker-ai/</guid><description>&lt;p>大善人 AI 食用指南&lt;/p>
 &lt;p>登录之后，打开
 &lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
 >https://dash.cloudflare.com/&lt;/a> ,保存/之后的字符串为 accountId&lt;/p>
