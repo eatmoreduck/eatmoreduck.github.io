@@ -1,4 +1,99 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Feb 2026 23:26:51 +0800</lastBuildDate><atom:link href="/post/feed.xml" rel="self" type="application/rss+xml"/><item><title>openclaw-from-zero-to-one</title><link>/p/openclaw-from-zero-to-one/</link><pubDate>Thu, 26 Feb 2026 23:26:51 +0800</pubDate><guid>/p/openclaw-from-zero-to-one/</guid><description>&lt;p>记录下openclaw安装流程，以macOS为例&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 11 Mar 2026 11:14:35 +0800</lastBuildDate><atom:link href="/post/feed.xml" rel="self" type="application/rss+xml"/><item><title>run-qwen-3.5-9B-on-macmini</title><link>/p/run-qwen-3.5-9b-on-macmini/</link><pubDate>Wed, 11 Mar 2026 11:14:35 +0800</pubDate><guid>/p/run-qwen-3.5-9b-on-macmini/</guid><description>&lt;p>ollama 官网 &lt;a class="link" href="https://ollama.com/" target="_blank" rel="noopener"
+>https://ollama.com/&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>脚本安装ollama&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">curl -fsSL https://ollama.com/install.sh | sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>配置config加速&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">cat ~/.ollama/config.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;registry&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;mirrors&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;registry.ollama.ai&amp;#34;: &amp;#34;https://registry.ollama.ai&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>run qwen
+qwen3.5-9b url &lt;a class="link" href="https://ollama.com/library/qwen3.5:9b" target="_blank" rel="noopener"
+>https://ollama.com/library/qwen3.5:9b&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ollama run qwen3.5:9b --verbose
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果要后台运行，直接 ollama serve 即可，可以从本地的http://localhost:11434 访问到 api&lt;/p></description></item><item><title>让小爱音响聪明起来</title><link>/p/%E8%AE%A9%E5%B0%8F%E7%88%B1%E9%9F%B3%E5%93%8D%E8%81%AA%E6%98%8E%E8%B5%B7%E6%9D%A5/</link><pubDate>Fri, 27 Feb 2026 11:13:28 +0800</pubDate><guid>/p/%E8%AE%A9%E5%B0%8F%E7%88%B1%E9%9F%B3%E5%93%8D%E8%81%AA%E6%98%8E%E8%B5%B7%E6%9D%A5/</guid><description>&lt;p>本文参见 &lt;a class="link" href="https://github.com/idootop/migpt-next" target="_blank" rel="noopener"
+>https://github.com/idootop/migpt-next&lt;/a>
+绿联nas内安装 docker方式启动 docker-compose.yaml&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">migpt&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">idootop/migpt-next:latest&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">migpt-next&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stdin_open&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 对应 -i&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tty&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 对应 -t&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./config.js:/app/config.js&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 假设 config.js 在同级目录&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>复制 &lt;a class="link" href="https://github.com/idootop/migpt-next/blob/main/apps/example/config.js" target="_blank" rel="noopener"
+>https://github.com/idootop/migpt-next/blob/main/apps/example/config.js&lt;/a>
+docker-compose.yaml 同级目录的config.js 里&lt;/p>
+&lt;p>按照教程配置用户名 密码等选项
+&lt;a class="link" href="https://github.com/idootop/migpt-next/issues/4" target="_blank" rel="noopener"
+>https://github.com/idootop/migpt-next/issues/4&lt;/a>&lt;/p></description></item><item><title>openclaw-from-zero-to-one</title><link>/p/openclaw-from-zero-to-one/</link><pubDate>Thu, 26 Feb 2026 23:26:51 +0800</pubDate><guid>/p/openclaw-from-zero-to-one/</guid><description>&lt;p>记录下openclaw安装流程，以macOS为例&lt;/p>
 &lt;h3 id="安装node">安装node&lt;/h3>
 &lt;ol>
 &lt;li>安装brew install node 可指定版本，但openclaw 要求大于22&lt;/li>
@@ -1288,97 +1383,4 @@ loading="lazy"
 alt="image.png"
 >&lt;/p>
 &lt;/li>
-&lt;/ol></description></item><item><title>Create-Virtual-machine-by-UTM</title><link>/p/create-virtual-machine-by-utm/</link><pubDate>Mon, 17 Mar 2025 16:35:30 +0800</pubDate><guid>/p/create-virtual-machine-by-utm/</guid><description>&lt;ol>
-&lt;li>下载 App 安装 &lt;a class="link" href="https://mac.getutm.app/" target="_blank" rel="noopener"
->https://mac.getutm.app/&lt;/a> 并打开&lt;/li>
-&lt;li>创建新的虚拟机 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163729210.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>M1 芯片安装 x86 win10 ,因 cpu 为 arm 架构，故只能选择模拟 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163804627.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>创建 windows 虚拟机&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164215439.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>选择自己喜欢的 win10 版本镜像（需提前下载）
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164344728.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>配置硬件参数&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164412790.png"
-loading="lazy"
-alt="image.png"
->
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164431605.png"
-loading="lazy"
-alt="image.png"
->
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164609153.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317173946665.png"
-loading="lazy"
-alt="image.png"
->
-注意将此处 UEFI 启动关闭，否则每次开机都是重新引导安装&lt;/li>
-&lt;li>后面就是一步步按操作来就行&lt;/li>
-&lt;/ol></description></item><item><title>DXP4800安装SSD</title><link>/p/dxp4800-add-ssd/</link><pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate><guid>/p/dxp4800-add-ssd/</guid><description>&lt;ol>
-&lt;li>关机&lt;/li>
-&lt;li>开盖&lt;/li>
-&lt;li>装 SSD&lt;/li>
-&lt;li>创建 basic 类型储存池
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>创建 basic 类型储存空间，选择Btrfs &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;li>设置新安装套件到储存池 2 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png"
-loading="lazy"
->&lt;/li>
-&lt;li>通过 hyper backup先完成 docker homes 目录的备份 &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png"
-loading="lazy"
-alt="image.png"
->
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;/ol>
-&lt;p>备份 docker homes 下的文件到共享文件夹
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png"
-loading="lazy"
-alt="image.png"
->
-8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。
-如下图所示
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png"
-loading="lazy"
-alt="image.png"
->
-先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082144024.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>备份完了按原流程弄回去就行&lt;/p>
-&lt;ol start="9">
-&lt;li>原有历史套件搬家，找了个 &lt;a class="link" href="https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x" target="_blank" rel="noopener"
->https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x&lt;/a>
-最后发现还是无法使用，最近才开始用套件，目前装的也不多，直接把原来卸载的都重新来一次，以下页面的服务其实是没法使用的
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082220473.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;/ol>
-&lt;p>完成以上所有操作之后，后续的套件都安装到ssd，无论是打开还是安装的速度都快了许多，后续再配置一个定时任务，定时将 docker 从 SSD 备份到 HHD 即可&lt;/p></description></item></channel></rss>
+&lt;/ol></description></item></channel></rss>
