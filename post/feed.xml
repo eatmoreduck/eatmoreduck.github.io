@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 11 Mar 2026 11:14:35 +0800</lastBuildDate><atom:link href="/post/feed.xml" rel="self" type="application/rss+xml"/><item><title>run-qwen-3.5-9B-on-macmini</title><link>/p/run-qwen-3.5-9b-on-macmini/</link><pubDate>Wed, 11 Mar 2026 11:14:35 +0800</pubDate><guid>/p/run-qwen-3.5-9b-on-macmini/</guid><description>&lt;p>ollama 官网 &lt;a class="link" href="https://ollama.com/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on eatmoreduck</title><link>/post/</link><description>Recent content in Posts on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Mar 2026 19:56:54 +0800</lastBuildDate><atom:link href="/post/feed.xml" rel="self" type="application/rss+xml"/><item><title>feature-send-to-anki-in-Easydict</title><link>/p/feature-send-to-anki-in-easydict/</link><pubDate>Tue, 24 Mar 2026 19:56:54 +0800</pubDate><guid>/p/feature-send-to-anki-in-easydict/</guid><description>&lt;p>一直都想做一个插件，来实现anki英语单词的制卡。去年年中就已经起了项目，想做谷歌插件，网页划词之后，直接发送到anki，包括读音、图片一类，但今年重新回看的时候，却发现那个方案有一定局限性。主要源自于插件无法捕获全局的事件，即为当我在其他见面时无法进行划词。
+正好看到我一直在用的Easydict，实际已经实现了Mac OS下的全局快捷键捕获。一拍脑袋就想着花一点时间扩展一下功能，初步想法，直接查词之后，能够将查到的单词发送到我本地的anik制卡。&lt;/p>
+&lt;p>初步想法，需要实现以下功能&lt;/p>
+&lt;ol>
+&lt;li>查询句子或单词时，中译音或音译中能直接制卡，将语句作为卡面，对应译文作为卡底&lt;/li>
+&lt;li>要将录音文件的TTS也发送到anki，无需依赖其他API&lt;/li>
+&lt;li>查单词时，卡底最好能有音标&lt;/li>
+&lt;/ol>
+&lt;p>于是经过跟Claude Code的多轮对话之后，基本实现功能，但语音层面仍需优化，后续考虑替换为大模型的 tts 服务
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213105089.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213023228.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213124973.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324233935621.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p></description></item><item><title>run-qwen-3.5-9B-on-macmini</title><link>/p/run-qwen-3.5-9b-on-macmini/</link><pubDate>Wed, 11 Mar 2026 11:14:35 +0800</pubDate><guid>/p/run-qwen-3.5-9b-on-macmini/</guid><description>&lt;p>ollama 官网 &lt;a class="link" href="https://ollama.com/" target="_blank" rel="noopener"
 >https://ollama.com/&lt;/a>&lt;/p>
 &lt;ol>
 &lt;li>脚本安装ollama&lt;/li>
@@ -1314,73 +1338,4 @@ alt="image.png"
 &lt;h3 id="提升">提升&lt;/h3>
 &lt;p>英语课开班了，目前上了三周的发音，但自己课后作业完成的不好，老师说功夫在平时，要多努力，形成肌肉记忆了一切都很简单。这方面自己需要努力&lt;/p>
 &lt;p>最近的感触还是挺多，家庭，工作方面都有，但还没有具体成面，还需要时间酝酿才能输出。
-自己对待生活的态度比起三个月前稍微积极一些了，另外能稍微不那么分心的工作，这个状态很正面，希望持续努力。&lt;/p></description></item><item><title>install-immortalwrt-in-Synology</title><link>/p/install-immortalwrt-in-synology/</link><pubDate>Tue, 18 Mar 2025 14:53:23 +0800</pubDate><guid>/p/install-immortalwrt-in-synology/</guid><description>&lt;ol>
-&lt;li>
-&lt;p>download a iso in &lt;a class="link" href="https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/" target="_blank" rel="noopener"
->https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>add new hard disk image &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164340052.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Wait for the image to be imported &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164427257.png"
-loading="lazy"
->&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>import a new Virtual Machine &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164514424.png"
-loading="lazy"
-alt="image.png"
->&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164530509.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164750558.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;ol start="5">
-&lt;li>set vm params &lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232345769.png"
-loading="lazy"
-alt="image.png"
->&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232412484.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;ol start="6">
-&lt;li>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232433502.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;p>vi /etc/config/network
-set ipaddr to the address of the same network segment as the router and reboot
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232451643.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>after reboot , login immortalwrt in web browser by http://192.168.5.100
-the default user is root, and the default password is password
-&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png"
-loading="lazy"
-alt="image.png"
->&lt;/p>
-&lt;/li>
-&lt;/ol></description></item></channel></rss>
+自己对待生活的态度比起三个月前稍微积极一些了，另外能稍微不那么分心的工作，这个状态很正面，希望持续努力。&lt;/p></description></item></channel></rss>
