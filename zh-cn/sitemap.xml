@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.xiaohuangyu.space/</loc>
-    <lastmod>2026-03-25T17:54:48+08:00</lastmod>
+    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -16,11 +16,6 @@
                 hreflang="zh-cn"
                 href="https://blog.xiaohuangyu.space/"
                 />
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/post/</loc>
-    <lastmod>2026-03-25T17:54:48+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/categories/ai/</loc>
     <lastmod>2026-03-25T06:54:46+08:00</lastmod>
@@ -48,6 +43,11 @@
                 />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/categories/other/</loc>
+    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/post/</loc>
     <lastmod>2026-03-25T06:54:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
