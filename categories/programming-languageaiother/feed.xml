@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>programming language,AI,other on eatmoreduck</title><link>/categories/programming-languageaiother/</link><description>Recent content in programming language,AI,other on eatmoreduck</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Mar 2026 06:54:46 +0800</lastBuildDate><atom:link href="/categories/programming-languageaiother/feed.xml" rel="self" type="application/rss+xml"/><item><title>AI-助力每一个梦想</title><link>/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3/</link><pubDate>Wed, 25 Mar 2026 06:54:46 +0800</pubDate><guid>/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3/</guid><description>&lt;p>过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png"
+loading="lazy"
+alt="image.png"
+>
+当时复制报错代码粘到 POE 中,一边阅读源学习新的语法和框架的用法。今天，使用 AI 的方式已经彻底，或者与其说是使用 ai ，不如说是与 AI 协作。
+也才仅仅过去了两年的时间，AI的发展真是令人咋舌，焦虑无处不在，如影随形。半个月之前，我在不怎么熟悉golang的情况下，紧靠Claude Code配合glm5 ，写出了SkillManager一个专门管理skill跨平台小工，地址在这 &lt;a class="link" href="https://github.com/eatmoreduck/SkillManager.git" target="_blank" rel="noopener"
+>https://github.com/eatmoreduck/SkillManager.git&lt;/a> 。
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142625642.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142632949.png"
+loading="lazy"
+alt="image.png"
+>
+&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142640944.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>如果没有AI，单凭我自己，我不确定需要花费多少时间去完成一个多端部署的小项目，包含三端打包的CI/CD，能够正常运行。但毛毛一估算，光是这些打包的配置文件就足够让人抓耳挠腮的。
+正如标题而言，AI助力每一个梦想。AI确确实实的在改变我们每一个人的生活。单单是电脑上，我已经装了这么多的AI工具来配合我的日常工作。&lt;/p>
+&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142112591.png"
+loading="lazy"
+alt="image.png"
+>&lt;/p>
+&lt;p>分别提手机上的AI 工具，随时掏出手机，记录会议，咨询常见的规章制度，AI 已经完完全全融入了我的生活。&lt;/p>
+&lt;p>从最初的POE 订阅，到后续cursor 订阅，又到近期的glm，我在AI工具上的花费保守估计已经达到了3000 元以上。不敢想象没有 AI 的世界，难怪自嘲&amp;quot;Claude 挂了，我也跟著挂了&amp;quot;。&lt;/p>
+&lt;p>有想法了，随时打开豆包，打开 cc，/gsd:do 付诸实践，AI 助力每一个梦想。&lt;/p></description></item></channel></rss>
