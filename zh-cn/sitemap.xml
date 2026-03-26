@@ -177,11 +177,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/p/how-to-fix-your-entire-life-in-1-day/</loc>
-    <lastmod>2026-02-25T14:47:48+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2026-02-25T14:47:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -193,6 +188,11 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/%E9%9A%8F%E6%83%B3/</loc>
+    <lastmod>2026-02-25T14:47:48+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/p/how-to-fix-your-entire-life-in-1-day/</loc>
     <lastmod>2026-02-25T14:47:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
