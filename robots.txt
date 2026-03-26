@@ -34,6 +34,10 @@ Allow: /
 User-Agent: 360Spider
 Allow: /
 
-# 爬取延迟
-User-Agent: *
+# 爬取延迟 - 只针对部分爬虫，不影响 Googlebot
+User-Agent: Baiduspider
+Crawl-delay: 1
+User-Agent: Sogou web spider
+Crawl-delay: 1
+User-Agent: 360Spider
 Crawl-delay: 1
