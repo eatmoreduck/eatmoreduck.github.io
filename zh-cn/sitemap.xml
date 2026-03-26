@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.xiaohuangyu.space/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -18,32 +18,32 @@
                 />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/ai/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <loc>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/claude/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/golang/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/post/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/seo/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/</loc>
-    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -56,6 +56,26 @@
                 hreflang="zh-cn"
                 href="https://blog.xiaohuangyu.space/tags/"
                 />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E6%95%88%E7%8E%87/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3/</loc>
+    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/golang/</loc>
+    <lastmod>2026-03-25T06:54:46+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/anki/</loc>
     <lastmod>2026-03-24T19:56:54+08:00</lastmod>
@@ -313,11 +333,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/%E8%BD%AF%E4%BB%B6/</loc>
-    <lastmod>2024-04-07T15:46:48+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/%E6%95%88%E7%8E%87/</loc>
     <lastmod>2024-04-07T15:46:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
