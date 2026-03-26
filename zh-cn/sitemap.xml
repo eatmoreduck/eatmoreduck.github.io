@@ -262,31 +262,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/immortalwrt/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/p/install-immortalwrt-in-synology/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/%E7%BE%A4%E6%99%96/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://blog.xiaohuangyu.space/p/create-virtual-machine-by-utm/</loc>
     <lastmod>2025-03-17T16:35:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -302,6 +277,21 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</loc>
+    <lastmod>2025-03-17T16:35:30+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"
+                />
+  </url><url>
     <loc>https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</loc>
     <lastmod>2024-11-08T20:12:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -316,6 +306,21 @@
     <lastmod>2024-11-08T20:12:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E7%BE%A4%E6%99%96/</loc>
+    <lastmod>2024-11-08T20:12:54+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/%E7%BE%A4%E6%99%96/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/%E7%BE%A4%E6%99%96/"
+                />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/ddns/</loc>
     <lastmod>2024-11-06T10:25:04+08:00</lastmod>

@@ -30,5 +30,58 @@
       
     </item>
     
+    <item>
+      <title>install-immortalwrt-in-Synology</title>
+      <link>https://blog.xiaohuangyu.space/en/p/install-immortalwrt-in-synology/</link>
+      <pubDate>Tue, 18 Mar 2025 14:53:23 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/en/p/install-immortalwrt-in-synology/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;download a iso in &lt;a href=&#34;https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&#34;&gt;https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;add new hard disk image &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164340052.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Wait for the image to be imported &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164427257.png&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;import a new  Virtual Machine &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164514424.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164530509.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164750558.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;set vm params &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232345769.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232412484.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232433502.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;vi /etc/config/network
+set ipaddr to the address of the same network segment as the router and reboot
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232451643.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;after reboot , login immortalwrt in web browser by http://192.168.5.100
+the default user is  root, and the default password is password
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;</description>
+      
+    </item>
+    
   </channel>
 </rss>
