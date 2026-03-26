@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.xiaohuangyu.space/en/</loc>
-    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -15,6 +15,81 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.xiaohuangyu.space/en/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/ai/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/ai/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/ai/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/p/ai-powering-dreams-part-2/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/blogging/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/claude/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/claude/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/claude/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/productivity/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/seo/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/seo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/seo/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/</loc>
+    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/"
                 />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/en/archives/</loc>
@@ -72,20 +147,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.xiaohuangyu.space/en/search/"
-                />
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://blog.xiaohuangyu.space/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.xiaohuangyu.space/en/tags/"
                 />
   </url>
 </urlset>

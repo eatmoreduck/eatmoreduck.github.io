@@ -21,18 +21,18 @@
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/p/ai-powering-dreams-part-2/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/ai/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/ai/"
+                />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/blogging/</loc>
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -41,13 +41,18 @@
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/claude/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/claude/"
+                />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/post/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/productivity/</loc>
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -56,6 +61,16 @@
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/seo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/seo/"
+                />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/</loc>
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
