@@ -27,10 +27,10 @@
     
     <item>
       <title>AI-助力每一个梦想之一</title>
-      <link>https://blog.xiaohuangyu.space/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3%E4%B9%8B%E4%B8%80/</link>
+      <link>https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</link>
       <pubDate>Wed, 25 Mar 2026 06:54:46 &#43;0800</pubDate>
       <author>eatmoreduck@qq.com (eatmoreduck)</author>
-      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3%E4%B9%8B%E4%B8%80/</guid>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</guid>
       <description>&lt;p&gt;过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，
 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png&#34; alt=&#34;image.png&#34;  /&gt;
 
@@ -89,10 +89,10 @@ qwen3.5-9b url &lt;a href=&#34;https://ollama.com/library/qwen3.5:9b&#34;&gt;htt
     
     <item>
       <title>让小爱音响聪明起来</title>
-      <link>https://blog.xiaohuangyu.space/p/%E8%AE%A9%E5%B0%8F%E7%88%B1%E9%9F%B3%E5%93%8D%E8%81%AA%E6%98%8E%E8%B5%B7%E6%9D%A5/</link>
+      <link>https://blog.xiaohuangyu.space/p/smart-xiaomi-speaker/</link>
       <pubDate>Fri, 27 Feb 2026 11:13:28 &#43;0800</pubDate>
       <author>eatmoreduck@qq.com (eatmoreduck)</author>
-      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/%E8%AE%A9%E5%B0%8F%E7%88%B1%E9%9F%B3%E5%93%8D%E8%81%AA%E6%98%8E%E8%B5%B7%E6%9D%A5/</guid>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/smart-xiaomi-speaker/</guid>
       <description>&lt;p&gt;本文参见 &lt;a href=&#34;https://github.com/idootop/migpt-next&#34;&gt;https://github.com/idootop/migpt-next&lt;/a&gt;
 绿联nas内安装 docker方式启动 docker-compose.yaml&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
@@ -224,10 +224,10 @@ docker-compose.yaml 同级目录的config.js 里&lt;/p&gt;</description>
     
     <item>
       <title>5&amp;6月碎碎念</title>
-      <link>https://blog.xiaohuangyu.space/p/56%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link>
+      <link>https://blog.xiaohuangyu.space/p/may-june-musings/</link>
       <pubDate>Thu, 10 Jul 2025 23:49:46 &#43;0800</pubDate>
       <author>eatmoreduck@qq.com (eatmoreduck)</author>
-      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/56%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/may-june-musings/</guid>
       <description>&lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;核心系统做了一次性能优化，凌晨批量数据任务时间从3 小时缩短到 2 小时&lt;/li&gt;
@@ -242,10 +242,10 @@ docker-compose.yaml 同级目录的config.js 里&lt;/p&gt;</description>
     
     <item>
       <title>4 月碎碎念</title>
-      <link>https://blog.xiaohuangyu.space/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link>
+      <link>https://blog.xiaohuangyu.space/p/april-musings/</link>
       <pubDate>Wed, 23 Apr 2025 00:11:26 &#43;0800</pubDate>
       <author>eatmoreduck@qq.com (eatmoreduck)</author>
-      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/april-musings/</guid>
       <description>&lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
 &lt;p&gt;工作上一如往常，没什么特别出彩的，也没翻车，只是自己在看数据时，发现自己新写的代码里，有一处致命 bug，长期运行可能会导致线上 redis 爆掉，恰好测试没发现，又避免了一次事故报告。上次 CTO 点完一些现有团队存在的问题之后，大一点的改动都心里很发虚，有些问题还真的 code review 才发现的了，这个季度打算把一些历史遗留问题解决一下，顺便把历史没迁移的服务迁移掉。还是对自己要求高一些，犯错的可能性才能降低些（虽然犯错成本不高）。&lt;/p&gt;</description>
       
