@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.xiaohuangyu.space/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -18,7 +18,7 @@
                 />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/ai/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -32,13 +32,13 @@
                 href="https://blog.xiaohuangyu.space/tags/ai/"
                 />
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <loc>https://blog.xiaohuangyu.space/tags/ai%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/claude/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -52,7 +52,72 @@
                 href="https://blog.xiaohuangyu.space/tags/claude/"
                 />
   </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/llm/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/markdown/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/obsidian/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/p/obsidianclaude-code-build-an-ai-second-brain-10-times-more-efficiently/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/other/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.xiaohuangyu.space/post/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/prompt/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E6%95%88%E7%8E%87/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E5%86%99%E4%BD%9C/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</loc>
+    <lastmod>2026-04-01T09:34:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</loc>
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -72,27 +137,7 @@
                 href="https://blog.xiaohuangyu.space/tags/seo/"
                 />
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.xiaohuangyu.space/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://blog.xiaohuangyu.space/tags/"
-                />
-  </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/%E6%95%88%E7%8E%87/</loc>
     <lastmod>2026-03-26T11:07:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -124,11 +169,6 @@
   </url><url>
     <loc>https://blog.xiaohuangyu.space/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2026-03-24T19:56:54+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/llm/</loc>
-    <lastmod>2026-03-11T11:14:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -398,11 +438,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/p/hugo-obsidian-stagic-blog1/</loc>
-    <lastmod>2024-02-20T16:27:01+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/tags/obsidian/</loc>
     <lastmod>2024-02-20T16:27:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

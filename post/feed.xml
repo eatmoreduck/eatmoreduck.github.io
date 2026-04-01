@@ -8,10 +8,22 @@
     <managingEditor>eatmoreduck@qq.com (eatmoreduck)</managingEditor>
     <webMaster>eatmoreduck@qq.com (eatmoreduck)</webMaster>
     
-    <lastBuildDate>Thu, 26 Mar 2026 11:07:23 &#43;0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 09:34:29 &#43;0800</lastBuildDate>
     
     <atom:link href="https://blog.xiaohuangyu.space/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Obsidian&#43;Claude Code 10 倍效率构建 AI 第二大脑</title>
+      <link>https://blog.xiaohuangyu.space/p/obsidianclaude-code-build-an-ai-second-brain-10-times-more-efficiently/</link>
+      <pubDate>Wed, 01 Apr 2026 09:34:29 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/obsidianclaude-code-build-an-ai-second-brain-10-times-more-efficiently/</guid>
+      <description>&lt;h2 id=&#34;为什么要在-obsidian-里用-claude-code&#34;&gt;为什么要在 Obsidian 里用 Claude Code&lt;/h2&gt;
+&lt;p&gt;说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。&lt;/p&gt;
+&lt;p&gt;不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。&lt;/p&gt;</description>
+      
+    </item>
     
     <item>
       <title>AI-助力每一个梦想之二</title>
