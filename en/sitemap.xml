@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.xiaohuangyu.space/en/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -17,68 +17,18 @@
                 href="https://blog.xiaohuangyu.space/en/"
                 />
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/ai/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://blog.xiaohuangyu.space/tags/ai/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.xiaohuangyu.space/en/tags/ai/"
-                />
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/p/ai-powering-dreams-part-2/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <loc>https://blog.xiaohuangyu.space/en/tags/immortalwrt/</loc>
+    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/blogging/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <loc>https://blog.xiaohuangyu.space/en/p/install-immortalwrt-in-synology/</loc>
+    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/claude/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://blog.xiaohuangyu.space/tags/claude/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.xiaohuangyu.space/en/tags/claude/"
-                />
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/productivity/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/seo/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://blog.xiaohuangyu.space/tags/seo/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.xiaohuangyu.space/en/tags/seo/"
-                />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/en/tags/</loc>
-    <lastmod>2026-03-26T11:07:23+08:00</lastmod>
+    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -91,16 +41,6 @@
                 hreflang="en"
                 href="https://blog.xiaohuangyu.space/en/tags/"
                 />
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/tags/immortalwrt/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.xiaohuangyu.space/en/p/install-immortalwrt-in-synology/</loc>
-    <lastmod>2025-03-18T14:53:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
   </url><url>
     <loc>https://blog.xiaohuangyu.space/en/tags/%E7%BE%A4%E6%99%96/</loc>
     <lastmod>2025-03-18T14:53:23+08:00</lastmod>
@@ -152,6 +92,24 @@
                 href="https://blog.xiaohuangyu.space/en/archives/"
                 />
   </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/ai/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/ai/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/ai/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/blogging/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.xiaohuangyu.space/en/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -164,6 +122,20 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.xiaohuangyu.space/en/categories/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/claude/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/claude/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/claude/"
                 />
   </url><url>
     <loc>https://blog.xiaohuangyu.space/en/links/</loc>
@@ -180,6 +152,10 @@
                 href="https://blog.xiaohuangyu.space/en/links/"
                 />
   </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/productivity/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.xiaohuangyu.space/en/search/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -192,6 +168,20 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.xiaohuangyu.space/en/search/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/en/tags/seo/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/tags/seo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/tags/seo/"
                 />
   </url>
 </urlset>
