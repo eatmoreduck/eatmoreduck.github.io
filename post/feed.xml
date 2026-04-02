@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts | eatmoreduck&#39;s Blog - 代码与生活</title>
+    <title>Posts | eatmoreduck&#39;s Blog</title>
     <link>https://blog.xiaohuangyu.space/post/</link>
-    <description>Recent content in Posts on eatmoreduck&#39;s Blog - 代码与生活</description>
+    <description>Recent content in Posts on eatmoreduck&#39;s Blog</description>
     <language>zh-cn</language>
     <managingEditor>eatmoreduck@qq.com (eatmoreduck)</managingEditor>
     <webMaster>eatmoreduck@qq.com (eatmoreduck)</webMaster>
     
-    <lastBuildDate>Wed, 01 Apr 2026 09:34:29 &#43;0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 19:32:20 &#43;0800</lastBuildDate>
     
     <atom:link href="https://blog.xiaohuangyu.space/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>我把 Happy Coder 搬到手机上，随时随地写代码</title>
+      <link>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</link>
+      <pubDate>Thu, 02 Apr 2026 19:32:20 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。&lt;/p&gt;</description>
+      
+    </item>
     
     <item>
       <title>Obsidian &#43; Claude Code 构建 AI 第二大脑实战指南</title>
