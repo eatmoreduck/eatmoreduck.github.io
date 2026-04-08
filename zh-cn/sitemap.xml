@@ -474,6 +474,34 @@
                 href="https://blog.xiaohuangyu.space/search/"
                 />
   </url><url>
+    <loc>https://blog.xiaohuangyu.space/about/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/about/"
+                />
+  </url><url>
+    <loc>https://blog.xiaohuangyu.space/privacy-policy/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.xiaohuangyu.space/en/privacy-policy/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://blog.xiaohuangyu.space/privacy-policy/"
+                />
+  </url><url>
     <loc>https://blog.xiaohuangyu.space/links/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
