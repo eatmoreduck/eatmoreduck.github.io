@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts | eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/post/</link>
+    <description>Recent content in Posts on eatmoreduck&#39;s Blog</description>
+    <language>zh-CN</language>
+    <managingEditor>eatmoreduck@qq.com (eatmoreduck)</managingEditor>
+    <webMaster>eatmoreduck@qq.com (eatmoreduck)</webMaster>
+    
+    <lastBuildDate>Thu, 25 Jun 2026 23:54:36 &#43;0800</lastBuildDate>
+    
+    <atom:link href="https://blog.xiaohuangyu.space/post/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>给 BOSS直聘抓取工具补了一个收尾：岗位摘要和提示词</title>
+      <link>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-job-summary/</link>
+      <pubDate>Thu, 25 Jun 2026 23:54:36 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-job-summary/</guid>
+      <description>&lt;p&gt;之前把 &lt;a href=&#34;https://github.com/eatmoreduck/boss-zhipin-scraper&#34;&gt;BOSS直聘抓取工具&lt;/a&gt; 开源之后，工具本身已经能把列表、薪资、详情页 JD 拉下来，也能导出 JSON/CSV。&lt;/p&gt;
+&lt;p&gt;但抓完之后还有一个问题：&lt;strong&gt;这些数据怎么用？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一开始很容易往一个方向想：既然岗位数据有了，那是不是顺手做一个“简历匹配打分”？把简历扔进去，给每个岗位算一个匹配度，最后排个序。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>hugo&#43;obsidian打造静态博客（二）</title>
+      <link>https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/</link>
+      <pubDate>Wed, 24 Jun 2026 11:30:00 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/</guid>
+      <description>&lt;p&gt;上一篇聊了为什么选 Obsidian，拖了 2 年终于续上了：怎么让 Obsidian 里写的东西，自动变成一个能访问的网站。&lt;/p&gt;
+&lt;p&gt;先讲流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Obsidian 里写 Markdown，粘贴图片，保存写完后统一提交&lt;/li&gt;
+&lt;li&gt;推到 GitHub 之后，线上自动重新构建，不用手动操作&lt;/li&gt;
+&lt;li&gt;用自己的域名，不绑死在某一个托管服务上&lt;/li&gt;
+&lt;li&gt;整个过程零服务器零费用（仅域名费，如果用 github pages ，还省去域名费）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这套东西的核心是一个**「私有源 + 公开产物」的分层**。
+大概就这么个逻辑&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/Untitled-2026-06-24-1206.png&#34; alt=&#34;Untitled-2026-06-24-1206.png&#34;  /&gt;
+&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>2026 Mac 开发全栈工具｜淘汰 Alfred/iTerm/Docker Desktop，我的最终软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</link>
+      <pubDate>Tue, 23 Jun 2026 20:00:00 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/my-software-stack-2026/</guid>
+      <description>&lt;p&gt;距离上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/mac-dev-software-list/&#34;&gt;Mac 开发常用软件清单&lt;/a&gt; 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。&lt;/p&gt;
+&lt;h2 id=&#34;先说哪些变了&#34;&gt;先说哪些变了&lt;/h2&gt;
+&lt;p&gt;旧清单里这几个我现在已经不用了：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>我照着 Karpathy 的 LLM Wiki 模式搭了个 Obsidian 知识库，跑了两个月</title>
+      <link>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</link>
+      <pubDate>Mon, 22 Jun 2026 18:40:00 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</guid>
+      <description>&lt;h2 id=&#34;karpathy-说的那个模式&#34;&gt;Karpathy 说的那个模式&lt;/h2&gt;
+&lt;p&gt;Karpathy 前段时间在一个 gist 里描述过一种用法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>我做了一个 BOSS直聘抓取工具，开源了</title>
+      <link>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</link>
+      <pubDate>Thu, 11 Jun 2026 23:30:00 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>终端启动 1.3 秒，AI 十分钟帮我干到 0.2 秒</title>
+      <link>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</link>
+      <pubDate>Thu, 28 May 2026 17:23:19 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这台机器用了好几年了。各种开发环境装了又卸、卸了又装，&lt;code&gt;.zshrc&lt;/code&gt; 和 &lt;code&gt;.bash_profile&lt;/code&gt; 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>让 Claude Desktop 支持任意第三方模型</title>
+      <link>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</link>
+      <pubDate>Thu, 28 May 2026 15:53:54 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</guid>
+      <description>&lt;p&gt;最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）&lt;/li&gt;
+&lt;li&gt;Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>我把 Happy Coder 搬到手机上，随时随地写代码</title>
+      <link>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</link>
+      <pubDate>Thu, 02 Apr 2026 19:32:20 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Obsidian &#43; Claude Code 构建 AI 第二大脑实战指南</title>
+      <link>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</link>
+      <pubDate>Wed, 01 Apr 2026 09:34:29 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</guid>
+      <description>&lt;h2 id=&#34;为什么要在-obsidian-里用-claude-code&#34;&gt;为什么要在 Obsidian 里用 Claude Code&lt;/h2&gt;
+&lt;p&gt;说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。&lt;/p&gt;
+&lt;p&gt;不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>AI-助力每一个梦想之二</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</link>
+      <pubDate>Thu, 26 Mar 2026 11:07:23 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/ai-empowering-dreams/&#34;&gt;AI-助力每一个梦想&lt;/a&gt; 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。&lt;/p&gt;
+&lt;p&gt;这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>AI-助力每一个梦想之一</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</link>
+      <pubDate>Wed, 25 Mar 2026 06:54:46 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</guid>
+      <description>&lt;p&gt;过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+当时复制报错代码粘到 POE 中,一边阅读源学习新的语法和框架的用法。今天，使用 AI 的方式已经彻底，或者与其说是使用 ai ，不如说是与 AI 协作。
+也才仅仅过去了两年的时间，AI的发展真是令人咋舌，焦虑无处不在，如影随形。半个月之前，我在不怎么熟悉golang的情况下，紧靠Claude Code配合glm5 ，写出了SkillManager一个专门管理skill跨平台小工，地址在这 &lt;a href=&#34;https://github.com/eatmoreduck/SkillManager.git&#34;&gt;https://github.com/eatmoreduck/SkillManager.git&lt;/a&gt; 。
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142625642.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142632949.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142640944.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Easydict 发送到 Anki 插件开发</title>
+      <link>https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/</link>
+      <pubDate>Tue, 24 Mar 2026 19:56:54 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/</guid>
+      <description>&lt;p&gt;一直都想做一个插件，来实现anki英语单词的制卡。去年年中就已经起了项目，想做谷歌插件，网页划词之后，直接发送到anki，包括读音、图片一类，但今年重新回看的时候，却发现那个方案有一定局限性。主要源自于插件无法捕获全局的事件，即为当我在其他见面时无法进行划词。
+正好看到我一直在用的Easydict，实际已经实现了Mac OS下的全局快捷键捕获。一拍脑袋就想着花一点时间扩展一下功能，初步想法，直接查词之后，能够将查到的单词发送到我本地的anik制卡。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>run-qwen-3.5-9B-on-macmini</title>
+      <link>https://blog.xiaohuangyu.space/p/run-qwen-3.5-9b-on-macmini/</link>
+      <pubDate>Wed, 11 Mar 2026 11:14:35 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/run-qwen-3.5-9b-on-macmini/</guid>
+      <description>&lt;p&gt;ollama 官网 &lt;a href=&#34;https://ollama.com/&#34;&gt;https://ollama.com/&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;脚本安装ollama&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -fsSL https://ollama.com/install.sh | sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;配置config加速&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ~/.ollama/config.json
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;registry&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;mirrors&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &amp;#34;registry.ollama.ai&amp;#34;: &amp;#34;https://registry.ollama.ai&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;run qwen
+qwen3.5-9b url &lt;a href=&#34;https://ollama.com/library/qwen3.5:9b&#34;&gt;https://ollama.com/library/qwen3.5:9b&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ollama run qwen3.5:9b --verbose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果要后台运行，直接 ollama serve 即可，可以从本地的http://localhost:11434 访问到 api&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>让小爱音响聪明起来</title>
+      <link>https://blog.xiaohuangyu.space/p/smart-xiaomi-speaker/</link>
+      <pubDate>Fri, 27 Feb 2026 11:13:28 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/smart-xiaomi-speaker/</guid>
+      <description>&lt;p&gt;本文参见 &lt;a href=&#34;https://github.com/idootop/migpt-next&#34;&gt;https://github.com/idootop/migpt-next&lt;/a&gt;
+绿联nas内安装 docker方式启动 docker-compose.yaml&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;migpt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;idootop/migpt-next:latest&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;migpt-next&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;stdin_open&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 对应 -i&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;tty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 对应 -t&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;volumes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;	  &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;./config.js:/app/config.js&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 假设 config.js 在同级目录&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;复制 &lt;a href=&#34;https://github.com/idootop/migpt-next/blob/main/apps/example/config.js&#34;&gt;https://github.com/idootop/migpt-next/blob/main/apps/example/config.js&lt;/a&gt;
+docker-compose.yaml 同级目录的config.js 里&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>OpenClaw 从零到一</title>
+      <link>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</link>
+      <pubDate>Thu, 26 Feb 2026 23:26:51 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</guid>
+      <description>&lt;p&gt;记录下openclaw安装流程，以macOS为例&lt;/p&gt;
+&lt;h3 id=&#34;安装node&#34;&gt;安装node&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;安装brew install node 可指定版本，但openclaw 要求大于22&lt;/li&gt;
+&lt;li&gt;验证 node &amp;ndash;version 出现版本号，版本号大于20即可&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;安装git&#34;&gt;安装git&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出有值即可                            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git version 2.39.5 (Apple Git-154)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;安装并配置openclaw&#34;&gt;安装并配置openclaw&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;安装openclaw&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;n&#34;&gt;luna&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ppmac&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fsSL&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openclaw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ai&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;install&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bash&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;Because&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;yourself&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reminders&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;so&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2024.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Detected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plan&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;ne&#34;&gt;OS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Requested&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;latest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Preparing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;environment&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Homebrew&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;found&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;11.9&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v2026&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2.26&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Finalizing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Refreshing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loaded&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;metadata&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;refreshed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;restarted&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✗&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Probing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;failed&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;—&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;details&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unknown&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;option&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;--probe&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Did&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;you&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mean&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;one&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;no&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;probe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;profile&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;successfully&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2026.2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;m in. Let&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cause&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;some&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;responsible&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chaos&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;migrate&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skipping&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;onboarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Starting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;配置openclaw&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>一天时间重构人生</title>
+      <link>https://blog.xiaohuangyu.space/p/how-to-fix-your-entire-life-in-1-day/</link>
+      <pubDate>Wed, 25 Feb 2026 14:47:48 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/how-to-fix-your-entire-life-in-1-day/</guid>
+      <description>&lt;p&gt;摘抄自 &lt;a href=&#34;https://x.com/thedankoe/status/2010751592346030461&#34;&gt;https://x.com/thedankoe/status/2010751592346030461&lt;/a&gt;
+使用沉浸式翻译插件翻译，2026伊始，收藏，学习，自用&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re anything like me, you think new years resolutions are stupid.&lt;br&gt;
+如果你和我一样，你就会觉得新年决心很愚蠢。&lt;/p&gt;
+&lt;p&gt;Because most people go about changing their lives in the completely wrong way. They create these resolutions because everyone else does – we create a superficial meaning out of status games – but they don’t meet the requirements for true change, which goes a lot deeper than convincing yourself you’re going to be more disciplined or productive this year.&lt;br&gt;
+因为大多数人改变生活的方式完全错误。他们制定这些计划只是因为其他人都这么做——我们把这种追求地位的游戏赋予了肤浅的意义——但这些计划并不符合真正改变的要求，真正的改变远比说服自己今年会更加自律或高效要深刻得多。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>屏蔽 macOS 26 更新（2026 亲测有效，消除小红点）</title>
+      <link>https://blog.xiaohuangyu.space/p/block-macos-updates/</link>
+      <pubDate>Mon, 29 Dec 2025 14:28:17 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/block-macos-updates/</guid>
+      <description>&lt;h2 id=&#34;为什么要屏蔽更新&#34;&gt;为什么要屏蔽更新&lt;/h2&gt;
+&lt;p&gt;macOS 26 出新之后，隔三岔五的弹窗更新，总让我担心手滑点到「立即更新」，虽然有二次确认。但最近更新频繁，我想找个一劳永逸的办法。&lt;/p&gt;
+&lt;p&gt;我想要屏蔽更新的几个原因：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>ZeroTier Planet 组网完全指南：从原理到实践</title>
+      <link>https://blog.xiaohuangyu.space/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Wed, 05 Nov 2025 10:00:00 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/</guid>
+      <description>&lt;p&gt;在当今时代，远程访问和跨地域网络连接已成为工作和生活的必需品。无论是远程办公访问公司资源，还是在家控制智能设备，抑或承担不起云上高额费用，想让家中旧设备焕发活力，我们都需要一种安全、高效且稳定，且高性价比的网络解决方案。ZeroTier就是一款强大的工具，它能让我们轻松搭建跨越互联网的虚拟局域网。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>新开始</title>
+      <link>https://blog.xiaohuangyu.space/p/new-beginning/</link>
+      <pubDate>Sat, 11 Oct 2025 23:01:31 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/new-beginning/</guid>
+      <description>&lt;p&gt;最近行业里的波动有点让人措手不及，同业群里的状态简直像开盲盒 —— 有人抱着 “等个 N+1 也不错” 的心态彻底躺平，有人已经急着改简历四处投，还有些大佬稳得很，该唱歌该聚会一点不耽误。​&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>5&amp;6月碎碎念</title>
+      <link>https://blog.xiaohuangyu.space/p/may-june-musings/</link>
+      <pubDate>Thu, 10 Jul 2025 23:49:46 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/may-june-musings/</guid>
+      <description>&lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;核心系统做了一次性能优化，凌晨批量数据任务时间从3 小时缩短到 2 小时&lt;/li&gt;
+&lt;li&gt;接手的模型相关服务，离线环境也做了性能优化，原本批量 30 万订单回溯的时间由报错跑不出缩短到2-3 天&lt;/li&gt;
+&lt;li&gt;模型回溯自动化代码已完成，终于从破事当中走出来&lt;/li&gt;
+&lt;li&gt;开始自己写些 k8s 的配置，现有项目在慢慢切到 k8s&lt;/li&gt;
+&lt;li&gt;公司采购单上支持选择 cursor 了(原来是垃圾 copilot)，自费购买了三个月的 cursor 无需再续费，又省一笔&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;希望继续平安无事故&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>4 月碎碎念</title>
+      <link>https://blog.xiaohuangyu.space/p/april-musings/</link>
+      <pubDate>Wed, 23 Apr 2025 00:11:26 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/april-musings/</guid>
+      <description>&lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
+&lt;p&gt;工作上一如往常，没什么特别出彩的，也没翻车，只是自己在看数据时，发现自己新写的代码里，有一处致命 bug，长期运行可能会导致线上 redis 爆掉，恰好测试没发现，又避免了一次事故报告。上次 CTO 点完一些现有团队存在的问题之后，大一点的改动都心里很发虚，有些问题还真的 code review 才发现的了，这个季度打算把一些历史遗留问题解决一下，顺便把历史没迁移的服务迁移掉。还是对自己要求高一些，犯错的可能性才能降低些（虽然犯错成本不高）。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Create-Virtual-machine-by-UTM</title>
+      <link>https://blog.xiaohuangyu.space/p/create-virtual-machine-by-utm/</link>
+      <pubDate>Mon, 17 Mar 2025 16:35:30 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/create-virtual-machine-by-utm/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;下载 App 安装 &lt;a href=&#34;https://mac.getutm.app/&#34;&gt;https://mac.getutm.app/&lt;/a&gt; 并打开&lt;/li&gt;
+&lt;li&gt;创建新的虚拟机 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163729210.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;M1 芯片安装 x86 win10 ,因 cpu 为 arm 架构，故只能选择模拟 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163804627.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;创建 windows 虚拟机&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164215439.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;选择自己喜欢的 win10 版本镜像（需提前下载）
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164344728.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;配置硬件参数&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164412790.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164431605.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164609153.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317173946665.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+注意将此处 UEFI 启动关闭，否则每次开机都是重新引导安装&lt;/li&gt;
+&lt;li&gt;后面就是一步步按操作来就行&lt;/li&gt;
+&lt;/ol&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>DXP4800安装SSD</title>
+      <link>https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</link>
+      <pubDate>Fri, 08 Nov 2024 20:12:54 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;关机&lt;/li&gt;
+&lt;li&gt;开盖&lt;/li&gt;
+&lt;li&gt;装 SSD&lt;/li&gt;
+&lt;li&gt;创建 basic 类型储存池
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;创建 basic 类型储存空间，选择Btrfs &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;设置新安装套件到储存池 2 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png&#34; alt=&#34;&#34;  /&gt;
+&lt;/li&gt;
+&lt;li&gt;通过 hyper backup先完成 docker homes 目录的备份 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;备份 docker homes 下的文件到共享文件夹
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。
+如下图所示
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>远程访问系列（一）公网IP</title>
+      <link>https://blog.xiaohuangyu.space/p/wan-to-lan-via-public-ipv4/</link>
+      <pubDate>Wed, 06 Nov 2024 10:25:04 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/wan-to-lan-via-public-ipv4/</guid>
+      <description>&lt;p&gt;最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/dxp4800-synology/&#34;&gt;DXP4800-黑群晖小记&lt;/a&gt; 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
+网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>DXP4800-黑群晖小记</title>
+      <link>https://blog.xiaohuangyu.space/p/dxp4800-synology/</link>
+      <pubDate>Sun, 03 Nov 2024 00:00:00 &#43;0000</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/dxp4800-synology/</guid>
+      <description>&lt;p&gt;黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;绿联nas 关闭watchdog 及修改启动方式教程
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://post.smzdm.com/p/a3xnev8n/](https://post.smzdm.com/p/a3xnev8n/)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;绿联黑群晖
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://post.smzdm.com/p/a07nw4zr/](https://post.smzdm.com/p/a07nw4zr/)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;黑群晖安装教程
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://post.smzdm.com/p/akk9vpkr/](https://post.smzdm.com/p/akk9vpkr/)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2024 年就 10 月黑群晖 nas 教程
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a](https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;已解决&#34;&gt;已解决&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;解决视频HEIC不能播放问题，需要安装 AME 套件并激活，参见 &lt;a href=&#34;https://post.smzdm.com/p/a7pw05r9/&#34;&gt;https://post.smzdm.com/p/a7pw05r9/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;更新小红点问题： 更改/etc/host,增加127.0.0.1 update.synology.com（未解决，后续再做）&lt;/li&gt;
+&lt;li&gt;MOV 视频封面不显示问题，升级ffmpeg 套件，从 4 升级到 6 后重建索引解决 ，参见 &lt;a href=&#34;https://blog.csdn.net/qq_44726883/article/details/140429626&#34;&gt;https://blog.csdn.net/qq_44726883/article/details/140429626&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;硬盘灯闪烁问题，不影响使用，故暂不解决，参见&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://www.langog.com/?p=0f263caf-d8a0-4627-b458-7f1df146b88a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://github.com/miskcoo/ugreen_leds_controller
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;群晖信息显示监控 ，ssh 安装 sensors 插件即可，&lt;a href=&#34;https://post.smzdm.com/p/a8xze450/&#34;&gt;https://post.smzdm.com/p/a8xze450/&lt;/a&gt;，后期使用hertzbeat 统一监控（11 月 1 日解决问题 3 后，重建索引时，发现 cpu 温度跟面板温度似乎一样&lt;/li&gt;
+&lt;li&gt;风扇问题，风扇无法自定义调节转速，暂时直接拉风速到 100 参见连接
+&lt;a href=&#34;https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments&#34;&gt;https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;外网访问,zerotier 已打通内外网访问，自建 planet 来搞定外网访问问题&lt;/li&gt;
+&lt;li&gt;公网 ip v4 已开通，ddns-go + 端口转发 + Let’s Encrypt 完成整个网络搭建&lt;/li&gt;
+&lt;li&gt;软件问题，主要设备平台为Android + mac 常用软件下载参考&lt;a href=&#34;https://www.synology.cn/zh-cn/support/download?version=7.2#utilities&#34;&gt;https://www.synology.cn/zh-cn/support/download?version=7.2#utilities&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;nas 内置docker 容器跑
+&lt;ol&gt;
+&lt;li&gt;&lt;del&gt;immich作为群晖相册补充&lt;/del&gt; （因群晖相册已足够，暂时不用）&lt;/li&gt;
+&lt;li&gt;jellyfin&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;2015mac docker容器
+&lt;ol&gt;
+&lt;li&gt;heatzbeat 做为整个局域网的监控&lt;/li&gt;
+&lt;li&gt;alist 挂百度网盘，夸克网盘，阿里云网盘&lt;/li&gt;
+&lt;li&gt;gitlab&lt;/li&gt;
+&lt;li&gt;gitlab-runner&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;经过一系列折腾之后，目前公网访问已经无问题，如果 ddns 挂了，也有自建 zerotier 能作为补充使用，后续考虑加一个 UPS 及两条 512 的 SSD 组 raid1 作为 docker 及虚拟机盘&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>VScode进入报错code 9, signal null error</title>
+      <link>https://blog.xiaohuangyu.space/p/vscode-code-9-error/</link>
+      <pubDate>Fri, 16 Aug 2024 10:07:54 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/vscode-code-9-error/</guid>
+      <description>&lt;p&gt;进入 Vscode 时，出现报错&lt;br&gt;
+Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)&lt;/p&gt;
+&lt;p&gt;![image.png](&lt;a href=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&#34;&gt;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&lt;/a&gt; =600x)&lt;/p&gt;
+&lt;p&gt;查证go 和 go env  之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 &lt;strong&gt;export NODE_OPTIONS=&amp;ndash;openssl-legacy-provider&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#node&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/opt/homebrew/opt/node@20/bin:$PATH&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LDFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CPPFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;NODE_OPTIONS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openssl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;legacy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;provider&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>大善人 AI 食用指南</title>
+      <link>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</link>
+      <pubDate>Mon, 12 Aug 2024 14:24:33 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</guid>
+      <description>&lt;p&gt;大善人 AI 食用指南&lt;/p&gt;
+&lt;p&gt;登录之后，打开
+&lt;a href=&#34;https://dash.cloudflare.com/&#34;&gt;https://dash.cloudflare.com/&lt;/a&gt; ,保存/之后的字符串为 accountId&lt;/p&gt;
+&lt;p&gt;再打开
+&lt;a href=&#34;https://dash.cloudflare.com/profile/api-tokens&#34;&gt;https://dash.cloudflare.com/profile/api-tokens&lt;/a&gt;
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;这一步完成后会看到如下图，保存好自己的 Workers AI API token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 用户 API 令牌
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#### Workers AI API 令牌已成功创建
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 one-api 添加新渠道
+&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png&#34; alt=&#34;image.png&#34;  /&gt;
+&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>七月随感</title>
+      <link>https://blog.xiaohuangyu.space/p/thinking-in-july/</link>
+      <pubDate>Mon, 22 Jul 2024 23:52:31 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/thinking-in-july/</guid>
+      <description>&lt;p&gt;近期父母和弟弟都来上海，此行目的有两个，一是给父母做体检复查，二是给弟弟做眼睛手术。&lt;/p&gt;
+&lt;p&gt;看着已经年迈的父母，心里有些许不是滋味，不知道身为长子，有些地方我做的是否不妥。父母都年事已高，可弟弟还毫不懂事，这次在未经过父母完全同意的情况下，直接从母亲手机里转钱买了 IPhone14plus ,在我看来无异于偷。或许是因为我小时候有过类似的经历，小学时从家里偷拿钱断断续续有半年，在某天也不知是被同学告发还是被父母发现，总之最后换来一顿毒打，所以对这次的事情才更为重视。人总是要为自己的行为负责，无论是父母或者是当事者本人。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Mac 开发常用软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</link>
+      <pubDate>Sun, 07 Apr 2024 15:46:48 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/mac-dev-software-list/</guid>
+      <description>&lt;p&gt;换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。&lt;/p&gt;
+&lt;h2 id=&#34;开发工具&#34;&gt;开发工具&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;软件&lt;/th&gt;
+          &lt;th&gt;说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;JetBrains 全家桶&lt;/td&gt;
+          &lt;td&gt;GoLand 用得最多，其他看项目需要&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;VSCode&lt;/td&gt;
+          &lt;td&gt;轻量编辑，前端开发主力&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Cursor&lt;/td&gt;
+          &lt;td&gt;最近在用，AI 辅助写代码确实省脑子&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Another Redis Desktop Manager&lt;/td&gt;
+          &lt;td&gt;Redis 客户端，免费够用&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Navicat Premium Lite&lt;/td&gt;
+          &lt;td&gt;官方免费版，不需要破解了&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Sublime Text&lt;/td&gt;
+          &lt;td&gt;快速打开文件看代码&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Docker&lt;/td&gt;
+          &lt;td&gt;容器开发必备&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;DevToys&lt;/td&gt;
+          &lt;td&gt;开发者小工具集合，JSON 格式化、Base64 转换啥的&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;EasyDevo&lt;/td&gt;
+          &lt;td&gt;和 DevToys 类似，二选一就行&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;实用工具&#34;&gt;实用工具&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;软件&lt;/th&gt;
+          &lt;th&gt;说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Android File Transfer&lt;/td&gt;
+          &lt;td&gt;传文件到手机，官方工具&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Neat Download Manager&lt;/td&gt;
+          &lt;td&gt;下载器，比浏览器自带的快&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Mounty&lt;/td&gt;
+          &lt;td&gt;读写 NTFS 格式硬盘&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Keka&lt;/td&gt;
+          &lt;td&gt;解压缩，支持格式多&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Easydict&lt;/td&gt;
+          &lt;td&gt;划词翻译，开源免费&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;IINA&lt;/td&gt;
+          &lt;td&gt;视频播放器，Mac 上最好的选择&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Karabiner-Elements&lt;/td&gt;
+          &lt;td&gt;改键位，比如把 Caps Lock 映射成 Ctrl&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;MonitorControl&lt;/td&gt;
+          &lt;td&gt;外接显示器调节亮度，这个很有用&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Hidden Bar&lt;/td&gt;
+          &lt;td&gt;折叠菜单栏图标，强迫症福音&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Mac Mouse Fix&lt;/td&gt;
+          &lt;td&gt;鼠标滚动变平滑，用罗技鼠标的推荐&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Loop&lt;/td&gt;
+          &lt;td&gt;窗口快捷缩放，类似 Windows 的 Aero Snap&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Mos&lt;/td&gt;
+          &lt;td&gt;鼠标平滑滚动，二选一&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PicList&lt;/td&gt;
+          &lt;td&gt;图床工具，支持 PicGo 配置&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;ShortcutDetective&lt;/td&gt;
+          &lt;td&gt;查看快捷键冲突，偶尔用到&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Macs Fan Control&lt;/td&gt;
+          &lt;td&gt;风扇转速调节，笔记本发热时用&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;个人推荐&lt;/strong&gt;：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>摘抄少数派-重新认识日记</title>
+      <link>https://blog.xiaohuangyu.space/p/rediscover-notes/</link>
+      <pubDate>Fri, 08 Mar 2024 08:00:00 &#43;0000</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/rediscover-notes/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://sspai.com/post/86356&#34;&gt;sspai.com&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们的世界看似雷打不动，但只要找准位置，轻轻一触，它就有可能发生倾斜。而日记，就是那个撬动世界的支点，请你务必一试。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;大多数人对日记的印象，可能还停留在小学老师对我们写日记的要求上。交差、流水账或许是大多数人对日记的看法，这导致我们以一种完成任务的心态被动记录。久而久之，大部分人没有感知到日记带来的好处，就更别提养成写日记的习惯了。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>hugo&#43;obsidian打造最强博客（一）</title>
+      <link>https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/</link>
+      <pubDate>Tue, 20 Feb 2024 16:27:01 &#43;0800</pubDate>
+      <author>eatmoreduck@qq.com (eatmoreduck)</author>
+      <guid isPermaLink="true">https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/</guid>
+      <description>&lt;h2 id=&#34;笔记软件选择原则&#34;&gt;笔记软件选择原则&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;拒绝云服务，数据留存本地，本机运行，使用github/gitee 私仓来进行笔记储存&lt;/li&gt;
+&lt;li&gt;拒绝专有格式，使用通用的标记型语言&lt;/li&gt;
+&lt;li&gt;开源&lt;/li&gt;
+&lt;li&gt;跨平台&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;本地笔记格式选择&#34;&gt;本地笔记格式选择&lt;/h2&gt;
+&lt;p&gt;这个自是不必多说，首选MarkDown格式，方便各类软件编辑，关于此格式，参见wiki &lt;a href=&#34;https://zh.wikipedia.org/wiki/Markdown&#34;&gt;https://zh.wikipedia.org/wiki/Markdown&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>
