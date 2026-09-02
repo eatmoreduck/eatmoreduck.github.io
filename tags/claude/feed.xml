@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Claude on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/claude/</link>
+    <description>Recent content in Claude on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/claude/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我照着 Karpathy 的 LLM Wiki 模式搭了个 Obsidian 知识库，跑了两个月</title>
+      <link>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</link>
+      <pubDate>Mon, 22 Jun 2026 18:40:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</guid>
+      <description>&lt;h2 id=&#34;karpathy-说的那个模式&#34;&gt;Karpathy 说的那个模式&lt;/h2&gt;&#xA;&lt;p&gt;Karpathy 前段时间在一个 gist 里描述过一种用法：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="karpathy-说的那个模式">Karpathy 说的那个模式</h2>
+<p>Karpathy 前段时间在一个 gist 里描述过一种用法：</p>
+<blockquote>
+<p>系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。</p>
+</blockquote>
+<p>第一次看到这段话的时候，我正好在找一个能跟着学 AI agent 的方法。市面上 agent 教程更新太快，看完就忘，记不住。RAG 那套每次都要重新检索，检索回来的东西还是散的。我想要的是把学过的东西一点点攒下来，攒成一个能往后查、能互相连起来的东西。</p>
+<p>Karpathy 这段话戳中我的地方是：他没把&quot;知识库&quot;说成多玄的事，就是三件事，收原料、LLM 编译成 wiki、人看 Obsidian。我也确实更愿意看 Obsidian 里的双向链接，而不是去某个 AI 产品的对话框里翻历史。</p>
+<p>所以我照着搭了一个。这篇文章记一下它实际长什么样，跑下来哪里好用、哪里卡。</p>
+<h2 id="我的版本长什么样">我的版本长什么样</h2>
+<p>仓库叫 <code>agent-obsidian</code>，是一个标准的 Obsidian vault，目录大概是这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">00-Inbox/              临时想法，没处理的内容
+</span></span><span class="line"><span class="cl">01-Raw/                原始资料，不可改写
+</span></span><span class="line"><span class="cl">02-Wiki/               LLM 维护的知识页
+</span></span><span class="line"><span class="cl">03-Daily-Digest/       每天的信息流总结
+</span></span><span class="line"><span class="cl">04-Projects/           自己的 agent 项目
+</span></span><span class="line"><span class="cl">05-Resources/          阅读清单、工具、论文
+</span></span><span class="line"><span class="cl">06-Risk-Control/       风控相关的资料和日报（我本职做风控）
+</span></span><span class="line"><span class="cl">07-Interview-Prep/     面试题
+</span></span><span class="line"><span class="cl">Templates/             Obsidian 笔记模板
+</span></span><span class="line"><span class="cl">scripts/               Python 脚本
+</span></span><span class="line"><span class="cl">config/                自动化配置
+</span></span><span class="line"><span class="cl">data/                  脚本的结构化输出
+</span></span></code></pre></div><p>核心是三层，和 Karpathy 说的一致：</p>
+<ul>
+<li><strong>原料层</strong>：<code>01-Raw/</code> 和 <code>06-Risk-Control/raw-sources/</code>，原始资料不动，只往里加。</li>
+<li><strong>wiki 层</strong>：<code>02-Wiki/</code>，LLM 编译出来的知识页，人也可以看、也可以改。</li>
+<li><strong>规则层</strong>：仓库根目录的 <code>AGENTS.md</code> 和 <code>CLAUDE.md</code>，告诉 LLM 这个 wiki 怎么维护、哪些目录不能动。</li>
+</ul>
+<p>原料层是事实来源，wiki 是 LLM 的二次产物。这个分工很关键。后面讲为什么。</p>
+<h2 id="一天大概怎么跑">一天大概怎么跑</h2>
+<p>每天早上我会跑一个脚本，把当天的信息源抓下来：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">uv run python3 scripts/collect_daily_sources.py
+</span></span></code></pre></div><p>这个脚本去 GitHub、Hacker News、arXiv 拉 AI agent 相关的内容，存成 <code>01-Raw/daily-sources/2026-06-22.md</code>。原料就是一堆标题加链接加摘要，没经过加工。</p>
+<p>然后我让 Claude Code 读这个原料文件，筛出当天真正值得记的几条，干三件事：</p>
+<ol>
+<li>在 <code>03-Daily-Digest/2026-06-22.md</code> 写一篇短日报。</li>
+<li>把里面值得沉淀的概念补进 <code>02-Wiki/</code> 对应的页面。</li>
+<li>更新 <code>02-Wiki/index.md</code> 和 <code>02-Wiki/log.md</code>。</li>
+</ol>
+<p>这个过程里我几乎不手动编辑 wiki。我做的事是判断：这条值不值得记，这个概念是不是该单独开一页，这个结论我同不同意。</p>
+<p>判断这件事 LLM 替不了。但整理、链接、写索引这种体力活，它干得比我快。</p>
+<h2 id="让它自己每天跑hermes">让它自己每天跑：Hermes</h2>
+<p>手动跑脚本这个事，坚持一周还行，一个月就难了。人会忘，会懒，会某天不想开电脑。所以我把每天这一趟活交给了 Hermes。</p>
+<p>Hermes 是 Nous Research 做的一个开源 agent 运行器，不是这个仓库里的脚本。它干三件事：本地聊天、定时任务（cron）、连各种消息平台（Telegram、飞书、Discord、企业微信）。我主要用的是它的 cron。</p>
+<p>我配了两个定时任务：</p>
+<ul>
+<li>每天 07:00 跑 agent 学习日报，结果推到 Telegram。</li>
+<li>每天 07:30 跑风控日报，错开半小时，避免两个任务同时采集、同时推送。</li>
+</ul>
+<p>cron 到点后，Hermes gateway 会起一个新的 agent session，加载我写好的 skill，在我的仓库目录里把采集、总结、写日报、更新 wiki 这一套全跑完，最后把摘要推到 Telegram。我早上醒来手机上就有一条当天的精华列表。</p>
+<p>整个链路长这样：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/hermes-daily-flow.png" alt="Hermes 每日推送链路"  />
+</p>
+<p>左边是触发，中间是采集和编译，右边是两个出口：一条推到我手机，一条发布到公开站点。</p>
+<p>skill 文件是这个自动化的核心。我的 <code>agent-learning-digest</code> skill 里写死了整个流程：先跑哪个脚本、读哪个文件、选哪类内容、日报写成什么结构、最后还要跑发布脚本。prompt 必须自包含，不能写&quot;接着昨天的&quot;，因为每次 cron 起的都是全新 session，没有上下文。</p>
+<p>这套东西配上之后，我才真正体会到 Karpathy 说的&quot;你几乎不用手动写或编辑&quot;。我现在做的只剩两件：早上看一眼 Telegram 的推送，发现哪条不对或者哪个概念该单独开页，回头跟 Claude 说一声补一下。日常的采集、编译、推送，我完全不碰了。</p>
+<h2 id="为什么不是直接用-rag">为什么不是直接用 RAG</h2>
+<p>我自己试过 RAG 那套，把一堆文档切碎塞进向量库，问的时候检索回来几段。问题是检索回来的东西是碎片，不是知识。你看不到概念之间怎么连，看不到自己一个月前的理解和现在差在哪。</p>
+<p>LLM Wiki 的思路不一样。它把原料一次性编译成结构化的页面，存下来，下次问的时候不用再去捞。LLM 先读 <code>index.md</code> 找到相关页面，再读那个页面，再给你有引用的回答。</p>
+<p>举个具体的例子。我之前攒了一页叫 <code>Context Engineering.md</code>，里面记的是各种 context engineering 的实践案例，像 get-shit-done、dirac、backpack-ontology、tool-output compression 这些。每次我看到新的案例，就让 Claude 读那一页，把新东西补进去，同时更新一下和已有概念的链接。</p>
+<p>这页现在比我脑子里的理解清楚多了。我问&quot;tool-output compression 在哪个项目里用过&quot;，它能直接告诉我，还带原始链接。RAG 做不到这个粒度，因为碎片之间没有结构。</p>
+<h2 id="把日报发出去cloudflare-pages">把日报发出去：Cloudflare Pages</h2>
+<p>Hermes 推到 Telegram 是给我自己看的。但日报这东西我也想公开，给同样在学 agent 的人看。于是加了一条出口：日报写完后，自动发布到一个公开站点。</p>
+<p>链路是这样：digest skill 跑完会调用 <code>publish_public_site.py</code>，这个脚本只把白名单目录（<code>03-Daily-Digest</code>、<code>06-Risk-Control/daily-digest</code>、<code>07-Interview-Prep</code>）里的内容挑出来，生成静态页面，commit 到 GitHub，Cloudflare Pages 检测到 push 后自动构建部署。</p>
+<p>这里最关键的是白名单。我的 vault 里有大量私人内容：项目想法、还没成形的笔记、面试刷题进度、风控业务细节。这些绝对不能发出去。所以发布脚本严格按 channel 白名单走，只挑符合 <code>YYYY-MM-DD.md</code> 命名的日报，不会把整个 vault 发出去。</p>
+<p>更细的一层：日报里有些段落是给自己看的，比如&quot;项目启发&quot;&ldquo;需要深入&quot;&ldquo;明日动作&rdquo;，这些在公开版里会被自动过滤掉。公开的只有外部抓取条目的标题、来源、URL 和摘要。私有想法留在本地，公开的是事实。</p>
+<p>这条链路跑顺之后，我每天什么都不用做，Telegram 收一份，公开站点自动更新一份。Karpathy 说的&quot;完全由 LLM 负责&rdquo;，在我这里是真的实现了。</p>
+<h2 id="规则文件是这套东西的地基">规则文件是这套东西的地基</h2>
+<p>跑下来发现，模型多聪明没那么重要，真正决定这套系统好不好用的是 <code>AGENTS.md</code> 写得多细。</p>
+<p>我的 <code>AGENTS.md</code> 里写了很多硬规则，比如：</p>
+<ul>
+<li><code>01-Raw/</code> 不能改写，只能加最小元数据或修格式。</li>
+<li><code>06-Risk-Control/raw-sources/</code> 完全 immutable。</li>
+<li><code>.obsidian/</code> 除非我明确说，否则不动。</li>
+<li>每个 wiki 页的重要结论必须能追溯到 raw source 或 URL。</li>
+<li>不确定的结论标 <code>待验证</code>。</li>
+<li>不堆长引用，总结加链接。</li>
+<li>新增 wiki 页要同步更新 <code>index.md</code>，加一条 <code>log.md</code>。</li>
+</ul>
+<p>这些规则写死之后，LLM 的行为稳定多了。它不会自作主张去改原始资料，也不会在 wiki 页里堆一堆没出处的判断。</p>
+<p>规则文件这个东西，越具体越好。早期我写得粗，LLM 经常自作主张整理目录，把我没说要动的东西也动了。后来把每个目录的&quot;能做什么不能做什么&quot;写清楚，这种情况就少了。</p>
+<h2 id="哪里还不够好">哪里还不够好</h2>
+<p>跑了两个月，几个明显的问题。</p>
+<p><strong>原料质量决定上限。</strong> 脚本拉下来的东西，很多是水文或者重复的新闻。LLM 编译得再好，原料是垃圾出来的也是垃圾。我现在每天还是要手动过一遍原料，删掉明显没用的。这一步还没法完全自动化。</p>
+<p><strong>wiki 会膨胀。</strong> 概念越攒越多，页面之间链接越织越密。好处是查起来方便，坏处是有时候一个页面连出去二三十个链接，读起来累。我大概每两周得做一次 lint，清掉孤立页面、合并重复概念。这个 lint 也是让 LLM 干，但它判断不准，最后还是我拍板。</p>
+<p><strong>整理和判断的边界会模糊。</strong> 有时候 LLM 编译出来的结论我不认同，但又说不上来哪里不对。这种时候要么改掉，要么标 <code>待验证</code>。但标多了页面就乱了，看着一堆待验证也挺烦。</p>
+<p><strong>多 agent 协作还差。</strong> 现在基本是单 agent 干所有事，收原料、写日报、编 wiki 都它来。我想做的是有专门的 agent 负责不同方向，比如风控的归风控，agent 学习的归 agent 学习。现在靠目录分，但 agent 之间不通信。这块还没想清楚。</p>
+<h2 id="这套东西改变了什么">这套东西改变了什么</h2>
+<p>最大的一点：我不再&quot;读完就忘&quot;了。</p>
+<p>以前看一篇 agent 的文章，当时觉得懂了，过两周细节全忘。现在看一篇，就让 Claude 编译进 wiki，下次再想不起来细节，去 <code>02-Wiki/</code> 里一翻就有，还带着当时的出处。</p>
+<p>第二点：学东西的路径清晰了。<code>index.md</code> 现在是我的导航，想看哪个主题直接点进去。比去搜索引擎从头搜要快，因为这些都是我自己筛过的、和我正在做的事相关的。</p>
+<p>第三点，也是 Karpathy 没明说但我觉得更重要的：<strong>判断力被锻炼了</strong>。每天筛原料、改 wiki、决定哪个概念单独开页，这些动作逼着你对每个信息做一次判断。LLM 帮你整理，但不替你判断。这个判断的过程，是 RAG 给不了的。</p>
+<h2 id="关于做成产品">关于&quot;做成产品&quot;</h2>
+<p>Karpathy 说这里能做成一个真正的产品，不只是脚本。我同意，但我觉得现在还早。</p>
+<p>现在这套东西能跑，是因为我对 Obsidian、Claude Code、Python 脚本都熟，哪里坏了能修。换成不熟的人，配环境、调脚本、写规则文件，门槛不低。</p>
+<p>真正的产品得把这几件事藏起来：原料采集不用写脚本，规则文件有默认模板，wiki 的 lint 和合并自动化，多设备同步不靠 git。Obsidian 本身已经把&quot;看&quot;这件事做得很好了，缺的是&quot;自动喂料 + 自动编译&quot;这一层做得很顺的产品。</p>
+<p>我自己短期内还会继续用现在这堆脚本。它不优雅，但它是我的，每个目录怎么来的我都清楚。这种&quot;自己搭的&quot;感觉，用一个现成产品替代不了。也许这就是为什么 Karpathy 说&quot;产品&quot;而不是&quot;开源工具&quot;。真正顺手的工具，往往是自己改出来的那个。</p>
+<h2 id="给想试的人几句话">给想试的人几句话</h2>
+<p>如果你想照着搭一个，不用一开始就上自动化。最小版本就三步：</p>
+<ol>
+<li>建一个 Obsidian vault，分 <code>raw</code> 和 <code>wiki</code> 两个目录。</li>
+<li>写一个 <code>AGENTS.md</code>，把&quot;什么能改什么不能改&quot;写死。</li>
+<li>找一个能读写文件的 coding agent（Claude Code、Codex 都行），让它读你的 raw，写进 wiki。</li>
+</ol>
+<p>跑一周你就知道哪里别扭了。别扭的地方就是你要改规则文件的地方。这套东西不是搭完就定型的，是边用边长的。</p>
+<p>我那个仓库现在大概有 200 多个 wiki 页，每天还在加。它已经比我任何一个 Notion 库都更有用，因为它是有结构的，而且结构是我和 LLM 一起长出来的，不是套个模板就完事。</p>
+<p>Karpathy 那段话我隔段时间就会翻出来再看一遍。每次看都觉得他说得对，但也觉得他故意把最难的部分没说。让 LLM 真正听话地维护一个 wiki，比让它写一段漂亮代码难多了。代码错了能跑出来看，wiki 错了你可能半年后才发现。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>让 Claude Desktop 支持任意第三方模型</title>
+      <link>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</link>
+      <pubDate>Thu, 28 May 2026 15:53:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</guid>
+      <description>&lt;p&gt;最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）&lt;/li&gt;&#xA;&lt;li&gt;Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：</p>
+<ol>
+<li>在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）</li>
+<li>Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。</li>
+</ol>
+<p>可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。</p>
+<ol>
+<li><a href="https://code.claude.com/docs/en/desktop">安装 Claude Desktop</a></li>
+<li>启动 APP，先不要登录，Mac 端在顶部菜单栏寻找</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Help -&gt; Troubleshooting -&gt; Enable Developer mode
+</span></span></code></pre></div><ol start="3">
+<li>继续在顶部选择</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Developer -&gt; Configure third-party inference
+</span></span></code></pre></div><ol start="4">
+<li>打开 CC-switch 添加你的模型供应商，可以一键复制之前配好的 Claude</li>
+<li>点击启用，并且开启本地路由
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260528160017309.png" alt="CC-switch 启用本地路由界面"  />
+</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我把 Happy Coder 搬到手机上，随时随地写代码</title>
+      <link>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</link>
+      <pubDate>Thu, 02 Apr 2026 19:32:20 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;&#xA;&lt;p&gt;最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="起因">起因</h2>
+<p>最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。</p>
+<p>但有个问题一直困扰我——<strong>我得一直盯着它</strong>。</p>
+<p>Claude Code 不是全自动的，它会频繁地要求你确认权限：这个文件能不能改？这个命令能不能执行？要不要继续？你要是不及时回应，它就停在那里等你。人根本走不开。尤其有些项目涉及到前端，我配置了 playwright mcp 做测试，在 claude 里已经配置&quot;mcp__plugin_playwright*&quot;, 的情况下，仍然需要频繁的去请求权限，常常被确认的逻辑卡住，但又不想配置到用户目录的配置而导致权限放的过大。</p>
+<p>我试过用手机远程连 Mac 的屏幕，想着至少能去倒杯水。但实际用起来太难受了，手机屏幕就那么大，终端界面的字小到看不清，点个按钮都得放大再放大，操作效率约等于零。</p>
+<p>这个问题困扰了我挺久的，直到最近看到了 <strong>Happy Coder</strong>。</p>
+<h2 id="happy-coder-是什么">Happy Coder 是什么</h2>
+<p>简单说，它就是 Claude Code 和 Codex 的手机客户端。</p>
+<p>你在电脑上跑 Claude Code，通过 Happy Coder，你可以用手机实时看到它在干什么，并且能直接在手机上操作——确认权限、输入指令、切换任务，跟坐在电脑前一样。</p>
+<p>几个我觉得比较关键的特点：</p>
+<ul>
+<li><strong>免费开源</strong>，MIT 协议，代码在 GitHub 上</li>
+<li><strong>端到端加密</strong>，你的代码和对话内容经过 AES 加密传输，中继服务器只搬运密文，看不懂你在传什么</li>
+<li><strong>推送通知</strong>，Claude Code 需要你操作的时候会推送到手机</li>
+<li><strong>支持语音</strong>，可以直接说话让它执行命令，不只是语音转文字那种</li>
+<li><strong>多任务并行</strong>，可以同时跑好几个 Claude Code 实例</li>
+</ul>
+<h2 id="安全性聊聊">安全性聊聊</h2>
+<p>看到&quot;把代码传到手机上&quot;这个说法，第一反应肯定是——安全吗？</p>
+<p>我查了一下它的原理，大概是这样的：整个系统分三块——电脑端的 CLI、一个中继服务器（Relay Server）、手机端的 App。你的电脑和手机之间不直接通信，所有数据都经过中继服务器转发。</p>
+<p>但关键是，<strong>中继服务器只搬运加密后的数据块，它自己解不开</strong>。</p>
+<p>具体来说：</p>
+<ul>
+<li>电脑端把 Claude Code 的终端状态用 AES 加密后上传</li>
+<li>手机端拉取加密数据，本地解密后展示</li>
+<li>你在手机上的操作指令反过来，也是加密后上传，电脑端解密执行</li>
+<li>密钥在你扫码配对的时候直接在两个设备之间交换，不经过服务器</li>
+</ul>
+<p>这叫零信任架构——你不需要信任中继服务器的运营者，因为它从头到尾只接触密文。而且整个项目是开源的，加密实现可以自己审计。如果你还是不放心，Relay Server 也是开源的，完全可以自己搭一套。</p>
+<p>对我来说，平时写代码传的是加密密文，比手机远程桌面明文传输终端画面安全多了。</p>
+<h2 id="安装配置">安装配置</h2>
+<p>整个过程不复杂，几分钟搞定。</p>
+<h3 id="电脑端">电脑端</h3>
+<p>先装 CLI 工具：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm i -g happy-coder
+</span></span></code></pre></div><p>装好之后直接运行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">happy claude
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260402212922578.png" alt="image.png"  />
+</p>
+<p>它会启动一个 Claude Code 的会话，同时把这个会话注册到 Happy 的服务上。你在终端里看到的跟正常用 Claude Code 没什么区别，只是这个会话现在可以被手机端接管了。</p>
+<h3 id="手机端">手机端</h3>
+<p>去应用商店搜 &ldquo;Happy Coder&rdquo; 就行，iOS 和 Android 都有。</p>
+<p>装好打开之后，它会引导你跟电脑端配对。
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260402213755250.png" alt="image.png"  />
+</p>
+<p>配对完成后，你就能在手机上看到电脑上正在跑的 Claude Code 会话了。</p>
+<h3 id="一个小技巧">一个小技巧</h3>
+<p>用了一段时间后发现一个问题——我老是习惯性地敲 <code>claude</code> 而不是 <code>happy claude</code>，等反应过来的时候已经晚了，会话没注册到 Happy 上。</p>
+<p>后来我在 <code>.zshrc</code> 里加了个 alias：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">claude</span><span class="o">=</span><span class="s1">&#39;happy claude&#39;</span>
+</span></span></code></pre></div><p>这样不管敲 <code>claude</code> 还是 <code>happy claude</code>，走的都是 Happy。如果某天 Happy 出问题了想用原版，敲 <code>\claude</code> 加个反斜杠就能跳过 alias。</p>
+<h2 id="实际使用体验">实际使用体验</h2>
+<p>用了几天，说说真实感受。</p>
+<h3 id="终于可以离开电脑了">终于可以离开电脑了</h3>
+<p>这是最大的变化。以前跑个任务，我得坐在那等它弹出确认框。现在手机收到推送，点开看一眼，确认就完事了。去厨房拿个外卖、沙发上躺着，都不耽误干活。</p>
+<h3 id="推送通知是真的好用">推送通知是真的好用</h3>
+<p>Claude Code 需要你输入的时候、代码写完等你 review 的时候、出了什么问题的时候，都会推送通知到手机。这个功能看着不起眼，但实际用起来你会发现——终于不用一直盯着屏幕刷新了。</p>
+<h3 id="语音操作有点惊喜">语音操作有点惊喜</h3>
+<p>本来觉得语音操控 Claude Code 是个噱头，但实际用下来还不错。躺着的时候不想打字，直接说一句&quot;继续&quot;或者&quot;执行&quot;，它就动了。不是简单的语音转文字，是真的语音到动作的执行。</p>
+<h3 id="多任务是真的爽">多任务是真的爽</h3>
+<p>做新项目时的时候，经常前端后端同时改。现在我可以同时开两个 Claude Code 实例，一个改后端规则引擎，一个改前端配置页面，手机上切来切去看进度。以前得一个个排着来，现在并行搞效率高了不少，当然一个 claude 多个 agent 一次性下发任务命令执行也是非常爽的。</p>
+<h3 id="也有不完美的地方">也有不完美的地方</h3>
+<p>说说缺点。毕竟是第三方工具，界面上偶尔会有点卡顿。另外如果你家网络不太好，手机端的响应会有延迟，这个看你自己的网络环境。还有就是语音识别偶尔会抽风，说中文的时候准确率不太稳定（我感觉到了，所以我都用微信语音转文字）。</p>
+<h2 id="适合什么人">适合什么人</h2>
+<p>如果你符合下面任意一条，可以试试：</p>
+<ul>
+<li>用 Claude Code 或 Codex 做主力开发工具，但不想一直坐在电脑前</li>
+<li>经常需要同时跑多个 AI 编程任务</li>
+<li>想在手机上也能随时查看和操控你的编程 session</li>
+<li>对代码安全有要求，需要端到端加密</li>
+</ul>
+<h2 id="写在最后">写在最后</h2>
+<p>Happy Coder 解决的不是什么大问题，它就是帮你把&quot;必须坐在电脑前&quot;这个束缚去掉了。但就是这个小变化，让整个 vibe coding 的体验舒服了很多。</p>
+<p>至少对我来说，终于不用在等确认的时候干坐着了。</p>
+<p>工具地址：<a href="https://happy.engineering/">happy.engineering</a></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Obsidian &#43; Claude Code 构建 AI 第二大脑实战指南</title>
+      <link>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</link>
+      <pubDate>Wed, 01 Apr 2026 09:34:29 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</guid>
+      <description>&lt;h2 id=&#34;为什么要在-obsidian-里用-claude-code&#34;&gt;为什么要在 Obsidian 里用 Claude Code&lt;/h2&gt;&#xA;&lt;p&gt;说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。&lt;/p&gt;&#xA;&lt;p&gt;不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="为什么要在-obsidian-里用-claude-code">为什么要在 Obsidian 里用 Claude Code</h2>
+<p>说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。</p>
+<p>不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。</p>
+<p>Teresa Torres 在一期播客里分享过她的工作流：Obsidian + 两个终端窗口跑 Claude Code，日常安排、笔记整理、知识管理全交给 AI。但说实话，开两个终端窗口盯着看，体验并不好。如果能直接在 Obsidian 内部跑 Claude Code，那才叫丝滑。</p>
+<p>好在社区已经做了好几个插件来实现这件事。下面介绍三种方案，从易到难，选一个适合你的就行。</p>
+<h2 id="前置条件">前置条件</h2>
+<p>不管你选哪个方案，都需要先安装 Claude Code CLI。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 通过 npm 全局安装</span>
+</span></span><span class="line"><span class="cl">npm install -g @anthropic-ai/claude-code
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl">claude --version
+</span></span></code></pre></div><p>然后需要配置 API Key。去 <a href="https://console.anthropic.com/">Anthropic Console</a> 申请一个，然后设置环境变量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 推荐写到 shell 配置文件里（~/.zshrc 或 ~/.bashrc）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s1">&#39;你的-api-key&#39;</span>
+</span></span></code></pre></div><p>如果你用的是 Claude Code 订阅（而不是 API 按量付费），登录一下就行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">claude login
+</span></span></code></pre></div><p>搞定这些，后面的插件才能正常工作。</p>
+<h2 id="方案一claude-code-integration-插件推荐">方案一：Claude Code Integration 插件（推荐）</h2>
+<p>这是目前功能最完善的方案，来自 <a href="https://github.com/deivid11/obsidian-claude-code-plugin">deivid11/obsidian-claude-code-plugin</a>。它不是简单嵌个终端，而是做了完整的 UI 交互：标签页、会话管理、实时流式输出、变更预览、Diff 对比，基本把 Claude Code 的能力完整搬进了 Obsidian。</p>
+<h3 id="安装">安装</h3>
+<p>这个插件还在审核中，暂时没上社区插件商店，需要通过 BRAT 安装。</p>
+<p><strong>第一步：安装 BRAT</strong></p>
+<p>如果你已经有了就跳过。没有的话：</p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件</li>
+<li>关闭安全模式</li>
+<li>点&quot;浏览&quot;，搜索 &ldquo;BRAT&rdquo;，安装并启用</li>
+</ol>
+<p><strong>第二步：通过 BRAT 安装 Claude Code Integration</strong></p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴仓库地址：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/deivid11/obsidian-claude-code-plugin
+</span></span></code></pre></div></li>
+<li>BRAT 会自动下载最新版本</li>
+<li>回到第三方插件列表，启用 &ldquo;Claude Code Integration&rdquo;</li>
+</ol>
+<h3 id="配置">配置</h3>
+<p>打开 设置 -&gt; Claude Code Integration，核心配置项：</p>
+<ul>
+<li><strong>Backend</strong>：选 Claude Code</li>
+<li><strong>Claude Code Path</strong>：一般会自动检测，检测不到就手动填，比如 <code>/usr/local/bin/claude</code> mac用户一般在 /Users/{username}/.local/bin/claude</li>
+<li><strong>Model</strong>：Sonnet（均衡）、Opus（最强）、Haiku（最快最便宜），日常用 Sonnet 就够了</li>
+<li><strong>Allow Vault Access</strong>：建议开启，这样 Claude 能读写整个 vault 的文件</li>
+<li><strong>Enable Permissionless Mode</strong>：新手建议先关着，这样每次修改前都会让你确认。熟悉了再开</li>
+<li>如果是国内用户，用 claude code 配合 glm 等模型使用，可以在<strong>自定义 API 配置</strong>里配置一遍对应供应商的信息</li>
+</ul>
+<h3 id="日常使用">日常使用</h3>
+<ol>
+<li>点左侧边栏的 Claude 图标，或者 <code>Cmd/Ctrl + P</code> 输入 &ldquo;Open Claude Code Assistant&rdquo;</li>
+<li>在面板里输入你的需求，比如：
+<ul>
+<li>&ldquo;给这篇笔记加个目录&rdquo;</li>
+<li>&ldquo;总结这篇文章的要点&rdquo;</li>
+<li>&ldquo;帮我整理一下这些标签&rdquo;</li>
+<li>&ldquo;用 PlantUML 画一个工作流图&rdquo;</li>
+</ul>
+</li>
+<li>Claude 会实时流式输出结果，你可以看到它在做什么</li>
+<li>如果有文件修改，会弹出预览，你可以选择接受或拒绝</li>
+</ol>
+<p>每个笔记都有独立的会话历史，切换笔记不会丢失上下文。还有个 Sessions 标签页能看到所有会话的汇总。 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100001767.png" alt="Claude Code Integration 插件在 Obsidian 中的使用界面"  />
+</p>
+<h2 id="方案二claude-sidebar-侧边栏">方案二：Claude Sidebar 侧边栏</h2>
+<p>来自 <a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">derek-larson14/obsidian-claude-sidebar</a>，主打一个简洁。它就是在 Obsidian 侧边栏里嵌了一个 Claude Code 终端，不需要额外的 UI，就是原生的 Claude Code 体验。</p>
+<h3 id="安装-1">安装</h3>
+<p>同样通过 BRAT：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/derek-larson14/obsidian-claude-sidebar
+</span></span></code></pre></div></li>
+<li>启用 &ldquo;Claude Sidebar&rdquo;</li>
+</ol>
+<h3 id="使用">使用</h3>
+<p>点侧边栏的机器人图标（或设置快捷键），右侧就会弹出一个终端面板，里面就是 Claude Code。跟你在外部终端里用一模一样，只是不用切窗口了。</p>
+<p>支持多标签页，可以同时开几个对话。简单粗暴，适合已经熟悉 Claude Code 命令行操作的人。
+<strong>因个人已经适应 Claude Code 的终端，又觉得第一种方式比较冗余，还是更喜欢这种侧边栏的操作</strong>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100241568.png" alt="image.png"  />
+</p>
+<h2 id="方案三terminal-插件">方案三：Terminal 插件</h2>
+<p>如果你想要更灵活的控制，可以用 <a href="https://forum.obsidian.md/t/plugin-terminal-integrated-terminals-in-obsidian/52170">Polyware Terminal</a> 插件，在 Obsidian 里直接开一个完整的终端，然后在里面跑 <code>claude</code>。</p>
+<h3 id="安装-2">安装</h3>
+<p>这个插件已经在社区插件商店里了：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; 浏览</li>
+<li>搜索 &ldquo;Terminal&rdquo;，找到 &ldquo;Terminal — Integrated terminals in Obsidian&rdquo;</li>
+<li>安装并启用</li>
+</ol>
+<h3 id="使用-1">使用</h3>
+<ol>
+<li>打开终端面板（左侧边栏或底部面板）</li>
+<li>在终端里输入 <code>claude</code> 回车</li>
+<li>开始对话</li>
+</ol>
+<p>本质上就是在 Obsidian 里开了个终端窗口。你可以自定义主题，让它跟 Obsidian 的外观融合。Yu Lu 在她的 <a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Medium 文章</a>里详细介绍了这种玩法，她管这叫 &ldquo;Vibe Writing&rdquo;——一边在 Obsidian 里写笔记，一边让 AI 在旁边的终端里实时辅助。</p>
+<h2 id="进阶让-claude-更懂你的-vault">进阶：让 Claude 更懂你的 Vault</h2>
+<p>不管用哪个方案，都可以在 vault 根目录创建一个 <code>CLAUDE.md</code> 文件。Claude Code 每次启动都会读取这个文件，作为它的&quot;行为指南&quot;。</p>
+<p>比如我的博客项目里的 <code>CLAUDE.md</code> 就写明了：</p>
+<ul>
+<li>文章的 front matter 格式要求</li>
+<li>图片上传到 CDN，不需要管理本地图片</li>
+<li>部署通过 GitHub Actions 自动完成</li>
+</ul>
+<p>这样 Claude Code 在操作你的文件时，就会遵循这些规则，不会乱来。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>装完插件找不到 Claude Code？</strong></p>
+<p>先确认 CLI 装好了没。在终端里跑 <code>claude --version</code>，如果能输出版本号就说明没问题。如果插件还是报错，去设置里手动指定 Claude Code 的路径。</p>
+<p><strong>Linux 下用 Flatpak/Snap 装的 Obsidian 报错？</strong></p>
+<p>沙盒限制，Obsidian 访问不到系统的 Node.js 和 Claude Code。解决方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Flatpak 用户执行这个</span>
+</span></span><span class="line"><span class="cl">flatpak override --user md.obsidian.Obsidian --filesystem<span class="o">=</span>host
+</span></span></code></pre></div><p>或者装个 <a href="https://flathub.org/apps/com.github.tchx84.Flatseal">Flatseal</a>，在图形界面里给 Obsidian 开文件系统权限。</p>
+<p><strong>API 费用怎么样？</strong></p>
+<p>看你怎么用。日常笔记整理用 Haiku 模型，几乎花不了多少钱。重度使用的话 Sonnet 也还好。具体可以去 <a href="https://console.anthropic.com/">Anthropic Console</a> 查看用量。当然国内的模型现在做的已经不错了，我日常主力使用的是智谱GLM5.1大模型，除了慢点好像没什么别的缺点，此外还会使用 codex 等模型来进行交叉校验。
+蹲蹲
+🙋蹲队友拼智谱 Coding Plan！</p>
+<p>🧩国内顶流编程大模型，20+主流工具全适配，性价比拉满，
+👉立即参与「拼好模」：https://www.bigmodel.cn/glm-coding?ic=CLGJO27TA6</p>
+<h2 id="写在最后">写在最后</h2>
+<p>三种方案，推荐新手直接用方案一（Claude Code Integration），功能最全，UI 体验最好，上手门槛也低。方案二适合已经习惯了命令行的老手。方案三最灵活但需要自己折腾。</p>
+<p>说到底，Obsidian + Claude Code 的组合之所以好用，核心原因是它们共享同一个底层——Markdown 文件。Claude Code 不需要通过什么复杂的 API 去理解你的笔记，它直接读写文件就行了。简单，直接，高效。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/deivid11/obsidian-claude-code-plugin">Claude Code Integration 插件 (GitHub)</a></li>
+<li><a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">Claude Sidebar (Obsidian Forum)</a></li>
+<li><a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Obsidian X Claude Code — A Seamless Vibe Writing Experience (Medium)</a></li>
+<li><a href="https://www.anthropic.com/claude-code">Claude Code 官方网站</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI-助力每一个梦想之二</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</link>
+      <pubDate>Thu, 26 Mar 2026 11:07:23 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/ai-empowering-dreams/&#34;&gt;AI-助力每一个梦想&lt;/a&gt; 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。&lt;/p&gt;&#xA;&lt;p&gt;这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言">前言</h2>
+<p>在上一篇 <a href="/p/ai-empowering-dreams/">AI-助力每一个梦想</a> 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。</p>
+<p>这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。</p>
+<hr>
+<h2 id="改造清单">改造清单</h2>
+<p>先看一下这次完成的改造内容：</p>
+<h3 id="主题更换">主题更换</h3>
+<p>从旧主题更换到 <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a>，这个主题：</p>
+<ul>
+<li>简洁优雅，符合我的审美</li>
+<li>响应式设计，移动端友好</li>
+<li>内置暗色模式</li>
+<li>良好的 SEO 支持</li>
+</ul>
+<p>更换过程涉及大量配置文件的重写：</p>
+<ul>
+<li><code>config/_default/</code> 下的所有配置文件</li>
+<li>首页、归档、友情链接等页面内容</li>
+<li>自定义样式文件</li>
+</ul>
+<p>说实话，如果是自己手动配置，光是研究各个配置项的作用就要花不少时间。但在 cc+glm4.7 的协助下，整个过程顺畅了很多。</p>
+<h3 id="社交媒体集成">社交媒体集成</h3>
+<p>新增了多个社交媒体图标和链接：</p>
+<ul>
+<li>微信（侧边栏二维码）</li>
+<li>GitHub</li>
+<li>哔哩哔哩</li>
+<li>YouTube</li>
+</ul>
+<p>这些图标不是直接用主题自带的，而是我自己从 <a href="https://tabler.io/">Tabler Icons</a> 找的官方 SVG，或者是让 AI 给我找，然后手动添加到项目中，虽然经历过多次的反复，比如微信的 SVG 改对了又给我换错，存在不稳定的情况，但最后我把这条规则直接写入 CLAUDE.md 得以解决</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 微信social media的svg已经固定，不要做改动!
+</span></span></code></pre></div><h3 id="分享按钮优化">分享按钮优化</h3>
+<p>增强了文章分享功能，支持：</p>
+<ul>
+<li>微信</li>
+<li>朋友圈</li>
+<li>知乎</li>
+<li>Twitter</li>
+<li>Facebook</li>
+<li>LinkedIn
+虽然 知乎的分享还有 bug，但目前这个结果我相当满意了，能给到 90 分</li>
+</ul>
+<h3 id="seo-全面优化">SEO 全面优化</h3>
+<p>这部分是我之前一直想做但觉得太复杂的：</p>
+<p><strong>结构化数据</strong>：</p>
+<ul>
+<li>BlogPosting</li>
+<li>FAQPage</li>
+<li>HowTo</li>
+<li>VideoObject</li>
+<li>Review</li>
+<li>SoftwareApplication</li>
+</ul>
+<p><strong>验证配置</strong>：</p>
+<ul>
+<li>Google Search Console 验证码补全</li>
+</ul>
+<p><strong>AI 可发现性</strong>：</p>
+<ul>
+<li>添加 <code>llms.txt</code> 文件，让 AI 工具更容易理解博客内容</li>
+</ul>
+<h3 id="github-actions-性能优化">GitHub Actions 性能优化</h3>
+<p>博客部署使用 GitHub Actions，之前每次构建效率有点低，。</p>
+<p>优化内容：</p>
+<ul>
+<li>升级到 Node.js 24</li>
+<li>添加 Hugo CLI 缓存</li>
+<li>添加 Git Submodule 缓存</li>
+<li>优化 workflow 步骤结构</li>
+</ul>
+<p>构建时间明显缩短了。</p>
+<h3 id="标签系统重构">标签系统重构</h3>
+<p>之前的博客同时使用 <code>categories</code> 和 <code>tags</code>，但实际上 categories 几乎没用，而且两者功能重复。</p>
+<p>重构内容：</p>
+<ul>
+<li>删除所有文章的 categories 字段</li>
+<li>为空标签文章补充标签</li>
+<li>修复拼写错误（ags → tags）</li>
+<li>简化文章创建流程（Obsidian QuickAdd 脚本优化）</li>
+</ul>
+<h3 id="数据分析集成">数据分析集成</h3>
+<p>除了已有的 Google Analytics，新增了 <strong>Cloudflare Web Analytics</strong>：</p>
+<p>优势：</p>
+<ul>
+<li>隐私友好，不使用 Cookie</li>
+<li>轻量级，不影响页面加载速度</li>
+<li>界面简洁直观</li>
+</ul>
+<h3 id="友情链接页面">友情链接页面</h3>
+<p>重新设计了友情链接页面：</p>
+<ul>
+<li>添加社交媒体链接（知乎、B站、YouTube、GitHub）</li>
+<li>添加 RSS 订阅链接</li>
+<li>优化友链交换文案</li>
+<li>启用评论功能（基于 Giscus）</li>
+</ul>
+<p>虽然目前没有一个友链，但还是很希望能多交朋友，多多添加友链～</p>
+<hr>
+<h2 id="工作方式">工作方式</h2>
+<p>这次改造使用的是 <strong>Claude Code</strong>，工作流程大概是：</p>
+<ol>
+<li><strong>提出需求</strong>：告诉 Claude 我想要做什么</li>
+<li><strong>分析方案</strong>：Claude 分析代码库，给出建议</li>
+<li><strong>确认执行</strong>：我确认后，Claude 直接修改代码</li>
+<li><strong>验证结果</strong>：推送代码，查看效果</li>
+</ol>
+<p>整个过程不需要我手动写任何代码，只需要：</p>
+<ul>
+<li>明确自己想要什么</li>
+<li>对 Claude 的建议进行判断和确认</li>
+<li>验证结果是否符合预期</li>
+</ul>
+<hr>
+<h2 id="高强度使用-ai-之后我有很多想法">高强度使用 AI 之后，我有很多想法</h2>
+<h3 id="敢想敢做">敢想敢做</h3>
+<p>以前看到别人博客有各种酷炫功能，自己想加但总觉得太复杂：</p>
+<ul>
+<li>主题配置一大堆参数，看不懂（感觉像是花时间装修，但是实际应该把时间花在内容产出上）</li>
+<li>SEO 结构化数据，完全不会（经过这次了之后，起码知道哪些点需要考虑到）</li>
+<li>GitHub Actions 优化，怕改坏了（这个是重中之重，想当初废了很大劲该坏了很多次部署的 action）</li>
+</ul>
+<p>现在有了 AI 协作，这些都不是障碍。只要说出需求，AI 就能帮你实现。</p>
+<h3 id="时间成本大幅降低">时间成本大幅降低</h3>
+<p>这次改造大概花了 12 小时，但实际操作时间可能只有几个小时：</p>
+<ul>
+<li>大部分时间在等待 GitHub Actions 部署</li>
+<li>真正的思考和决策时间很有限</li>
+</ul>
+<p>如果是自己从零开始研究：</p>
+<ul>
+<li>研究主题配置：可能要几天</li>
+<li>学习 SEO 最佳实践：可能要一周</li>
+<li>优化 GitHub Actions：可能要反复调试</li>
+</ul>
+<h3 id="ai-是副驾驶">AI 是副驾驶</h3>
+<p>AI 不会替代你，但会让你变得更强：</p>
+<ul>
+<li>你仍然需要知道想要什么</li>
+<li>你需要判断 AI 的建议是否合理</li>
+<li>你需要验证结果是否符合预期</li>
+</ul>
+<p>AI 是副驾驶，你是机长。</p>
+<hr>
+<h2 id="下一步">下一步</h2>
+<p>我也给自己立了一个 flag：<strong>每周至少产出一篇博文</strong>。</p>
+<p>借助 AI 的力量，我觉得这个 flag 是可以坚持的。</p>
+<hr>
+<p>AI 让我敢想敢做。以前觉得复杂、麻烦、不想做的事情，现在有了 AI 协作，花一点点时间就能完成。</p>
+<p>这不仅是效率的提升，更是可能性的拓展。</p>
+<p><strong>AI 助力每一个梦想，这不是空话。</strong></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI-助力每一个梦想之一</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</link>
+      <pubDate>Wed, 25 Mar 2026 06:54:46 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</guid>
+      <description>&lt;p&gt;过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;当时复制报错代码粘到 POE 中,一边阅读源学习新的语法和框架的用法。今天，使用 AI 的方式已经彻底，或者与其说是使用 ai ，不如说是与 AI 协作。&#xA;也才仅仅过去了两年的时间，AI的发展真是令人咋舌，焦虑无处不在，如影随形。半个月之前，我在不怎么熟悉golang的情况下，紧靠Claude Code配合glm5 ，写出了SkillManager一个专门管理skill跨平台小工，地址在这 &lt;a href=&#34;https://github.com/eatmoreduck/SkillManager.git&#34;&gt;https://github.com/eatmoreduck/SkillManager.git&lt;/a&gt; 。&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142625642.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142632949.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142640944.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png" alt="image.png"  />
+
+当时复制报错代码粘到 POE 中,一边阅读源学习新的语法和框架的用法。今天，使用 AI 的方式已经彻底，或者与其说是使用 ai ，不如说是与 AI 协作。
+也才仅仅过去了两年的时间，AI的发展真是令人咋舌，焦虑无处不在，如影随形。半个月之前，我在不怎么熟悉golang的情况下，紧靠Claude Code配合glm5 ，写出了SkillManager一个专门管理skill跨平台小工，地址在这 <a href="https://github.com/eatmoreduck/SkillManager.git">https://github.com/eatmoreduck/SkillManager.git</a> 。
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142625642.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142632949.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142640944.png" alt="image.png"  />
+</p>
+<p>如果没有AI，单凭我自己，我不确定需要花费多少时间去完成一个多端部署的小项目，包含三端打包的CI/CD，能够正常运行。但毛毛一估算，光是这些打包的配置文件就足够让人抓耳挠腮的。
+正如标题而言，AI助力每一个梦想。AI确确实实的在改变我们每一个人的生活。单单是电脑上，我已经装了这么多的AI工具来配合我的日常工作。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142112591.png" alt="image.png"  />
+</p>
+<p>分别提手机上的AI 工具，随时掏出手机，记录会议，咨询常见的规章制度，AI 已经完完全全融入了我的生活。</p>
+<p>从最初的POE 订阅，到后续cursor 订阅，又到近期的glm，我在AI工具上的花费保守估计已经达到了3000 元以上。不敢想象没有 AI 的世界，难怪自嘲&quot;Claude 挂了，我也跟著挂了&quot;。</p>
+<p>有想法了，随时打开豆包，打开 cc，/gsd:do 付诸实践，AI 助力每一个梦想。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>OpenClaw 从零到一</title>
+      <link>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</link>
+      <pubDate>Thu, 26 Feb 2026 23:26:51 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</guid>
+      <description>&lt;p&gt;记录下openclaw安装流程，以macOS为例&lt;/p&gt;&#xA;&lt;h3 id=&#34;安装node&#34;&gt;安装node&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装brew install node 可指定版本，但openclaw 要求大于22&lt;/li&gt;&#xA;&lt;li&gt;验证 node &amp;ndash;version 出现版本号，版本号大于20即可&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;安装git&#34;&gt;安装git&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version   &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出有值即可                            &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git version 2.39.5 (Apple Git-154)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;安装并配置openclaw&#34;&gt;安装并配置openclaw&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装openclaw&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;n&#34;&gt;luna&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ppmac&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fsSL&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openclaw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ai&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;install&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bash&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installer&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;Because&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;yourself&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reminders&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;so&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2024.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Detected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plan&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;ne&#34;&gt;OS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Requested&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;latest&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Preparing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;environment&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Homebrew&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;found&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;11.9&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v2026&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2.26&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Finalizing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Refreshing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loaded&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;metadata&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;refreshed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;restarted&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✗&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Probing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;failed&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;—&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;details&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unknown&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;option&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;--probe&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Did&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;you&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mean&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;one&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;no&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;probe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;profile&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;successfully&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2026.2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;m in. Let&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cause&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;some&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;responsible&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chaos&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;migrate&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;complete&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skipping&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;onboarding&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Starting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;配置openclaw&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>记录下openclaw安装流程，以macOS为例</p>
+<h3 id="安装node">安装node</h3>
+<ol>
+<li>安装brew install node 可指定版本，但openclaw 要求大于22</li>
+<li>验证 node &ndash;version 出现版本号，版本号大于20即可</li>
+</ol>
+<h3 id="安装git">安装git</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install git
+</span></span><span class="line"><span class="cl">git --version   
+</span></span><span class="line"><span class="cl">输出有值即可                            
+</span></span><span class="line"><span class="cl">git version 2.39.5 (Apple Git-154)
+</span></span></code></pre></div><h3 id="安装并配置openclaw">安装并配置openclaw</h3>
+<ol>
+<li>安装openclaw</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">luna</span><span class="err">@</span><span class="n">ppmac</span> <span class="err"></span> <span class="o">~</span> <span class="err"></span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">openclaw</span><span class="o">.</span><span class="n">ai</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sh</span> <span class="o">|</span> <span class="n">bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">🦞</span> <span class="n">OpenClaw</span> <span class="n">Installer</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Because</span> <span class="n">texting</span> <span class="n">yourself</span> <span class="n">reminders</span> <span class="n">is</span> <span class="n">so</span> <span class="mf">2024.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Detected</span><span class="p">:</span> <span class="n">macos</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Install</span> <span class="n">plan</span>
+</span></span><span class="line"><span class="cl"><span class="ne">OS</span><span class="p">:</span> <span class="n">macos</span>
+</span></span><span class="line"><span class="cl"><span class="n">Install</span> <span class="n">method</span><span class="p">:</span> <span class="n">npm</span>
+</span></span><span class="line"><span class="cl"><span class="n">Requested</span> <span class="n">version</span><span class="p">:</span> <span class="n">latest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Preparing</span> <span class="n">environment</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Homebrew</span> <span class="n">already</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="ne">Node</span><span class="o">.</span><span class="n">js</span> <span class="n">v25</span><span class="o">.</span><span class="mf">6.1</span> <span class="n">found</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Active</span> <span class="ne">Node</span><span class="o">.</span><span class="n">js</span><span class="p">:</span> <span class="n">v25</span><span class="o">.</span><span class="mf">6.1</span> <span class="p">(</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homebrew</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Active</span> <span class="n">npm</span><span class="p">:</span> <span class="mf">11.9</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homebrew</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Installing</span> <span class="n">OpenClaw</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Git</span> <span class="n">already</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Installing</span> <span class="n">OpenClaw</span> <span class="n">v2026</span><span class="o">.</span><span class="mf">2.26</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">OpenClaw</span> <span class="n">npm</span> <span class="n">package</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">OpenClaw</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Finalizing</span> <span class="n">setup</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Refreshing</span> <span class="n">loaded</span> <span class="n">gateway</span> <span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Gateway</span> <span class="n">service</span> <span class="n">metadata</span> <span class="n">refreshed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Gateway</span> <span class="n">service</span> <span class="n">restarted</span>
+</span></span><span class="line"><span class="cl"><span class="err">✗</span> <span class="n">Probing</span> <span class="n">gateway</span> <span class="n">service</span> <span class="n">failed</span> <span class="err">—</span> <span class="n">re</span><span class="o">-</span><span class="n">run</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span> <span class="k">for</span> <span class="n">details</span>
+</span></span><span class="line"><span class="cl"><span class="n">error</span><span class="p">:</span> <span class="n">unknown</span> <span class="n">option</span> <span class="s1">&#39;--probe&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">Did</span> <span class="n">you</span> <span class="n">mean</span> <span class="n">one</span> <span class="n">of</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">probe</span><span class="p">,</span> <span class="o">--</span><span class="n">profile</span><span class="err">?</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">🦞</span> <span class="n">OpenClaw</span> <span class="n">installed</span> <span class="n">successfully</span> <span class="p">(</span><span class="mf">2026.2</span><span class="o">.</span><span class="mi">26</span><span class="p">)</span><span class="o">!</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span><span class="s1">&#39;m in. Let&#39;</span><span class="n">s</span> <span class="n">cause</span> <span class="n">some</span> <span class="n">responsible</span> <span class="n">chaos</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Config</span> <span class="n">already</span> <span class="n">present</span><span class="p">;</span> <span class="n">running</span> <span class="n">doctor</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Running</span> <span class="n">doctor</span> <span class="n">to</span> <span class="n">migrate</span> <span class="n">settings</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Doctor</span> <span class="n">complete</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Config</span> <span class="n">already</span> <span class="n">present</span><span class="p">;</span> <span class="n">skipping</span> <span class="n">onboarding</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Starting</span> <span class="n">setup</span>
+</span></span></code></pre></div><ol start="2">
+<li>
+<p>配置openclaw</p>
+<ol>
+<li>安装好后会自动开始这步<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260226233356873.png" alt="image.png"  />
+选yes</li>
+<li>先quickstart 后面可配置 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094239665.png" alt="image.png"  />
+</li>
+<li>模型选择自己想要的模型即可，我这里选用z.ai 使用智谱模型（需要先去生成apikey 并且填入，其他模型也是一样）<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094530465.png" alt="image.png"  />
+</li>
+<li>channel官方推荐telegram 这里自行选择，需要准备上网工具增加proxy配置后，粘贴bot的token ，机器上需要加配置 &ldquo;proxy&rdquo;:&ldquo;http://127.0.0.1:7890&rdquo;, 给机器人发消息 ，/start 之后会收到回复的code 然后在终端使用。openclaw pairing approve telegram QRNT5UUY(code)<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094753872.png" alt="image.png"  />
+
+至此已经配置完，可以开始使用了openclaw</li>
+</ol>
+</li>
+</ol>
+<h3 id="给openclaw操控浏览器的能力">给openclaw操控浏览器的能力</h3>
+<p>macOS</p>
+<ol>
+<li>安装extension，命令执行后会自动下载extension包到对应文件夹下 /Users/{你的用户名}/.openclaw/browser/chrome-extension</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">openclaw browser extension install
+</span></span></code></pre></div><ol start="2">
+<li>
+<p>在chrome里地址栏输入 chrome://extensions/ 打开开发者模式 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100923737.png" alt="image.png"  />
+</p>
+</li>
+<li>
+<p>点击加载未打包的扩展程序，然后选中extension文件夹即可 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100909783.png" alt="image.png"  />
+</p>
+</li>
+</ol>
+<p>linux 可参照 <a href="https://cloud.tencent.com/developer/article/2626186">https://cloud.tencent.com/developer/article/2626186</a></p>
+<h3 id="遇到的坑">遇到的坑</h3>
+<ol>
+<li>最初用nvm 安装node ，node全局安装后总时不时出现闪退问题，后面直接采用brew install node，官方脚本安装的openclaw</li>
+<li>nvm安装后，卸载时，重新运行openclaw gatway install的plist .nvm路径，导致openclaw doctor始终有问题 原因是清理了.zshr后当前终端没有source 导致读取的环境变量是旧的，要么source ，要么重连一下ssh</li>
+</ol>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

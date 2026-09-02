@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/ai/</link>
+    <description>Recent content in AI on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/ai/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>终端启动 1.3 秒，AI 十分钟帮我干到 0.2 秒</title>
+      <link>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</link>
+      <pubDate>Thu, 28 May 2026 17:23:19 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;这台机器用了好几年了。各种开发环境装了又卸、卸了又装，&lt;code&gt;.zshrc&lt;/code&gt; 和 &lt;code&gt;.bash_profile&lt;/code&gt; 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端</p>
+</blockquote>
+<p>这台机器用了好几年了。各种开发环境装了又卸、卸了又装，<code>.zshrc</code> 和 <code>.bash_profile</code> 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。</p>
+<p>一直知道该清理，但总觉得&quot;下次再说&quot;。直到最近用 Claude + GLM 5.1 试了一下，从诊断到改完，前后大概十来分钟。</p>
+<p>结果是从 1.3 秒降到了 0.2 秒。</p>
+<h2 id="先看看有多慢">先看看有多慢</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">time</span> zsh -i -c <span class="nb">exit</span>
+</span></span></code></pre></div><p>跑一下，1.303 秒。开个终端等一秒多，体感确实很差。</p>
+<h2 id="怎么查的">怎么查的</h2>
+<p>整体计时知道了慢，但不知道慢在哪。有两种方式定位：</p>
+<p><strong>逐个 source 测耗时：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;source /opt/homebrew/opt/nvm/nvm.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;source </span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;eval \$(/opt/homebrew/bin/brew shellenv)&#34;</span>
+</span></span></code></pre></div><p><strong>zprof 函数级分析：</strong></p>
+<p>在 <code>.zshrc</code> 开头加 <code>zmodload zsh/zprof</code>，末尾加 <code>zprof</code>，能得到精确到每个函数的耗时排名。这个最管用。</p>
+<h2 id="到底是什么在拖后腿">到底是什么在拖后腿</h2>
+<p>zprof 一跑，问题很清楚：</p>
+<ul>
+<li><strong>nvm</strong> 吃了 ~540ms，占了一半多。它每次启动都扫描所有 Node 版本，完全没必要。</li>
+<li><strong>compinit</strong>（补全系统）~360ms，6 个插件的补全初始化开销。</li>
+<li><strong>SDKMAN</strong> ~300ms，Java 版本管理器初始化。</li>
+<li>brew / bun / cargo 这些加起来 ~120ms，影响不大。</li>
+</ul>
+<p>但除了这些&quot;大头&quot;，还有一堆乱七八糟的问题：</p>
+<ul>
+<li><code>zsh-syntax-highlighting</code> 和 <code>fast-syntax-highlighting</code> 功能完全一样，同时加载着</li>
+<li>ServBay 环境块在 <code>.zshrc</code> 和 <code>.bash_profile</code> 各出现一次</li>
+<li>SDKMAN 也加载了两次，同上</li>
+<li>Antigravity PATH 在 <code>.zshrc</code> 里写了两次</li>
+<li>datax、codebuddy、yarn global 等目录早就不存在了，PATH 还留着</li>
+<li><code>.zshenv</code> 里重复加载 <code>cargo/env</code></li>
+<li><code>arch -arm64 brew</code> 这个 alias 在原生 arm64 机器上完全多余</li>
+</ul>
+<p>说白了，就是年久失修。每次装个新工具就往配置文件里塞一行，从来没清理过。</p>
+<h2 id="改了什么">改了什么</h2>
+<h3 id="nvm-懒加载省-500ms效果最大">nvm 懒加载（省 ~500ms，效果最大）</h3>
+<p>原来每次开终端都加载 nvm，但大部分时候根本不用 node。改成懒加载——首次调用 <code>node</code>/<code>npm</code>/<code>npx</code> 时才初始化：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.nvm&#34;</span>
+</span></span><span class="line"><span class="cl">lazy_load_nvm<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> -f nvm node npm npx pnpm
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> -s <span class="s2">&#34;/opt/homebrew/opt/nvm/nvm.sh&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&#34;/opt/homebrew/opt/nvm/nvm.sh&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> -s <span class="s2">&#34;/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&#34;/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">nvm<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> nvm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">node<span class="o">()</span> <span class="o">{</span> lazy_load_nvm<span class="p">;</span> node <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">npm<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> npm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">npx<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> npx <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">pnpm<span class="o">()</span> <span class="o">{</span> lazy_load_nvm<span class="p">;</span> pnpm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span></code></pre></div><h3 id="sdkman-懒加载省-300ms">SDKMAN 懒加载（省 ~300ms）</h3>
+<p>同理，java/sdk/mvn 这些也不需要每次都加载：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SDKMAN_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman&#34;</span>
+</span></span><span class="line"><span class="cl">lazy_load_sdkman<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> -f sdk java javac jar mvn gradle
+</span></span><span class="line"><span class="cl">  <span class="o">[[</span> -s <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">sdk<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> sdk <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">java<span class="o">()</span>   <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> java <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">javac<span class="o">()</span>  <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> javac <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">jar<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> jar <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">mvn<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> mvn <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">gradle<span class="o">()</span> <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> gradle <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span></code></pre></div><h3 id="精简插件">精简插件</h3>
+<p>去掉了 <code>zsh-autocomplete</code>（bug 多、资源占用高）和 <code>fast-syntax-highlighting</code>（跟另一个重复）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 之前</span>
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>git poetry zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 之后</span>
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>git poetry zsh-autosuggestions zsh-syntax-highlighting<span class="o">)</span>
+</span></span></code></pre></div><h3 id="清理重复和失效的配置">清理重复和失效的配置</h3>
+<p>删掉的东西不少，列一下：</p>
+<p><strong>重复的：</strong></p>
+<ul>
+<li>ServBay 环境块（<code>.zshrc</code> 里有，<code>.bash_profile</code> 里也有）</li>
+<li>SDKMAN 加载（同上）</li>
+<li>Antigravity PATH（<code>.zshrc</code> 自己内部就写了两次）</li>
+<li>cargo/env（<code>.zshenv</code> 和 <code>.bash_profile</code> 都加载了）</li>
+</ul>
+<p><strong>失效的：</strong></p>
+<ul>
+<li><code>$PYENV_ROOT/bin</code> — 目录不存在</li>
+<li><code>DATAX_HOME</code> — 目录不存在</li>
+<li><code>$PATH.</code> 末尾多了个 <code>.</code> — 语法错误</li>
+<li><code>yarn/global/node_modules/.bin</code> — 目录不存在</li>
+<li><code>.codebuddy/bin</code> — 目录不存在</li>
+<li><code>arch -arm64 brew</code> alias — arm64 原生机器不需要这个包装</li>
+</ul>
+<h2 id="最终结果">最终结果</h2>
+<table>
+  <thead>
+      <tr>
+          <th>阶段</th>
+          <th>启动时间</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>优化前</td>
+          <td>1.303s</td>
+      </tr>
+      <tr>
+          <td>懒加载 + 插件精简后</td>
+          <td>0.549s</td>
+      </tr>
+      <tr>
+          <td>清理失效 PATH 后</td>
+          <td><strong>0.208s</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>从 1.3 秒到 0.2 秒，快了大概 6 倍。</p>
+<p>有两个小事项：每个终端会话里首次跑 <code>node</code> 或 <code>java</code> 会有一次 0.5-0.8 秒的加载延迟，之后就不会了。另外 <code>zsh -i -c exit</code> 测试时可能会报 gitstatus 初始化失败，这是因为非交互模式缺少完整 TTY，正常使用不会碰到。</p>
+<p>整个过程，从打开终端发现问题到改完验证，十几分钟。之前拖了大半年没动的东西，让 AI 帮忙梳理一下就清掉了。这种&quot;知道自己该做但一直没做&quot;的事情，有个帮手确实不一样。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>让 Claude Desktop 支持任意第三方模型</title>
+      <link>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</link>
+      <pubDate>Thu, 28 May 2026 15:53:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</guid>
+      <description>&lt;p&gt;最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）&lt;/li&gt;&#xA;&lt;li&gt;Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：</p>
+<ol>
+<li>在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）</li>
+<li>Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。</li>
+</ol>
+<p>可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。</p>
+<ol>
+<li><a href="https://code.claude.com/docs/en/desktop">安装 Claude Desktop</a></li>
+<li>启动 APP，先不要登录，Mac 端在顶部菜单栏寻找</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Help -&gt; Troubleshooting -&gt; Enable Developer mode
+</span></span></code></pre></div><ol start="3">
+<li>继续在顶部选择</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Developer -&gt; Configure third-party inference
+</span></span></code></pre></div><ol start="4">
+<li>打开 CC-switch 添加你的模型供应商，可以一键复制之前配好的 Claude</li>
+<li>点击启用，并且开启本地路由
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260528160017309.png" alt="CC-switch 启用本地路由界面"  />
+</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我把 Happy Coder 搬到手机上，随时随地写代码</title>
+      <link>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</link>
+      <pubDate>Thu, 02 Apr 2026 19:32:20 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;&#xA;&lt;p&gt;最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="起因">起因</h2>
+<p>最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。</p>
+<p>但有个问题一直困扰我——<strong>我得一直盯着它</strong>。</p>
+<p>Claude Code 不是全自动的，它会频繁地要求你确认权限：这个文件能不能改？这个命令能不能执行？要不要继续？你要是不及时回应，它就停在那里等你。人根本走不开。尤其有些项目涉及到前端，我配置了 playwright mcp 做测试，在 claude 里已经配置&quot;mcp__plugin_playwright*&quot;, 的情况下，仍然需要频繁的去请求权限，常常被确认的逻辑卡住，但又不想配置到用户目录的配置而导致权限放的过大。</p>
+<p>我试过用手机远程连 Mac 的屏幕，想着至少能去倒杯水。但实际用起来太难受了，手机屏幕就那么大，终端界面的字小到看不清，点个按钮都得放大再放大，操作效率约等于零。</p>
+<p>这个问题困扰了我挺久的，直到最近看到了 <strong>Happy Coder</strong>。</p>
+<h2 id="happy-coder-是什么">Happy Coder 是什么</h2>
+<p>简单说，它就是 Claude Code 和 Codex 的手机客户端。</p>
+<p>你在电脑上跑 Claude Code，通过 Happy Coder，你可以用手机实时看到它在干什么，并且能直接在手机上操作——确认权限、输入指令、切换任务，跟坐在电脑前一样。</p>
+<p>几个我觉得比较关键的特点：</p>
+<ul>
+<li><strong>免费开源</strong>，MIT 协议，代码在 GitHub 上</li>
+<li><strong>端到端加密</strong>，你的代码和对话内容经过 AES 加密传输，中继服务器只搬运密文，看不懂你在传什么</li>
+<li><strong>推送通知</strong>，Claude Code 需要你操作的时候会推送到手机</li>
+<li><strong>支持语音</strong>，可以直接说话让它执行命令，不只是语音转文字那种</li>
+<li><strong>多任务并行</strong>，可以同时跑好几个 Claude Code 实例</li>
+</ul>
+<h2 id="安全性聊聊">安全性聊聊</h2>
+<p>看到&quot;把代码传到手机上&quot;这个说法，第一反应肯定是——安全吗？</p>
+<p>我查了一下它的原理，大概是这样的：整个系统分三块——电脑端的 CLI、一个中继服务器（Relay Server）、手机端的 App。你的电脑和手机之间不直接通信，所有数据都经过中继服务器转发。</p>
+<p>但关键是，<strong>中继服务器只搬运加密后的数据块，它自己解不开</strong>。</p>
+<p>具体来说：</p>
+<ul>
+<li>电脑端把 Claude Code 的终端状态用 AES 加密后上传</li>
+<li>手机端拉取加密数据，本地解密后展示</li>
+<li>你在手机上的操作指令反过来，也是加密后上传，电脑端解密执行</li>
+<li>密钥在你扫码配对的时候直接在两个设备之间交换，不经过服务器</li>
+</ul>
+<p>这叫零信任架构——你不需要信任中继服务器的运营者，因为它从头到尾只接触密文。而且整个项目是开源的，加密实现可以自己审计。如果你还是不放心，Relay Server 也是开源的，完全可以自己搭一套。</p>
+<p>对我来说，平时写代码传的是加密密文，比手机远程桌面明文传输终端画面安全多了。</p>
+<h2 id="安装配置">安装配置</h2>
+<p>整个过程不复杂，几分钟搞定。</p>
+<h3 id="电脑端">电脑端</h3>
+<p>先装 CLI 工具：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm i -g happy-coder
+</span></span></code></pre></div><p>装好之后直接运行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">happy claude
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260402212922578.png" alt="image.png"  />
+</p>
+<p>它会启动一个 Claude Code 的会话，同时把这个会话注册到 Happy 的服务上。你在终端里看到的跟正常用 Claude Code 没什么区别，只是这个会话现在可以被手机端接管了。</p>
+<h3 id="手机端">手机端</h3>
+<p>去应用商店搜 &ldquo;Happy Coder&rdquo; 就行，iOS 和 Android 都有。</p>
+<p>装好打开之后，它会引导你跟电脑端配对。
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260402213755250.png" alt="image.png"  />
+</p>
+<p>配对完成后，你就能在手机上看到电脑上正在跑的 Claude Code 会话了。</p>
+<h3 id="一个小技巧">一个小技巧</h3>
+<p>用了一段时间后发现一个问题——我老是习惯性地敲 <code>claude</code> 而不是 <code>happy claude</code>，等反应过来的时候已经晚了，会话没注册到 Happy 上。</p>
+<p>后来我在 <code>.zshrc</code> 里加了个 alias：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">claude</span><span class="o">=</span><span class="s1">&#39;happy claude&#39;</span>
+</span></span></code></pre></div><p>这样不管敲 <code>claude</code> 还是 <code>happy claude</code>，走的都是 Happy。如果某天 Happy 出问题了想用原版，敲 <code>\claude</code> 加个反斜杠就能跳过 alias。</p>
+<h2 id="实际使用体验">实际使用体验</h2>
+<p>用了几天，说说真实感受。</p>
+<h3 id="终于可以离开电脑了">终于可以离开电脑了</h3>
+<p>这是最大的变化。以前跑个任务，我得坐在那等它弹出确认框。现在手机收到推送，点开看一眼，确认就完事了。去厨房拿个外卖、沙发上躺着，都不耽误干活。</p>
+<h3 id="推送通知是真的好用">推送通知是真的好用</h3>
+<p>Claude Code 需要你输入的时候、代码写完等你 review 的时候、出了什么问题的时候，都会推送通知到手机。这个功能看着不起眼，但实际用起来你会发现——终于不用一直盯着屏幕刷新了。</p>
+<h3 id="语音操作有点惊喜">语音操作有点惊喜</h3>
+<p>本来觉得语音操控 Claude Code 是个噱头，但实际用下来还不错。躺着的时候不想打字，直接说一句&quot;继续&quot;或者&quot;执行&quot;，它就动了。不是简单的语音转文字，是真的语音到动作的执行。</p>
+<h3 id="多任务是真的爽">多任务是真的爽</h3>
+<p>做新项目时的时候，经常前端后端同时改。现在我可以同时开两个 Claude Code 实例，一个改后端规则引擎，一个改前端配置页面，手机上切来切去看进度。以前得一个个排着来，现在并行搞效率高了不少，当然一个 claude 多个 agent 一次性下发任务命令执行也是非常爽的。</p>
+<h3 id="也有不完美的地方">也有不完美的地方</h3>
+<p>说说缺点。毕竟是第三方工具，界面上偶尔会有点卡顿。另外如果你家网络不太好，手机端的响应会有延迟，这个看你自己的网络环境。还有就是语音识别偶尔会抽风，说中文的时候准确率不太稳定（我感觉到了，所以我都用微信语音转文字）。</p>
+<h2 id="适合什么人">适合什么人</h2>
+<p>如果你符合下面任意一条，可以试试：</p>
+<ul>
+<li>用 Claude Code 或 Codex 做主力开发工具，但不想一直坐在电脑前</li>
+<li>经常需要同时跑多个 AI 编程任务</li>
+<li>想在手机上也能随时查看和操控你的编程 session</li>
+<li>对代码安全有要求，需要端到端加密</li>
+</ul>
+<h2 id="写在最后">写在最后</h2>
+<p>Happy Coder 解决的不是什么大问题，它就是帮你把&quot;必须坐在电脑前&quot;这个束缚去掉了。但就是这个小变化，让整个 vibe coding 的体验舒服了很多。</p>
+<p>至少对我来说，终于不用在等确认的时候干坐着了。</p>
+<p>工具地址：<a href="https://happy.engineering/">happy.engineering</a></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI-助力每一个梦想之二</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</link>
+      <pubDate>Thu, 26 Mar 2026 11:07:23 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/ai-empowering-dreams/&#34;&gt;AI-助力每一个梦想&lt;/a&gt; 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。&lt;/p&gt;&#xA;&lt;p&gt;这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言">前言</h2>
+<p>在上一篇 <a href="/p/ai-empowering-dreams/">AI-助力每一个梦想</a> 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。</p>
+<p>这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。</p>
+<hr>
+<h2 id="改造清单">改造清单</h2>
+<p>先看一下这次完成的改造内容：</p>
+<h3 id="主题更换">主题更换</h3>
+<p>从旧主题更换到 <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a>，这个主题：</p>
+<ul>
+<li>简洁优雅，符合我的审美</li>
+<li>响应式设计，移动端友好</li>
+<li>内置暗色模式</li>
+<li>良好的 SEO 支持</li>
+</ul>
+<p>更换过程涉及大量配置文件的重写：</p>
+<ul>
+<li><code>config/_default/</code> 下的所有配置文件</li>
+<li>首页、归档、友情链接等页面内容</li>
+<li>自定义样式文件</li>
+</ul>
+<p>说实话，如果是自己手动配置，光是研究各个配置项的作用就要花不少时间。但在 cc+glm4.7 的协助下，整个过程顺畅了很多。</p>
+<h3 id="社交媒体集成">社交媒体集成</h3>
+<p>新增了多个社交媒体图标和链接：</p>
+<ul>
+<li>微信（侧边栏二维码）</li>
+<li>GitHub</li>
+<li>哔哩哔哩</li>
+<li>YouTube</li>
+</ul>
+<p>这些图标不是直接用主题自带的，而是我自己从 <a href="https://tabler.io/">Tabler Icons</a> 找的官方 SVG，或者是让 AI 给我找，然后手动添加到项目中，虽然经历过多次的反复，比如微信的 SVG 改对了又给我换错，存在不稳定的情况，但最后我把这条规则直接写入 CLAUDE.md 得以解决</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 微信social media的svg已经固定，不要做改动!
+</span></span></code></pre></div><h3 id="分享按钮优化">分享按钮优化</h3>
+<p>增强了文章分享功能，支持：</p>
+<ul>
+<li>微信</li>
+<li>朋友圈</li>
+<li>知乎</li>
+<li>Twitter</li>
+<li>Facebook</li>
+<li>LinkedIn
+虽然 知乎的分享还有 bug，但目前这个结果我相当满意了，能给到 90 分</li>
+</ul>
+<h3 id="seo-全面优化">SEO 全面优化</h3>
+<p>这部分是我之前一直想做但觉得太复杂的：</p>
+<p><strong>结构化数据</strong>：</p>
+<ul>
+<li>BlogPosting</li>
+<li>FAQPage</li>
+<li>HowTo</li>
+<li>VideoObject</li>
+<li>Review</li>
+<li>SoftwareApplication</li>
+</ul>
+<p><strong>验证配置</strong>：</p>
+<ul>
+<li>Google Search Console 验证码补全</li>
+</ul>
+<p><strong>AI 可发现性</strong>：</p>
+<ul>
+<li>添加 <code>llms.txt</code> 文件，让 AI 工具更容易理解博客内容</li>
+</ul>
+<h3 id="github-actions-性能优化">GitHub Actions 性能优化</h3>
+<p>博客部署使用 GitHub Actions，之前每次构建效率有点低，。</p>
+<p>优化内容：</p>
+<ul>
+<li>升级到 Node.js 24</li>
+<li>添加 Hugo CLI 缓存</li>
+<li>添加 Git Submodule 缓存</li>
+<li>优化 workflow 步骤结构</li>
+</ul>
+<p>构建时间明显缩短了。</p>
+<h3 id="标签系统重构">标签系统重构</h3>
+<p>之前的博客同时使用 <code>categories</code> 和 <code>tags</code>，但实际上 categories 几乎没用，而且两者功能重复。</p>
+<p>重构内容：</p>
+<ul>
+<li>删除所有文章的 categories 字段</li>
+<li>为空标签文章补充标签</li>
+<li>修复拼写错误（ags → tags）</li>
+<li>简化文章创建流程（Obsidian QuickAdd 脚本优化）</li>
+</ul>
+<h3 id="数据分析集成">数据分析集成</h3>
+<p>除了已有的 Google Analytics，新增了 <strong>Cloudflare Web Analytics</strong>：</p>
+<p>优势：</p>
+<ul>
+<li>隐私友好，不使用 Cookie</li>
+<li>轻量级，不影响页面加载速度</li>
+<li>界面简洁直观</li>
+</ul>
+<h3 id="友情链接页面">友情链接页面</h3>
+<p>重新设计了友情链接页面：</p>
+<ul>
+<li>添加社交媒体链接（知乎、B站、YouTube、GitHub）</li>
+<li>添加 RSS 订阅链接</li>
+<li>优化友链交换文案</li>
+<li>启用评论功能（基于 Giscus）</li>
+</ul>
+<p>虽然目前没有一个友链，但还是很希望能多交朋友，多多添加友链～</p>
+<hr>
+<h2 id="工作方式">工作方式</h2>
+<p>这次改造使用的是 <strong>Claude Code</strong>，工作流程大概是：</p>
+<ol>
+<li><strong>提出需求</strong>：告诉 Claude 我想要做什么</li>
+<li><strong>分析方案</strong>：Claude 分析代码库，给出建议</li>
+<li><strong>确认执行</strong>：我确认后，Claude 直接修改代码</li>
+<li><strong>验证结果</strong>：推送代码，查看效果</li>
+</ol>
+<p>整个过程不需要我手动写任何代码，只需要：</p>
+<ul>
+<li>明确自己想要什么</li>
+<li>对 Claude 的建议进行判断和确认</li>
+<li>验证结果是否符合预期</li>
+</ul>
+<hr>
+<h2 id="高强度使用-ai-之后我有很多想法">高强度使用 AI 之后，我有很多想法</h2>
+<h3 id="敢想敢做">敢想敢做</h3>
+<p>以前看到别人博客有各种酷炫功能，自己想加但总觉得太复杂：</p>
+<ul>
+<li>主题配置一大堆参数，看不懂（感觉像是花时间装修，但是实际应该把时间花在内容产出上）</li>
+<li>SEO 结构化数据，完全不会（经过这次了之后，起码知道哪些点需要考虑到）</li>
+<li>GitHub Actions 优化，怕改坏了（这个是重中之重，想当初废了很大劲该坏了很多次部署的 action）</li>
+</ul>
+<p>现在有了 AI 协作，这些都不是障碍。只要说出需求，AI 就能帮你实现。</p>
+<h3 id="时间成本大幅降低">时间成本大幅降低</h3>
+<p>这次改造大概花了 12 小时，但实际操作时间可能只有几个小时：</p>
+<ul>
+<li>大部分时间在等待 GitHub Actions 部署</li>
+<li>真正的思考和决策时间很有限</li>
+</ul>
+<p>如果是自己从零开始研究：</p>
+<ul>
+<li>研究主题配置：可能要几天</li>
+<li>学习 SEO 最佳实践：可能要一周</li>
+<li>优化 GitHub Actions：可能要反复调试</li>
+</ul>
+<h3 id="ai-是副驾驶">AI 是副驾驶</h3>
+<p>AI 不会替代你，但会让你变得更强：</p>
+<ul>
+<li>你仍然需要知道想要什么</li>
+<li>你需要判断 AI 的建议是否合理</li>
+<li>你需要验证结果是否符合预期</li>
+</ul>
+<p>AI 是副驾驶，你是机长。</p>
+<hr>
+<h2 id="下一步">下一步</h2>
+<p>我也给自己立了一个 flag：<strong>每周至少产出一篇博文</strong>。</p>
+<p>借助 AI 的力量，我觉得这个 flag 是可以坚持的。</p>
+<hr>
+<p>AI 让我敢想敢做。以前觉得复杂、麻烦、不想做的事情，现在有了 AI 协作，花一点点时间就能完成。</p>
+<p>这不仅是效率的提升，更是可能性的拓展。</p>
+<p><strong>AI 助力每一个梦想，这不是空话。</strong></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI-助力每一个梦想之一</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</link>
+      <pubDate>Wed, 25 Mar 2026 06:54:46 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/ai-empowering-dreams/</guid>
+      <description>&lt;p&gt;过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;当时复制报错代码粘到 POE 中,一边阅读源学习新的语法和框架的用法。今天，使用 AI 的方式已经彻底，或者与其说是使用 ai ，不如说是与 AI 协作。&#xA;也才仅仅过去了两年的时间，AI的发展真是令人咋舌，焦虑无处不在，如影随形。半个月之前，我在不怎么熟悉golang的情况下，紧靠Claude Code配合glm5 ，写出了SkillManager一个专门管理skill跨平台小工，地址在这 &lt;a href=&#34;https://github.com/eatmoreduck/SkillManager.git&#34;&gt;https://github.com/eatmoreduck/SkillManager.git&lt;/a&gt; 。&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142625642.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142632949.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142640944.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>过去的几年里，AI 发展迅猛。我记忆犹新的是2年前我订阅了 POE ($20/月)，
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325070114619.png" alt="image.png"  />
+
+当时复制报错代码粘到 POE 中,一边阅读源学习新的语法和框架的用法。今天，使用 AI 的方式已经彻底，或者与其说是使用 ai ，不如说是与 AI 协作。
+也才仅仅过去了两年的时间，AI的发展真是令人咋舌，焦虑无处不在，如影随形。半个月之前，我在不怎么熟悉golang的情况下，紧靠Claude Code配合glm5 ，写出了SkillManager一个专门管理skill跨平台小工，地址在这 <a href="https://github.com/eatmoreduck/SkillManager.git">https://github.com/eatmoreduck/SkillManager.git</a> 。
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142625642.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142632949.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142640944.png" alt="image.png"  />
+</p>
+<p>如果没有AI，单凭我自己，我不确定需要花费多少时间去完成一个多端部署的小项目，包含三端打包的CI/CD，能够正常运行。但毛毛一估算，光是这些打包的配置文件就足够让人抓耳挠腮的。
+正如标题而言，AI助力每一个梦想。AI确确实实的在改变我们每一个人的生活。单单是电脑上，我已经装了这么多的AI工具来配合我的日常工作。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260325142112591.png" alt="image.png"  />
+</p>
+<p>分别提手机上的AI 工具，随时掏出手机，记录会议，咨询常见的规章制度，AI 已经完完全全融入了我的生活。</p>
+<p>从最初的POE 订阅，到后续cursor 订阅，又到近期的glm，我在AI工具上的花费保守估计已经达到了3000 元以上。不敢想象没有 AI 的世界，难怪自嘲&quot;Claude 挂了，我也跟著挂了&quot;。</p>
+<p>有想法了，随时打开豆包，打开 cc，/gsd:do 付诸实践，AI 助力每一个梦想。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Easydict 发送到 Anki 插件开发</title>
+      <link>https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/</link>
+      <pubDate>Tue, 24 Mar 2026 19:56:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/</guid>
+      <description>&lt;p&gt;一直都想做一个插件，来实现anki英语单词的制卡。去年年中就已经起了项目，想做谷歌插件，网页划词之后，直接发送到anki，包括读音、图片一类，但今年重新回看的时候，却发现那个方案有一定局限性。主要源自于插件无法捕获全局的事件，即为当我在其他见面时无法进行划词。&#xA;正好看到我一直在用的Easydict，实际已经实现了Mac OS下的全局快捷键捕获。一拍脑袋就想着花一点时间扩展一下功能，初步想法，直接查词之后，能够将查到的单词发送到我本地的anik制卡。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>一直都想做一个插件，来实现anki英语单词的制卡。去年年中就已经起了项目，想做谷歌插件，网页划词之后，直接发送到anki，包括读音、图片一类，但今年重新回看的时候，却发现那个方案有一定局限性。主要源自于插件无法捕获全局的事件，即为当我在其他见面时无法进行划词。
+正好看到我一直在用的Easydict，实际已经实现了Mac OS下的全局快捷键捕获。一拍脑袋就想着花一点时间扩展一下功能，初步想法，直接查词之后，能够将查到的单词发送到我本地的anik制卡。</p>
+<p>初步想法，需要实现以下功能</p>
+<ol>
+<li>查询句子或单词时，中译音或音译中能直接制卡，将语句作为卡面，对应译文作为卡底</li>
+<li>要将录音文件的TTS也发送到anki，无需依赖其他API</li>
+<li>查单词时，卡底最好能有音标</li>
+</ol>
+<p>于是经过跟Claude Code的多轮对话之后，基本实现功能，但语音层面仍需优化，后续考虑替换为大模型的 tts 服务
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213105089.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213023228.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213124973.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324233935621.png" alt="image.png"  />
+</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>run-qwen-3.5-9B-on-macmini</title>
+      <link>https://blog.xiaohuangyu.space/p/run-qwen-3.5-9b-on-macmini/</link>
+      <pubDate>Wed, 11 Mar 2026 11:14:35 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/run-qwen-3.5-9b-on-macmini/</guid>
+      <description>&lt;p&gt;ollama 官网 &lt;a href=&#34;https://ollama.com/&#34;&gt;https://ollama.com/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;脚本安装ollama&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -fsSL https://ollama.com/install.sh | sh&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;配置config加速&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ~/.ollama/config.json&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;registry&amp;#34;: {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;mirrors&amp;#34;: {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &amp;#34;registry.ollama.ai&amp;#34;: &amp;#34;https://registry.ollama.ai&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        }&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;&#xA;&lt;li&gt;run qwen&#xA;qwen3.5-9b url &lt;a href=&#34;https://ollama.com/library/qwen3.5:9b&#34;&gt;https://ollama.com/library/qwen3.5:9b&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ollama run qwen3.5:9b --verbose&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果要后台运行，直接 ollama serve 即可，可以从本地的http://localhost:11434 访问到 api&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>ollama 官网 <a href="https://ollama.com/">https://ollama.com/</a></p>
+<ol>
+<li>脚本安装ollama</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl -fsSL https://ollama.com/install.sh | sh
+</span></span></code></pre></div><ol start="2">
+<li>配置config加速</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat ~/.ollama/config.json
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    &#34;registry&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;mirrors&#34;: {
+</span></span><span class="line"><span class="cl">            &#34;registry.ollama.ai&#34;: &#34;https://registry.ollama.ai&#34;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><ol start="3">
+<li>run qwen
+qwen3.5-9b url <a href="https://ollama.com/library/qwen3.5:9b">https://ollama.com/library/qwen3.5:9b</a></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ollama run qwen3.5:9b --verbose
+</span></span></code></pre></div><p>如果要后台运行，直接 ollama serve 即可，可以从本地的http://localhost:11434 访问到 api</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>让小爱音响聪明起来</title>
+      <link>https://blog.xiaohuangyu.space/p/smart-xiaomi-speaker/</link>
+      <pubDate>Fri, 27 Feb 2026 11:13:28 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/smart-xiaomi-speaker/</guid>
+      <description>&lt;p&gt;本文参见 &lt;a href=&#34;https://github.com/idootop/migpt-next&#34;&gt;https://github.com/idootop/migpt-next&lt;/a&gt;&#xA;绿联nas内安装 docker方式启动 docker-compose.yaml&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;migpt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;idootop/migpt-next:latest&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;migpt-next&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;stdin_open&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 对应 -i&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;tty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 对应 -t&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;volumes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&#x9;  &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;./config.js:/app/config.js&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 假设 config.js 在同级目录&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;复制 &lt;a href=&#34;https://github.com/idootop/migpt-next/blob/main/apps/example/config.js&#34;&gt;https://github.com/idootop/migpt-next/blob/main/apps/example/config.js&lt;/a&gt;&#xA;docker-compose.yaml 同级目录的config.js 里&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>本文参见 <a href="https://github.com/idootop/migpt-next">https://github.com/idootop/migpt-next</a>
+绿联nas内安装 docker方式启动 docker-compose.yaml</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">migpt</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">idootop/migpt-next:latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">migpt-next</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c"># 对应 -i</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c"># 对应 -t</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	  </span>- <span class="l">./config.js:/app/config.js</span><span class="w"> </span><span class="c"># 假设 config.js 在同级目录</span><span class="w">
+</span></span></span></code></pre></div><p>复制 <a href="https://github.com/idootop/migpt-next/blob/main/apps/example/config.js">https://github.com/idootop/migpt-next/blob/main/apps/example/config.js</a>
+docker-compose.yaml 同级目录的config.js 里</p>
+<p>按照教程配置用户名 密码等选项
+<a href="https://github.com/idootop/migpt-next/issues/4">https://github.com/idootop/migpt-next/issues/4</a></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>OpenClaw 从零到一</title>
+      <link>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</link>
+      <pubDate>Thu, 26 Feb 2026 23:26:51 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</guid>
+      <description>&lt;p&gt;记录下openclaw安装流程，以macOS为例&lt;/p&gt;&#xA;&lt;h3 id=&#34;安装node&#34;&gt;安装node&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装brew install node 可指定版本，但openclaw 要求大于22&lt;/li&gt;&#xA;&lt;li&gt;验证 node &amp;ndash;version 出现版本号，版本号大于20即可&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;安装git&#34;&gt;安装git&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version   &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出有值即可                            &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git version 2.39.5 (Apple Git-154)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;安装并配置openclaw&#34;&gt;安装并配置openclaw&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装openclaw&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;n&#34;&gt;luna&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ppmac&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fsSL&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openclaw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ai&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;install&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bash&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installer&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;Because&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;yourself&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reminders&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;so&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2024.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Detected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plan&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;ne&#34;&gt;OS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Requested&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;latest&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Preparing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;environment&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Homebrew&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;found&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;11.9&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v2026&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2.26&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Finalizing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Refreshing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loaded&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;metadata&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;refreshed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;restarted&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✗&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Probing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;failed&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;—&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;details&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unknown&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;option&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;--probe&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Did&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;you&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mean&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;one&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;no&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;probe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;profile&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;successfully&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2026.2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;m in. Let&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cause&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;some&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;responsible&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chaos&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;migrate&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;complete&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skipping&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;onboarding&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Starting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;配置openclaw&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>记录下openclaw安装流程，以macOS为例</p>
+<h3 id="安装node">安装node</h3>
+<ol>
+<li>安装brew install node 可指定版本，但openclaw 要求大于22</li>
+<li>验证 node &ndash;version 出现版本号，版本号大于20即可</li>
+</ol>
+<h3 id="安装git">安装git</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install git
+</span></span><span class="line"><span class="cl">git --version   
+</span></span><span class="line"><span class="cl">输出有值即可                            
+</span></span><span class="line"><span class="cl">git version 2.39.5 (Apple Git-154)
+</span></span></code></pre></div><h3 id="安装并配置openclaw">安装并配置openclaw</h3>
+<ol>
+<li>安装openclaw</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">luna</span><span class="err">@</span><span class="n">ppmac</span> <span class="err"></span> <span class="o">~</span> <span class="err"></span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">openclaw</span><span class="o">.</span><span class="n">ai</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sh</span> <span class="o">|</span> <span class="n">bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">🦞</span> <span class="n">OpenClaw</span> <span class="n">Installer</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Because</span> <span class="n">texting</span> <span class="n">yourself</span> <span class="n">reminders</span> <span class="n">is</span> <span class="n">so</span> <span class="mf">2024.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Detected</span><span class="p">:</span> <span class="n">macos</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Install</span> <span class="n">plan</span>
+</span></span><span class="line"><span class="cl"><span class="ne">OS</span><span class="p">:</span> <span class="n">macos</span>
+</span></span><span class="line"><span class="cl"><span class="n">Install</span> <span class="n">method</span><span class="p">:</span> <span class="n">npm</span>
+</span></span><span class="line"><span class="cl"><span class="n">Requested</span> <span class="n">version</span><span class="p">:</span> <span class="n">latest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Preparing</span> <span class="n">environment</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Homebrew</span> <span class="n">already</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="ne">Node</span><span class="o">.</span><span class="n">js</span> <span class="n">v25</span><span class="o">.</span><span class="mf">6.1</span> <span class="n">found</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Active</span> <span class="ne">Node</span><span class="o">.</span><span class="n">js</span><span class="p">:</span> <span class="n">v25</span><span class="o">.</span><span class="mf">6.1</span> <span class="p">(</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homebrew</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Active</span> <span class="n">npm</span><span class="p">:</span> <span class="mf">11.9</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homebrew</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Installing</span> <span class="n">OpenClaw</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Git</span> <span class="n">already</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Installing</span> <span class="n">OpenClaw</span> <span class="n">v2026</span><span class="o">.</span><span class="mf">2.26</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">OpenClaw</span> <span class="n">npm</span> <span class="n">package</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">OpenClaw</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Finalizing</span> <span class="n">setup</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Refreshing</span> <span class="n">loaded</span> <span class="n">gateway</span> <span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Gateway</span> <span class="n">service</span> <span class="n">metadata</span> <span class="n">refreshed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Gateway</span> <span class="n">service</span> <span class="n">restarted</span>
+</span></span><span class="line"><span class="cl"><span class="err">✗</span> <span class="n">Probing</span> <span class="n">gateway</span> <span class="n">service</span> <span class="n">failed</span> <span class="err">—</span> <span class="n">re</span><span class="o">-</span><span class="n">run</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span> <span class="k">for</span> <span class="n">details</span>
+</span></span><span class="line"><span class="cl"><span class="n">error</span><span class="p">:</span> <span class="n">unknown</span> <span class="n">option</span> <span class="s1">&#39;--probe&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">Did</span> <span class="n">you</span> <span class="n">mean</span> <span class="n">one</span> <span class="n">of</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">probe</span><span class="p">,</span> <span class="o">--</span><span class="n">profile</span><span class="err">?</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">🦞</span> <span class="n">OpenClaw</span> <span class="n">installed</span> <span class="n">successfully</span> <span class="p">(</span><span class="mf">2026.2</span><span class="o">.</span><span class="mi">26</span><span class="p">)</span><span class="o">!</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span><span class="s1">&#39;m in. Let&#39;</span><span class="n">s</span> <span class="n">cause</span> <span class="n">some</span> <span class="n">responsible</span> <span class="n">chaos</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Config</span> <span class="n">already</span> <span class="n">present</span><span class="p">;</span> <span class="n">running</span> <span class="n">doctor</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Running</span> <span class="n">doctor</span> <span class="n">to</span> <span class="n">migrate</span> <span class="n">settings</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Doctor</span> <span class="n">complete</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Config</span> <span class="n">already</span> <span class="n">present</span><span class="p">;</span> <span class="n">skipping</span> <span class="n">onboarding</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Starting</span> <span class="n">setup</span>
+</span></span></code></pre></div><ol start="2">
+<li>
+<p>配置openclaw</p>
+<ol>
+<li>安装好后会自动开始这步<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260226233356873.png" alt="image.png"  />
+选yes</li>
+<li>先quickstart 后面可配置 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094239665.png" alt="image.png"  />
+</li>
+<li>模型选择自己想要的模型即可，我这里选用z.ai 使用智谱模型（需要先去生成apikey 并且填入，其他模型也是一样）<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094530465.png" alt="image.png"  />
+</li>
+<li>channel官方推荐telegram 这里自行选择，需要准备上网工具增加proxy配置后，粘贴bot的token ，机器上需要加配置 &ldquo;proxy&rdquo;:&ldquo;http://127.0.0.1:7890&rdquo;, 给机器人发消息 ，/start 之后会收到回复的code 然后在终端使用。openclaw pairing approve telegram QRNT5UUY(code)<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094753872.png" alt="image.png"  />
+
+至此已经配置完，可以开始使用了openclaw</li>
+</ol>
+</li>
+</ol>
+<h3 id="给openclaw操控浏览器的能力">给openclaw操控浏览器的能力</h3>
+<p>macOS</p>
+<ol>
+<li>安装extension，命令执行后会自动下载extension包到对应文件夹下 /Users/{你的用户名}/.openclaw/browser/chrome-extension</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">openclaw browser extension install
+</span></span></code></pre></div><ol start="2">
+<li>
+<p>在chrome里地址栏输入 chrome://extensions/ 打开开发者模式 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100923737.png" alt="image.png"  />
+</p>
+</li>
+<li>
+<p>点击加载未打包的扩展程序，然后选中extension文件夹即可 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100909783.png" alt="image.png"  />
+</p>
+</li>
+</ol>
+<p>linux 可参照 <a href="https://cloud.tencent.com/developer/article/2626186">https://cloud.tencent.com/developer/article/2626186</a></p>
+<h3 id="遇到的坑">遇到的坑</h3>
+<ol>
+<li>最初用nvm 安装node ，node全局安装后总时不时出现闪退问题，后面直接采用brew install node，官方脚本安装的openclaw</li>
+<li>nvm安装后，卸载时，重新运行openclaw gatway install的plist .nvm路径，导致openclaw doctor始终有问题 原因是清理了.zshr后当前终端没有source 导致读取的环境变量是旧的，要么source ，要么重连一下ssh</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>大善人 AI 食用指南</title>
+      <link>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</link>
+      <pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</guid>
+      <description>&lt;p&gt;大善人 AI 食用指南&lt;/p&gt;&#xA;&lt;p&gt;登录之后，打开&#xA;&lt;a href=&#34;https://dash.cloudflare.com/&#34;&gt;https://dash.cloudflare.com/&lt;/a&gt; ,保存/之后的字符串为 accountId&lt;/p&gt;&#xA;&lt;p&gt;再打开&#xA;&lt;a href=&#34;https://dash.cloudflare.com/profile/api-tokens&#34;&gt;https://dash.cloudflare.com/profile/api-tokens&lt;/a&gt;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;这一步完成后会看到如下图，保存好自己的 Workers AI API token&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 用户 API 令牌&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#### Workers AI API 令牌已成功创建&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 one-api 添加新渠道&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>大善人 AI 食用指南</p>
+<p>登录之后，打开
+<a href="https://dash.cloudflare.com/">https://dash.cloudflare.com/</a> ,保存/之后的字符串为 accountId</p>
+<p>再打开
+<a href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png" alt="image.png"  />
+</p>
+<p>这一步完成后会看到如下图，保存好自己的 Workers AI API token</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 用户 API 令牌
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#### Workers AI API 令牌已成功创建
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。
+</span></span></code></pre></div><p>然后去 one-api 添加新渠道
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png" alt="image.png"  />
+</p>
+<p>添加完成后即可进行测试，后续可以再 next-chatgpt中直接使用
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121436437.png" alt="image.png"  />
+</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

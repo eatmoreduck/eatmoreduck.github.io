@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/en/</link>
+    <description>Recent content on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 02 Sep 2026 11:26:31 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Small Spend, Big Win: Replacing Every MacBook Keycap for 28 Yuan</title>
+      <link>https://blog.xiaohuangyu.space/en/p/macbook-keycaps-28-yuan-en/</link>
+      <pubDate>Tue, 01 Sep 2026 15:01:51 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/macbook-keycaps-28-yuan-en/</guid>
+      <description>&lt;p&gt;My MacBook Pro is almost five years old, and its keyboard had become hard to look at. The keycaps were shiny with oil, the gaps were packed with dust, you could faintly see hairs under a few of them, and a couple of caps had actually cracked. Every key felt different, and all of them felt awful. Last week I tried a new MacBook Pro at the Apple Store. Looks-wise it is the same machine with small tweaks, but the keyboard feel was on another planet compared to my five-year-old one. The new keys feel perfectly consistent, with a matte texture; mine are polished shiny and honestly a bit sticky.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>My MacBook Pro is almost five years old, and its keyboard had become hard to look at. The keycaps were shiny with oil, the gaps were packed with dust, you could faintly see hairs under a few of them, and a couple of caps had actually cracked. Every key felt different, and all of them felt awful. Last week I tried a new MacBook Pro at the Apple Store. Looks-wise it is the same machine with small tweaks, but the keyboard feel was on another planet compared to my five-year-old one. The new keys feel perfectly consistent, with a matte texture; mine are polished shiny and honestly a bit sticky.</p>
+<p>All I knew before was the Genius Bar, where they will replace up to five keycaps for free, but I had way too many bad keys for that. Last week I was scrolling Xiaohongshu and stumbled on people buying full keycap sets on Taobao and swapping them themselves. A whole set was just 28 yuan, so I ordered one without thinking twice. I did not expect much; as long as it was an improvement, I would take it. When it arrived, it turned out to be identical to the original keycaps.
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/d35164749f6ac81df3ba4d8d3563a1fc.jpg" alt="Full set of replacement MacBook keycaps from Taobao"  />
+</p>
+<p>After it arrived I found a tutorial on Bilibili, and the caps came off quicker and easier than I expected. Once every single one was off, the deck underneath was finally exposed, and it was a disaster. Dust in the gaps can be blown out now and then, but the hairs under the keycaps, plus the soup I once spilled in there, are things surface-wiping can never fix. A pass with a soft brush, a cotton swab with a bit of alcohol around the edges, two minutes to dry, and it was time to put everything back.</p>
+<p>The small keys went back on really fast, one press and done. The big keys and the arrow keys were another story, especially the ones with a balance bar like Tab: every single-bar key mounts with the bar facing down, and double-bar keys are one up, one down. Not much more to say about that.
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260901160126437.png" alt="The keyboard deck with every keycap removed; red boxes mark the balance-bar mechanisms"  />
+</p>
+<p>This is how I broke the Chinese/English key: its balance bar was backwards, I pressed hard anyway, and the little hook on the clip snapped right off. Luckily I asked the seller, half expecting nothing, and they agreed to mail me a replacement cap.
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260901155544928.png" alt="The snapped clip hook on the Chinese/English key cap"  />
+</p>
+<p>While installing the arrow keys I also knocked a scissor mechanism loose. Not all of them, luckily. I copied the neighboring keys and got everything seated again. Be bold but careful and it all goes back together; just note that the arrow keys slide in from different directions.
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260901155954396.png" alt="A scissor mechanism that came loose while installing the arrow keys"  />
+</p>
+<p>The rest of the small keys are unremarkable: two seconds each.</p>
+<p>The first thing I noticed after the swap was the typing feel. The matte surface on the new caps has not been polished shiny yet, and next to the old oily glaze it is night and day; every press snaps back crisply. 28 yuan for a full set of keycaps plus a deep clean, and the keyboard is like new again. My old machine is good for a few more years.</p>
+<p>Here is what it looks like now. The Chinese/English key is on the way from the seller; once it is on, the keyboard will be good as completely new!
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260901160506191.png" alt="The MacBook Pro keyboard after the keycap swap"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260901154807356.png" alt="About This Mac: 16-inch 2021 MacBook Pro"  />
+</p>
+<h2 id="things-to-know">Things to Know</h2>
+<ul>
+<li>Lock the screen before you start.</li>
+<li>Small keys pop off freely; big keys all have a balance bar. Single bars mount facing down, double bars are one up, one down. Flip the cap over and check the direction first, and never force it when it is backwards. Forcing it is exactly how I snapped the hook on my Chinese/English key.</li>
+<li>The arrow keys slide in from different directions. If a cap will not go in, flip it over and study the clips first, then press. If a scissor mechanism comes loose, do not panic; copy a neighboring key and put it back.</li>
+<li>Clean the deck with a soft brush and a well-wrung alcohol swab, not a wet cloth, and let it dry for a few minutes before reassembling.</li>
+<li>If you break a cap, don&rsquo;t panic; ask the seller. Many are willing to mail you a single replacement cap, sometimes just for the shipping fee.</li>
+<li>Check your model and keyboard layout before buying; keycap sets are not cross-compatible. Mine is a 16-inch 2021 MacBook Pro.</li>
+<li>The butterfly-keyboard MacBooks (2016-2019) have far more fragile caps and clips. Do not follow this guide on one of those.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>Removing caps: be bold but careful. In general, pry the bottom edge and slide the cap out; for keys with a balance bar, watch the angle and do not use much force. Installing: remember two things. Single balance bars always face down, and the arrow keys snap in from different directions, so observe first, then slide in, no brute force. Everything else is easy, two seconds per key.</p>
+<p>All in, it cost 28 yuan plus about an hour of cleaning and swapping, and the typing feel is now identical to a brand-new machine.</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>My Software Stack 2026</title>
+      <link>https://blog.xiaohuangyu.space/en/p/my-software-stack-2026-en/</link>
+      <pubDate>Tue, 23 Jun 2026 20:00:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/my-software-stack-2026-en/</guid>
+      <description>&lt;p&gt;It has been more than two years since my previous post &lt;a href=&#34;https://blog.xiaohuangyu.space/p/mac-dev-software-list/&#34;&gt;Mac Dev Software List&lt;/a&gt;. I dug it up, and some things on it are gone now, some got replaced by better options, and a few I still use exactly the same way.&lt;/p&gt;&#xA;&lt;p&gt;This post is not about &amp;ldquo;I heard this is good.&amp;rdquo; It is only about what is actually running on my machine right now. Along the way I update the outdated parts of the old list.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>It has been more than two years since my previous post <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac Dev Software List</a>. I dug it up, and some things on it are gone now, some got replaced by better options, and a few I still use exactly the same way.</p>
+<p>This post is not about &ldquo;I heard this is good.&rdquo; It is only about what is actually running on my machine right now. Along the way I update the outdated parts of the old list.</p>
+<h2 id="what-changed-first">What changed first</h2>
+<p>A few items from the old list I no longer use:</p>
+<ul>
+<li><strong>Alfred</strong> — fully replaced by Raycast. The paywall is steep and the free tier does too little.</li>
+<li><strong>Mos / Mac Mouse Fix (pick one)</strong> — I keep only Mac Mouse Fix now. Its recent versions added window management, so it got better.</li>
+<li><strong>Loop</strong> — removed after Mac Mouse Fix took over window management.</li>
+<li><strong>EasyDevo</strong> — DevToys is enough.</li>
+<li><strong>Termius</strong> — SSH now goes through Ghostty + system ssh config, and I no longer need multi-device sync.</li>
+<li><strong>lux (Bilibili downloader)</strong> — I just do not download anymore.</li>
+</ul>
+<p>Below is everything reorganized around how I actually use things today.</p>
+<h2 id="ai-coding">AI Coding</h2>
+<p>This is the part that changed the most in the last two years, so it gets its own section.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Code</td>
+          <td>My main driver, paired with GLM and other third-party models</td>
+      </tr>
+      <tr>
+          <td>Codex</td>
+          <td>OpenAI&rsquo;s command-line agent for writing code</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>The graphical AI editor, handy for big files and frontend work</td>
+      </tr>
+      <tr>
+          <td>Gemini / Doubao / Qwen / Yuanbao</td>
+          <td>Desktop clients, one per model, ask whichever answers best</td>
+      </tr>
+  </tbody>
+</table>
+<p>Honestly, AI coding tools have multiplied to the point of oversaturation. My actual state is Claude Code as the main driver, and the other clients just to compare answers from different models on the same question. No need to install all of them. Pick one or two that feel right.</p>
+<h2 id="editors-and-ides">Editors and IDEs</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>GoLand</td>
+          <td>Main tool for Go, JetBrains indexing is still the most comfortable</td>
+      </tr>
+      <tr>
+          <td>WebStorm</td>
+          <td>For frontend projects</td>
+      </tr>
+      <tr>
+          <td>PyCharm</td>
+          <td>Occasional Python</td>
+      </tr>
+      <tr>
+          <td>IntelliJ IDEA</td>
+          <td>For Java projects</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>Quick opens for large files, fast startup</td>
+      </tr>
+      <tr>
+          <td>ZCode</td>
+          <td>Another command-line agent</td>
+      </tr>
+  </tbody>
+</table>
+<p>The JetBrains suite is still a memory hog, but nothing beats it for code navigation and refactoring. Sublime stays purely because opening a log file with tens of thousands of lines does not lag it.</p>
+<h2 id="notes">Notes</h2>
+<p>I keep three of them open at the same time: Obsidian, Yuque, and Notion. Not because I cannot decide, but they each do a different job for me, and none replaces the others.</p>
+<p>Quick overview first:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>My role for it</th>
+          <th>Where the data lives</th>
+          <th>Who it is for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Obsidian</td>
+          <td>Private second brain, for myself</td>
+          <td>All local</td>
+          <td>Long-term accumulation, people who want full control</td>
+      </tr>
+      <tr>
+          <td>Yuque</td>
+          <td>Technical docs, structured knowledge base</td>
+          <td>Cloud</td>
+          <td>People who like document trees, team/project wikis</td>
+      </tr>
+      <tr>
+          <td>Notion</td>
+          <td>Public sharing, an outward-facing knowledge base</td>
+          <td>Cloud</td>
+          <td>People who need to present outward, care about nice pages</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="obsidian-my-main-driver">Obsidian: my main driver</h3>
+<p>This very blog post was written in Obsidian, and all my daily notes, skills, and collected technical references live in it. Its core strength is that <strong>the files are all local, pure Markdown</strong>, not locked into any cloud service — whenever I want to migrate, I can. Backlinks and the graph view let notes connect to each other, so the more I accumulate the more valuable it gets, unlike traditional notes that turn into a pile of dead documents you can never find again.</p>
+<p>It is a local tool, so publishing takes some DIY. I have set up two things around it, worth a look:</p>
+<ul>
+<li><a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/">hugo+obsidian building the strongest blog (Part 1)</a> and <a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/">(Part 2)</a> — how to wire Obsidian into a Hugo blog</li>
+<li><a href="https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/">Building an AI Second Brain with Obsidian + Claude Code</a> — later I brought AI in, to make the notes actually come &ldquo;alive&rdquo;</li>
+</ul>
+<h3 id="yuque-technical-docs">Yuque: technical docs</h3>
+<p>Technical stuff goes into Yuque. Its document-tree structure is well suited for layering a knowledge base — break a project from design to implementation into pieces and hang them up, and looking back is clear at a glance. The editor handles code blocks, formulas, and drawing boards in fine detail, so writing technical docs in it is more comfortable than raw Markdown. The downside is it is a closed cloud, export is not that free, so I only put &ldquo;structured, long-term-maintained&rdquo; technical content here.</p>
+<h3 id="notion-for-sharing-outward">Notion: for sharing outward</h3>
+<p>I do not actually use Notion much, but I keep it for a reason — <strong>for public sharing and an outward-facing knowledge base, it is the best of the three</strong>. Notion pages can be published directly as public links, the layout is nice, multimedia mixing is easy, and it is great for personal homepages, project intros, and tutorials for others, with decent SEO. I do not use it for daily notes, but for things meant to be shown to others, I reach for it first.</p>
+<h3 id="how-i-actually-split-the-work">How I actually split the work</h3>
+<p>Put simply: <strong>Obsidian handles input and accumulation, Yuque handles technical organization, Notion handles outward output</strong>. If you only pick one: for long-term accumulation go Obsidian; for team wikis go Yuque; for outward content go Notion. Installing all three is not a waste either, as long as you give each tool a clear role, and do not just shovel everything into one.</p>
+<p>There is also <strong>Anki</strong>, which is not in the same lane as the three above. It is a pure memory tool — pull it out in spare moments to flip cards, memorize vocabulary and technical points. It pairs nicely with Easydict for saving new words.</p>
+<h2 id="terminal-and-shell">Terminal and Shell</h2>
+<p>This part got the most thorough overhaul in two years.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ghostty</td>
+          <td>My main terminal now, GPU rendered, minimal config</td>
+      </tr>
+      <tr>
+          <td>Oh My Zsh</td>
+          <td>Still it, with the powerlevel10k theme</td>
+      </tr>
+      <tr>
+          <td>powerlevel10k</td>
+          <td>Prompt theme, instant prompt makes startup a lot faster</td>
+      </tr>
+      <tr>
+          <td>zsh-autosuggestions</td>
+          <td>Command autocompletion</td>
+      </tr>
+      <tr>
+          <td>zsh-syntax-highlighting</td>
+          <td>Command syntax highlighting</td>
+      </tr>
+  </tbody>
+</table>
+<p>I used to be on iTerm2, and the move to Ghostty was mostly for speed and cleanliness. The config is a single file, no fancy settings panels, and I actually like that better.</p>
+<p>I did not tinker much with the shell setup. Just four things: Oh My Zsh, p10k, autosuggestions, syntax-highlighting. That is enough. Add more plugins and startup gets slow.</p>
+<h2 id="command-line-tools">Command-Line Tools</h2>
+<p>This is a section the old list completely missed, but it is what I use the most every day.</p>
+<h3 id="package-managers-and-runtimes">Package managers and runtimes</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Homebrew</td>
+          <td>The foundation for installing everything on Mac</td>
+      </tr>
+      <tr>
+          <td>uv</td>
+          <td>Python package manager and virtualenv, far faster than pip + venv, I barely touch pip now</td>
+      </tr>
+      <tr>
+          <td>bun</td>
+          <td>JS runtime and package manager, faster than node</td>
+      </tr>
+      <tr>
+          <td>nvm</td>
+          <td>Switching between node versions</td>
+      </tr>
+      <tr>
+          <td>pyenv</td>
+          <td>Switching between Python versions</td>
+      </tr>
+  </tbody>
+</table>
+<p>uv is the Python tool I most want to recommend from the last two years. Installing dependencies, creating virtualenvs, running scripts — all through this one tool, no more memorizing the <code>python -m venv</code> chain. Combined with <code>uv run</code> to run a script in a throwaway env, it is really comfortable.</p>
+<h3 id="daily-high-frequency">Daily high-frequency</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>gh</td>
+          <td>Official GitHub CLI, opening PRs, checking issues, cloning repos</td>
+      </tr>
+      <tr>
+          <td>git</td>
+          <td>No explanation needed</td>
+      </tr>
+      <tr>
+          <td>task (go-task)</td>
+          <td>Like make but written in YAML, cross-platform, all project automation goes through it</td>
+      </tr>
+      <tr>
+          <td>ffmpeg</td>
+          <td>Audio and video, converting formats, clipping, extracting audio</td>
+      </tr>
+      <tr>
+          <td>tree</td>
+          <td>Viewing directory structures</td>
+      </tr>
+      <tr>
+          <td>telnet</td>
+          <td>Occasional port testing</td>
+      </tr>
+  </tbody>
+</table>
+<p>A few more words on <code>task</code>. I used to have a pile of <code>Makefile</code>s in projects, and they were hard to write and easy to get wrong. After switching to task, a <code>taskfile.yml</code> reads at a glance, runs on Windows too, and saves a lot of friction in team collaboration.</p>
+<h3 id="system-monitoring">System monitoring</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>fastfetch</td>
+          <td>A replacement for neofetch, fast startup, for system info</td>
+      </tr>
+      <tr>
+          <td>mactop</td>
+          <td>top for Apple Silicon, understands the M-series architecture better than htop</td>
+      </tr>
+      <tr>
+          <td>kubectl</td>
+          <td>Occasional cluster access</td>
+      </tr>
+  </tbody>
+</table>
+<p>mactop is one I recommend on Apple Silicon. It shows per-core usage broken down by performance and efficiency cores, plus GPU and memory bandwidth, things htop cannot see.</p>
+<h2 id="containers-and-virtualization">Containers and virtualization</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>OrbStack</td>
+          <td>A Docker Desktop replacement, faster startup, less memory, also runs Linux VMs</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>Still used when compatibility matters</td>
+      </tr>
+  </tbody>
+</table>
+<p>Moving from Docker Desktop to OrbStack was another &ldquo;can&rsquo;t go back&rdquo; experience. Same containers, OrbStack starts faster and uses less memory, and its built-in Linux VM works as a lightweight dev environment. Docker stays mainly so I can reproduce CI environments locally for consistency.</p>
+<h2 id="databases-and-networking">Databases and networking</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis client</td>
+      </tr>
+      <tr>
+          <td>DataGrip</td>
+          <td>Universal database client, connects to anything</td>
+      </tr>
+      <tr>
+          <td>SecureCRT / SecureFX</td>
+          <td>Classic terminal and file transfer, paid</td>
+      </tr>
+      <tr>
+          <td>Wireshark</td>
+          <td>Packet capture, for network troubleshooting</td>
+      </tr>
+      <tr>
+          <td>Clash Verge</td>
+          <td>Network proxy client</td>
+      </tr>
+      <tr>
+          <td>Tunnelblick</td>
+          <td>OpenVPN client</td>
+      </tr>
+      <tr>
+          <td>ZeroTier</td>
+          <td>Virtual LAN, for networking</td>
+      </tr>
+  </tbody>
+</table>
+<p>I no longer install Navicat. DataGrip covers everything. Wireshark is rarely used, but when you really need to troubleshoot a network issue, it is the only reliable one.</p>
+<h2 id="productivity-and-launchers">Productivity and launchers</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Raycast</td>
+          <td>Launcher, free tier is enough, an Alfred replacement</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>Cursor translation, open source and free</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>Key remapping, Caps Lock becomes Ctrl+Esc</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>Brightness for external displays</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>Smooth mouse scrolling + window management</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>Collapses menu bar icons</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>Fan speed</td>
+      </tr>
+      <tr>
+          <td>BrightIntosh</td>
+          <td>Brightness for older MacBooks</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>Image hosting, all my blog images go through it</td>
+      </tr>
+  </tbody>
+</table>
+<p>The Raycast features I use the most every day: launching apps, clipboard history, window management, quick math. What is better than Alfred is that the free tier gives away all the core features, so you do not have to agonize over whether to buy a Powerpack.</p>
+<p>Easydict is something I wrote a dedicated post about, <a href="https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/">Adding Anki support to Easydict</a>. Genuinely good — select a word, look it up, hear pronunciation, save it as a flashcard.</p>
+<h2 id="browsers-and-extensions">Browsers and extensions</h2>
+<p>Google Chrome as the main browser. Daily extensions:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Extension</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Immersive Translate</td>
+          <td>Bilingual side-by-side on web pages, great for English docs</td>
+      </tr>
+      <tr>
+          <td>Proxy SwitchyOmega / ZeroOmega</td>
+          <td>Proxy switching</td>
+      </tr>
+      <tr>
+          <td>SimpRead</td>
+          <td>Reader mode, cleans up messy pages</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>Bypasses sites that block copying</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>Scraping website assets</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="other-daily-apps">Other daily apps</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>IINA</td>
+          <td>Video player, the best choice on Mac</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>Archiver</td>
+      </tr>
+      <tr>
+          <td>OBS</td>
+          <td>Screen recording and streaming</td>
+      </tr>
+      <tr>
+          <td>Apifox</td>
+          <td>API debugging, a Postman replacement</td>
+      </tr>
+      <tr>
+          <td>OrbStack</td>
+          <td>Mentioned above</td>
+      </tr>
+      <tr>
+          <td>XMind</td>
+          <td>Mind maps</td>
+      </tr>
+  </tbody>
+</table>
+<p>Not much to say about IINA. Just install it.</p>
+<h2 id="chat-and-office">Chat and office</h2>
+<p>QQ, WeChat, WeCom, Lark, Tencent Meeting, WPS, Baidu Netdisk, Aliyun Drive — I will not expand on these, install as needed. One mention: WeChat Read is nice for reading on the commute.</p>
+<h2 id="how-to-start">How to start</h2>
+<p>If you want to set up a similar stack, you do not have to install everything at once. My suggestion is to grab three things first:</p>
+<ol>
+<li><strong>Shell basics</strong>: Oh My Zsh + p10k + autosuggestions + syntax-highlighting</li>
+<li><strong>Three genuinely high-frequency CLI tools</strong>: uv, gh, task</li>
+<li><strong>A terminal you like</strong>: Ghostty or iTerm2, either is fine</li>
+</ol>
+<p>With those three in place, your daily development experience already moves up a notch. Add the rest as needed.</p>
+<p>I am leaving the old <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac Dev Software List</a> up as a timestamp. This is the 2026 version, and I expect to update it again in another two years.</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Block macOS 26 Updates (Still Works in 2026, Removes the Badge)</title>
+      <link>https://blog.xiaohuangyu.space/en/p/block-macos-26-updates/</link>
+      <pubDate>Mon, 29 Dec 2025 14:28:17 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/block-macos-26-updates/</guid>
+      <description>&lt;h2 id=&#34;why-block-updates-at-all&#34;&gt;Why block updates at all&lt;/h2&gt;&#xA;&lt;p&gt;After macOS 26 came out, the update nag kept popping up every few days. I kept worrying I&amp;rsquo;d slip and hit &amp;ldquo;Update Now&amp;rdquo;, confirmation or not. It got frequent enough that I wanted a fix that sticks.&lt;/p&gt;&#xA;&lt;p&gt;My reasons, plainly:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The red badge drives me crazy&lt;/li&gt;&#xA;&lt;li&gt;Older machines don&amp;rsquo;t handle the new system well, and I don&amp;rsquo;t want the slowdown&lt;/li&gt;&#xA;&lt;li&gt;I need a stable work setup, and an upgrade breaking my dev environment is not worth the risk&lt;/li&gt;&#xA;&lt;li&gt;I dislike the liquid glass look in macOS 26, and some apps may not be compatible yet&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;So after upgrading to macOS 15.7.3, I decided to block macOS updates completely and get rid of the badge.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="why-block-updates-at-all">Why block updates at all</h2>
+<p>After macOS 26 came out, the update nag kept popping up every few days. I kept worrying I&rsquo;d slip and hit &ldquo;Update Now&rdquo;, confirmation or not. It got frequent enough that I wanted a fix that sticks.</p>
+<p>My reasons, plainly:</p>
+<ul>
+<li>The red badge drives me crazy</li>
+<li>Older machines don&rsquo;t handle the new system well, and I don&rsquo;t want the slowdown</li>
+<li>I need a stable work setup, and an upgrade breaking my dev environment is not worth the risk</li>
+<li>I dislike the liquid glass look in macOS 26, and some apps may not be compatible yet</li>
+</ul>
+<p>So after upgrading to macOS 15.7.3, I decided to block macOS updates completely and get rid of the badge.</p>
+<blockquote>
+<p>The methods below still work on macOS 26 (Tahoe) in 2026, but honestly, the newer the system, the more stubborn the update nag is. Blocking hosts makes the download fail, but it doesn&rsquo;t always kill the badge cleanly. So I split this into two layers: hosts as a fallback, and a configuration profile for the real fix (the recommended, low-effort approach in 2026).</p>
+</blockquote>
+<h2 id="step-1-turn-off-automatic-updates-in-system-settings">Step 1: Turn off automatic updates in System Settings</h2>
+<ol>
+<li>Open System Settings → General → Software Update</li>
+<li>Click the ⓘ icon on the right</li>
+<li>Turn off &ldquo;Automatically keep my Mac up to date&rdquo;</li>
+</ol>
+<h2 id="step-2-block-updates-via-hosts">Step 2: Block updates via hosts</h2>
+<p>This stops your Mac from reaching the macOS update servers. Edit the hosts file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/hosts
+</span></span></code></pre></div><p>Append these lines:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swscan</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swdist</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swdownload</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swcdn</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">updates</span><span class="o">-</span><span class="n">http</span><span class="o">.</span><span class="n">cdn</span><span class="o">-</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">updates</span><span class="o">.</span><span class="n">cdn</span><span class="o">-</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">gdmf</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">xp</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">mesu</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span></code></pre></div><p>Then flush the DNS cache:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo dscacheutil -flushcache
+</span></span><span class="line"><span class="cl">sudo killall -HUP mDNSResponder
+</span></span></code></pre></div><h2 id="step-3-get-rid-of-the-red-badge">Step 3: Get rid of the red badge</h2>
+<p>After the previous step, you&rsquo;ll still see the macOS 26 update prompt, but clicking update will fail. At that point, click update, and in the dialog that appears, <strong>do not click &ldquo;Check for Updates&rdquo;</strong>. Then press <code>command+option+esc</code> to open Force Quit, force quit System Settings, and the badge disappears.
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20251229144404126.png" alt="Force quit System Settings to remove the update badge"  />
+</p>
+<h3 id="the-limits-of-the-hosts-approach">The limits of the hosts approach</h3>
+<p>One thing to be honest about: from macOS 15 (Sequoia) through 26 (Tahoe), Apple has made update detection and notifications increasingly stubborn. The hosts block above stops the upgrade package from downloading, but the badge and the &ldquo;Upgrade to macOS Tahoe&rdquo; prompt can still reappear, especially after a background daemon does a scheduled check. If the badge keeps coming back every few days, skip to Step 4 and use a configuration profile. That&rsquo;s the clean fix.</p>
+<h2 id="step-4-recommended-in-2026-use-a-configuration-profile-to-hide-the-upgrade">Step 4 (recommended in 2026): Use a configuration profile to hide the upgrade</h2>
+<p>This is what the community (r/macsysadmin, Jamf, Daring Fireball, etc.) converged on in 2026, and honestly it&rsquo;s the least effort. The idea is to install a &ldquo;software update deferral&rdquo; profile so the macOS 26 upgrade entry simply disappears from the Software Update screen, badge included. You don&rsquo;t need enterprise MDM for a personal Mac. You can build a <code>.mobileconfig</code> yourself and install it.</p>
+<p>The two keys that matter in the Restrictions (<code>com.apple.applicationaccess</code>) payload:</p>
+<ul>
+<li><code>forceDelayedMajorSoftwareUpdates = true</code> — hides the major version upgrade (i.e. macOS 26)</li>
+<li><code>managedInstallDelay = 90</code> — the deferral in days, max 90</li>
+</ul>
+<h3 id="building-the-profile">Building the profile</h3>
+<p>You don&rsquo;t need to hand-write XML. Use the free <strong>iMazing Profile Editor</strong> or <strong>Apple Configurator</strong> (on the App Store) to create a new profile, add General → Restrictions, enable forcing a delay on major software updates, set the days to 90, and export a <code>.mobileconfig</code> file.</p>
+<h3 id="installing-the-profile">Installing the profile</h3>
+<ol>
+<li>Double-click the exported <code>.mobileconfig</code>; macOS tells you a profile was downloaded</li>
+<li>Open System Settings → Privacy &amp; Security, scroll to the bottom and find &ldquo;Profiles&rdquo;</li>
+<li>Select the profile, click &ldquo;Install&rdquo;, and enter your password when asked</li>
+</ol>
+<p>Go back to Software Update and the &ldquo;Upgrade to macOS Tahoe&rdquo; entry and the badge are gone. A lot less hassle than fighting hosts.</p>
+<h3 id="things-to-keep-in-mind">Things to keep in mind</h3>
+<ul>
+<li><strong>90-day cap</strong>: the deferral maxes out at 90 days. Reinstall a fresh profile before it expires if you want to stay put long-term, so set a calendar reminder.</li>
+<li><strong>Manual install limits</strong>: on macOS 26, a manually installed profile isn&rsquo;t as forceful as one from an MDM-enrolled device, but for hiding the major macOS upgrade it&rsquo;s enough</li>
+<li><strong>When you do want to upgrade</strong>: remove the profile (in the Profiles screen, click &ldquo;Remove&rdquo;), wait a moment, and the update entry comes back</li>
+</ul>
+<h2 id="already-clicked-update-or-the-update-already-downloaded">Already clicked Update, or the update already downloaded?</h2>
+<p>A few readers ran into this before finding the post: they slipped and clicked &ldquo;Update Now&rdquo;, or macOS quietly downloaded the update in the background. It&rsquo;s reversible, depending on how far it went.</p>
+<h3 id="case-1-you-havent-restarted-yet">Case 1: You haven&rsquo;t restarted yet</h3>
+<p>Go to System Settings → General → Software Update and click the ⓘ next to the downloading entry. On recent macOS (Ventura and later) you&rsquo;ll usually find a &ldquo;Delete Update&rdquo; button there — if it exists, use it. Cleanest option.</p>
+<p>If it doesn&rsquo;t, the package is already sitting on disk: minor updates land in <code>/Library/Updates</code>, major upgrades in &ldquo;macOS Install Data&rdquo; at the root of your drive. Try deleting them from the terminal first:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rm -rf /Library/Updates/*
+</span></span><span class="line"><span class="cl">sudo rm -rf <span class="s2">&#34;/macOS Install Data&#34;</span>
+</span></span></code></pre></div><p>If you get <code>Operation not permitted</code>, that&rsquo;s not a typo — SIP is protecting those files. The workaround is clunkier: boot into Recovery (Apple Silicon: shut down, hold the power button until &ldquo;Loading startup options&rdquo; appears, click Options → Continue; Intel: hold Cmd+R at boot), open Terminal from the Utilities menu, run <code>csrutil disable</code>, reboot and run the delete commands again, then boot back into Recovery once more and run <code>csrutil enable</code> to turn SIP back on.</p>
+<p>Afterwards, check Software Update to confirm nothing is pending, and make sure the Step 4 profile is installed (or your hosts entries are still in place), or it will quietly download everything again in a few days.</p>
+<h3 id="case-2-you-already-restarted-and-it-installed">Case 2: You already restarted and it installed</h3>
+<p>Once it&rsquo;s installed there is no &ldquo;undo&rdquo;. Your options are a full Time Machine restore or wiping the drive and reinstalling an older macOS, and both hurt. Which is exactly why you want the block in place before it gets that far.</p>
+<h2 id="how-to-undo-this">How to undo this</h2>
+<p>If you ever want to update again, depends on which method you used:</p>
+<ul>
+<li><strong>hosts approach</strong>: comment out or delete the relevant lines in <code>/etc/hosts</code>, flush DNS, and click Check for Updates again</li>
+<li><strong>configuration profile approach</strong>: go to System Settings → Privacy &amp; Security → Profiles, remove the profile, and the macOS upgrade entry shows up again after a short wait</li>
+</ul>
+<h2 id="a-final-note">A final note</h2>
+<p>I used to chase the latest version too. Every app, every OS, always current. After rebuilding my dev environment more times than I care to remember, I lost interest in the tinkering. Since I got an ARM Mac in 2021, something in my setup has broken roughly once every year or two, and every time I regret being too aggressive with updates.</p>
+<p>This year I finally set up Time Machine and blocked updates for good. No more worrying about an accidental click.</p>
+<p>This whole thing takes about five minutes. Worth it.</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>install-immortalwrt-in-Synology</title>
+      <link>https://blog.xiaohuangyu.space/en/p/install-immortalwrt-in-synology/</link>
+      <pubDate>Tue, 18 Mar 2025 14:53:23 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/install-immortalwrt-in-synology/</guid>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;download a iso in &lt;a href=&#34;https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&#34;&gt;https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;add new hard disk image &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164340052.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Wait for the image to be imported &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164427257.png&#34; alt=&#34;&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;import a new  Virtual Machine &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164514424.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164530509.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164750558.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;ol start=&#34;5&#34;&gt;&#xA;&lt;li&gt;set vm params &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232345769.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232412484.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;ol start=&#34;6&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232433502.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;vi /etc/config/network&#xA;set ipaddr to the address of the same network segment as the router and reboot&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232451643.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;after reboot , login immortalwrt in web browser by http://192.168.5.100&#xA;the default user is  root, and the default password is password&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<ol>
+<li>
+<p>download a iso in <a href="https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/">https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/x86/64/</a></p>
+</li>
+<li>
+<p>add new hard disk image <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164340052.png" alt="image.png"  />
+</p>
+</li>
+<li>
+<p>Wait for the image to be imported <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164427257.png" alt=""  />
+</p>
+</li>
+<li>
+<p>import a new  Virtual Machine <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164514424.png" alt="image.png"  />
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164530509.png" alt="image.png"  />
+</p>
+</li>
+</ol>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164750558.png" alt="image.png"  />
+</p>
+<ol start="5">
+<li>set vm params <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232345769.png" alt="image.png"  />
+</li>
+</ol>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164903800.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319164934676.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232412484.png" alt="image.png"  />
+</p>
+<ol start="6">
+<li>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232433502.png" alt="image.png"  />
+</p>
+<p>vi /etc/config/network
+set ipaddr to the address of the same network segment as the router and reboot
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319232451643.png" alt="image.png"  />
+</p>
+</li>
+<li>
+<p>after reboot , login immortalwrt in web browser by http://192.168.5.100
+the default user is  root, and the default password is password
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250319163252554.png" alt="image.png"  />
+</p>
+</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Archives</title>
+      <link>https://blog.xiaohuangyu.space/en/archives/</link>
+      <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/archives/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://blog.xiaohuangyu.space/en/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/about/</guid>
+      <description>&lt;p&gt;Hey, welcome to eatmoreduck&amp;rsquo;s Blog.&lt;/p&gt;&#xA;&lt;p&gt;This is a personal blog with the tagline &lt;strong&gt;Code &amp;amp; Lifestyle &amp;amp; AI&lt;/strong&gt; &amp;ndash; coding, living, and tinkering with AI. That pretty much sums up what you will find here.&lt;/p&gt;&#xA;&lt;h2 id=&#34;about-me&#34;&gt;About Me&lt;/h2&gt;&#xA;&lt;p&gt;I am eatmoreduck, a developer who enjoys tinkering with technology and tools. I spend most of my time writing code, occasionally messing around with NAS and smart home setups, and recently I have been hooked on using AI to boost productivity.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Hey, welcome to eatmoreduck&rsquo;s Blog.</p>
+<p>This is a personal blog with the tagline <strong>Code &amp; Lifestyle &amp; AI</strong> &ndash; coding, living, and tinkering with AI. That pretty much sums up what you will find here.</p>
+<h2 id="about-me">About Me</h2>
+<p>I am eatmoreduck, a developer who enjoys tinkering with technology and tools. I spend most of my time writing code, occasionally messing around with NAS and smart home setups, and recently I have been hooked on using AI to boost productivity.</p>
+<h2 id="what-this-blog-covers">What This Blog Covers</h2>
+<p>Content here revolves around a few topics:</p>
+<ul>
+<li><strong>Programming</strong>: Java backend, CI/CD, Git workflows, and other hands-on development experiences</li>
+<li><strong>AI Tools</strong>: LLM applications, AI-assisted coding, and real-world reviews of productivity tools</li>
+<li><strong>NAS &amp; Smart Home</strong>: Synology setups, remote access solutions, and home networking</li>
+<li><strong>Life Notes</strong>: Occasional thoughts and random musings</li>
+</ul>
+<p>The reason I started blogging is simple &ndash; document the pitfalls I have encountered and things I have learned. If it happens to help someone else along the way, even better.</p>
+<h2 id="tech-stack">Tech Stack</h2>
+<p>Tools and frameworks powering this blog:</p>
+<ul>
+<li><strong>Static Site Generator</strong>: <a href="https://gohugo.io/">Hugo</a> &ndash; fast builds, great developer experience</li>
+<li><strong>Theme</strong>: <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a> &ndash; clean and readable</li>
+<li><strong>Editor</strong>: <a href="https://obsidian.md/">Obsidian</a> &ndash; Markdown-based writing with local file management</li>
+<li><strong>Hosting</strong>: <a href="https://pages.cloudflare.com/">Cloudflare Pages</a> + GitHub Pages dual deployment</li>
+<li><strong>Comments</strong>: <a href="https://giscus.app/">Giscus</a> &ndash; powered by GitHub Discussions</li>
+<li><strong>Image Hosting</strong>: GitHub + jsDelivr CDN</li>
+</ul>
+<h2 id="get-in-touch">Get in Touch</h2>
+<p>If you want to chat or have any suggestions, feel free to reach out:</p>
+<ul>
+<li><strong>Email</strong>: <a href="mailto:eatmoreduck@qq.com">eatmoreduck@qq.com</a></li>
+<li><strong>GitHub Issues</strong>: Open an issue on any of my repositories</li>
+</ul>
+<p>Thanks for visiting. Hope you find something useful here. For questions or suggestions, feel free to email <a href="mailto:eatmoreduck@qq.com">eatmoreduck@qq.com</a>.</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Links</title>
+      <link>https://blog.xiaohuangyu.space/en/links/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/links/</guid>
+      <description>&lt;h2 id=&#34;my-links&#34;&gt;My Links&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/eatmoreduck&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;friend-links&#34;&gt;Friend Links&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;eatmoreduck&lt;/strong&gt;: &lt;a href=&#34;https://www.eatmoreduck.com/&#34;&gt;www.eatmoreduck.com&lt;/a&gt; - Personal homepage and portfolio of a risk-control developer based in Shanghai&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+      <content:encoded><![CDATA[<h2 id="my-links">My Links</h2>
+<ul>
+<li><a href="https://github.com/eatmoreduck">GitHub</a></li>
+</ul>
+<hr>
+<h2 id="friend-links">Friend Links</h2>
+<ul>
+<li><strong>eatmoreduck</strong>: <a href="https://www.eatmoreduck.com/">www.eatmoreduck.com</a> - Personal homepage and portfolio of a risk-control developer based in Shanghai</li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Privacy Policy</title>
+      <link>https://blog.xiaohuangyu.space/en/privacy-policy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/privacy-policy/</guid>
+      <description>&lt;p&gt;Last updated: April 8, 2026&lt;/p&gt;&#xA;&lt;p&gt;This Privacy Policy describes how eatmoreduck&amp;rsquo;s Blog (&amp;ldquo;this site&amp;rdquo;) collects, uses, and protects your personal information when you visit. Please read this policy carefully before using this site.&lt;/p&gt;&#xA;&lt;h2 id=&#34;information-collection&#34;&gt;Information Collection&lt;/h2&gt;&#xA;&lt;p&gt;This site is a static blog that does not require user registration or login, and does not actively collect personal identity information. However, the following information may be automatically recorded during your visit:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Access logs&lt;/strong&gt;: Browser type, operating system, visit time, referring page, IP address, etc., automatically recorded by the server or third-party services&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Cookie data&lt;/strong&gt;: Cookie information automatically sent by your browser to improve your browsing experience&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;cookie-usage&#34;&gt;Cookie Usage&lt;/h2&gt;&#xA;&lt;p&gt;This site uses cookies and similar technologies for the following purposes:&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Last updated: April 8, 2026</p>
+<p>This Privacy Policy describes how eatmoreduck&rsquo;s Blog (&ldquo;this site&rdquo;) collects, uses, and protects your personal information when you visit. Please read this policy carefully before using this site.</p>
+<h2 id="information-collection">Information Collection</h2>
+<p>This site is a static blog that does not require user registration or login, and does not actively collect personal identity information. However, the following information may be automatically recorded during your visit:</p>
+<ul>
+<li><strong>Access logs</strong>: Browser type, operating system, visit time, referring page, IP address, etc., automatically recorded by the server or third-party services</li>
+<li><strong>Cookie data</strong>: Cookie information automatically sent by your browser to improve your browsing experience</li>
+</ul>
+<h2 id="cookie-usage">Cookie Usage</h2>
+<p>This site uses cookies and similar technologies for the following purposes:</p>
+<ul>
+<li><strong>Website analytics</strong>: Google Analytics is used to collect anonymous access data to understand page visits and user behavior</li>
+<li><strong>Third-party advertising</strong>: This site may display ads through Google AdSense. Google and its partners may use cookies to show personalized ads based on your past visits to this site and other websites</li>
+</ul>
+<p>You can manage or delete cookies through your browser settings. Please note that disabling cookies may affect some features of this site.</p>
+<h2 id="google-adsense">Google AdSense</h2>
+<p>This site uses Google AdSense to display advertisements. Google AdSense may use cookies and web beacons to serve ads based on a user&rsquo;s visits to this site and other websites on the internet.</p>
+<ul>
+<li>Google uses cookies to serve ads based on a user&rsquo;s prior visits to this website</li>
+<li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads">Google Ads Settings</a></li>
+<li>Third-party ad vendors may use cookie-based tracking technologies to measure ad effectiveness</li>
+<li>For more information on how Google uses data, please see <a href="https://policies.google.com/privacy">Google&rsquo;s Privacy Policy</a></li>
+</ul>
+<h2 id="google-analytics">Google Analytics</h2>
+<p>This site uses Google Analytics to analyze website traffic and user behavior. Google Analytics collects anonymous data including page views, visit duration, and geographic location. This data is used solely to improve website content and user experience.</p>
+<p>For details on Google Analytics data processing, please see the <a href="https://support.google.com/analytics/answer/6004245">Google Analytics Privacy Policy</a>.</p>
+<h2 id="cloudflare">Cloudflare</h2>
+<p>This site uses Cloudflare for content delivery and security services. Cloudflare may collect access data for performance optimization and security protection. For details, please see the <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a>.</p>
+<h2 id="third-party-links">Third-Party Links</h2>
+<p>Articles on this site may contain links to third-party websites. This site is not responsible for the content or privacy practices of those websites. We recommend reading the privacy policies of each website you visit.</p>
+<h2 id="data-protection">Data Protection</h2>
+<p>This site takes reasonable technical measures to protect your information security, including HTTPS encrypted transmission and reliable third-party service providers.</p>
+<h2 id="childrens-privacy">Children&rsquo;s Privacy</h2>
+<p>The content of this site is intended for general tech enthusiasts and is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+<h2 id="policy-changes">Policy Changes</h2>
+<p>This privacy policy may be updated from time to time. Significant changes will be announced on this page. We recommend reviewing this page periodically for the latest policy.</p>
+<h2 id="contact-us">Contact Us</h2>
+<p>If you have any questions about this privacy policy, please contact us at:</p>
+<ul>
+<li><strong>Email</strong>: <a href="mailto:eatmoreduck@qq.com">eatmoreduck@qq.com</a></li>
+<li><strong>GitHub</strong>: <a href="https://github.com/eatmoreduck">eatmoreduck</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Search</title>
+      <link>https://blog.xiaohuangyu.space/en/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/search/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+  </channel>
+</rss>

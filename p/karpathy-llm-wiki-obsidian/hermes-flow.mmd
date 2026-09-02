@@ -1,0 +1,11 @@
+flowchart TD
+    A["Hermes cron<br/>07:00 / 07:30"] --> B["gateway 启动<br/>agent session"]
+    B --> C["collect 脚本<br/>拉 GitHub/HN/arXiv"]
+    C --> D["01-Raw 原料"]
+    D --> E["digest skill<br/>筛选 + 总结"]
+    E --> F["03-Daily-Digest 日报"]
+    E --> G["02-Wiki 编译"]
+    E --> H["推送到 Telegram"]
+    F --> I["publish 脚本"]
+    I --> J["push GitHub"]
+    J --> K["Cloudflare Pages<br/>自动构建发布"]

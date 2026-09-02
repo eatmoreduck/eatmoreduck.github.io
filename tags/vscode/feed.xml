@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>VScode on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/vscode/</link>
+    <description>Recent content in VScode on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/vscode/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VScode进入报错code 9, signal null error</title>
+      <link>https://blog.xiaohuangyu.space/p/vscode-code-9-error/</link>
+      <pubDate>Fri, 16 Aug 2024 10:07:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/vscode-code-9-error/</guid>
+      <description>&lt;p&gt;进入 Vscode 时，出现报错&lt;br&gt;&#xA;Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)&lt;/p&gt;&#xA;&lt;p&gt;![image.png](&lt;a href=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&#34;&gt;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&lt;/a&gt; =600x)&lt;/p&gt;&#xA;&lt;p&gt;查证go 和 go env  之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 &lt;strong&gt;export NODE_OPTIONS=&amp;ndash;openssl-legacy-provider&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#node&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/opt/homebrew/opt/node@20/bin:$PATH&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LDFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CPPFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;NODE_OPTIONS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openssl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;legacy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;provider&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>进入 Vscode 时，出现报错<br>
+Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)</p>
+<p>![image.png](<a href="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png">https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png</a> =600x)</p>
+<p>查证go 和 go env  之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 <strong>export NODE_OPTIONS=&ndash;openssl-legacy-provider</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1">#node</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&#34;/opt/homebrew/opt/node@20/bin:$PATH&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">LDFLAGS</span><span class="o">=</span><span class="s2">&#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">CPPFLAGS</span><span class="o">=</span><span class="s2">&#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">NODE_OPTIONS</span><span class="o">=--</span><span class="n">openssl</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">provider</span>
+</span></span></code></pre></div><p>使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">vi</span> <span class="o">~/.</span><span class="n">bash_profile</span>
+</span></span><span class="line"><span class="cl"><span class="err">按</span><span class="n">i进入编辑模式</span>
+</span></span><span class="line"><span class="cl"><span class="err">找到</span><span class="k">export</span> <span class="n">NODE_OPTIONS</span><span class="o">=--</span><span class="n">openssl</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">provider</span> <span class="err">所在行</span>
+</span></span><span class="line"><span class="cl"><span class="err">在</span> <span class="k">export</span> <span class="n">NODE_OPTIONS</span><span class="o">=--</span><span class="n">openssl</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">provider</span> <span class="err">前加</span><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="err">最后那行变成</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#export NODE_OPTIONS=--openssl-legacy-provider</span>
+</span></span><span class="line"><span class="cl"><span class="err">再按</span> <span class="n">esc</span> <span class="err">退出编辑模式</span>
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="n">wq</span><span class="o">!</span> 
+</span></span><span class="line"><span class="cl"><span class="err">然后回车</span>
+</span></span></code></pre></div><p>如果不会使用 vi 可以直接终端执行</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd $HOME &amp; open .
+</span></span></code></pre></div><p>然后用喜欢的文本编辑器打开.bash_profile 更改所在行</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202409101100157.png" alt="image.png"  />
+</p>
+<p>将NODE_OPTIONS 注释掉后，重新进入 VScode 解决</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

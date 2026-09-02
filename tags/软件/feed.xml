@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>软件 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E8%BD%AF%E4%BB%B6/</link>
+    <description>Recent content in 软件 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E8%BD%AF%E4%BB%B6/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2026 Mac 开发全栈工具｜淘汰 Alfred/iTerm/Docker Desktop，我的最终软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</link>
+      <pubDate>Tue, 23 Jun 2026 20:00:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</guid>
+      <description>&lt;p&gt;距离上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/mac-dev-software-list/&#34;&gt;Mac 开发常用软件清单&lt;/a&gt; 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。&lt;/p&gt;&#xA;&lt;h2 id=&#34;先说哪些变了&#34;&gt;先说哪些变了&lt;/h2&gt;&#xA;&lt;p&gt;旧清单里这几个我现在已经不用了：&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>距离上一篇 <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac 开发常用软件清单</a> 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。</p>
+<h2 id="先说哪些变了">先说哪些变了</h2>
+<p>旧清单里这几个我现在已经不用了：</p>
+<ul>
+<li><strong>Alfred</strong> —— 被 Raycast 完全取代了。付费墙又高，免费版能干的事太少。</li>
+<li><strong>Mos / Mac Mouse Fix 二选一</strong> —— 现在只留 Mac Mouse Fix，它新版本窗口管理也做了，比以前好用。</li>
+<li><strong>Loop</strong> —— 留给 Mac Mouse Fix 的窗口管理之后撤了。</li>
+<li><strong>EasyDevo</strong> —— DevToys 够用了。</li>
+<li><strong>Termius</strong> —— SSH 直接交给 Ghostty + 系统 ssh 配置，多端同步的需求没了。</li>
+<li><strong>lux（B 站下载）</strong> —— 不怎么下了。</li>
+</ul>
+<p>下文按我现在真实的用法重新整理。</p>
+<h2 id="ai-编程">AI 编程</h2>
+<p>这是这两年变化最大的部分，单独拎出来。</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Code</td>
+          <td>主力，配合 GLM 和其他第三方模型用</td>
+      </tr>
+      <tr>
+          <td>Codex</td>
+          <td>OpenAI 的命令行 agent，写代码</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>图形化的 AI 编辑器，需要看大文件、改前端的时候顺手</td>
+      </tr>
+      <tr>
+          <td>Gemini / 豆包 / 通义 / 元宝</td>
+          <td>桌面客户端，分别对应几家的模型，谁好用问谁</td>
+      </tr>
+  </tbody>
+</table>
+<p>说实话现在 AI 编程工具已经多到有点过剩了。我的实际状态是 Claude Code 当主力，剩下几个客户端拿来对比同一个问题不同模型的回答。没必要全装，挑一两个顺手的就行。</p>
+<h2 id="编辑器和-ide">编辑器和 IDE</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>GoLand</td>
+          <td>写 Go 的主力，JetBrains 的索引还是最舒服</td>
+      </tr>
+      <tr>
+          <td>WebStorm</td>
+          <td>前端项目用</td>
+      </tr>
+      <tr>
+          <td>PyCharm</td>
+          <td>偶尔写 Python</td>
+      </tr>
+      <tr>
+          <td>IntelliJ IDEA</td>
+          <td>Java 项目</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>快速打开大文件看代码，启动快</td>
+      </tr>
+      <tr>
+          <td>ZCode</td>
+          <td>另一个命令行 agent</td>
+      </tr>
+  </tbody>
+</table>
+<p>JetBrains 全家桶还是吃内存大户，但代码跳转和重构这块没什么能打的。Sublime 留着纯粹是因为它打开几万行的日志文件不卡。</p>
+<h2 id="笔记">笔记</h2>
+<p>笔记类我同时开着三个：Obsidian、语雀、Notion。不是因为选择困难，是它们在我这儿干的活不一样，谁也替代不了谁。</p>
+<p>先给个速览：</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>我的定位</th>
+          <th>数据在哪</th>
+          <th>适合谁</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Obsidian</td>
+          <td>私人第二大脑，给自己看</td>
+          <td>全在本地</td>
+          <td>长期沉淀、想要完全掌控的人</td>
+      </tr>
+      <tr>
+          <td>语雀</td>
+          <td>技术文档沉淀，结构化的知识库</td>
+          <td>云端</td>
+          <td>喜欢文档树、做团队/项目 Wiki 的人</td>
+      </tr>
+      <tr>
+          <td>Notion</td>
+          <td>公开分享和对外知识库</td>
+          <td>云端</td>
+          <td>需要对外展示、追求页面好看的人</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="obsidian我的主力">Obsidian：我的主力</h3>
+<p>这篇博客就是 Obsidian 写的，平时记的笔记、写的 skill、攒的技术资料全在里面。它的核心好处是<strong>文件全在本地、纯 Markdown</strong>，不被任何一个云服务绑住，哪天想迁随时能迁。双链和图谱让笔记之间能连起来，越攒越有价值，不像传统笔记写到后面就成了一堆找不到的死文档。</p>
+<p>它是个本地工具，发布得自己搭。我自己搭过两套，可以看看：</p>
+<ul>
+<li><a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/">hugo+obsidian 打造最强博客（一）</a> 和 <a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/">(二)</a> —— 怎么把 Obsidian 接到 Hugo 博客上</li>
+<li><a href="https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/">Obsidian + Claude Code 构建 AI 第二大脑</a> —— 后来又把 AI 接进来，让笔记真正&quot;活&quot;起来</li>
+</ul>
+<h3 id="语雀技术文档沉淀">语雀：技术文档沉淀</h3>
+<p>技术类的东西我往语雀放。它那套文档树结构很适合做知识库分层，一个项目从设计到实现拆成一块块挂上去，回头看一目了然。语雀的编辑器对代码块、公式、画板这些支持得比较细，写技术文档比 Markdown 裸写舒服。缺点是云端封闭，导出没那么自由，所以我只把&quot;需要结构化整理、长期维护&quot;的技术内容放这。</p>
+<h3 id="notion对外分享">Notion：对外分享</h3>
+<p>Notion 我其实用得不多，但留着有它的道理——<strong>公开分享和对外知识库这块，它最好用</strong>。Notion 的页面能直接发布成公开链接，排版好看、多媒体混排方便，拿来做个人主页、项目介绍、对外教程很合适，对 SEO 也友好。我自己不拿它记日常笔记，但要做给别人看的东西，会优先考虑它。</p>
+<h3 id="我的实际分工">我的实际分工</h3>
+<p>简单说就是：<strong>Obsidian 管输入和沉淀，语雀管技术整理，Notion 管对外输出</strong>。如果你只挑一个，长期沉淀选 Obsidian；要带团队做 Wiki 选语雀；要做对外内容选 Notion。三个都装也不是浪费，前提是给每个工具一个明确的角色，别什么都往一个里塞。</p>
+<p>另外还有个 <strong>Anki</strong>，不在上面三个的赛道里。它是纯记忆工具，碎片时间拿来刷卡片，背单词和记技术知识点，配合 Easydict 存生词挺好用。</p>
+<h2 id="终端和-shell">终端和 Shell</h2>
+<p>这块这两年换得最彻底。</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ghostty</td>
+          <td>现在的主力终端，GPU 渲染，配置极简</td>
+      </tr>
+      <tr>
+          <td>Oh My Zsh</td>
+          <td>还是它，配 powerlevel10k 主题</td>
+      </tr>
+      <tr>
+          <td>powerlevel10k</td>
+          <td>提示符主题，instant prompt 让启动快很多</td>
+      </tr>
+      <tr>
+          <td>zsh-autosuggestions</td>
+          <td>命令自动补全</td>
+      </tr>
+      <tr>
+          <td>zsh-syntax-highlighting</td>
+          <td>命令语法高亮</td>
+      </tr>
+  </tbody>
+</table>
+<p>以前用 iTerm2，换到 Ghostty 主要是图它快和干净。配置文件就一个，没有什么花里胡哨的设置面板，我反而更喜欢。</p>
+<p>Shell 这套配置我没怎么折腾，就四样东西：Oh My Zsh、p10k、自动补全、语法高亮。够用了，再往上加插件启动会变慢。</p>
+<h2 id="命令行工具">命令行工具</h2>
+<p>这是旧清单里完全没覆盖的部分，但其实是我每天用得最多的。</p>
+<h3 id="包管理和运行时">包管理和运行时</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Homebrew</td>
+          <td>Mac 上装一切的基础</td>
+      </tr>
+      <tr>
+          <td>uv</td>
+          <td>Python 的包管理和虚拟环境，比 pip + venv 快得多，现在基本不碰 pip 了</td>
+      </tr>
+      <tr>
+          <td>bun</td>
+          <td>JS 运行时和包管理，比 node 快</td>
+      </tr>
+      <tr>
+          <td>nvm</td>
+          <td>多版本 node 切换</td>
+      </tr>
+      <tr>
+          <td>pyenv</td>
+          <td>多版本 Python 切换</td>
+      </tr>
+  </tbody>
+</table>
+<p>uv 是这两年我最想安利的 Python 工具。装依赖、建虚拟环境、跑脚本，全用它一个，不用再记 <code>python -m venv</code> 那一串。配合 <code>uv run</code> 直接在临时环境里跑脚本特别舒服。</p>
+<h3 id="日常高频">日常高频</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>gh</td>
+          <td>GitHub 官方命令行，开 PR、看 issue、clone 仓库都靠它</td>
+      </tr>
+      <tr>
+          <td>git</td>
+          <td>不用多说了</td>
+      </tr>
+      <tr>
+          <td>task (go-task)</td>
+          <td>像 make 但是用 YAML 写，跨平台，项目里的自动化我都用它</td>
+      </tr>
+      <tr>
+          <td>ffmpeg</td>
+          <td>处理音视频，转格式、剪片段、抽音频</td>
+      </tr>
+      <tr>
+          <td>tree</td>
+          <td>看目录结构</td>
+      </tr>
+      <tr>
+          <td>telnet</td>
+          <td>偶尔测端口用</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>task</code> 这个我想多说一句。以前项目里一堆 <code>Makefile</code>，写起来不直观还容易写错。换成 task 之后，<code>taskfile.yml</code> 一眼能看懂在干什么，Windows 上也能跑，团队协作省心很多。</p>
+<h3 id="系统监控">系统监控</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>fastfetch</td>
+          <td>neofetch 的替代，启动快，看系统信息用的</td>
+      </tr>
+      <tr>
+          <td>mactop</td>
+          <td>苹果芯片上的 top，比 htop 更懂 M 系列的架构</td>
+      </tr>
+      <tr>
+          <td>kubectl</td>
+          <td>偶尔连集群</td>
+      </tr>
+  </tbody>
+</table>
+<p>mactop 是 Apple Silicon 上我比较推荐的。它能显示 CPU 各个性能核和能效核的占用，还有 GPU、内存带宽这些，htop 看不到。</p>
+<h2 id="容器和虚拟化">容器和虚拟化</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>OrbStack</td>
+          <td>Docker Desktop 的替代，启动快、占内存少、还能跑 Linux 虚拟机</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>兼容性需要的时候还是会用</td>
+      </tr>
+  </tbody>
+</table>
+<p>从 Docker Desktop 换到 OrbStack 是另一个&quot;用完回不去&quot;的体验。同样的容器，OrbStack 启动快一截，内存占用也小，而且它内置的 Linux 虚拟机可以当轻量开发环境用。Docker 留着主要是有些 CI 本地复现的时候要保证环境一致。</p>
+<h2 id="数据库和网络">数据库和网络</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis 客户端</td>
+      </tr>
+      <tr>
+          <td>DataGrip</td>
+          <td>数据库通用客户端，连啥都行</td>
+      </tr>
+      <tr>
+          <td>SecureCRT / SecureFX</td>
+          <td>老牌终端和文件传输，付费</td>
+      </tr>
+      <tr>
+          <td>Wireshark</td>
+          <td>抓包，排查网络问题</td>
+      </tr>
+      <tr>
+          <td>ZeroTier</td>
+          <td>虚拟局域网，组网用</td>
+      </tr>
+  </tbody>
+</table>
+<p>Navicat 我现在没装了，DataGrip 一个顶所有。Wireshark 不常用，但真要排查网络问题的时候它是唯一靠谱的。</p>
+<h2 id="效率和启动器">效率和启动器</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Raycast</td>
+          <td>启动器，免费版够用，Alfred 的平替</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>划词翻译，开源免费</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>改键，把 Caps Lock 改成 Ctrl+Esc</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>外接显示器调亮度</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>鼠标平滑滚动 + 窗口管理</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>折叠菜单栏图标</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>风扇转速</td>
+      </tr>
+      <tr>
+          <td>BrightIntosh</td>
+          <td>老款 MacBook 突破官方限制最高亮度</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>图床，博客图片都走它</td>
+      </tr>
+  </tbody>
+</table>
+<p>Raycast 我每天用得最多的几个功能：启动应用、剪贴板历史、窗口管理、简单计算。它比 Alfred 好的地方是免费版就把核心功能全给了，不用纠结要不要买 Powerpack。</p>
+<p>Easydict 这个之前我专门写过一篇 <a href="https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/">给 Easydict 加 Anki 功能</a>，是真好用，划词就能查、能发音、能存生词。</p>
+<h2 id="浏览器和插件">浏览器和插件</h2>
+<p>主力 Google Chrome。日常用的插件：</p>
+<table>
+  <thead>
+      <tr>
+          <th>插件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>沉浸式翻译</td>
+          <td>网页双语对照，看英文文档神器</td>
+      </tr>
+      <tr>
+          <td>简阅</td>
+          <td>阅读模式，把乱七八糟的网页变清爽</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>绕过禁止复制的网站</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>扒网站资源用</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="其它日常">其它日常</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>IINA</td>
+          <td>视频播放器，Mac 上最好的选择</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>解压缩</td>
+      </tr>
+      <tr>
+          <td>OBS</td>
+          <td>录屏、直播</td>
+      </tr>
+      <tr>
+          <td>Apifox</td>
+          <td>API 调试，Postman 的替代</td>
+      </tr>
+      <tr>
+          <td>OrbStack</td>
+          <td>上面提过</td>
+      </tr>
+      <tr>
+          <td>XMind</td>
+          <td>思维导图</td>
+      </tr>
+  </tbody>
+</table>
+<p>IINA 没什么好说的，装就完了。</p>
+<p>旧的那篇 <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac 开发常用软件清单</a> 留个时间戳，也没删。这篇是 2026 年的版本，估计过两年又得再更新一次。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Mac 开发常用软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</link>
+      <pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</guid>
+      <description>&lt;p&gt;换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。&lt;/p&gt;&#xA;&lt;h2 id=&#34;开发工具&#34;&gt;开发工具&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;软件&lt;/th&gt;&#xA;          &lt;th&gt;说明&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;JetBrains 全家桶&lt;/td&gt;&#xA;          &lt;td&gt;GoLand 用得最多，其他看项目需要&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;VSCode&lt;/td&gt;&#xA;          &lt;td&gt;轻量编辑，前端开发主力&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Cursor&lt;/td&gt;&#xA;          &lt;td&gt;最近在用，AI 辅助写代码确实省脑子&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Another Redis Desktop Manager&lt;/td&gt;&#xA;          &lt;td&gt;Redis 客户端，免费够用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Navicat Premium Lite&lt;/td&gt;&#xA;          &lt;td&gt;官方免费版，不需要破解了&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Sublime Text&lt;/td&gt;&#xA;          &lt;td&gt;快速打开文件看代码&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Docker&lt;/td&gt;&#xA;          &lt;td&gt;容器开发必备&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;DevToys&lt;/td&gt;&#xA;          &lt;td&gt;开发者小工具集合，JSON 格式化、Base64 转换啥的&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;EasyDevo&lt;/td&gt;&#xA;          &lt;td&gt;和 DevToys 类似，二选一就行&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;实用工具&#34;&gt;实用工具&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;软件&lt;/th&gt;&#xA;          &lt;th&gt;说明&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Android File Transfer&lt;/td&gt;&#xA;          &lt;td&gt;传文件到手机，官方工具&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Neat Download Manager&lt;/td&gt;&#xA;          &lt;td&gt;下载器，比浏览器自带的快&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mounty&lt;/td&gt;&#xA;          &lt;td&gt;读写 NTFS 格式硬盘&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Keka&lt;/td&gt;&#xA;          &lt;td&gt;解压缩，支持格式多&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Easydict&lt;/td&gt;&#xA;          &lt;td&gt;划词翻译，开源免费&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;IINA&lt;/td&gt;&#xA;          &lt;td&gt;视频播放器，Mac 上最好的选择&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Karabiner-Elements&lt;/td&gt;&#xA;          &lt;td&gt;改键位，比如把 Caps Lock 映射成 Ctrl&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;MonitorControl&lt;/td&gt;&#xA;          &lt;td&gt;外接显示器调节亮度，这个很有用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Hidden Bar&lt;/td&gt;&#xA;          &lt;td&gt;折叠菜单栏图标，强迫症福音&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mac Mouse Fix&lt;/td&gt;&#xA;          &lt;td&gt;鼠标滚动变平滑，用罗技鼠标的推荐&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Loop&lt;/td&gt;&#xA;          &lt;td&gt;窗口快捷缩放，类似 Windows 的 Aero Snap&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mos&lt;/td&gt;&#xA;          &lt;td&gt;鼠标平滑滚动，二选一&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;PicList&lt;/td&gt;&#xA;          &lt;td&gt;图床工具，支持 PicGo 配置&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;ShortcutDetective&lt;/td&gt;&#xA;          &lt;td&gt;查看快捷键冲突，偶尔用到&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Macs Fan Control&lt;/td&gt;&#xA;          &lt;td&gt;风扇转速调节，笔记本发热时用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;个人推荐&lt;/strong&gt;：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。</p>
+<h2 id="开发工具">开发工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>JetBrains 全家桶</td>
+          <td>GoLand 用得最多，其他看项目需要</td>
+      </tr>
+      <tr>
+          <td>VSCode</td>
+          <td>轻量编辑，前端开发主力</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>最近在用，AI 辅助写代码确实省脑子</td>
+      </tr>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis 客户端，免费够用</td>
+      </tr>
+      <tr>
+          <td>Navicat Premium Lite</td>
+          <td>官方免费版，不需要破解了</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>快速打开文件看代码</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>容器开发必备</td>
+      </tr>
+      <tr>
+          <td>DevToys</td>
+          <td>开发者小工具集合，JSON 格式化、Base64 转换啥的</td>
+      </tr>
+      <tr>
+          <td>EasyDevo</td>
+          <td>和 DevToys 类似，二选一就行</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="实用工具">实用工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Android File Transfer</td>
+          <td>传文件到手机，官方工具</td>
+      </tr>
+      <tr>
+          <td>Neat Download Manager</td>
+          <td>下载器，比浏览器自带的快</td>
+      </tr>
+      <tr>
+          <td>Mounty</td>
+          <td>读写 NTFS 格式硬盘</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>解压缩，支持格式多</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>划词翻译，开源免费</td>
+      </tr>
+      <tr>
+          <td>IINA</td>
+          <td>视频播放器，Mac 上最好的选择</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>改键位，比如把 Caps Lock 映射成 Ctrl</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>外接显示器调节亮度，这个很有用</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>折叠菜单栏图标，强迫症福音</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>鼠标滚动变平滑，用罗技鼠标的推荐</td>
+      </tr>
+      <tr>
+          <td>Loop</td>
+          <td>窗口快捷缩放，类似 Windows 的 Aero Snap</td>
+      </tr>
+      <tr>
+          <td>Mos</td>
+          <td>鼠标平滑滚动，二选一</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>图床工具，支持 PicGo 配置</td>
+      </tr>
+      <tr>
+          <td>ShortcutDetective</td>
+          <td>查看快捷键冲突，偶尔用到</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>风扇转速调节，笔记本发热时用</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>个人推荐</strong>：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。</p>
+<h2 id="效率工具">效率工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Alfred</td>
+          <td>老牌启动器，Powerpack 需要付费</td>
+      </tr>
+      <tr>
+          <td>滴答清单</td>
+          <td>GTD 待办事项，多端同步</td>
+      </tr>
+      <tr>
+          <td>RayCast</td>
+          <td><strong>强烈推荐</strong>，免费版已经够用，Alfred 的平替</td>
+      </tr>
+  </tbody>
+</table>
+<p>RayCast 真的好用，我主要是用来：</p>
+<ul>
+<li>快速启动应用</li>
+<li>查剪贴板历史</li>
+<li>简单的计算和转换</li>
+<li>搜索文件</li>
+</ul>
+<h2 id="终端工具">终端工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>iTerm2</td>
+          <td>终端替代品，配色和分屏都很方便</td>
+      </tr>
+      <tr>
+          <td>SecureCRT</td>
+          <td>商用终端，付费</td>
+      </tr>
+      <tr>
+          <td>lux</td>
+          <td>B 站视频下载，偶尔用</td>
+      </tr>
+      <tr>
+          <td>Termius</td>
+          <td>SSH 客户端，多设备同步</td>
+      </tr>
+      <tr>
+          <td>htop</td>
+          <td>top 的升级版，更好看</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="网络工具">网络工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Lulu</td>
+          <td>开源防火墙，监控应用网络连接</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="chrome-插件">Chrome 插件</h2>
+<table>
+  <thead>
+      <tr>
+          <th>插件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Proxy SwitchyOmega</td>
+          <td>代理切换，老牌了</td>
+      </tr>
+      <tr>
+          <td>ZeroOmega</td>
+          <td>SwitchyOmega 的轻量版</td>
+      </tr>
+      <tr>
+          <td>Adblock Plus</td>
+          <td>广告拦截</td>
+      </tr>
+      <tr>
+          <td>简阅</td>
+          <td>阅读模式，网页变清爽</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>复制禁止复制的网站内容</td>
+      </tr>
+      <tr>
+          <td>XSwitch</td>
+          <td>代理管理</td>
+      </tr>
+      <tr>
+          <td>Axure RP</td>
+          <td>原型预览</td>
+      </tr>
+      <tr>
+          <td>沉浸式翻译</td>
+          <td>页面双语对照翻译</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>下载网站资源，扒网站用</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="补充说明">补充说明</h2>
+<p>上面的工具不是都要装，按需选择就行。如果你也在整理自己的工具清单，推荐看看 <a href="https://wangchujiang.com/awesome-mac/README-zh.html">awesome-mac</a>，那里更全。</p>
+<hr>
+<p><strong>最后更新</strong>：2024-04-07</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

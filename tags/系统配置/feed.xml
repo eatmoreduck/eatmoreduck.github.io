@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>系统配置 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/</link>
+    <description>Recent content in 系统配置 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 02 Sep 2026 11:26:31 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>屏蔽 macOS 26 更新（2026 亲测有效，消除小红点）</title>
+      <link>https://blog.xiaohuangyu.space/p/block-macos-updates/</link>
+      <pubDate>Mon, 29 Dec 2025 14:28:17 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/block-macos-updates/</guid>
+      <description>&lt;h2 id=&#34;为什么要屏蔽更新&#34;&gt;为什么要屏蔽更新&lt;/h2&gt;&#xA;&lt;p&gt;macOS 26 出新之后，隔三岔五的弹窗更新，总让我担心手滑点到「立即更新」，虽然有二次确认。但最近更新频繁，我想找个一劳永逸的办法。&lt;/p&gt;&#xA;&lt;p&gt;我想要屏蔽更新的几个原因：&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="为什么要屏蔽更新">为什么要屏蔽更新</h2>
+<p>macOS 26 出新之后，隔三岔五的弹窗更新，总让我担心手滑点到「立即更新」，虽然有二次确认。但最近更新频繁，我想找个一劳永逸的办法。</p>
+<p>我想要屏蔽更新的几个原因：</p>
+<ul>
+<li>强迫症看着那个红点难受</li>
+<li>新系统老机器带不动，怕更新了变卡</li>
+<li>工作环境需要稳定，不想瞎折腾，更新后担心开发环境炸掉</li>
+<li>macOS 26 的液态玻璃风格我很讨厌，同时也担心更新后部分 app 不能匹配</li>
+</ul>
+<p>遂决定升级到 macOS 15.7.3 之后，彻底屏蔽 macOS 更新，同时消除小红点</p>
+<blockquote>
+<p>下面的方法在 2026 年的 macOS 26（Tahoe）上仍然可用，但说实话，越新的系统对更新提示的「执念」越深。hosts 拦截能让更新下载失败，却不一定能干净地让小红点消失。所以我把方案分成两个层次：先上 hosts 兜底，再用配置描述文件做彻底屏蔽（这是 2026 年最推荐、最省心的做法）。</p>
+</blockquote>
+<h2 id="第一步ui屏蔽软件更新及自动下载">第一步：UI屏蔽软件更新及自动下载</h2>
+<ol>
+<li>打开「设置」-「通用」-「软件更新」</li>
+<li>点击右边的 ⓘ 图标</li>
+<li>把「自动保持我的 Mac 最新」关掉</li>
+</ol>
+<h2 id="第二步修改-hosts-屏蔽更新">第二步：修改 hosts 屏蔽更新</h2>
+<p>这一步的操作是为了禁止连接到 macOS 更新服务器，编辑 hosts 文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/hosts
+</span></span></code></pre></div><p>在文件末尾加入以下几行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swscan</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swdist</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swdownload</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">swcdn</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">updates</span><span class="o">-</span><span class="n">http</span><span class="o">.</span><span class="n">cdn</span><span class="o">-</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">updates</span><span class="o">.</span><span class="n">cdn</span><span class="o">-</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">gdmf</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">xp</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl"><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">mesu</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">com</span>
+</span></span></code></pre></div><p>然后刷新 DNS 缓存：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo dscacheutil -flushcache
+</span></span><span class="line"><span class="cl">sudo killall -HUP mDNSResponder
+</span></span></code></pre></div><h2 id="第三步消除小红点">第三步：消除小红点</h2>
+<p>完成上一步之后，依然能看到 macOS 26 的更新提示，但点击更新会失败。此时先点击更新，在弹出的界面<strong>不要点击「检测更新」</strong>，然后按 <code>command+option+esc</code> 打开「强制退出」窗口，将「系统设置」强制退出，小红点就会消失
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20251229144404126.png" alt="macOS 软件更新界面强制退出消除小红点"  />
+</p>
+<h3 id="关于-hosts-方法的局限">关于 hosts 方法的局限</h3>
+<p>需要说明的是，从 macOS 15（Sequoia）到 26（Tahoe），Apple 把更新检测和通知做得越来越「顽固」。上面的 hosts 屏蔽可以让升级包下载不下来，但小红点和「升级到 macOS Tahoe」的提示有时还是会冒出来，尤其是系统后台守护进程定时检查之后。如果你发现红点三天两头又回来了，那就直接用下面第四步的配置描述文件，一劳永逸。</p>
+<h2 id="第四步2026-推荐用配置描述文件彻底屏蔽升级">第四步（2026 推荐）：用配置描述文件彻底屏蔽升级</h2>
+<p>这是 2026 年社区（macsysadmin、Jamf、Daring Fireball 等）一致推荐的做法，也是我个人认为最省心的方案。原理是给系统装一个「延迟软件更新」的描述文件，让 macOS 26 的升级入口在「软件更新」界面里直接消失，连红点都不给你留。个人 Mac 不需要企业 MDM，自己做一个 <code>.mobileconfig</code> 装上就行。</p>
+<p>核心是 Restrictions（<code>com.apple.applicationaccess</code>）这个 payload 里的两个键：</p>
+<ul>
+<li><code>forceDelayedMajorSoftwareUpdates = true</code>：隐藏大版本升级（也就是 macOS 26）</li>
+<li><code>managedInstallDelay = 90</code>：延迟天数，最大 90 天</li>
+</ul>
+<h3 id="做一个描述文件">做一个描述文件</h3>
+<p>不需要从零手写 XML，用免费的 <strong>iMazing Profile Editor</strong> 或 <strong>Apple Configurator</strong>（App Store 可下）新建一个 profile，添加 General → Restrictions，勾上强制延迟主版本更新，天数填 90，导出成 <code>.mobileconfig</code> 文件即可。</p>
+<h3 id="安装描述文件">安装描述文件</h3>
+<ol>
+<li>双击导出的 <code>.mobileconfig</code> 文件，系统会提示「已下载描述文件」</li>
+<li>打开「设置」-「隐私与安全性」，下拉到底部找到「描述文件」，点击进入</li>
+<li>选中刚才的描述文件，点击「安装」，按提示输入密码确认</li>
+</ol>
+<p>装完回到「软件更新」看一眼，原本的「升级到 macOS Tahoe」入口和红点就都不见了。这比 hosts 折腾舒服多了。</p>
+<h3 id="注意事项">注意事项</h3>
+<ul>
+<li><strong>90 天上限</strong>：延迟最多只能设 90 天，到期前重新安装一次新 profile 就能续上，长期不升级的话设个日历提醒</li>
+<li><strong>手动安装的限制</strong>：macOS 26 上手动安装的描述文件，部分 Restrictions 键的覆盖力不如 MDM 受管设备，但对隐藏 macOS 大版本升级这一项是够用的</li>
+<li><strong>想升级时</strong>：把描述文件删掉（描述文件界面里点「移除」），稍等片刻就能重新看到更新入口</li>
+</ul>
+<h2 id="已经点了更新或更新包已经下载怎么反悔">已经点了更新、或更新包已经下载，怎么反悔</h2>
+<p>这段时间陆续有朋友问到同一个问题：手快点了「立即更新」，或者系统后台已经把更新包下载好了，还能不能取消。能，按走到哪一步来处理：</p>
+<h3 id="情况一还没重启更新正在下载或已经下载完">情况一：还没重启，更新正在下载或已经下载完</h3>
+<p>先去「设置」-「通用」-「软件更新」，点下载条目旁边的 ⓘ，新系统（Ventura 之后）一般会在这里给一个「删除更新」按钮，有就直接点，这是最干净的办法。</p>
+<p>找不到这个按钮的话，更新包其实已经躺在硬盘里了：小版本更新在 <code>/Library/Updates</code>，大版本升级在根目录的「macOS Install Data」文件夹。先试试终端直接删：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rm -rf /Library/Updates/*
+</span></span><span class="line"><span class="cl">sudo rm -rf <span class="s2">&#34;/macOS Install Data&#34;</span>
+</span></span></code></pre></div><p>如果提示 <code>Operation not permitted</code>，不是命令的问题，是 SIP 在保护这些文件。处理起来繁琐一点：进恢复模式（Apple Silicon 关机后长按电源键，出现「载入启动选项」后点「选项」-「继续」；Intel 机器开机时按住 <code>Cmd+R</code>），在菜单栏「实用工具」里打开终端，执行 <code>csrutil disable</code>，重启回系统再执行上面的删除命令，删完记得再进一次恢复模式用 <code>csrutil enable</code> 把 SIP 开回去。</p>
+<p>删完回「软件更新」页面确认没有挂起的更新，然后把上面第四步的描述文件装上（或者确认 hosts 条目还在），不然过几天它又悄悄给你下载回来。</p>
+<h3 id="情况二已经重启装完了">情况二：已经重启、装完了</h3>
+<p>装完就没有「取消」这回事了，只能 Time Machine 整机回退，或者抹盘重装旧版本，代价大得多。所以真想留在旧系统，重点是别让它走到这一步——屏蔽描述文件就是干这个的。</p>
+<h2 id="怎么恢复">怎么恢复</h2>
+<p>哪天想更新了，按你当初用的是哪种屏蔽方式来恢复：</p>
+<ul>
+<li><strong>hosts 方式</strong>：把 <code>/etc/hosts</code> 里相关行注释掉或删掉，刷新 DNS 缓存，重新点击检查更新即可</li>
+<li><strong>配置描述文件方式</strong>：到「设置」-「隐私与安全性」-「描述文件」里把对应的 profile 移除，等一会儿就能重新看到 macOS 升级入口</li>
+</ul>
+<h2 id="写在最后">写在最后</h2>
+<p>以前我也喜欢追新，软件更到最新，经历过多次开发环境崩溃重建之后，逐渐对折腾失去了兴趣，自从 21 年入了 arm 的 mac 之后，过去4年，每隔1-2年就要有一次开发环境崩溃，我为自己过于激进导致的浪费时间感到后悔。</p>
+<p>今年正式用上了 Time Machine，同时把更新彻底屏蔽了，再也不怕手抖了。这套方法我从 2025 年底一直用到 2026 年中，期间 Apple 推了不少次 macOS 26 的升级提醒，我这边一点动静都没有。</p>
+<p>动动小手，五分钟，免除烦人更新小红点困扰</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/bb5f15ed5150f7a9a3e5b2042e6612cd.jpg" alt="微信公众号二维码"  />
+</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

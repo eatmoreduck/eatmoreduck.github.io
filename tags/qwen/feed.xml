@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Qwen on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/qwen/</link>
+    <description>Recent content in Qwen on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/qwen/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>run-qwen-3.5-9B-on-macmini</title>
+      <link>https://blog.xiaohuangyu.space/p/run-qwen-3.5-9b-on-macmini/</link>
+      <pubDate>Wed, 11 Mar 2026 11:14:35 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/run-qwen-3.5-9b-on-macmini/</guid>
+      <description>&lt;p&gt;ollama 官网 &lt;a href=&#34;https://ollama.com/&#34;&gt;https://ollama.com/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;脚本安装ollama&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -fsSL https://ollama.com/install.sh | sh&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;配置config加速&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ~/.ollama/config.json&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;registry&amp;#34;: {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;mirrors&amp;#34;: {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &amp;#34;registry.ollama.ai&amp;#34;: &amp;#34;https://registry.ollama.ai&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        }&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;&#xA;&lt;li&gt;run qwen&#xA;qwen3.5-9b url &lt;a href=&#34;https://ollama.com/library/qwen3.5:9b&#34;&gt;https://ollama.com/library/qwen3.5:9b&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ollama run qwen3.5:9b --verbose&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果要后台运行，直接 ollama serve 即可，可以从本地的http://localhost:11434 访问到 api&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>ollama 官网 <a href="https://ollama.com/">https://ollama.com/</a></p>
+<ol>
+<li>脚本安装ollama</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl -fsSL https://ollama.com/install.sh | sh
+</span></span></code></pre></div><ol start="2">
+<li>配置config加速</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat ~/.ollama/config.json
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    &#34;registry&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;mirrors&#34;: {
+</span></span><span class="line"><span class="cl">            &#34;registry.ollama.ai&#34;: &#34;https://registry.ollama.ai&#34;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><ol start="3">
+<li>run qwen
+qwen3.5-9b url <a href="https://ollama.com/library/qwen3.5:9b">https://ollama.com/library/qwen3.5:9b</a></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ollama run qwen3.5:9b --verbose
+</span></span></code></pre></div><p>如果要后台运行，直接 ollama serve 即可，可以从本地的http://localhost:11434 访问到 api</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

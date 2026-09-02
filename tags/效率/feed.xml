@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>效率 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E6%95%88%E7%8E%87/</link>
+    <description>Recent content in 效率 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E6%95%88%E7%8E%87/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2026 Mac 开发全栈工具｜淘汰 Alfred/iTerm/Docker Desktop，我的最终软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</link>
+      <pubDate>Tue, 23 Jun 2026 20:00:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</guid>
+      <description>&lt;p&gt;距离上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/mac-dev-software-list/&#34;&gt;Mac 开发常用软件清单&lt;/a&gt; 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。&lt;/p&gt;&#xA;&lt;h2 id=&#34;先说哪些变了&#34;&gt;先说哪些变了&lt;/h2&gt;&#xA;&lt;p&gt;旧清单里这几个我现在已经不用了：&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>距离上一篇 <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac 开发常用软件清单</a> 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。</p>
+<h2 id="先说哪些变了">先说哪些变了</h2>
+<p>旧清单里这几个我现在已经不用了：</p>
+<ul>
+<li><strong>Alfred</strong> —— 被 Raycast 完全取代了。付费墙又高，免费版能干的事太少。</li>
+<li><strong>Mos / Mac Mouse Fix 二选一</strong> —— 现在只留 Mac Mouse Fix，它新版本窗口管理也做了，比以前好用。</li>
+<li><strong>Loop</strong> —— 留给 Mac Mouse Fix 的窗口管理之后撤了。</li>
+<li><strong>EasyDevo</strong> —— DevToys 够用了。</li>
+<li><strong>Termius</strong> —— SSH 直接交给 Ghostty + 系统 ssh 配置，多端同步的需求没了。</li>
+<li><strong>lux（B 站下载）</strong> —— 不怎么下了。</li>
+</ul>
+<p>下文按我现在真实的用法重新整理。</p>
+<h2 id="ai-编程">AI 编程</h2>
+<p>这是这两年变化最大的部分，单独拎出来。</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Code</td>
+          <td>主力，配合 GLM 和其他第三方模型用</td>
+      </tr>
+      <tr>
+          <td>Codex</td>
+          <td>OpenAI 的命令行 agent，写代码</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>图形化的 AI 编辑器，需要看大文件、改前端的时候顺手</td>
+      </tr>
+      <tr>
+          <td>Gemini / 豆包 / 通义 / 元宝</td>
+          <td>桌面客户端，分别对应几家的模型，谁好用问谁</td>
+      </tr>
+  </tbody>
+</table>
+<p>说实话现在 AI 编程工具已经多到有点过剩了。我的实际状态是 Claude Code 当主力，剩下几个客户端拿来对比同一个问题不同模型的回答。没必要全装，挑一两个顺手的就行。</p>
+<h2 id="编辑器和-ide">编辑器和 IDE</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>GoLand</td>
+          <td>写 Go 的主力，JetBrains 的索引还是最舒服</td>
+      </tr>
+      <tr>
+          <td>WebStorm</td>
+          <td>前端项目用</td>
+      </tr>
+      <tr>
+          <td>PyCharm</td>
+          <td>偶尔写 Python</td>
+      </tr>
+      <tr>
+          <td>IntelliJ IDEA</td>
+          <td>Java 项目</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>快速打开大文件看代码，启动快</td>
+      </tr>
+      <tr>
+          <td>ZCode</td>
+          <td>另一个命令行 agent</td>
+      </tr>
+  </tbody>
+</table>
+<p>JetBrains 全家桶还是吃内存大户，但代码跳转和重构这块没什么能打的。Sublime 留着纯粹是因为它打开几万行的日志文件不卡。</p>
+<h2 id="笔记">笔记</h2>
+<p>笔记类我同时开着三个：Obsidian、语雀、Notion。不是因为选择困难，是它们在我这儿干的活不一样，谁也替代不了谁。</p>
+<p>先给个速览：</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>我的定位</th>
+          <th>数据在哪</th>
+          <th>适合谁</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Obsidian</td>
+          <td>私人第二大脑，给自己看</td>
+          <td>全在本地</td>
+          <td>长期沉淀、想要完全掌控的人</td>
+      </tr>
+      <tr>
+          <td>语雀</td>
+          <td>技术文档沉淀，结构化的知识库</td>
+          <td>云端</td>
+          <td>喜欢文档树、做团队/项目 Wiki 的人</td>
+      </tr>
+      <tr>
+          <td>Notion</td>
+          <td>公开分享和对外知识库</td>
+          <td>云端</td>
+          <td>需要对外展示、追求页面好看的人</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="obsidian我的主力">Obsidian：我的主力</h3>
+<p>这篇博客就是 Obsidian 写的，平时记的笔记、写的 skill、攒的技术资料全在里面。它的核心好处是<strong>文件全在本地、纯 Markdown</strong>，不被任何一个云服务绑住，哪天想迁随时能迁。双链和图谱让笔记之间能连起来，越攒越有价值，不像传统笔记写到后面就成了一堆找不到的死文档。</p>
+<p>它是个本地工具，发布得自己搭。我自己搭过两套，可以看看：</p>
+<ul>
+<li><a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/">hugo+obsidian 打造最强博客（一）</a> 和 <a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/">(二)</a> —— 怎么把 Obsidian 接到 Hugo 博客上</li>
+<li><a href="https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/">Obsidian + Claude Code 构建 AI 第二大脑</a> —— 后来又把 AI 接进来，让笔记真正&quot;活&quot;起来</li>
+</ul>
+<h3 id="语雀技术文档沉淀">语雀：技术文档沉淀</h3>
+<p>技术类的东西我往语雀放。它那套文档树结构很适合做知识库分层，一个项目从设计到实现拆成一块块挂上去，回头看一目了然。语雀的编辑器对代码块、公式、画板这些支持得比较细，写技术文档比 Markdown 裸写舒服。缺点是云端封闭，导出没那么自由，所以我只把&quot;需要结构化整理、长期维护&quot;的技术内容放这。</p>
+<h3 id="notion对外分享">Notion：对外分享</h3>
+<p>Notion 我其实用得不多，但留着有它的道理——<strong>公开分享和对外知识库这块，它最好用</strong>。Notion 的页面能直接发布成公开链接，排版好看、多媒体混排方便，拿来做个人主页、项目介绍、对外教程很合适，对 SEO 也友好。我自己不拿它记日常笔记，但要做给别人看的东西，会优先考虑它。</p>
+<h3 id="我的实际分工">我的实际分工</h3>
+<p>简单说就是：<strong>Obsidian 管输入和沉淀，语雀管技术整理，Notion 管对外输出</strong>。如果你只挑一个，长期沉淀选 Obsidian；要带团队做 Wiki 选语雀；要做对外内容选 Notion。三个都装也不是浪费，前提是给每个工具一个明确的角色，别什么都往一个里塞。</p>
+<p>另外还有个 <strong>Anki</strong>，不在上面三个的赛道里。它是纯记忆工具，碎片时间拿来刷卡片，背单词和记技术知识点，配合 Easydict 存生词挺好用。</p>
+<h2 id="终端和-shell">终端和 Shell</h2>
+<p>这块这两年换得最彻底。</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ghostty</td>
+          <td>现在的主力终端，GPU 渲染，配置极简</td>
+      </tr>
+      <tr>
+          <td>Oh My Zsh</td>
+          <td>还是它，配 powerlevel10k 主题</td>
+      </tr>
+      <tr>
+          <td>powerlevel10k</td>
+          <td>提示符主题，instant prompt 让启动快很多</td>
+      </tr>
+      <tr>
+          <td>zsh-autosuggestions</td>
+          <td>命令自动补全</td>
+      </tr>
+      <tr>
+          <td>zsh-syntax-highlighting</td>
+          <td>命令语法高亮</td>
+      </tr>
+  </tbody>
+</table>
+<p>以前用 iTerm2，换到 Ghostty 主要是图它快和干净。配置文件就一个，没有什么花里胡哨的设置面板，我反而更喜欢。</p>
+<p>Shell 这套配置我没怎么折腾，就四样东西：Oh My Zsh、p10k、自动补全、语法高亮。够用了，再往上加插件启动会变慢。</p>
+<h2 id="命令行工具">命令行工具</h2>
+<p>这是旧清单里完全没覆盖的部分，但其实是我每天用得最多的。</p>
+<h3 id="包管理和运行时">包管理和运行时</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Homebrew</td>
+          <td>Mac 上装一切的基础</td>
+      </tr>
+      <tr>
+          <td>uv</td>
+          <td>Python 的包管理和虚拟环境，比 pip + venv 快得多，现在基本不碰 pip 了</td>
+      </tr>
+      <tr>
+          <td>bun</td>
+          <td>JS 运行时和包管理，比 node 快</td>
+      </tr>
+      <tr>
+          <td>nvm</td>
+          <td>多版本 node 切换</td>
+      </tr>
+      <tr>
+          <td>pyenv</td>
+          <td>多版本 Python 切换</td>
+      </tr>
+  </tbody>
+</table>
+<p>uv 是这两年我最想安利的 Python 工具。装依赖、建虚拟环境、跑脚本，全用它一个，不用再记 <code>python -m venv</code> 那一串。配合 <code>uv run</code> 直接在临时环境里跑脚本特别舒服。</p>
+<h3 id="日常高频">日常高频</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>gh</td>
+          <td>GitHub 官方命令行，开 PR、看 issue、clone 仓库都靠它</td>
+      </tr>
+      <tr>
+          <td>git</td>
+          <td>不用多说了</td>
+      </tr>
+      <tr>
+          <td>task (go-task)</td>
+          <td>像 make 但是用 YAML 写，跨平台，项目里的自动化我都用它</td>
+      </tr>
+      <tr>
+          <td>ffmpeg</td>
+          <td>处理音视频，转格式、剪片段、抽音频</td>
+      </tr>
+      <tr>
+          <td>tree</td>
+          <td>看目录结构</td>
+      </tr>
+      <tr>
+          <td>telnet</td>
+          <td>偶尔测端口用</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>task</code> 这个我想多说一句。以前项目里一堆 <code>Makefile</code>，写起来不直观还容易写错。换成 task 之后，<code>taskfile.yml</code> 一眼能看懂在干什么，Windows 上也能跑，团队协作省心很多。</p>
+<h3 id="系统监控">系统监控</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>fastfetch</td>
+          <td>neofetch 的替代，启动快，看系统信息用的</td>
+      </tr>
+      <tr>
+          <td>mactop</td>
+          <td>苹果芯片上的 top，比 htop 更懂 M 系列的架构</td>
+      </tr>
+      <tr>
+          <td>kubectl</td>
+          <td>偶尔连集群</td>
+      </tr>
+  </tbody>
+</table>
+<p>mactop 是 Apple Silicon 上我比较推荐的。它能显示 CPU 各个性能核和能效核的占用，还有 GPU、内存带宽这些，htop 看不到。</p>
+<h2 id="容器和虚拟化">容器和虚拟化</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>OrbStack</td>
+          <td>Docker Desktop 的替代，启动快、占内存少、还能跑 Linux 虚拟机</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>兼容性需要的时候还是会用</td>
+      </tr>
+  </tbody>
+</table>
+<p>从 Docker Desktop 换到 OrbStack 是另一个&quot;用完回不去&quot;的体验。同样的容器，OrbStack 启动快一截，内存占用也小，而且它内置的 Linux 虚拟机可以当轻量开发环境用。Docker 留着主要是有些 CI 本地复现的时候要保证环境一致。</p>
+<h2 id="数据库和网络">数据库和网络</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis 客户端</td>
+      </tr>
+      <tr>
+          <td>DataGrip</td>
+          <td>数据库通用客户端，连啥都行</td>
+      </tr>
+      <tr>
+          <td>SecureCRT / SecureFX</td>
+          <td>老牌终端和文件传输，付费</td>
+      </tr>
+      <tr>
+          <td>Wireshark</td>
+          <td>抓包，排查网络问题</td>
+      </tr>
+      <tr>
+          <td>ZeroTier</td>
+          <td>虚拟局域网，组网用</td>
+      </tr>
+  </tbody>
+</table>
+<p>Navicat 我现在没装了，DataGrip 一个顶所有。Wireshark 不常用，但真要排查网络问题的时候它是唯一靠谱的。</p>
+<h2 id="效率和启动器">效率和启动器</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Raycast</td>
+          <td>启动器，免费版够用，Alfred 的平替</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>划词翻译，开源免费</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>改键，把 Caps Lock 改成 Ctrl+Esc</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>外接显示器调亮度</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>鼠标平滑滚动 + 窗口管理</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>折叠菜单栏图标</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>风扇转速</td>
+      </tr>
+      <tr>
+          <td>BrightIntosh</td>
+          <td>老款 MacBook 突破官方限制最高亮度</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>图床，博客图片都走它</td>
+      </tr>
+  </tbody>
+</table>
+<p>Raycast 我每天用得最多的几个功能：启动应用、剪贴板历史、窗口管理、简单计算。它比 Alfred 好的地方是免费版就把核心功能全给了，不用纠结要不要买 Powerpack。</p>
+<p>Easydict 这个之前我专门写过一篇 <a href="https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/">给 Easydict 加 Anki 功能</a>，是真好用，划词就能查、能发音、能存生词。</p>
+<h2 id="浏览器和插件">浏览器和插件</h2>
+<p>主力 Google Chrome。日常用的插件：</p>
+<table>
+  <thead>
+      <tr>
+          <th>插件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>沉浸式翻译</td>
+          <td>网页双语对照，看英文文档神器</td>
+      </tr>
+      <tr>
+          <td>简阅</td>
+          <td>阅读模式，把乱七八糟的网页变清爽</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>绕过禁止复制的网站</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>扒网站资源用</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="其它日常">其它日常</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>IINA</td>
+          <td>视频播放器，Mac 上最好的选择</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>解压缩</td>
+      </tr>
+      <tr>
+          <td>OBS</td>
+          <td>录屏、直播</td>
+      </tr>
+      <tr>
+          <td>Apifox</td>
+          <td>API 调试，Postman 的替代</td>
+      </tr>
+      <tr>
+          <td>OrbStack</td>
+          <td>上面提过</td>
+      </tr>
+      <tr>
+          <td>XMind</td>
+          <td>思维导图</td>
+      </tr>
+  </tbody>
+</table>
+<p>IINA 没什么好说的，装就完了。</p>
+<p>旧的那篇 <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac 开发常用软件清单</a> 留个时间戳，也没删。这篇是 2026 年的版本，估计过两年又得再更新一次。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>终端启动 1.3 秒，AI 十分钟帮我干到 0.2 秒</title>
+      <link>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</link>
+      <pubDate>Thu, 28 May 2026 17:23:19 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;这台机器用了好几年了。各种开发环境装了又卸、卸了又装，&lt;code&gt;.zshrc&lt;/code&gt; 和 &lt;code&gt;.bash_profile&lt;/code&gt; 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端</p>
+</blockquote>
+<p>这台机器用了好几年了。各种开发环境装了又卸、卸了又装，<code>.zshrc</code> 和 <code>.bash_profile</code> 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。</p>
+<p>一直知道该清理，但总觉得&quot;下次再说&quot;。直到最近用 Claude + GLM 5.1 试了一下，从诊断到改完，前后大概十来分钟。</p>
+<p>结果是从 1.3 秒降到了 0.2 秒。</p>
+<h2 id="先看看有多慢">先看看有多慢</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">time</span> zsh -i -c <span class="nb">exit</span>
+</span></span></code></pre></div><p>跑一下，1.303 秒。开个终端等一秒多，体感确实很差。</p>
+<h2 id="怎么查的">怎么查的</h2>
+<p>整体计时知道了慢，但不知道慢在哪。有两种方式定位：</p>
+<p><strong>逐个 source 测耗时：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;source /opt/homebrew/opt/nvm/nvm.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;source </span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;eval \$(/opt/homebrew/bin/brew shellenv)&#34;</span>
+</span></span></code></pre></div><p><strong>zprof 函数级分析：</strong></p>
+<p>在 <code>.zshrc</code> 开头加 <code>zmodload zsh/zprof</code>，末尾加 <code>zprof</code>，能得到精确到每个函数的耗时排名。这个最管用。</p>
+<h2 id="到底是什么在拖后腿">到底是什么在拖后腿</h2>
+<p>zprof 一跑，问题很清楚：</p>
+<ul>
+<li><strong>nvm</strong> 吃了 ~540ms，占了一半多。它每次启动都扫描所有 Node 版本，完全没必要。</li>
+<li><strong>compinit</strong>（补全系统）~360ms，6 个插件的补全初始化开销。</li>
+<li><strong>SDKMAN</strong> ~300ms，Java 版本管理器初始化。</li>
+<li>brew / bun / cargo 这些加起来 ~120ms，影响不大。</li>
+</ul>
+<p>但除了这些&quot;大头&quot;，还有一堆乱七八糟的问题：</p>
+<ul>
+<li><code>zsh-syntax-highlighting</code> 和 <code>fast-syntax-highlighting</code> 功能完全一样，同时加载着</li>
+<li>ServBay 环境块在 <code>.zshrc</code> 和 <code>.bash_profile</code> 各出现一次</li>
+<li>SDKMAN 也加载了两次，同上</li>
+<li>Antigravity PATH 在 <code>.zshrc</code> 里写了两次</li>
+<li>datax、codebuddy、yarn global 等目录早就不存在了，PATH 还留着</li>
+<li><code>.zshenv</code> 里重复加载 <code>cargo/env</code></li>
+<li><code>arch -arm64 brew</code> 这个 alias 在原生 arm64 机器上完全多余</li>
+</ul>
+<p>说白了，就是年久失修。每次装个新工具就往配置文件里塞一行，从来没清理过。</p>
+<h2 id="改了什么">改了什么</h2>
+<h3 id="nvm-懒加载省-500ms效果最大">nvm 懒加载（省 ~500ms，效果最大）</h3>
+<p>原来每次开终端都加载 nvm，但大部分时候根本不用 node。改成懒加载——首次调用 <code>node</code>/<code>npm</code>/<code>npx</code> 时才初始化：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.nvm&#34;</span>
+</span></span><span class="line"><span class="cl">lazy_load_nvm<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> -f nvm node npm npx pnpm
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> -s <span class="s2">&#34;/opt/homebrew/opt/nvm/nvm.sh&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&#34;/opt/homebrew/opt/nvm/nvm.sh&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> -s <span class="s2">&#34;/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&#34;/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">nvm<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> nvm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">node<span class="o">()</span> <span class="o">{</span> lazy_load_nvm<span class="p">;</span> node <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">npm<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> npm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">npx<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> npx <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">pnpm<span class="o">()</span> <span class="o">{</span> lazy_load_nvm<span class="p">;</span> pnpm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span></code></pre></div><h3 id="sdkman-懒加载省-300ms">SDKMAN 懒加载（省 ~300ms）</h3>
+<p>同理，java/sdk/mvn 这些也不需要每次都加载：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SDKMAN_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman&#34;</span>
+</span></span><span class="line"><span class="cl">lazy_load_sdkman<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> -f sdk java javac jar mvn gradle
+</span></span><span class="line"><span class="cl">  <span class="o">[[</span> -s <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">sdk<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> sdk <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">java<span class="o">()</span>   <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> java <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">javac<span class="o">()</span>  <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> javac <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">jar<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> jar <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">mvn<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> mvn <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">gradle<span class="o">()</span> <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> gradle <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span></code></pre></div><h3 id="精简插件">精简插件</h3>
+<p>去掉了 <code>zsh-autocomplete</code>（bug 多、资源占用高）和 <code>fast-syntax-highlighting</code>（跟另一个重复）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 之前</span>
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>git poetry zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 之后</span>
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>git poetry zsh-autosuggestions zsh-syntax-highlighting<span class="o">)</span>
+</span></span></code></pre></div><h3 id="清理重复和失效的配置">清理重复和失效的配置</h3>
+<p>删掉的东西不少，列一下：</p>
+<p><strong>重复的：</strong></p>
+<ul>
+<li>ServBay 环境块（<code>.zshrc</code> 里有，<code>.bash_profile</code> 里也有）</li>
+<li>SDKMAN 加载（同上）</li>
+<li>Antigravity PATH（<code>.zshrc</code> 自己内部就写了两次）</li>
+<li>cargo/env（<code>.zshenv</code> 和 <code>.bash_profile</code> 都加载了）</li>
+</ul>
+<p><strong>失效的：</strong></p>
+<ul>
+<li><code>$PYENV_ROOT/bin</code> — 目录不存在</li>
+<li><code>DATAX_HOME</code> — 目录不存在</li>
+<li><code>$PATH.</code> 末尾多了个 <code>.</code> — 语法错误</li>
+<li><code>yarn/global/node_modules/.bin</code> — 目录不存在</li>
+<li><code>.codebuddy/bin</code> — 目录不存在</li>
+<li><code>arch -arm64 brew</code> alias — arm64 原生机器不需要这个包装</li>
+</ul>
+<h2 id="最终结果">最终结果</h2>
+<table>
+  <thead>
+      <tr>
+          <th>阶段</th>
+          <th>启动时间</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>优化前</td>
+          <td>1.303s</td>
+      </tr>
+      <tr>
+          <td>懒加载 + 插件精简后</td>
+          <td>0.549s</td>
+      </tr>
+      <tr>
+          <td>清理失效 PATH 后</td>
+          <td><strong>0.208s</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>从 1.3 秒到 0.2 秒，快了大概 6 倍。</p>
+<p>有两个小事项：每个终端会话里首次跑 <code>node</code> 或 <code>java</code> 会有一次 0.5-0.8 秒的加载延迟，之后就不会了。另外 <code>zsh -i -c exit</code> 测试时可能会报 gitstatus 初始化失败，这是因为非交互模式缺少完整 TTY，正常使用不会碰到。</p>
+<p>整个过程，从打开终端发现问题到改完验证，十几分钟。之前拖了大半年没动的东西，让 AI 帮忙梳理一下就清掉了。这种&quot;知道自己该做但一直没做&quot;的事情，有个帮手确实不一样。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Obsidian &#43; Claude Code 构建 AI 第二大脑实战指南</title>
+      <link>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</link>
+      <pubDate>Wed, 01 Apr 2026 09:34:29 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</guid>
+      <description>&lt;h2 id=&#34;为什么要在-obsidian-里用-claude-code&#34;&gt;为什么要在 Obsidian 里用 Claude Code&lt;/h2&gt;&#xA;&lt;p&gt;说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。&lt;/p&gt;&#xA;&lt;p&gt;不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="为什么要在-obsidian-里用-claude-code">为什么要在 Obsidian 里用 Claude Code</h2>
+<p>说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。</p>
+<p>不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。</p>
+<p>Teresa Torres 在一期播客里分享过她的工作流：Obsidian + 两个终端窗口跑 Claude Code，日常安排、笔记整理、知识管理全交给 AI。但说实话，开两个终端窗口盯着看，体验并不好。如果能直接在 Obsidian 内部跑 Claude Code，那才叫丝滑。</p>
+<p>好在社区已经做了好几个插件来实现这件事。下面介绍三种方案，从易到难，选一个适合你的就行。</p>
+<h2 id="前置条件">前置条件</h2>
+<p>不管你选哪个方案，都需要先安装 Claude Code CLI。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 通过 npm 全局安装</span>
+</span></span><span class="line"><span class="cl">npm install -g @anthropic-ai/claude-code
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl">claude --version
+</span></span></code></pre></div><p>然后需要配置 API Key。去 <a href="https://console.anthropic.com/">Anthropic Console</a> 申请一个，然后设置环境变量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 推荐写到 shell 配置文件里（~/.zshrc 或 ~/.bashrc）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s1">&#39;你的-api-key&#39;</span>
+</span></span></code></pre></div><p>如果你用的是 Claude Code 订阅（而不是 API 按量付费），登录一下就行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">claude login
+</span></span></code></pre></div><p>搞定这些，后面的插件才能正常工作。</p>
+<h2 id="方案一claude-code-integration-插件推荐">方案一：Claude Code Integration 插件（推荐）</h2>
+<p>这是目前功能最完善的方案，来自 <a href="https://github.com/deivid11/obsidian-claude-code-plugin">deivid11/obsidian-claude-code-plugin</a>。它不是简单嵌个终端，而是做了完整的 UI 交互：标签页、会话管理、实时流式输出、变更预览、Diff 对比，基本把 Claude Code 的能力完整搬进了 Obsidian。</p>
+<h3 id="安装">安装</h3>
+<p>这个插件还在审核中，暂时没上社区插件商店，需要通过 BRAT 安装。</p>
+<p><strong>第一步：安装 BRAT</strong></p>
+<p>如果你已经有了就跳过。没有的话：</p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件</li>
+<li>关闭安全模式</li>
+<li>点&quot;浏览&quot;，搜索 &ldquo;BRAT&rdquo;，安装并启用</li>
+</ol>
+<p><strong>第二步：通过 BRAT 安装 Claude Code Integration</strong></p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴仓库地址：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/deivid11/obsidian-claude-code-plugin
+</span></span></code></pre></div></li>
+<li>BRAT 会自动下载最新版本</li>
+<li>回到第三方插件列表，启用 &ldquo;Claude Code Integration&rdquo;</li>
+</ol>
+<h3 id="配置">配置</h3>
+<p>打开 设置 -&gt; Claude Code Integration，核心配置项：</p>
+<ul>
+<li><strong>Backend</strong>：选 Claude Code</li>
+<li><strong>Claude Code Path</strong>：一般会自动检测，检测不到就手动填，比如 <code>/usr/local/bin/claude</code> mac用户一般在 /Users/{username}/.local/bin/claude</li>
+<li><strong>Model</strong>：Sonnet（均衡）、Opus（最强）、Haiku（最快最便宜），日常用 Sonnet 就够了</li>
+<li><strong>Allow Vault Access</strong>：建议开启，这样 Claude 能读写整个 vault 的文件</li>
+<li><strong>Enable Permissionless Mode</strong>：新手建议先关着，这样每次修改前都会让你确认。熟悉了再开</li>
+<li>如果是国内用户，用 claude code 配合 glm 等模型使用，可以在<strong>自定义 API 配置</strong>里配置一遍对应供应商的信息</li>
+</ul>
+<h3 id="日常使用">日常使用</h3>
+<ol>
+<li>点左侧边栏的 Claude 图标，或者 <code>Cmd/Ctrl + P</code> 输入 &ldquo;Open Claude Code Assistant&rdquo;</li>
+<li>在面板里输入你的需求，比如：
+<ul>
+<li>&ldquo;给这篇笔记加个目录&rdquo;</li>
+<li>&ldquo;总结这篇文章的要点&rdquo;</li>
+<li>&ldquo;帮我整理一下这些标签&rdquo;</li>
+<li>&ldquo;用 PlantUML 画一个工作流图&rdquo;</li>
+</ul>
+</li>
+<li>Claude 会实时流式输出结果，你可以看到它在做什么</li>
+<li>如果有文件修改，会弹出预览，你可以选择接受或拒绝</li>
+</ol>
+<p>每个笔记都有独立的会话历史，切换笔记不会丢失上下文。还有个 Sessions 标签页能看到所有会话的汇总。 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100001767.png" alt="Claude Code Integration 插件在 Obsidian 中的使用界面"  />
+</p>
+<h2 id="方案二claude-sidebar-侧边栏">方案二：Claude Sidebar 侧边栏</h2>
+<p>来自 <a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">derek-larson14/obsidian-claude-sidebar</a>，主打一个简洁。它就是在 Obsidian 侧边栏里嵌了一个 Claude Code 终端，不需要额外的 UI，就是原生的 Claude Code 体验。</p>
+<h3 id="安装-1">安装</h3>
+<p>同样通过 BRAT：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/derek-larson14/obsidian-claude-sidebar
+</span></span></code></pre></div></li>
+<li>启用 &ldquo;Claude Sidebar&rdquo;</li>
+</ol>
+<h3 id="使用">使用</h3>
+<p>点侧边栏的机器人图标（或设置快捷键），右侧就会弹出一个终端面板，里面就是 Claude Code。跟你在外部终端里用一模一样，只是不用切窗口了。</p>
+<p>支持多标签页，可以同时开几个对话。简单粗暴，适合已经熟悉 Claude Code 命令行操作的人。
+<strong>因个人已经适应 Claude Code 的终端，又觉得第一种方式比较冗余，还是更喜欢这种侧边栏的操作</strong>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100241568.png" alt="image.png"  />
+</p>
+<h2 id="方案三terminal-插件">方案三：Terminal 插件</h2>
+<p>如果你想要更灵活的控制，可以用 <a href="https://forum.obsidian.md/t/plugin-terminal-integrated-terminals-in-obsidian/52170">Polyware Terminal</a> 插件，在 Obsidian 里直接开一个完整的终端，然后在里面跑 <code>claude</code>。</p>
+<h3 id="安装-2">安装</h3>
+<p>这个插件已经在社区插件商店里了：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; 浏览</li>
+<li>搜索 &ldquo;Terminal&rdquo;，找到 &ldquo;Terminal — Integrated terminals in Obsidian&rdquo;</li>
+<li>安装并启用</li>
+</ol>
+<h3 id="使用-1">使用</h3>
+<ol>
+<li>打开终端面板（左侧边栏或底部面板）</li>
+<li>在终端里输入 <code>claude</code> 回车</li>
+<li>开始对话</li>
+</ol>
+<p>本质上就是在 Obsidian 里开了个终端窗口。你可以自定义主题，让它跟 Obsidian 的外观融合。Yu Lu 在她的 <a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Medium 文章</a>里详细介绍了这种玩法，她管这叫 &ldquo;Vibe Writing&rdquo;——一边在 Obsidian 里写笔记，一边让 AI 在旁边的终端里实时辅助。</p>
+<h2 id="进阶让-claude-更懂你的-vault">进阶：让 Claude 更懂你的 Vault</h2>
+<p>不管用哪个方案，都可以在 vault 根目录创建一个 <code>CLAUDE.md</code> 文件。Claude Code 每次启动都会读取这个文件，作为它的&quot;行为指南&quot;。</p>
+<p>比如我的博客项目里的 <code>CLAUDE.md</code> 就写明了：</p>
+<ul>
+<li>文章的 front matter 格式要求</li>
+<li>图片上传到 CDN，不需要管理本地图片</li>
+<li>部署通过 GitHub Actions 自动完成</li>
+</ul>
+<p>这样 Claude Code 在操作你的文件时，就会遵循这些规则，不会乱来。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>装完插件找不到 Claude Code？</strong></p>
+<p>先确认 CLI 装好了没。在终端里跑 <code>claude --version</code>，如果能输出版本号就说明没问题。如果插件还是报错，去设置里手动指定 Claude Code 的路径。</p>
+<p><strong>Linux 下用 Flatpak/Snap 装的 Obsidian 报错？</strong></p>
+<p>沙盒限制，Obsidian 访问不到系统的 Node.js 和 Claude Code。解决方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Flatpak 用户执行这个</span>
+</span></span><span class="line"><span class="cl">flatpak override --user md.obsidian.Obsidian --filesystem<span class="o">=</span>host
+</span></span></code></pre></div><p>或者装个 <a href="https://flathub.org/apps/com.github.tchx84.Flatseal">Flatseal</a>，在图形界面里给 Obsidian 开文件系统权限。</p>
+<p><strong>API 费用怎么样？</strong></p>
+<p>看你怎么用。日常笔记整理用 Haiku 模型，几乎花不了多少钱。重度使用的话 Sonnet 也还好。具体可以去 <a href="https://console.anthropic.com/">Anthropic Console</a> 查看用量。当然国内的模型现在做的已经不错了，我日常主力使用的是智谱GLM5.1大模型，除了慢点好像没什么别的缺点，此外还会使用 codex 等模型来进行交叉校验。
+蹲蹲
+🙋蹲队友拼智谱 Coding Plan！</p>
+<p>🧩国内顶流编程大模型，20+主流工具全适配，性价比拉满，
+👉立即参与「拼好模」：https://www.bigmodel.cn/glm-coding?ic=CLGJO27TA6</p>
+<h2 id="写在最后">写在最后</h2>
+<p>三种方案，推荐新手直接用方案一（Claude Code Integration），功能最全，UI 体验最好，上手门槛也低。方案二适合已经习惯了命令行的老手。方案三最灵活但需要自己折腾。</p>
+<p>说到底，Obsidian + Claude Code 的组合之所以好用，核心原因是它们共享同一个底层——Markdown 文件。Claude Code 不需要通过什么复杂的 API 去理解你的笔记，它直接读写文件就行了。简单，直接，高效。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/deivid11/obsidian-claude-code-plugin">Claude Code Integration 插件 (GitHub)</a></li>
+<li><a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">Claude Sidebar (Obsidian Forum)</a></li>
+<li><a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Obsidian X Claude Code — A Seamless Vibe Writing Experience (Medium)</a></li>
+<li><a href="https://www.anthropic.com/claude-code">Claude Code 官方网站</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI-助力每一个梦想之二</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</link>
+      <pubDate>Thu, 26 Mar 2026 11:07:23 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/ai-empowering-dreams/&#34;&gt;AI-助力每一个梦想&lt;/a&gt; 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。&lt;/p&gt;&#xA;&lt;p&gt;这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言">前言</h2>
+<p>在上一篇 <a href="/p/ai-empowering-dreams/">AI-助力每一个梦想</a> 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。</p>
+<p>这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。</p>
+<hr>
+<h2 id="改造清单">改造清单</h2>
+<p>先看一下这次完成的改造内容：</p>
+<h3 id="主题更换">主题更换</h3>
+<p>从旧主题更换到 <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a>，这个主题：</p>
+<ul>
+<li>简洁优雅，符合我的审美</li>
+<li>响应式设计，移动端友好</li>
+<li>内置暗色模式</li>
+<li>良好的 SEO 支持</li>
+</ul>
+<p>更换过程涉及大量配置文件的重写：</p>
+<ul>
+<li><code>config/_default/</code> 下的所有配置文件</li>
+<li>首页、归档、友情链接等页面内容</li>
+<li>自定义样式文件</li>
+</ul>
+<p>说实话，如果是自己手动配置，光是研究各个配置项的作用就要花不少时间。但在 cc+glm4.7 的协助下，整个过程顺畅了很多。</p>
+<h3 id="社交媒体集成">社交媒体集成</h3>
+<p>新增了多个社交媒体图标和链接：</p>
+<ul>
+<li>微信（侧边栏二维码）</li>
+<li>GitHub</li>
+<li>哔哩哔哩</li>
+<li>YouTube</li>
+</ul>
+<p>这些图标不是直接用主题自带的，而是我自己从 <a href="https://tabler.io/">Tabler Icons</a> 找的官方 SVG，或者是让 AI 给我找，然后手动添加到项目中，虽然经历过多次的反复，比如微信的 SVG 改对了又给我换错，存在不稳定的情况，但最后我把这条规则直接写入 CLAUDE.md 得以解决</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 微信social media的svg已经固定，不要做改动!
+</span></span></code></pre></div><h3 id="分享按钮优化">分享按钮优化</h3>
+<p>增强了文章分享功能，支持：</p>
+<ul>
+<li>微信</li>
+<li>朋友圈</li>
+<li>知乎</li>
+<li>Twitter</li>
+<li>Facebook</li>
+<li>LinkedIn
+虽然 知乎的分享还有 bug，但目前这个结果我相当满意了，能给到 90 分</li>
+</ul>
+<h3 id="seo-全面优化">SEO 全面优化</h3>
+<p>这部分是我之前一直想做但觉得太复杂的：</p>
+<p><strong>结构化数据</strong>：</p>
+<ul>
+<li>BlogPosting</li>
+<li>FAQPage</li>
+<li>HowTo</li>
+<li>VideoObject</li>
+<li>Review</li>
+<li>SoftwareApplication</li>
+</ul>
+<p><strong>验证配置</strong>：</p>
+<ul>
+<li>Google Search Console 验证码补全</li>
+</ul>
+<p><strong>AI 可发现性</strong>：</p>
+<ul>
+<li>添加 <code>llms.txt</code> 文件，让 AI 工具更容易理解博客内容</li>
+</ul>
+<h3 id="github-actions-性能优化">GitHub Actions 性能优化</h3>
+<p>博客部署使用 GitHub Actions，之前每次构建效率有点低，。</p>
+<p>优化内容：</p>
+<ul>
+<li>升级到 Node.js 24</li>
+<li>添加 Hugo CLI 缓存</li>
+<li>添加 Git Submodule 缓存</li>
+<li>优化 workflow 步骤结构</li>
+</ul>
+<p>构建时间明显缩短了。</p>
+<h3 id="标签系统重构">标签系统重构</h3>
+<p>之前的博客同时使用 <code>categories</code> 和 <code>tags</code>，但实际上 categories 几乎没用，而且两者功能重复。</p>
+<p>重构内容：</p>
+<ul>
+<li>删除所有文章的 categories 字段</li>
+<li>为空标签文章补充标签</li>
+<li>修复拼写错误（ags → tags）</li>
+<li>简化文章创建流程（Obsidian QuickAdd 脚本优化）</li>
+</ul>
+<h3 id="数据分析集成">数据分析集成</h3>
+<p>除了已有的 Google Analytics，新增了 <strong>Cloudflare Web Analytics</strong>：</p>
+<p>优势：</p>
+<ul>
+<li>隐私友好，不使用 Cookie</li>
+<li>轻量级，不影响页面加载速度</li>
+<li>界面简洁直观</li>
+</ul>
+<h3 id="友情链接页面">友情链接页面</h3>
+<p>重新设计了友情链接页面：</p>
+<ul>
+<li>添加社交媒体链接（知乎、B站、YouTube、GitHub）</li>
+<li>添加 RSS 订阅链接</li>
+<li>优化友链交换文案</li>
+<li>启用评论功能（基于 Giscus）</li>
+</ul>
+<p>虽然目前没有一个友链，但还是很希望能多交朋友，多多添加友链～</p>
+<hr>
+<h2 id="工作方式">工作方式</h2>
+<p>这次改造使用的是 <strong>Claude Code</strong>，工作流程大概是：</p>
+<ol>
+<li><strong>提出需求</strong>：告诉 Claude 我想要做什么</li>
+<li><strong>分析方案</strong>：Claude 分析代码库，给出建议</li>
+<li><strong>确认执行</strong>：我确认后，Claude 直接修改代码</li>
+<li><strong>验证结果</strong>：推送代码，查看效果</li>
+</ol>
+<p>整个过程不需要我手动写任何代码，只需要：</p>
+<ul>
+<li>明确自己想要什么</li>
+<li>对 Claude 的建议进行判断和确认</li>
+<li>验证结果是否符合预期</li>
+</ul>
+<hr>
+<h2 id="高强度使用-ai-之后我有很多想法">高强度使用 AI 之后，我有很多想法</h2>
+<h3 id="敢想敢做">敢想敢做</h3>
+<p>以前看到别人博客有各种酷炫功能，自己想加但总觉得太复杂：</p>
+<ul>
+<li>主题配置一大堆参数，看不懂（感觉像是花时间装修，但是实际应该把时间花在内容产出上）</li>
+<li>SEO 结构化数据，完全不会（经过这次了之后，起码知道哪些点需要考虑到）</li>
+<li>GitHub Actions 优化，怕改坏了（这个是重中之重，想当初废了很大劲该坏了很多次部署的 action）</li>
+</ul>
+<p>现在有了 AI 协作，这些都不是障碍。只要说出需求，AI 就能帮你实现。</p>
+<h3 id="时间成本大幅降低">时间成本大幅降低</h3>
+<p>这次改造大概花了 12 小时，但实际操作时间可能只有几个小时：</p>
+<ul>
+<li>大部分时间在等待 GitHub Actions 部署</li>
+<li>真正的思考和决策时间很有限</li>
+</ul>
+<p>如果是自己从零开始研究：</p>
+<ul>
+<li>研究主题配置：可能要几天</li>
+<li>学习 SEO 最佳实践：可能要一周</li>
+<li>优化 GitHub Actions：可能要反复调试</li>
+</ul>
+<h3 id="ai-是副驾驶">AI 是副驾驶</h3>
+<p>AI 不会替代你，但会让你变得更强：</p>
+<ul>
+<li>你仍然需要知道想要什么</li>
+<li>你需要判断 AI 的建议是否合理</li>
+<li>你需要验证结果是否符合预期</li>
+</ul>
+<p>AI 是副驾驶，你是机长。</p>
+<hr>
+<h2 id="下一步">下一步</h2>
+<p>我也给自己立了一个 flag：<strong>每周至少产出一篇博文</strong>。</p>
+<p>借助 AI 的力量，我觉得这个 flag 是可以坚持的。</p>
+<hr>
+<p>AI 让我敢想敢做。以前觉得复杂、麻烦、不想做的事情，现在有了 AI 协作，花一点点时间就能完成。</p>
+<p>这不仅是效率的提升，更是可能性的拓展。</p>
+<p><strong>AI 助力每一个梦想，这不是空话。</strong></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Mac 开发常用软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</link>
+      <pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</guid>
+      <description>&lt;p&gt;换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。&lt;/p&gt;&#xA;&lt;h2 id=&#34;开发工具&#34;&gt;开发工具&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;软件&lt;/th&gt;&#xA;          &lt;th&gt;说明&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;JetBrains 全家桶&lt;/td&gt;&#xA;          &lt;td&gt;GoLand 用得最多，其他看项目需要&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;VSCode&lt;/td&gt;&#xA;          &lt;td&gt;轻量编辑，前端开发主力&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Cursor&lt;/td&gt;&#xA;          &lt;td&gt;最近在用，AI 辅助写代码确实省脑子&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Another Redis Desktop Manager&lt;/td&gt;&#xA;          &lt;td&gt;Redis 客户端，免费够用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Navicat Premium Lite&lt;/td&gt;&#xA;          &lt;td&gt;官方免费版，不需要破解了&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Sublime Text&lt;/td&gt;&#xA;          &lt;td&gt;快速打开文件看代码&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Docker&lt;/td&gt;&#xA;          &lt;td&gt;容器开发必备&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;DevToys&lt;/td&gt;&#xA;          &lt;td&gt;开发者小工具集合，JSON 格式化、Base64 转换啥的&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;EasyDevo&lt;/td&gt;&#xA;          &lt;td&gt;和 DevToys 类似，二选一就行&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;实用工具&#34;&gt;实用工具&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;软件&lt;/th&gt;&#xA;          &lt;th&gt;说明&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Android File Transfer&lt;/td&gt;&#xA;          &lt;td&gt;传文件到手机，官方工具&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Neat Download Manager&lt;/td&gt;&#xA;          &lt;td&gt;下载器，比浏览器自带的快&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mounty&lt;/td&gt;&#xA;          &lt;td&gt;读写 NTFS 格式硬盘&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Keka&lt;/td&gt;&#xA;          &lt;td&gt;解压缩，支持格式多&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Easydict&lt;/td&gt;&#xA;          &lt;td&gt;划词翻译，开源免费&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;IINA&lt;/td&gt;&#xA;          &lt;td&gt;视频播放器，Mac 上最好的选择&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Karabiner-Elements&lt;/td&gt;&#xA;          &lt;td&gt;改键位，比如把 Caps Lock 映射成 Ctrl&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;MonitorControl&lt;/td&gt;&#xA;          &lt;td&gt;外接显示器调节亮度，这个很有用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Hidden Bar&lt;/td&gt;&#xA;          &lt;td&gt;折叠菜单栏图标，强迫症福音&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mac Mouse Fix&lt;/td&gt;&#xA;          &lt;td&gt;鼠标滚动变平滑，用罗技鼠标的推荐&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Loop&lt;/td&gt;&#xA;          &lt;td&gt;窗口快捷缩放，类似 Windows 的 Aero Snap&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mos&lt;/td&gt;&#xA;          &lt;td&gt;鼠标平滑滚动，二选一&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;PicList&lt;/td&gt;&#xA;          &lt;td&gt;图床工具，支持 PicGo 配置&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;ShortcutDetective&lt;/td&gt;&#xA;          &lt;td&gt;查看快捷键冲突，偶尔用到&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Macs Fan Control&lt;/td&gt;&#xA;          &lt;td&gt;风扇转速调节，笔记本发热时用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;个人推荐&lt;/strong&gt;：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。</p>
+<h2 id="开发工具">开发工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>JetBrains 全家桶</td>
+          <td>GoLand 用得最多，其他看项目需要</td>
+      </tr>
+      <tr>
+          <td>VSCode</td>
+          <td>轻量编辑，前端开发主力</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>最近在用，AI 辅助写代码确实省脑子</td>
+      </tr>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis 客户端，免费够用</td>
+      </tr>
+      <tr>
+          <td>Navicat Premium Lite</td>
+          <td>官方免费版，不需要破解了</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>快速打开文件看代码</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>容器开发必备</td>
+      </tr>
+      <tr>
+          <td>DevToys</td>
+          <td>开发者小工具集合，JSON 格式化、Base64 转换啥的</td>
+      </tr>
+      <tr>
+          <td>EasyDevo</td>
+          <td>和 DevToys 类似，二选一就行</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="实用工具">实用工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Android File Transfer</td>
+          <td>传文件到手机，官方工具</td>
+      </tr>
+      <tr>
+          <td>Neat Download Manager</td>
+          <td>下载器，比浏览器自带的快</td>
+      </tr>
+      <tr>
+          <td>Mounty</td>
+          <td>读写 NTFS 格式硬盘</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>解压缩，支持格式多</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>划词翻译，开源免费</td>
+      </tr>
+      <tr>
+          <td>IINA</td>
+          <td>视频播放器，Mac 上最好的选择</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>改键位，比如把 Caps Lock 映射成 Ctrl</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>外接显示器调节亮度，这个很有用</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>折叠菜单栏图标，强迫症福音</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>鼠标滚动变平滑，用罗技鼠标的推荐</td>
+      </tr>
+      <tr>
+          <td>Loop</td>
+          <td>窗口快捷缩放，类似 Windows 的 Aero Snap</td>
+      </tr>
+      <tr>
+          <td>Mos</td>
+          <td>鼠标平滑滚动，二选一</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>图床工具，支持 PicGo 配置</td>
+      </tr>
+      <tr>
+          <td>ShortcutDetective</td>
+          <td>查看快捷键冲突，偶尔用到</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>风扇转速调节，笔记本发热时用</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>个人推荐</strong>：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。</p>
+<h2 id="效率工具">效率工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Alfred</td>
+          <td>老牌启动器，Powerpack 需要付费</td>
+      </tr>
+      <tr>
+          <td>滴答清单</td>
+          <td>GTD 待办事项，多端同步</td>
+      </tr>
+      <tr>
+          <td>RayCast</td>
+          <td><strong>强烈推荐</strong>，免费版已经够用，Alfred 的平替</td>
+      </tr>
+  </tbody>
+</table>
+<p>RayCast 真的好用，我主要是用来：</p>
+<ul>
+<li>快速启动应用</li>
+<li>查剪贴板历史</li>
+<li>简单的计算和转换</li>
+<li>搜索文件</li>
+</ul>
+<h2 id="终端工具">终端工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>iTerm2</td>
+          <td>终端替代品，配色和分屏都很方便</td>
+      </tr>
+      <tr>
+          <td>SecureCRT</td>
+          <td>商用终端，付费</td>
+      </tr>
+      <tr>
+          <td>lux</td>
+          <td>B 站视频下载，偶尔用</td>
+      </tr>
+      <tr>
+          <td>Termius</td>
+          <td>SSH 客户端，多设备同步</td>
+      </tr>
+      <tr>
+          <td>htop</td>
+          <td>top 的升级版，更好看</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="网络工具">网络工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Lulu</td>
+          <td>开源防火墙，监控应用网络连接</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="chrome-插件">Chrome 插件</h2>
+<table>
+  <thead>
+      <tr>
+          <th>插件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Proxy SwitchyOmega</td>
+          <td>代理切换，老牌了</td>
+      </tr>
+      <tr>
+          <td>ZeroOmega</td>
+          <td>SwitchyOmega 的轻量版</td>
+      </tr>
+      <tr>
+          <td>Adblock Plus</td>
+          <td>广告拦截</td>
+      </tr>
+      <tr>
+          <td>简阅</td>
+          <td>阅读模式，网页变清爽</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>复制禁止复制的网站内容</td>
+      </tr>
+      <tr>
+          <td>XSwitch</td>
+          <td>代理管理</td>
+      </tr>
+      <tr>
+          <td>Axure RP</td>
+          <td>原型预览</td>
+      </tr>
+      <tr>
+          <td>沉浸式翻译</td>
+          <td>页面双语对照翻译</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>下载网站资源，扒网站用</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="补充说明">补充说明</h2>
+<p>上面的工具不是都要装，按需选择就行。如果你也在整理自己的工具清单，推荐看看 <a href="https://wangchujiang.com/awesome-mac/README-zh.html">awesome-mac</a>，那里更全。</p>
+<hr>
+<p><strong>最后更新</strong>：2024-04-07</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

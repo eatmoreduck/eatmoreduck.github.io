@@ -1,0 +1,24 @@
+{
+  "name": "eatmoreduck's Blog",
+  "short_name": "eatmoreduck",
+  "description": "Code & Lifestyle & AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["technology", "blog", "education"],
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "scope": "/",
+  "related_applications": [],
+  "prefer_related_applications": false
+}

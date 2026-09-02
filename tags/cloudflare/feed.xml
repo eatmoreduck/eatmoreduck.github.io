@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Cloudflare on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/cloudflare/</link>
+    <description>Recent content in Cloudflare on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/cloudflare/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>大善人 AI 食用指南</title>
+      <link>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</link>
+      <pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</guid>
+      <description>&lt;p&gt;大善人 AI 食用指南&lt;/p&gt;&#xA;&lt;p&gt;登录之后，打开&#xA;&lt;a href=&#34;https://dash.cloudflare.com/&#34;&gt;https://dash.cloudflare.com/&lt;/a&gt; ,保存/之后的字符串为 accountId&lt;/p&gt;&#xA;&lt;p&gt;再打开&#xA;&lt;a href=&#34;https://dash.cloudflare.com/profile/api-tokens&#34;&gt;https://dash.cloudflare.com/profile/api-tokens&lt;/a&gt;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;这一步完成后会看到如下图，保存好自己的 Workers AI API token&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 用户 API 令牌&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#### Workers AI API 令牌已成功创建&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 one-api 添加新渠道&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>大善人 AI 食用指南</p>
+<p>登录之后，打开
+<a href="https://dash.cloudflare.com/">https://dash.cloudflare.com/</a> ,保存/之后的字符串为 accountId</p>
+<p>再打开
+<a href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png" alt="image.png"  />
+</p>
+<p>这一步完成后会看到如下图，保存好自己的 Workers AI API token</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 用户 API 令牌
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#### Workers AI API 令牌已成功创建
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。
+</span></span></code></pre></div><p>然后去 one-api 添加新渠道
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png" alt="image.png"  />
+</p>
+<p>添加完成后即可进行测试，后续可以再 next-chatgpt中直接使用
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121436437.png" alt="image.png"  />
+</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

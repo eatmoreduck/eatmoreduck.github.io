@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>CC-Switch on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/cc-switch/</link>
+    <description>Recent content in CC-Switch on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/cc-switch/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>让 Claude Desktop 支持任意第三方模型</title>
+      <link>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</link>
+      <pubDate>Thu, 28 May 2026 15:53:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/claude-desktop-uses-any-third-party-model/</guid>
+      <description>&lt;p&gt;最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）&lt;/li&gt;&#xA;&lt;li&gt;Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>最新版本 Claude Desktop 已经不支持使用第三方模型了，绕过的方法也很简单：</p>
+<ol>
+<li>在上游 API 地址和客户端之间加一层本地转发，转发的时候把模型字段替换掉（纯本地操作）</li>
+<li>Claude Desktop 只认 HTTPS，所以本地转发端口得套一层 HTTPS。</li>
+</ol>
+<p>可以直接在本地使用 CC-switch 做一个转发，把任意三方模型包装成 claude 模型，配置映射关系即可正常使用 Claude Desktop。</p>
+<ol>
+<li><a href="https://code.claude.com/docs/en/desktop">安装 Claude Desktop</a></li>
+<li>启动 APP，先不要登录，Mac 端在顶部菜单栏寻找</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Help -&gt; Troubleshooting -&gt; Enable Developer mode
+</span></span></code></pre></div><ol start="3">
+<li>继续在顶部选择</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Developer -&gt; Configure third-party inference
+</span></span></code></pre></div><ol start="4">
+<li>打开 CC-switch 添加你的模型供应商，可以一键复制之前配好的 Claude</li>
+<li>点击启用，并且开启本地路由
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260528160017309.png" alt="CC-switch 启用本地路由界面"  />
+</li>
+</ol>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

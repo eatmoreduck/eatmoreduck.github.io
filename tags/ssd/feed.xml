@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SSD on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/ssd/</link>
+    <description>Recent content in SSD on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/ssd/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DXP4800安装SSD</title>
+      <link>https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</link>
+      <pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</guid>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;关机&lt;/li&gt;&#xA;&lt;li&gt;开盖&lt;/li&gt;&#xA;&lt;li&gt;装 SSD&lt;/li&gt;&#xA;&lt;li&gt;创建 basic 类型储存池&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;创建 basic 类型储存空间，选择Btrfs &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;设置新安装套件到储存池 2 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png&#34; alt=&#34;&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;通过 hyper backup先完成 docker homes 目录的备份 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;备份 docker homes 下的文件到共享文件夹&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。&#xA;如下图所示&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<ol>
+<li>关机</li>
+<li>开盖</li>
+<li>装 SSD</li>
+<li>创建 basic 类型储存池
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png" alt="image.png"  />
+</li>
+<li>创建 basic 类型储存空间，选择Btrfs <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png" alt="image.png"  />
+</li>
+<li>设置新安装套件到储存池 2 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png" alt=""  />
+</li>
+<li>通过 hyper backup先完成 docker homes 目录的备份 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png" alt="image.png"  />
+</li>
+</ol>
+<p>备份 docker homes 下的文件到共享文件夹
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png" alt="image.png"  />
+
+8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。
+如下图所示
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png" alt="image.png"  />
+
+先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082144024.png" alt="image.png"  />
+</p>
+<p>备份完了按原流程弄回去就行</p>
+<ol start="9">
+<li>原有历史套件搬家，找了个 <a href="https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x">https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x</a>
+最后发现还是无法使用，最近才开始用套件，目前装的也不多，直接把原来卸载的都重新来一次，以下页面的服务其实是没法使用的
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082220473.png" alt="image.png"  />
+</li>
+</ol>
+<p>完成以上所有操作之后，后续的套件都安装到ssd，无论是打开还是安装的速度都快了许多，后续再配置一个定时任务，定时将 docker 从 SSD 备份到 HHD 即可</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

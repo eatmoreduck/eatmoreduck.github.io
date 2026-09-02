@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>工具 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in 工具 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E5%B7%A5%E5%85%B7/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2026 Mac 开发全栈工具｜淘汰 Alfred/iTerm/Docker Desktop，我的最终软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</link>
+      <pubDate>Tue, 23 Jun 2026 20:00:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/my-software-stack-2026/</guid>
+      <description>&lt;p&gt;距离上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/mac-dev-software-list/&#34;&gt;Mac 开发常用软件清单&lt;/a&gt; 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。&lt;/p&gt;&#xA;&lt;h2 id=&#34;先说哪些变了&#34;&gt;先说哪些变了&lt;/h2&gt;&#xA;&lt;p&gt;旧清单里这几个我现在已经不用了：&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>距离上一篇 <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac 开发常用软件清单</a> 过去两年多了。翻出来看了一下，里面有些东西已经不在了，有些被更好的替代了，也有些我到现在还在用。</p>
+<h2 id="先说哪些变了">先说哪些变了</h2>
+<p>旧清单里这几个我现在已经不用了：</p>
+<ul>
+<li><strong>Alfred</strong> —— 被 Raycast 完全取代了。付费墙又高，免费版能干的事太少。</li>
+<li><strong>Mos / Mac Mouse Fix 二选一</strong> —— 现在只留 Mac Mouse Fix，它新版本窗口管理也做了，比以前好用。</li>
+<li><strong>Loop</strong> —— 留给 Mac Mouse Fix 的窗口管理之后撤了。</li>
+<li><strong>EasyDevo</strong> —— DevToys 够用了。</li>
+<li><strong>Termius</strong> —— SSH 直接交给 Ghostty + 系统 ssh 配置，多端同步的需求没了。</li>
+<li><strong>lux（B 站下载）</strong> —— 不怎么下了。</li>
+</ul>
+<p>下文按我现在真实的用法重新整理。</p>
+<h2 id="ai-编程">AI 编程</h2>
+<p>这是这两年变化最大的部分，单独拎出来。</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Code</td>
+          <td>主力，配合 GLM 和其他第三方模型用</td>
+      </tr>
+      <tr>
+          <td>Codex</td>
+          <td>OpenAI 的命令行 agent，写代码</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>图形化的 AI 编辑器，需要看大文件、改前端的时候顺手</td>
+      </tr>
+      <tr>
+          <td>Gemini / 豆包 / 通义 / 元宝</td>
+          <td>桌面客户端，分别对应几家的模型，谁好用问谁</td>
+      </tr>
+  </tbody>
+</table>
+<p>说实话现在 AI 编程工具已经多到有点过剩了。我的实际状态是 Claude Code 当主力，剩下几个客户端拿来对比同一个问题不同模型的回答。没必要全装，挑一两个顺手的就行。</p>
+<h2 id="编辑器和-ide">编辑器和 IDE</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>GoLand</td>
+          <td>写 Go 的主力，JetBrains 的索引还是最舒服</td>
+      </tr>
+      <tr>
+          <td>WebStorm</td>
+          <td>前端项目用</td>
+      </tr>
+      <tr>
+          <td>PyCharm</td>
+          <td>偶尔写 Python</td>
+      </tr>
+      <tr>
+          <td>IntelliJ IDEA</td>
+          <td>Java 项目</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>快速打开大文件看代码，启动快</td>
+      </tr>
+      <tr>
+          <td>ZCode</td>
+          <td>另一个命令行 agent</td>
+      </tr>
+  </tbody>
+</table>
+<p>JetBrains 全家桶还是吃内存大户，但代码跳转和重构这块没什么能打的。Sublime 留着纯粹是因为它打开几万行的日志文件不卡。</p>
+<h2 id="笔记">笔记</h2>
+<p>笔记类我同时开着三个：Obsidian、语雀、Notion。不是因为选择困难，是它们在我这儿干的活不一样，谁也替代不了谁。</p>
+<p>先给个速览：</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>我的定位</th>
+          <th>数据在哪</th>
+          <th>适合谁</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Obsidian</td>
+          <td>私人第二大脑，给自己看</td>
+          <td>全在本地</td>
+          <td>长期沉淀、想要完全掌控的人</td>
+      </tr>
+      <tr>
+          <td>语雀</td>
+          <td>技术文档沉淀，结构化的知识库</td>
+          <td>云端</td>
+          <td>喜欢文档树、做团队/项目 Wiki 的人</td>
+      </tr>
+      <tr>
+          <td>Notion</td>
+          <td>公开分享和对外知识库</td>
+          <td>云端</td>
+          <td>需要对外展示、追求页面好看的人</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="obsidian我的主力">Obsidian：我的主力</h3>
+<p>这篇博客就是 Obsidian 写的，平时记的笔记、写的 skill、攒的技术资料全在里面。它的核心好处是<strong>文件全在本地、纯 Markdown</strong>，不被任何一个云服务绑住，哪天想迁随时能迁。双链和图谱让笔记之间能连起来，越攒越有价值，不像传统笔记写到后面就成了一堆找不到的死文档。</p>
+<p>它是个本地工具，发布得自己搭。我自己搭过两套，可以看看：</p>
+<ul>
+<li><a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/">hugo+obsidian 打造最强博客（一）</a> 和 <a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/">(二)</a> —— 怎么把 Obsidian 接到 Hugo 博客上</li>
+<li><a href="https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/">Obsidian + Claude Code 构建 AI 第二大脑</a> —— 后来又把 AI 接进来，让笔记真正&quot;活&quot;起来</li>
+</ul>
+<h3 id="语雀技术文档沉淀">语雀：技术文档沉淀</h3>
+<p>技术类的东西我往语雀放。它那套文档树结构很适合做知识库分层，一个项目从设计到实现拆成一块块挂上去，回头看一目了然。语雀的编辑器对代码块、公式、画板这些支持得比较细，写技术文档比 Markdown 裸写舒服。缺点是云端封闭，导出没那么自由，所以我只把&quot;需要结构化整理、长期维护&quot;的技术内容放这。</p>
+<h3 id="notion对外分享">Notion：对外分享</h3>
+<p>Notion 我其实用得不多，但留着有它的道理——<strong>公开分享和对外知识库这块，它最好用</strong>。Notion 的页面能直接发布成公开链接，排版好看、多媒体混排方便，拿来做个人主页、项目介绍、对外教程很合适，对 SEO 也友好。我自己不拿它记日常笔记，但要做给别人看的东西，会优先考虑它。</p>
+<h3 id="我的实际分工">我的实际分工</h3>
+<p>简单说就是：<strong>Obsidian 管输入和沉淀，语雀管技术整理，Notion 管对外输出</strong>。如果你只挑一个，长期沉淀选 Obsidian；要带团队做 Wiki 选语雀；要做对外内容选 Notion。三个都装也不是浪费，前提是给每个工具一个明确的角色，别什么都往一个里塞。</p>
+<p>另外还有个 <strong>Anki</strong>，不在上面三个的赛道里。它是纯记忆工具，碎片时间拿来刷卡片，背单词和记技术知识点，配合 Easydict 存生词挺好用。</p>
+<h2 id="终端和-shell">终端和 Shell</h2>
+<p>这块这两年换得最彻底。</p>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ghostty</td>
+          <td>现在的主力终端，GPU 渲染，配置极简</td>
+      </tr>
+      <tr>
+          <td>Oh My Zsh</td>
+          <td>还是它，配 powerlevel10k 主题</td>
+      </tr>
+      <tr>
+          <td>powerlevel10k</td>
+          <td>提示符主题，instant prompt 让启动快很多</td>
+      </tr>
+      <tr>
+          <td>zsh-autosuggestions</td>
+          <td>命令自动补全</td>
+      </tr>
+      <tr>
+          <td>zsh-syntax-highlighting</td>
+          <td>命令语法高亮</td>
+      </tr>
+  </tbody>
+</table>
+<p>以前用 iTerm2，换到 Ghostty 主要是图它快和干净。配置文件就一个，没有什么花里胡哨的设置面板，我反而更喜欢。</p>
+<p>Shell 这套配置我没怎么折腾，就四样东西：Oh My Zsh、p10k、自动补全、语法高亮。够用了，再往上加插件启动会变慢。</p>
+<h2 id="命令行工具">命令行工具</h2>
+<p>这是旧清单里完全没覆盖的部分，但其实是我每天用得最多的。</p>
+<h3 id="包管理和运行时">包管理和运行时</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Homebrew</td>
+          <td>Mac 上装一切的基础</td>
+      </tr>
+      <tr>
+          <td>uv</td>
+          <td>Python 的包管理和虚拟环境，比 pip + venv 快得多，现在基本不碰 pip 了</td>
+      </tr>
+      <tr>
+          <td>bun</td>
+          <td>JS 运行时和包管理，比 node 快</td>
+      </tr>
+      <tr>
+          <td>nvm</td>
+          <td>多版本 node 切换</td>
+      </tr>
+      <tr>
+          <td>pyenv</td>
+          <td>多版本 Python 切换</td>
+      </tr>
+  </tbody>
+</table>
+<p>uv 是这两年我最想安利的 Python 工具。装依赖、建虚拟环境、跑脚本，全用它一个，不用再记 <code>python -m venv</code> 那一串。配合 <code>uv run</code> 直接在临时环境里跑脚本特别舒服。</p>
+<h3 id="日常高频">日常高频</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>gh</td>
+          <td>GitHub 官方命令行，开 PR、看 issue、clone 仓库都靠它</td>
+      </tr>
+      <tr>
+          <td>git</td>
+          <td>不用多说了</td>
+      </tr>
+      <tr>
+          <td>task (go-task)</td>
+          <td>像 make 但是用 YAML 写，跨平台，项目里的自动化我都用它</td>
+      </tr>
+      <tr>
+          <td>ffmpeg</td>
+          <td>处理音视频，转格式、剪片段、抽音频</td>
+      </tr>
+      <tr>
+          <td>tree</td>
+          <td>看目录结构</td>
+      </tr>
+      <tr>
+          <td>telnet</td>
+          <td>偶尔测端口用</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>task</code> 这个我想多说一句。以前项目里一堆 <code>Makefile</code>，写起来不直观还容易写错。换成 task 之后，<code>taskfile.yml</code> 一眼能看懂在干什么，Windows 上也能跑，团队协作省心很多。</p>
+<h3 id="系统监控">系统监控</h3>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>fastfetch</td>
+          <td>neofetch 的替代，启动快，看系统信息用的</td>
+      </tr>
+      <tr>
+          <td>mactop</td>
+          <td>苹果芯片上的 top，比 htop 更懂 M 系列的架构</td>
+      </tr>
+      <tr>
+          <td>kubectl</td>
+          <td>偶尔连集群</td>
+      </tr>
+  </tbody>
+</table>
+<p>mactop 是 Apple Silicon 上我比较推荐的。它能显示 CPU 各个性能核和能效核的占用，还有 GPU、内存带宽这些，htop 看不到。</p>
+<h2 id="容器和虚拟化">容器和虚拟化</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>OrbStack</td>
+          <td>Docker Desktop 的替代，启动快、占内存少、还能跑 Linux 虚拟机</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>兼容性需要的时候还是会用</td>
+      </tr>
+  </tbody>
+</table>
+<p>从 Docker Desktop 换到 OrbStack 是另一个&quot;用完回不去&quot;的体验。同样的容器，OrbStack 启动快一截，内存占用也小，而且它内置的 Linux 虚拟机可以当轻量开发环境用。Docker 留着主要是有些 CI 本地复现的时候要保证环境一致。</p>
+<h2 id="数据库和网络">数据库和网络</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis 客户端</td>
+      </tr>
+      <tr>
+          <td>DataGrip</td>
+          <td>数据库通用客户端，连啥都行</td>
+      </tr>
+      <tr>
+          <td>SecureCRT / SecureFX</td>
+          <td>老牌终端和文件传输，付费</td>
+      </tr>
+      <tr>
+          <td>Wireshark</td>
+          <td>抓包，排查网络问题</td>
+      </tr>
+      <tr>
+          <td>ZeroTier</td>
+          <td>虚拟局域网，组网用</td>
+      </tr>
+  </tbody>
+</table>
+<p>Navicat 我现在没装了，DataGrip 一个顶所有。Wireshark 不常用，但真要排查网络问题的时候它是唯一靠谱的。</p>
+<h2 id="效率和启动器">效率和启动器</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Raycast</td>
+          <td>启动器，免费版够用，Alfred 的平替</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>划词翻译，开源免费</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>改键，把 Caps Lock 改成 Ctrl+Esc</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>外接显示器调亮度</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>鼠标平滑滚动 + 窗口管理</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>折叠菜单栏图标</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>风扇转速</td>
+      </tr>
+      <tr>
+          <td>BrightIntosh</td>
+          <td>老款 MacBook 突破官方限制最高亮度</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>图床，博客图片都走它</td>
+      </tr>
+  </tbody>
+</table>
+<p>Raycast 我每天用得最多的几个功能：启动应用、剪贴板历史、窗口管理、简单计算。它比 Alfred 好的地方是免费版就把核心功能全给了，不用纠结要不要买 Powerpack。</p>
+<p>Easydict 这个之前我专门写过一篇 <a href="https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/">给 Easydict 加 Anki 功能</a>，是真好用，划词就能查、能发音、能存生词。</p>
+<h2 id="浏览器和插件">浏览器和插件</h2>
+<p>主力 Google Chrome。日常用的插件：</p>
+<table>
+  <thead>
+      <tr>
+          <th>插件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>沉浸式翻译</td>
+          <td>网页双语对照，看英文文档神器</td>
+      </tr>
+      <tr>
+          <td>简阅</td>
+          <td>阅读模式，把乱七八糟的网页变清爽</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>绕过禁止复制的网站</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>扒网站资源用</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="其它日常">其它日常</h2>
+<table>
+  <thead>
+      <tr>
+          <th>工具</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>IINA</td>
+          <td>视频播放器，Mac 上最好的选择</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>解压缩</td>
+      </tr>
+      <tr>
+          <td>OBS</td>
+          <td>录屏、直播</td>
+      </tr>
+      <tr>
+          <td>Apifox</td>
+          <td>API 调试，Postman 的替代</td>
+      </tr>
+      <tr>
+          <td>OrbStack</td>
+          <td>上面提过</td>
+      </tr>
+      <tr>
+          <td>XMind</td>
+          <td>思维导图</td>
+      </tr>
+  </tbody>
+</table>
+<p>IINA 没什么好说的，装就完了。</p>
+<p>旧的那篇 <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac 开发常用软件清单</a> 留个时间戳，也没删。这篇是 2026 年的版本，估计过两年又得再更新一次。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Easydict 发送到 Anki 插件开发</title>
+      <link>https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/</link>
+      <pubDate>Tue, 24 Mar 2026 19:56:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/</guid>
+      <description>&lt;p&gt;一直都想做一个插件，来实现anki英语单词的制卡。去年年中就已经起了项目，想做谷歌插件，网页划词之后，直接发送到anki，包括读音、图片一类，但今年重新回看的时候，却发现那个方案有一定局限性。主要源自于插件无法捕获全局的事件，即为当我在其他见面时无法进行划词。&#xA;正好看到我一直在用的Easydict，实际已经实现了Mac OS下的全局快捷键捕获。一拍脑袋就想着花一点时间扩展一下功能，初步想法，直接查词之后，能够将查到的单词发送到我本地的anik制卡。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>一直都想做一个插件，来实现anki英语单词的制卡。去年年中就已经起了项目，想做谷歌插件，网页划词之后，直接发送到anki，包括读音、图片一类，但今年重新回看的时候，却发现那个方案有一定局限性。主要源自于插件无法捕获全局的事件，即为当我在其他见面时无法进行划词。
+正好看到我一直在用的Easydict，实际已经实现了Mac OS下的全局快捷键捕获。一拍脑袋就想着花一点时间扩展一下功能，初步想法，直接查词之后，能够将查到的单词发送到我本地的anik制卡。</p>
+<p>初步想法，需要实现以下功能</p>
+<ol>
+<li>查询句子或单词时，中译音或音译中能直接制卡，将语句作为卡面，对应译文作为卡底</li>
+<li>要将录音文件的TTS也发送到anki，无需依赖其他API</li>
+<li>查单词时，卡底最好能有音标</li>
+</ol>
+<p>于是经过跟Claude Code的多轮对话之后，基本实现功能，但语音层面仍需优化，后续考虑替换为大模型的 tts 服务
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213105089.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213023228.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324213124973.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260324233935621.png" alt="image.png"  />
+</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>OpenClaw 从零到一</title>
+      <link>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</link>
+      <pubDate>Thu, 26 Feb 2026 23:26:51 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/openclaw-from-zero-to-one/</guid>
+      <description>&lt;p&gt;记录下openclaw安装流程，以macOS为例&lt;/p&gt;&#xA;&lt;h3 id=&#34;安装node&#34;&gt;安装node&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装brew install node 可指定版本，但openclaw 要求大于22&lt;/li&gt;&#xA;&lt;li&gt;验证 node &amp;ndash;version 出现版本号，版本号大于20即可&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;安装git&#34;&gt;安装git&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version   &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出有值即可                            &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git version 2.39.5 (Apple Git-154)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;安装并配置openclaw&#34;&gt;安装并配置openclaw&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装openclaw&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;n&#34;&gt;luna&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ppmac&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fsSL&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openclaw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ai&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;install&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bash&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installer&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;Because&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;yourself&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reminders&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;so&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2024.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Detected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plan&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;ne&#34;&gt;OS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;macos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Requested&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;latest&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Preparing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;environment&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Homebrew&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;found&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;js&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;6.1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Active&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;11.9&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;homebrew&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Installing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;v2026&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2.26&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;npm&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Finalizing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Refreshing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loaded&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;metadata&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;refreshed&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;restarted&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✗&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Probing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gateway&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;failed&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;—&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;details&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unknown&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;option&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;--probe&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Did&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;you&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mean&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;one&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;no&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;probe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;profile&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;🦞&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OpenClaw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;successfully&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2026.2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;m in. Let&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cause&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;some&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;responsible&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chaos&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Running&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;migrate&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;✓&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Doctor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;complete&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skipping&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;onboarding&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;·&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Starting&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;配置openclaw&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>记录下openclaw安装流程，以macOS为例</p>
+<h3 id="安装node">安装node</h3>
+<ol>
+<li>安装brew install node 可指定版本，但openclaw 要求大于22</li>
+<li>验证 node &ndash;version 出现版本号，版本号大于20即可</li>
+</ol>
+<h3 id="安装git">安装git</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install git
+</span></span><span class="line"><span class="cl">git --version   
+</span></span><span class="line"><span class="cl">输出有值即可                            
+</span></span><span class="line"><span class="cl">git version 2.39.5 (Apple Git-154)
+</span></span></code></pre></div><h3 id="安装并配置openclaw">安装并配置openclaw</h3>
+<ol>
+<li>安装openclaw</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">luna</span><span class="err">@</span><span class="n">ppmac</span> <span class="err"></span> <span class="o">~</span> <span class="err"></span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">openclaw</span><span class="o">.</span><span class="n">ai</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sh</span> <span class="o">|</span> <span class="n">bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">🦞</span> <span class="n">OpenClaw</span> <span class="n">Installer</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Because</span> <span class="n">texting</span> <span class="n">yourself</span> <span class="n">reminders</span> <span class="n">is</span> <span class="n">so</span> <span class="mf">2024.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Detected</span><span class="p">:</span> <span class="n">macos</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Install</span> <span class="n">plan</span>
+</span></span><span class="line"><span class="cl"><span class="ne">OS</span><span class="p">:</span> <span class="n">macos</span>
+</span></span><span class="line"><span class="cl"><span class="n">Install</span> <span class="n">method</span><span class="p">:</span> <span class="n">npm</span>
+</span></span><span class="line"><span class="cl"><span class="n">Requested</span> <span class="n">version</span><span class="p">:</span> <span class="n">latest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Preparing</span> <span class="n">environment</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Homebrew</span> <span class="n">already</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="ne">Node</span><span class="o">.</span><span class="n">js</span> <span class="n">v25</span><span class="o">.</span><span class="mf">6.1</span> <span class="n">found</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Active</span> <span class="ne">Node</span><span class="o">.</span><span class="n">js</span><span class="p">:</span> <span class="n">v25</span><span class="o">.</span><span class="mf">6.1</span> <span class="p">(</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homebrew</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Active</span> <span class="n">npm</span><span class="p">:</span> <span class="mf">11.9</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">homebrew</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Installing</span> <span class="n">OpenClaw</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Git</span> <span class="n">already</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Installing</span> <span class="n">OpenClaw</span> <span class="n">v2026</span><span class="o">.</span><span class="mf">2.26</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">OpenClaw</span> <span class="n">npm</span> <span class="n">package</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">OpenClaw</span> <span class="n">installed</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span> <span class="n">Finalizing</span> <span class="n">setup</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Refreshing</span> <span class="n">loaded</span> <span class="n">gateway</span> <span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Gateway</span> <span class="n">service</span> <span class="n">metadata</span> <span class="n">refreshed</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Gateway</span> <span class="n">service</span> <span class="n">restarted</span>
+</span></span><span class="line"><span class="cl"><span class="err">✗</span> <span class="n">Probing</span> <span class="n">gateway</span> <span class="n">service</span> <span class="n">failed</span> <span class="err">—</span> <span class="n">re</span><span class="o">-</span><span class="n">run</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span> <span class="k">for</span> <span class="n">details</span>
+</span></span><span class="line"><span class="cl"><span class="n">error</span><span class="p">:</span> <span class="n">unknown</span> <span class="n">option</span> <span class="s1">&#39;--probe&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">Did</span> <span class="n">you</span> <span class="n">mean</span> <span class="n">one</span> <span class="n">of</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">probe</span><span class="p">,</span> <span class="o">--</span><span class="n">profile</span><span class="err">?</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">🦞</span> <span class="n">OpenClaw</span> <span class="n">installed</span> <span class="n">successfully</span> <span class="p">(</span><span class="mf">2026.2</span><span class="o">.</span><span class="mi">26</span><span class="p">)</span><span class="o">!</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span><span class="s1">&#39;m in. Let&#39;</span><span class="n">s</span> <span class="n">cause</span> <span class="n">some</span> <span class="n">responsible</span> <span class="n">chaos</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Config</span> <span class="n">already</span> <span class="n">present</span><span class="p">;</span> <span class="n">running</span> <span class="n">doctor</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Running</span> <span class="n">doctor</span> <span class="n">to</span> <span class="n">migrate</span> <span class="n">settings</span>
+</span></span><span class="line"><span class="cl"><span class="err">✓</span> <span class="n">Doctor</span> <span class="n">complete</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Config</span> <span class="n">already</span> <span class="n">present</span><span class="p">;</span> <span class="n">skipping</span> <span class="n">onboarding</span>
+</span></span><span class="line"><span class="cl"><span class="err">·</span> <span class="n">Starting</span> <span class="n">setup</span>
+</span></span></code></pre></div><ol start="2">
+<li>
+<p>配置openclaw</p>
+<ol>
+<li>安装好后会自动开始这步<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260226233356873.png" alt="image.png"  />
+选yes</li>
+<li>先quickstart 后面可配置 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094239665.png" alt="image.png"  />
+</li>
+<li>模型选择自己想要的模型即可，我这里选用z.ai 使用智谱模型（需要先去生成apikey 并且填入，其他模型也是一样）<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094530465.png" alt="image.png"  />
+</li>
+<li>channel官方推荐telegram 这里自行选择，需要准备上网工具增加proxy配置后，粘贴bot的token ，机器上需要加配置 &ldquo;proxy&rdquo;:&ldquo;http://127.0.0.1:7890&rdquo;, 给机器人发消息 ，/start 之后会收到回复的code 然后在终端使用。openclaw pairing approve telegram QRNT5UUY(code)<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227094753872.png" alt="image.png"  />
+
+至此已经配置完，可以开始使用了openclaw</li>
+</ol>
+</li>
+</ol>
+<h3 id="给openclaw操控浏览器的能力">给openclaw操控浏览器的能力</h3>
+<p>macOS</p>
+<ol>
+<li>安装extension，命令执行后会自动下载extension包到对应文件夹下 /Users/{你的用户名}/.openclaw/browser/chrome-extension</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">openclaw browser extension install
+</span></span></code></pre></div><ol start="2">
+<li>
+<p>在chrome里地址栏输入 chrome://extensions/ 打开开发者模式 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100923737.png" alt="image.png"  />
+</p>
+</li>
+<li>
+<p>点击加载未打包的扩展程序，然后选中extension文件夹即可 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260227100909783.png" alt="image.png"  />
+</p>
+</li>
+</ol>
+<p>linux 可参照 <a href="https://cloud.tencent.com/developer/article/2626186">https://cloud.tencent.com/developer/article/2626186</a></p>
+<h3 id="遇到的坑">遇到的坑</h3>
+<ol>
+<li>最初用nvm 安装node ，node全局安装后总时不时出现闪退问题，后面直接采用brew install node，官方脚本安装的openclaw</li>
+<li>nvm安装后，卸载时，重新运行openclaw gatway install的plist .nvm路径，导致openclaw doctor始终有问题 原因是清理了.zshr后当前终端没有source 导致读取的环境变量是旧的，要么source ，要么重连一下ssh</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>VScode进入报错code 9, signal null error</title>
+      <link>https://blog.xiaohuangyu.space/p/vscode-code-9-error/</link>
+      <pubDate>Fri, 16 Aug 2024 10:07:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/vscode-code-9-error/</guid>
+      <description>&lt;p&gt;进入 Vscode 时，出现报错&lt;br&gt;&#xA;Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)&lt;/p&gt;&#xA;&lt;p&gt;![image.png](&lt;a href=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&#34;&gt;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png&lt;/a&gt; =600x)&lt;/p&gt;&#xA;&lt;p&gt;查证go 和 go env  之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 &lt;strong&gt;export NODE_OPTIONS=&amp;ndash;openssl-legacy-provider&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#node&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/opt/homebrew/opt/node@20/bin:$PATH&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LDFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CPPFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;NODE_OPTIONS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;openssl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;legacy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;provider&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>进入 Vscode 时，出现报错<br>
+Unable to resolve your shell environment: Unexpected exit code from spawned shell (code 9, signal null)</p>
+<p>![image.png](<a href="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png">https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408161008789.png</a> =600x)</p>
+<p>查证go 和 go env  之后发现都没问题，最后注意到 ~/.bash_profile 中有这部分，确定造成报错的行是 <strong>export NODE_OPTIONS=&ndash;openssl-legacy-provider</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1">#node</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&#34;/opt/homebrew/opt/node@20/bin:$PATH&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">LDFLAGS</span><span class="o">=</span><span class="s2">&#34;-L/opt/homebrew/opt/node@20/lib:$LDFLAGS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">CPPFLAGS</span><span class="o">=</span><span class="s2">&#34;-I/opt/homebrew/opt/node@20/include:$CPPFLAGS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">NODE_OPTIONS</span><span class="o">=--</span><span class="n">openssl</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">provider</span>
+</span></span></code></pre></div><p>使用vi编辑或者是使用其他文本编辑器打开 .bash_profile 文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">vi</span> <span class="o">~/.</span><span class="n">bash_profile</span>
+</span></span><span class="line"><span class="cl"><span class="err">按</span><span class="n">i进入编辑模式</span>
+</span></span><span class="line"><span class="cl"><span class="err">找到</span><span class="k">export</span> <span class="n">NODE_OPTIONS</span><span class="o">=--</span><span class="n">openssl</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">provider</span> <span class="err">所在行</span>
+</span></span><span class="line"><span class="cl"><span class="err">在</span> <span class="k">export</span> <span class="n">NODE_OPTIONS</span><span class="o">=--</span><span class="n">openssl</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">provider</span> <span class="err">前加</span><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="err">最后那行变成</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#export NODE_OPTIONS=--openssl-legacy-provider</span>
+</span></span><span class="line"><span class="cl"><span class="err">再按</span> <span class="n">esc</span> <span class="err">退出编辑模式</span>
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="n">wq</span><span class="o">!</span> 
+</span></span><span class="line"><span class="cl"><span class="err">然后回车</span>
+</span></span></code></pre></div><p>如果不会使用 vi 可以直接终端执行</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd $HOME &amp; open .
+</span></span></code></pre></div><p>然后用喜欢的文本编辑器打开.bash_profile 更改所在行</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202409101100157.png" alt="image.png"  />
+</p>
+<p>将NODE_OPTIONS 注释掉后，重新进入 VScode 解决</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>大善人 AI 食用指南</title>
+      <link>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</link>
+      <pubDate>Mon, 12 Aug 2024 14:24:33 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/cloudflare-worker-ai/</guid>
+      <description>&lt;p&gt;大善人 AI 食用指南&lt;/p&gt;&#xA;&lt;p&gt;登录之后，打开&#xA;&lt;a href=&#34;https://dash.cloudflare.com/&#34;&gt;https://dash.cloudflare.com/&lt;/a&gt; ,保存/之后的字符串为 accountId&lt;/p&gt;&#xA;&lt;p&gt;再打开&#xA;&lt;a href=&#34;https://dash.cloudflare.com/profile/api-tokens&#34;&gt;https://dash.cloudflare.com/profile/api-tokens&lt;/a&gt;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;这一步完成后会看到如下图，保存好自己的 Workers AI API token&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 用户 API 令牌&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#### Workers AI API 令牌已成功创建&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 one-api 添加新渠道&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>大善人 AI 食用指南</p>
+<p>登录之后，打开
+<a href="https://dash.cloudflare.com/">https://dash.cloudflare.com/</a> ,保存/之后的字符串为 accountId</p>
+<p>再打开
+<a href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121425957.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121427156.png" alt="image.png"  />
+</p>
+<p>这一步完成后会看到如下图，保存好自己的 Workers AI API token</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 用户 API 令牌
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#### Workers AI API 令牌已成功创建
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">复制此令牌以访问 Cloudflare API。为安全起见，将不再显示此令牌。
+</span></span></code></pre></div><p>然后去 one-api 添加新渠道
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121433758.png" alt="image.png"  />
+</p>
+<p>添加完成后即可进行测试，后续可以再 next-chatgpt中直接使用
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202408121436437.png" alt="image.png"  />
+</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Mac 开发常用软件清单</title>
+      <link>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</link>
+      <pubDate>Sun, 07 Apr 2024 15:46:48 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/mac-dev-software-list/</guid>
+      <description>&lt;p&gt;换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。&lt;/p&gt;&#xA;&lt;h2 id=&#34;开发工具&#34;&gt;开发工具&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;软件&lt;/th&gt;&#xA;          &lt;th&gt;说明&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;JetBrains 全家桶&lt;/td&gt;&#xA;          &lt;td&gt;GoLand 用得最多，其他看项目需要&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;VSCode&lt;/td&gt;&#xA;          &lt;td&gt;轻量编辑，前端开发主力&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Cursor&lt;/td&gt;&#xA;          &lt;td&gt;最近在用，AI 辅助写代码确实省脑子&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Another Redis Desktop Manager&lt;/td&gt;&#xA;          &lt;td&gt;Redis 客户端，免费够用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Navicat Premium Lite&lt;/td&gt;&#xA;          &lt;td&gt;官方免费版，不需要破解了&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Sublime Text&lt;/td&gt;&#xA;          &lt;td&gt;快速打开文件看代码&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Docker&lt;/td&gt;&#xA;          &lt;td&gt;容器开发必备&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;DevToys&lt;/td&gt;&#xA;          &lt;td&gt;开发者小工具集合，JSON 格式化、Base64 转换啥的&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;EasyDevo&lt;/td&gt;&#xA;          &lt;td&gt;和 DevToys 类似，二选一就行&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;实用工具&#34;&gt;实用工具&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;软件&lt;/th&gt;&#xA;          &lt;th&gt;说明&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Android File Transfer&lt;/td&gt;&#xA;          &lt;td&gt;传文件到手机，官方工具&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Neat Download Manager&lt;/td&gt;&#xA;          &lt;td&gt;下载器，比浏览器自带的快&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mounty&lt;/td&gt;&#xA;          &lt;td&gt;读写 NTFS 格式硬盘&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Keka&lt;/td&gt;&#xA;          &lt;td&gt;解压缩，支持格式多&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Easydict&lt;/td&gt;&#xA;          &lt;td&gt;划词翻译，开源免费&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;IINA&lt;/td&gt;&#xA;          &lt;td&gt;视频播放器，Mac 上最好的选择&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Karabiner-Elements&lt;/td&gt;&#xA;          &lt;td&gt;改键位，比如把 Caps Lock 映射成 Ctrl&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;MonitorControl&lt;/td&gt;&#xA;          &lt;td&gt;外接显示器调节亮度，这个很有用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Hidden Bar&lt;/td&gt;&#xA;          &lt;td&gt;折叠菜单栏图标，强迫症福音&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mac Mouse Fix&lt;/td&gt;&#xA;          &lt;td&gt;鼠标滚动变平滑，用罗技鼠标的推荐&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Loop&lt;/td&gt;&#xA;          &lt;td&gt;窗口快捷缩放，类似 Windows 的 Aero Snap&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Mos&lt;/td&gt;&#xA;          &lt;td&gt;鼠标平滑滚动，二选一&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;PicList&lt;/td&gt;&#xA;          &lt;td&gt;图床工具，支持 PicGo 配置&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;ShortcutDetective&lt;/td&gt;&#xA;          &lt;td&gt;查看快捷键冲突，偶尔用到&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Macs Fan Control&lt;/td&gt;&#xA;          &lt;td&gt;风扇转速调节，笔记本发热时用&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;个人推荐&lt;/strong&gt;：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>换了几次电脑，每次都要重新装软件，干脆整理一下。以下是我在日常开发中真的在用的工具，不搞虚的。</p>
+<h2 id="开发工具">开发工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>JetBrains 全家桶</td>
+          <td>GoLand 用得最多，其他看项目需要</td>
+      </tr>
+      <tr>
+          <td>VSCode</td>
+          <td>轻量编辑，前端开发主力</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>最近在用，AI 辅助写代码确实省脑子</td>
+      </tr>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis 客户端，免费够用</td>
+      </tr>
+      <tr>
+          <td>Navicat Premium Lite</td>
+          <td>官方免费版，不需要破解了</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>快速打开文件看代码</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>容器开发必备</td>
+      </tr>
+      <tr>
+          <td>DevToys</td>
+          <td>开发者小工具集合，JSON 格式化、Base64 转换啥的</td>
+      </tr>
+      <tr>
+          <td>EasyDevo</td>
+          <td>和 DevToys 类似，二选一就行</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="实用工具">实用工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Android File Transfer</td>
+          <td>传文件到手机，官方工具</td>
+      </tr>
+      <tr>
+          <td>Neat Download Manager</td>
+          <td>下载器，比浏览器自带的快</td>
+      </tr>
+      <tr>
+          <td>Mounty</td>
+          <td>读写 NTFS 格式硬盘</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>解压缩，支持格式多</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>划词翻译，开源免费</td>
+      </tr>
+      <tr>
+          <td>IINA</td>
+          <td>视频播放器，Mac 上最好的选择</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>改键位，比如把 Caps Lock 映射成 Ctrl</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>外接显示器调节亮度，这个很有用</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>折叠菜单栏图标，强迫症福音</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>鼠标滚动变平滑，用罗技鼠标的推荐</td>
+      </tr>
+      <tr>
+          <td>Loop</td>
+          <td>窗口快捷缩放，类似 Windows 的 Aero Snap</td>
+      </tr>
+      <tr>
+          <td>Mos</td>
+          <td>鼠标平滑滚动，二选一</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>图床工具，支持 PicGo 配置</td>
+      </tr>
+      <tr>
+          <td>ShortcutDetective</td>
+          <td>查看快捷键冲突，偶尔用到</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>风扇转速调节，笔记本发热时用</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>个人推荐</strong>：MonitorControl 和 Mac Mouse Fix/Mos 是真心推荐，用完就回不去了。</p>
+<h2 id="效率工具">效率工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Alfred</td>
+          <td>老牌启动器，Powerpack 需要付费</td>
+      </tr>
+      <tr>
+          <td>滴答清单</td>
+          <td>GTD 待办事项，多端同步</td>
+      </tr>
+      <tr>
+          <td>RayCast</td>
+          <td><strong>强烈推荐</strong>，免费版已经够用，Alfred 的平替</td>
+      </tr>
+  </tbody>
+</table>
+<p>RayCast 真的好用，我主要是用来：</p>
+<ul>
+<li>快速启动应用</li>
+<li>查剪贴板历史</li>
+<li>简单的计算和转换</li>
+<li>搜索文件</li>
+</ul>
+<h2 id="终端工具">终端工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>iTerm2</td>
+          <td>终端替代品，配色和分屏都很方便</td>
+      </tr>
+      <tr>
+          <td>SecureCRT</td>
+          <td>商用终端，付费</td>
+      </tr>
+      <tr>
+          <td>lux</td>
+          <td>B 站视频下载，偶尔用</td>
+      </tr>
+      <tr>
+          <td>Termius</td>
+          <td>SSH 客户端，多设备同步</td>
+      </tr>
+      <tr>
+          <td>htop</td>
+          <td>top 的升级版，更好看</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="网络工具">网络工具</h2>
+<table>
+  <thead>
+      <tr>
+          <th>软件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Lulu</td>
+          <td>开源防火墙，监控应用网络连接</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="chrome-插件">Chrome 插件</h2>
+<table>
+  <thead>
+      <tr>
+          <th>插件</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Proxy SwitchyOmega</td>
+          <td>代理切换，老牌了</td>
+      </tr>
+      <tr>
+          <td>ZeroOmega</td>
+          <td>SwitchyOmega 的轻量版</td>
+      </tr>
+      <tr>
+          <td>Adblock Plus</td>
+          <td>广告拦截</td>
+      </tr>
+      <tr>
+          <td>简阅</td>
+          <td>阅读模式，网页变清爽</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>复制禁止复制的网站内容</td>
+      </tr>
+      <tr>
+          <td>XSwitch</td>
+          <td>代理管理</td>
+      </tr>
+      <tr>
+          <td>Axure RP</td>
+          <td>原型预览</td>
+      </tr>
+      <tr>
+          <td>沉浸式翻译</td>
+          <td>页面双语对照翻译</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>下载网站资源，扒网站用</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="补充说明">补充说明</h2>
+<p>上面的工具不是都要装，按需选择就行。如果你也在整理自己的工具清单，推荐看看 <a href="https://wangchujiang.com/awesome-mac/README-zh.html">awesome-mac</a>，那里更全。</p>
+<hr>
+<p><strong>最后更新</strong>：2024-04-07</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
