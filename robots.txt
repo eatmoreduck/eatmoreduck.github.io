@@ -1,0 +1,42 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://blog.xiaohuangyu.space/sitemap.xml
+
+# 百度爬虫
+User-Agent: Baiduspider
+Allow: /
+Crawl-delay: 1
+
+# 百度图片爬虫
+User-Agent: Baiduspider-image
+Allow: /
+
+# Google 爬虫
+User-Agent: Googlebot
+Allow: /
+
+# Google 图片爬虫
+User-Agent: Googlebot-Image
+Allow: /
+
+# Bing 爬虫
+User-Agent: bingbot
+Allow: /
+
+# 搜狗爬虫
+User-Agent: Sogou web spider
+Allow: /
+
+# 360 爬虫
+User-Agent: 360Spider
+Allow: /
+
+# 爬取延迟 - 只针对部分爬虫，不影响 Googlebot
+User-Agent: Baiduspider
+Crawl-delay: 1
+User-Agent: Sogou web spider
+Crawl-delay: 1
+User-Agent: 360Spider
+Crawl-delay: 1

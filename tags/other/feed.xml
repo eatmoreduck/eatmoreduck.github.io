@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Other on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/other/</link>
+    <description>Recent content in Other on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/other/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>终端启动 1.3 秒，AI 十分钟帮我干到 0.2 秒</title>
+      <link>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</link>
+      <pubDate>Thu, 28 May 2026 17:23:19 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/zsh-startup-opitmization/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;这台机器用了好几年了。各种开发环境装了又卸、卸了又装，&lt;code&gt;.zshrc&lt;/code&gt; 和 &lt;code&gt;.bash_profile&lt;/code&gt; 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>环境：macOS arm64 (Apple Silicon)，32GB RAM，Ghostty 终端</p>
+</blockquote>
+<p>这台机器用了好几年了。各种开发环境装了又卸、卸了又装，<code>.zshrc</code> 和 <code>.bash_profile</code> 里塞满了历史遗留的 PATH、重复的插件、已经不存在的目录。终端启动越来越慢，每次开个新 tab 都要愣一下。</p>
+<p>一直知道该清理，但总觉得&quot;下次再说&quot;。直到最近用 Claude + GLM 5.1 试了一下，从诊断到改完，前后大概十来分钟。</p>
+<p>结果是从 1.3 秒降到了 0.2 秒。</p>
+<h2 id="先看看有多慢">先看看有多慢</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">time</span> zsh -i -c <span class="nb">exit</span>
+</span></span></code></pre></div><p>跑一下，1.303 秒。开个终端等一秒多，体感确实很差。</p>
+<h2 id="怎么查的">怎么查的</h2>
+<p>整体计时知道了慢，但不知道慢在哪。有两种方式定位：</p>
+<p><strong>逐个 source 测耗时：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;source /opt/homebrew/opt/nvm/nvm.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;source </span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">time</span> zsh -c <span class="s2">&#34;eval \$(/opt/homebrew/bin/brew shellenv)&#34;</span>
+</span></span></code></pre></div><p><strong>zprof 函数级分析：</strong></p>
+<p>在 <code>.zshrc</code> 开头加 <code>zmodload zsh/zprof</code>，末尾加 <code>zprof</code>，能得到精确到每个函数的耗时排名。这个最管用。</p>
+<h2 id="到底是什么在拖后腿">到底是什么在拖后腿</h2>
+<p>zprof 一跑，问题很清楚：</p>
+<ul>
+<li><strong>nvm</strong> 吃了 ~540ms，占了一半多。它每次启动都扫描所有 Node 版本，完全没必要。</li>
+<li><strong>compinit</strong>（补全系统）~360ms，6 个插件的补全初始化开销。</li>
+<li><strong>SDKMAN</strong> ~300ms，Java 版本管理器初始化。</li>
+<li>brew / bun / cargo 这些加起来 ~120ms，影响不大。</li>
+</ul>
+<p>但除了这些&quot;大头&quot;，还有一堆乱七八糟的问题：</p>
+<ul>
+<li><code>zsh-syntax-highlighting</code> 和 <code>fast-syntax-highlighting</code> 功能完全一样，同时加载着</li>
+<li>ServBay 环境块在 <code>.zshrc</code> 和 <code>.bash_profile</code> 各出现一次</li>
+<li>SDKMAN 也加载了两次，同上</li>
+<li>Antigravity PATH 在 <code>.zshrc</code> 里写了两次</li>
+<li>datax、codebuddy、yarn global 等目录早就不存在了，PATH 还留着</li>
+<li><code>.zshenv</code> 里重复加载 <code>cargo/env</code></li>
+<li><code>arch -arm64 brew</code> 这个 alias 在原生 arm64 机器上完全多余</li>
+</ul>
+<p>说白了，就是年久失修。每次装个新工具就往配置文件里塞一行，从来没清理过。</p>
+<h2 id="改了什么">改了什么</h2>
+<h3 id="nvm-懒加载省-500ms效果最大">nvm 懒加载（省 ~500ms，效果最大）</h3>
+<p>原来每次开终端都加载 nvm，但大部分时候根本不用 node。改成懒加载——首次调用 <code>node</code>/<code>npm</code>/<code>npx</code> 时才初始化：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.nvm&#34;</span>
+</span></span><span class="line"><span class="cl">lazy_load_nvm<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> -f nvm node npm npx pnpm
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> -s <span class="s2">&#34;/opt/homebrew/opt/nvm/nvm.sh&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&#34;/opt/homebrew/opt/nvm/nvm.sh&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> -s <span class="s2">&#34;/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&#34;/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">nvm<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> nvm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">node<span class="o">()</span> <span class="o">{</span> lazy_load_nvm<span class="p">;</span> node <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">npm<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> npm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">npx<span class="o">()</span>  <span class="o">{</span> lazy_load_nvm<span class="p">;</span> npx <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">pnpm<span class="o">()</span> <span class="o">{</span> lazy_load_nvm<span class="p">;</span> pnpm <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span></code></pre></div><h3 id="sdkman-懒加载省-300ms">SDKMAN 懒加载（省 ~300ms）</h3>
+<p>同理，java/sdk/mvn 这些也不需要每次都加载：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SDKMAN_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman&#34;</span>
+</span></span><span class="line"><span class="cl">lazy_load_sdkman<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> -f sdk java javac jar mvn gradle
+</span></span><span class="line"><span class="cl">  <span class="o">[[</span> -s <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">sdk<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> sdk <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">java<span class="o">()</span>   <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> java <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">javac<span class="o">()</span>  <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> javac <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">jar<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> jar <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">mvn<span class="o">()</span>    <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> mvn <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">gradle<span class="o">()</span> <span class="o">{</span> lazy_load_sdkman<span class="p">;</span> gradle <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
+</span></span></code></pre></div><h3 id="精简插件">精简插件</h3>
+<p>去掉了 <code>zsh-autocomplete</code>（bug 多、资源占用高）和 <code>fast-syntax-highlighting</code>（跟另一个重复）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 之前</span>
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>git poetry zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 之后</span>
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>git poetry zsh-autosuggestions zsh-syntax-highlighting<span class="o">)</span>
+</span></span></code></pre></div><h3 id="清理重复和失效的配置">清理重复和失效的配置</h3>
+<p>删掉的东西不少，列一下：</p>
+<p><strong>重复的：</strong></p>
+<ul>
+<li>ServBay 环境块（<code>.zshrc</code> 里有，<code>.bash_profile</code> 里也有）</li>
+<li>SDKMAN 加载（同上）</li>
+<li>Antigravity PATH（<code>.zshrc</code> 自己内部就写了两次）</li>
+<li>cargo/env（<code>.zshenv</code> 和 <code>.bash_profile</code> 都加载了）</li>
+</ul>
+<p><strong>失效的：</strong></p>
+<ul>
+<li><code>$PYENV_ROOT/bin</code> — 目录不存在</li>
+<li><code>DATAX_HOME</code> — 目录不存在</li>
+<li><code>$PATH.</code> 末尾多了个 <code>.</code> — 语法错误</li>
+<li><code>yarn/global/node_modules/.bin</code> — 目录不存在</li>
+<li><code>.codebuddy/bin</code> — 目录不存在</li>
+<li><code>arch -arm64 brew</code> alias — arm64 原生机器不需要这个包装</li>
+</ul>
+<h2 id="最终结果">最终结果</h2>
+<table>
+  <thead>
+      <tr>
+          <th>阶段</th>
+          <th>启动时间</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>优化前</td>
+          <td>1.303s</td>
+      </tr>
+      <tr>
+          <td>懒加载 + 插件精简后</td>
+          <td>0.549s</td>
+      </tr>
+      <tr>
+          <td>清理失效 PATH 后</td>
+          <td><strong>0.208s</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>从 1.3 秒到 0.2 秒，快了大概 6 倍。</p>
+<p>有两个小事项：每个终端会话里首次跑 <code>node</code> 或 <code>java</code> 会有一次 0.5-0.8 秒的加载延迟，之后就不会了。另外 <code>zsh -i -c exit</code> 测试时可能会报 gitstatus 初始化失败，这是因为非交互模式缺少完整 TTY，正常使用不会碰到。</p>
+<p>整个过程，从打开终端发现问题到改完验证，十几分钟。之前拖了大半年没动的东西，让 AI 帮忙梳理一下就清掉了。这种&quot;知道自己该做但一直没做&quot;的事情，有个帮手确实不一样。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

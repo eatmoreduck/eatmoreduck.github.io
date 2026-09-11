@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mac on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/en/tags/mac/</link>
+    <description>Recent content in Mac on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 24 Jun 2026 16:56:26 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/tags/mac/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Software Stack 2026</title>
+      <link>https://blog.xiaohuangyu.space/en/p/my-software-stack-2026-en/</link>
+      <pubDate>Tue, 23 Jun 2026 20:00:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/my-software-stack-2026-en/</guid>
+      <description>&lt;p&gt;It has been more than two years since my previous post &lt;a href=&#34;https://blog.xiaohuangyu.space/p/mac-dev-software-list/&#34;&gt;Mac Dev Software List&lt;/a&gt;. I dug it up, and some things on it are gone now, some got replaced by better options, and a few I still use exactly the same way.&lt;/p&gt;&#xA;&lt;p&gt;This post is not about &amp;ldquo;I heard this is good.&amp;rdquo; It is only about what is actually running on my machine right now. Along the way I update the outdated parts of the old list.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>It has been more than two years since my previous post <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac Dev Software List</a>. I dug it up, and some things on it are gone now, some got replaced by better options, and a few I still use exactly the same way.</p>
+<p>This post is not about &ldquo;I heard this is good.&rdquo; It is only about what is actually running on my machine right now. Along the way I update the outdated parts of the old list.</p>
+<h2 id="what-changed-first">What changed first</h2>
+<p>A few items from the old list I no longer use:</p>
+<ul>
+<li><strong>Alfred</strong> — fully replaced by Raycast. The paywall is steep and the free tier does too little.</li>
+<li><strong>Mos / Mac Mouse Fix (pick one)</strong> — I keep only Mac Mouse Fix now. Its recent versions added window management, so it got better.</li>
+<li><strong>Loop</strong> — removed after Mac Mouse Fix took over window management.</li>
+<li><strong>EasyDevo</strong> — DevToys is enough.</li>
+<li><strong>Termius</strong> — SSH now goes through Ghostty + system ssh config, and I no longer need multi-device sync.</li>
+<li><strong>lux (Bilibili downloader)</strong> — I just do not download anymore.</li>
+</ul>
+<p>Below is everything reorganized around how I actually use things today.</p>
+<h2 id="ai-coding">AI Coding</h2>
+<p>This is the part that changed the most in the last two years, so it gets its own section.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Code</td>
+          <td>My main driver, paired with GLM and other third-party models</td>
+      </tr>
+      <tr>
+          <td>Codex</td>
+          <td>OpenAI&rsquo;s command-line agent for writing code</td>
+      </tr>
+      <tr>
+          <td>Cursor</td>
+          <td>The graphical AI editor, handy for big files and frontend work</td>
+      </tr>
+      <tr>
+          <td>Gemini / Doubao / Qwen / Yuanbao</td>
+          <td>Desktop clients, one per model, ask whichever answers best</td>
+      </tr>
+  </tbody>
+</table>
+<p>Honestly, AI coding tools have multiplied to the point of oversaturation. My actual state is Claude Code as the main driver, and the other clients just to compare answers from different models on the same question. No need to install all of them. Pick one or two that feel right.</p>
+<h2 id="editors-and-ides">Editors and IDEs</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>GoLand</td>
+          <td>Main tool for Go, JetBrains indexing is still the most comfortable</td>
+      </tr>
+      <tr>
+          <td>WebStorm</td>
+          <td>For frontend projects</td>
+      </tr>
+      <tr>
+          <td>PyCharm</td>
+          <td>Occasional Python</td>
+      </tr>
+      <tr>
+          <td>IntelliJ IDEA</td>
+          <td>For Java projects</td>
+      </tr>
+      <tr>
+          <td>Sublime Text</td>
+          <td>Quick opens for large files, fast startup</td>
+      </tr>
+      <tr>
+          <td>ZCode</td>
+          <td>Another command-line agent</td>
+      </tr>
+  </tbody>
+</table>
+<p>The JetBrains suite is still a memory hog, but nothing beats it for code navigation and refactoring. Sublime stays purely because opening a log file with tens of thousands of lines does not lag it.</p>
+<h2 id="notes">Notes</h2>
+<p>I keep three of them open at the same time: Obsidian, Yuque, and Notion. Not because I cannot decide, but they each do a different job for me, and none replaces the others.</p>
+<p>Quick overview first:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>My role for it</th>
+          <th>Where the data lives</th>
+          <th>Who it is for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Obsidian</td>
+          <td>Private second brain, for myself</td>
+          <td>All local</td>
+          <td>Long-term accumulation, people who want full control</td>
+      </tr>
+      <tr>
+          <td>Yuque</td>
+          <td>Technical docs, structured knowledge base</td>
+          <td>Cloud</td>
+          <td>People who like document trees, team/project wikis</td>
+      </tr>
+      <tr>
+          <td>Notion</td>
+          <td>Public sharing, an outward-facing knowledge base</td>
+          <td>Cloud</td>
+          <td>People who need to present outward, care about nice pages</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="obsidian-my-main-driver">Obsidian: my main driver</h3>
+<p>This very blog post was written in Obsidian, and all my daily notes, skills, and collected technical references live in it. Its core strength is that <strong>the files are all local, pure Markdown</strong>, not locked into any cloud service — whenever I want to migrate, I can. Backlinks and the graph view let notes connect to each other, so the more I accumulate the more valuable it gets, unlike traditional notes that turn into a pile of dead documents you can never find again.</p>
+<p>It is a local tool, so publishing takes some DIY. I have set up two things around it, worth a look:</p>
+<ul>
+<li><a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/">hugo+obsidian building the strongest blog (Part 1)</a> and <a href="https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/">(Part 2)</a> — how to wire Obsidian into a Hugo blog</li>
+<li><a href="https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/">Building an AI Second Brain with Obsidian + Claude Code</a> — later I brought AI in, to make the notes actually come &ldquo;alive&rdquo;</li>
+</ul>
+<h3 id="yuque-technical-docs">Yuque: technical docs</h3>
+<p>Technical stuff goes into Yuque. Its document-tree structure is well suited for layering a knowledge base — break a project from design to implementation into pieces and hang them up, and looking back is clear at a glance. The editor handles code blocks, formulas, and drawing boards in fine detail, so writing technical docs in it is more comfortable than raw Markdown. The downside is it is a closed cloud, export is not that free, so I only put &ldquo;structured, long-term-maintained&rdquo; technical content here.</p>
+<h3 id="notion-for-sharing-outward">Notion: for sharing outward</h3>
+<p>I do not actually use Notion much, but I keep it for a reason — <strong>for public sharing and an outward-facing knowledge base, it is the best of the three</strong>. Notion pages can be published directly as public links, the layout is nice, multimedia mixing is easy, and it is great for personal homepages, project intros, and tutorials for others, with decent SEO. I do not use it for daily notes, but for things meant to be shown to others, I reach for it first.</p>
+<h3 id="how-i-actually-split-the-work">How I actually split the work</h3>
+<p>Put simply: <strong>Obsidian handles input and accumulation, Yuque handles technical organization, Notion handles outward output</strong>. If you only pick one: for long-term accumulation go Obsidian; for team wikis go Yuque; for outward content go Notion. Installing all three is not a waste either, as long as you give each tool a clear role, and do not just shovel everything into one.</p>
+<p>There is also <strong>Anki</strong>, which is not in the same lane as the three above. It is a pure memory tool — pull it out in spare moments to flip cards, memorize vocabulary and technical points. It pairs nicely with Easydict for saving new words.</p>
+<h2 id="terminal-and-shell">Terminal and Shell</h2>
+<p>This part got the most thorough overhaul in two years.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ghostty</td>
+          <td>My main terminal now, GPU rendered, minimal config</td>
+      </tr>
+      <tr>
+          <td>Oh My Zsh</td>
+          <td>Still it, with the powerlevel10k theme</td>
+      </tr>
+      <tr>
+          <td>powerlevel10k</td>
+          <td>Prompt theme, instant prompt makes startup a lot faster</td>
+      </tr>
+      <tr>
+          <td>zsh-autosuggestions</td>
+          <td>Command autocompletion</td>
+      </tr>
+      <tr>
+          <td>zsh-syntax-highlighting</td>
+          <td>Command syntax highlighting</td>
+      </tr>
+  </tbody>
+</table>
+<p>I used to be on iTerm2, and the move to Ghostty was mostly for speed and cleanliness. The config is a single file, no fancy settings panels, and I actually like that better.</p>
+<p>I did not tinker much with the shell setup. Just four things: Oh My Zsh, p10k, autosuggestions, syntax-highlighting. That is enough. Add more plugins and startup gets slow.</p>
+<h2 id="command-line-tools">Command-Line Tools</h2>
+<p>This is a section the old list completely missed, but it is what I use the most every day.</p>
+<h3 id="package-managers-and-runtimes">Package managers and runtimes</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Homebrew</td>
+          <td>The foundation for installing everything on Mac</td>
+      </tr>
+      <tr>
+          <td>uv</td>
+          <td>Python package manager and virtualenv, far faster than pip + venv, I barely touch pip now</td>
+      </tr>
+      <tr>
+          <td>bun</td>
+          <td>JS runtime and package manager, faster than node</td>
+      </tr>
+      <tr>
+          <td>nvm</td>
+          <td>Switching between node versions</td>
+      </tr>
+      <tr>
+          <td>pyenv</td>
+          <td>Switching between Python versions</td>
+      </tr>
+  </tbody>
+</table>
+<p>uv is the Python tool I most want to recommend from the last two years. Installing dependencies, creating virtualenvs, running scripts — all through this one tool, no more memorizing the <code>python -m venv</code> chain. Combined with <code>uv run</code> to run a script in a throwaway env, it is really comfortable.</p>
+<h3 id="daily-high-frequency">Daily high-frequency</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>gh</td>
+          <td>Official GitHub CLI, opening PRs, checking issues, cloning repos</td>
+      </tr>
+      <tr>
+          <td>git</td>
+          <td>No explanation needed</td>
+      </tr>
+      <tr>
+          <td>task (go-task)</td>
+          <td>Like make but written in YAML, cross-platform, all project automation goes through it</td>
+      </tr>
+      <tr>
+          <td>ffmpeg</td>
+          <td>Audio and video, converting formats, clipping, extracting audio</td>
+      </tr>
+      <tr>
+          <td>tree</td>
+          <td>Viewing directory structures</td>
+      </tr>
+      <tr>
+          <td>telnet</td>
+          <td>Occasional port testing</td>
+      </tr>
+  </tbody>
+</table>
+<p>A few more words on <code>task</code>. I used to have a pile of <code>Makefile</code>s in projects, and they were hard to write and easy to get wrong. After switching to task, a <code>taskfile.yml</code> reads at a glance, runs on Windows too, and saves a lot of friction in team collaboration.</p>
+<h3 id="system-monitoring">System monitoring</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>fastfetch</td>
+          <td>A replacement for neofetch, fast startup, for system info</td>
+      </tr>
+      <tr>
+          <td>mactop</td>
+          <td>top for Apple Silicon, understands the M-series architecture better than htop</td>
+      </tr>
+      <tr>
+          <td>kubectl</td>
+          <td>Occasional cluster access</td>
+      </tr>
+  </tbody>
+</table>
+<p>mactop is one I recommend on Apple Silicon. It shows per-core usage broken down by performance and efficiency cores, plus GPU and memory bandwidth, things htop cannot see.</p>
+<h2 id="containers-and-virtualization">Containers and virtualization</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>OrbStack</td>
+          <td>A Docker Desktop replacement, faster startup, less memory, also runs Linux VMs</td>
+      </tr>
+      <tr>
+          <td>Docker</td>
+          <td>Still used when compatibility matters</td>
+      </tr>
+  </tbody>
+</table>
+<p>Moving from Docker Desktop to OrbStack was another &ldquo;can&rsquo;t go back&rdquo; experience. Same containers, OrbStack starts faster and uses less memory, and its built-in Linux VM works as a lightweight dev environment. Docker stays mainly so I can reproduce CI environments locally for consistency.</p>
+<h2 id="databases-and-networking">Databases and networking</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Another Redis Desktop Manager</td>
+          <td>Redis client</td>
+      </tr>
+      <tr>
+          <td>DataGrip</td>
+          <td>Universal database client, connects to anything</td>
+      </tr>
+      <tr>
+          <td>SecureCRT / SecureFX</td>
+          <td>Classic terminal and file transfer, paid</td>
+      </tr>
+      <tr>
+          <td>Wireshark</td>
+          <td>Packet capture, for network troubleshooting</td>
+      </tr>
+      <tr>
+          <td>Clash Verge</td>
+          <td>Network proxy client</td>
+      </tr>
+      <tr>
+          <td>Tunnelblick</td>
+          <td>OpenVPN client</td>
+      </tr>
+      <tr>
+          <td>ZeroTier</td>
+          <td>Virtual LAN, for networking</td>
+      </tr>
+  </tbody>
+</table>
+<p>I no longer install Navicat. DataGrip covers everything. Wireshark is rarely used, but when you really need to troubleshoot a network issue, it is the only reliable one.</p>
+<h2 id="productivity-and-launchers">Productivity and launchers</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Raycast</td>
+          <td>Launcher, free tier is enough, an Alfred replacement</td>
+      </tr>
+      <tr>
+          <td>Easydict</td>
+          <td>Cursor translation, open source and free</td>
+      </tr>
+      <tr>
+          <td>Karabiner-Elements</td>
+          <td>Key remapping, Caps Lock becomes Ctrl+Esc</td>
+      </tr>
+      <tr>
+          <td>MonitorControl</td>
+          <td>Brightness for external displays</td>
+      </tr>
+      <tr>
+          <td>Mac Mouse Fix</td>
+          <td>Smooth mouse scrolling + window management</td>
+      </tr>
+      <tr>
+          <td>Hidden Bar</td>
+          <td>Collapses menu bar icons</td>
+      </tr>
+      <tr>
+          <td>Macs Fan Control</td>
+          <td>Fan speed</td>
+      </tr>
+      <tr>
+          <td>BrightIntosh</td>
+          <td>Brightness for older MacBooks</td>
+      </tr>
+      <tr>
+          <td>PicList</td>
+          <td>Image hosting, all my blog images go through it</td>
+      </tr>
+  </tbody>
+</table>
+<p>The Raycast features I use the most every day: launching apps, clipboard history, window management, quick math. What is better than Alfred is that the free tier gives away all the core features, so you do not have to agonize over whether to buy a Powerpack.</p>
+<p>Easydict is something I wrote a dedicated post about, <a href="https://blog.xiaohuangyu.space/p/feature-send-to-anki-in-easydict/">Adding Anki support to Easydict</a>. Genuinely good — select a word, look it up, hear pronunciation, save it as a flashcard.</p>
+<h2 id="browsers-and-extensions">Browsers and extensions</h2>
+<p>Google Chrome as the main browser. Daily extensions:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Extension</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Immersive Translate</td>
+          <td>Bilingual side-by-side on web pages, great for English docs</td>
+      </tr>
+      <tr>
+          <td>Proxy SwitchyOmega / ZeroOmega</td>
+          <td>Proxy switching</td>
+      </tr>
+      <tr>
+          <td>SimpRead</td>
+          <td>Reader mode, cleans up messy pages</td>
+      </tr>
+      <tr>
+          <td>Simple Allow Copy</td>
+          <td>Bypasses sites that block copying</td>
+      </tr>
+      <tr>
+          <td>Save All Resources</td>
+          <td>Scraping website assets</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="other-daily-apps">Other daily apps</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>IINA</td>
+          <td>Video player, the best choice on Mac</td>
+      </tr>
+      <tr>
+          <td>Keka</td>
+          <td>Archiver</td>
+      </tr>
+      <tr>
+          <td>OBS</td>
+          <td>Screen recording and streaming</td>
+      </tr>
+      <tr>
+          <td>Apifox</td>
+          <td>API debugging, a Postman replacement</td>
+      </tr>
+      <tr>
+          <td>OrbStack</td>
+          <td>Mentioned above</td>
+      </tr>
+      <tr>
+          <td>XMind</td>
+          <td>Mind maps</td>
+      </tr>
+  </tbody>
+</table>
+<p>Not much to say about IINA. Just install it.</p>
+<h2 id="chat-and-office">Chat and office</h2>
+<p>QQ, WeChat, WeCom, Lark, Tencent Meeting, WPS, Baidu Netdisk, Aliyun Drive — I will not expand on these, install as needed. One mention: WeChat Read is nice for reading on the commute.</p>
+<h2 id="how-to-start">How to start</h2>
+<p>If you want to set up a similar stack, you do not have to install everything at once. My suggestion is to grab three things first:</p>
+<ol>
+<li><strong>Shell basics</strong>: Oh My Zsh + p10k + autosuggestions + syntax-highlighting</li>
+<li><strong>Three genuinely high-frequency CLI tools</strong>: uv, gh, task</li>
+<li><strong>A terminal you like</strong>: Ghostty or iTerm2, either is fine</li>
+</ol>
+<p>With those three in place, your daily development experience already moves up a notch. Add the rest as needed.</p>
+<p>I am leaving the old <a href="https://blog.xiaohuangyu.space/p/mac-dev-software-list/">Mac Dev Software List</a> up as a timestamp. This is the 2026 version, and I expect to update it again in another two years.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

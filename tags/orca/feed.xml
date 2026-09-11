@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Orca on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/orca/</link>
+    <description>Recent content in Orca on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 12 Sep 2026 00:16:19 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/orca/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Orca &#43; GitHub Projects：跑通 AI 编程工作流的第一天</title>
+      <link>https://blog.xiaohuangyu.space/p/github-projects-orca-agent-workflow/</link>
+      <pubDate>Fri, 11 Sep 2026 23:55:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/github-projects-orca-agent-workflow/</guid>
+      <description>&lt;p&gt;记录下用 GitHub Projects + Orca 把 AI 编程工作流跑通的过程，踩的坑都在里面，以 macOS 为例。&lt;/p&gt;&#xA;&lt;p&gt;背景：手头有个 side project（panta-log，本地优先的语音复盘工具），之前 issue/PR 规范一直躺在另一个项目里没落地。这次目标很明确：看板管任务，Orca 跑 agent，一天之内把「领任务 → 开发 → 测试 → 合并 → 状态自动流转」整条链跑通。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>记录下用 GitHub Projects + Orca 把 AI 编程工作流跑通的过程，踩的坑都在里面，以 macOS 为例。</p>
+<p>背景：手头有个 side project（panta-log，本地优先的语音复盘工具），之前 issue/PR 规范一直躺在另一个项目里没落地。这次目标很明确：看板管任务，Orca 跑 agent，一天之内把「领任务 → 开发 → 测试 → 合并 → 状态自动流转」整条链跑通。</p>
+<p>先看最终跑通后的闭环长什么样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">看板挑卡(Todo) → Orca 从卡片开 worktree → agent 干活（自跑测试）
+</span></span><span class="line"><span class="cl">→ PR 触发 CI → 审 diff → squash merge
+</span></span><span class="line"><span class="cl">→ issue 自动关闭 → 看板卡片自动进 Done → 远端分支自动删除
+</span></span></code></pre></div><h3 id="第一步规范落地">第一步：规范落地</h3>
+<p>直接从自己的 boss-zhipin-scraper 项目抄了一套：issue 模板（bug/feature/question 三个 yml）、PR 模板、CONTRIBUTING.md，改成新项目的技术栈（uv、pytest、macOS 权限那些禁忌）。推上去之后仓库的 New issue 页面就有中文表单了，这步没什么好说的，五分钟的事。</p>
+<h3 id="第二步用-gh-cli-批量建-backlog">第二步：用 gh CLI 批量建 backlog</h3>
+<p>Roadmap 文档里本来就有六个工作包、带验收标准，照着拆就行。原则：</p>
+<ul>
+<li>只把「需改造」和「需新建」的任务建成 issue，已经能用的不建，别污染看板</li>
+<li>标题带上任务编号（WP-A1 这种），看板上一眼能对回文档</li>
+<li>正文直接引用 roadmap 的验收标准原文，再加一句建议批次（第几周做）</li>
+<li>全部挂到 milestone 上，milestone 描述里写清退出条件</li>
+</ul>
+<p>18 个 issue，两个 for 循环的事。</p>
+<h3 id="第三步踩坑重灾区gh-project-cli">第三步：踩坑重灾区——gh project CLI</h3>
+<p>Projects 的操作大部分能用命令行做，但命令的坑一个接一个，全是实际踩出来的：</p>
+<p><strong>坑 1：<code>gh auth refresh</code> 非交互执行必须加 <code>-h</code></strong></p>
+<p>在 Claude Code 里用 <code>!</code> 前缀跑命令是非交互模式，直接报错：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">--hostname required when not running interactively
+</span></span></code></pre></div><p>要写成 <code>gh auth refresh -h github.com -s read:project,project</code>。另外这个命令要设备授权，进程会卡在那等浏览器确认，放后台跑，从输出里把 one-time code 捞出来，去 github.com/login/device 输入就行。</p>
+<p><strong>坑 2：field-create 的参数是 <code>--name</code>，不是 <code>--title</code></strong></p>
+<p><code>gh project field-create --title &quot;Phase&quot;</code> 会直接 unknown flag。帮助文档里两种写法都出现过，以 <code>--name</code> 为准。</p>
+<p><strong>坑 3：<code>-q</code> 必须配 <code>--format json</code></strong></p>
+<p>这条最阴险。<code>gh project item-add &lt;n&gt; --owner me --url xxx -q '.id'</code> 会静默失败，报错是 <code>cannot use --jq without specifying --format json</code>。批量脚本里 18 个 item 全挂了还看不到原因（stderr 被吞了）。正确写法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-add <span class="m">2</span> --owner eatmoreduck --url <span class="s2">&#34;https://github.com/xxx/issues/1&#34;</span> --format json -q <span class="s1">&#39;.id&#39;</span>
+</span></span></code></pre></div><p><strong>坑 4：item-edit 用的是 <code>--project-id</code>，不是 <code>--owner</code> + <code>--project-number</code></strong></p>
+<p>前面 item-add 都是 number + owner 的组合，到 item-edit 突然变了，要用项目全局 ID（形如 <code>PVT_xxxx</code>，project list 里能看到）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;field-id&gt; --single-select-option-id &lt;option-id&gt;
+</span></span></code></pre></div><p><strong>坑 5：item-list 的 JSON 里 fieldValues 是 null</strong></p>
+<p>挂完板想核对字段值，<code>gh project item-list --format json</code> 返回的 fieldValues 全是 null，不是没设置上，是这接口压根不返回。想验证只能上 GraphQL：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh api graphql -f <span class="nv">query</span><span class="o">=</span><span class="s1">&#39;query($login:String!,$number:Int!){
+</span></span></span><span class="line"><span class="cl"><span class="s1">  user(login:$login){ projectV2(number:$number){
+</span></span></span><span class="line"><span class="cl"><span class="s1">    items(first:30){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">      content{ ... on Issue { number } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      fieldValues(first:20){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">        ... on ProjectV2ItemFieldSingleSelectValue { name field{ ... on ProjectV2FieldCommon { name } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">    } } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">}&#39;</span> -f <span class="nv">login</span><span class="o">=</span>eatmoreduck -F <span class="nv">number</span><span class="o">=</span><span class="m">2</span> --jq <span class="s1">&#39;...&#39;</span>
+</span></span></code></pre></div><p>建两个单选字段（Phase 对应版本分期、Area 对应模块），18 张卡批量挂板、设 Status/Phase/Area，再建两个日期字段给时间线用。一次搞定。</p>
+<h3 id="orca-接入比想象的省事">Orca 接入：比想象的省事</h3>
+<p>本来以为要在 Orca 里走一遍 GitHub OAuth，结果打开集成页面发现 GitHub 已经是 Connected 状态。原因是 Orca 的 GitHub 集成直接读本机 gh CLI 的登录凭据，gh 登录过就算接好了，根本不存在「连接并授权」按钮。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-github-connected.png" alt="Orca 集成页 GitHub 已显示 Connected"  />
+</p>
+<p>还有个小迷惑：想找看板找不到。Orca 的「任务」页面顶部有三个标签——议题、PR、项目。issue 列表在「议题」里，<strong>看板在「项目」标签里</strong>，从卡片右键就能创建 worktree，composer 会自动预填任务名并链接 issue。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-issue-list.png" alt="Orca 任务页的三个标签"  />
+</p>
+<h3 id="看板自动化两条规则默认就是开的">看板自动化：两条规则，默认就是开的</h3>
+<p>闭环的引擎是 Project 自带的两条工作流：</p>
+<ul>
+<li>Item added to project → Set Status = Todo（新卡自动入列）</li>
+<li>When pull request merged → Set Status = Done（合并自动流转）</li>
+</ul>
+<p>有个反直觉的地方：这两条<strong>项目创建出来就是 On 的状态</strong>，什么都不用配。我一开始以为得去网页设置里手动开，还专门写进了待办清单，后来打开 Workflows 面板一看，人家早就在干活了。查了一圈才确认 gh CLI 压根没有管理 Workflows 的子命令（<code>gh project --help</code> 里只有增删改查 item 和 field），所以这东西既没法命令行关掉也没法命令行开，只能去项目页面的 Workflows 面板查看和调整。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-workflow-pr-merged.png" alt="Pull request merged 工作流配置"  />
+</p>
+<p>它们生效之后，merge PR 的瞬间：issue 自动关（commit 里写了 Closes #n）、卡片自动进 Done，全程无感。</p>
+<h3 id="roadmap-时间线日期值可以命令行灌">Roadmap 时间线：日期值可以命令行灌</h3>
+<p>时间线视图打开一片空白，因为每个 item 都没有日期。做法：</p>
+<ol>
+<li>建 <code>Start date</code> / <code>Target date</code> 两个日期字段</li>
+<li>视图工具栏的 Date fields 里把起止指向这两个字段</li>
+<li>日期值按 roadmap 的执行批次用命令灌：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;start-field-id&gt; --date <span class="s2">&#34;2026-09-14&#34;</span>
+</span></span></code></pre></div><p>灌完时间线上就是一根根条了，之后直接拖拽调期，字段值会跟着变。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-roadmap-timeline.png" alt="Roadmap 时间线视图"  />
+</p>
+<h3 id="多开-agent可以但别贪">多开 agent：可以，但别贪</h3>
+<p>Orca 的核心玩法就是一个任务一个独立 git worktree，几个 agent 并行互不踩分支。实测确实如此，两个任务同时跑，互不干扰。</p>
+<p>但有几个实际经验：</p>
+<ul>
+<li><strong>挑卡要避开文件冲突</strong>。两个任务都改同一个文件，后合的必然冲突。同子系统的任务（比如都动转写模块的）别并行</li>
+<li><strong>并行 2-3 张，merge 串行</strong>。瓶颈根本不在写代码，在 review。一口气开五个 agent，五个 PR 堆在那里你审不过来，盲合进核心管线等于裸奔</li>
+<li>智能体仪表盘三列（需要你 / 工作中 / 已完成）就是多开时的管理面板，agent 停下来等确认会出现在「需要你」列</li>
+</ul>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-agents-dashboard.png" alt="智能体仪表盘"  />
+</p>
+<p>另外 Orca 不会自动从看板领卡派活，挑哪张卡什么时候开还是人说了算。这反而是好事。</p>
+<h3 id="ci-也扔给-agent-建">CI 也扔给 agent 建</h3>
+<p>仓库没有 CI，PR 级的自动测试就是空的。我的做法是先提一个 issue 把约束写死：私有仓库 Actions 分钟数计费、macOS runner 按 10 倍费率所以必须锁 ubuntu runner、只加一个 workflow 文件、不引入 ESLint/mypy。然后开个 worktree 交给 agent。</p>
+<p>结果它把验收标准全打勾了：backend（ruff + 88 个测试）和 frontend build 双 job 全绿，合计 40 秒出头。中间还自己踩坑自己修——ubuntu 的 sounddevice 缺 PortAudio 依赖，它在 CI 里补了 <code>apt-get install libportaudio2</code>。更绝的是第一轮它故意看着 CI 红了一次才修，验证失败报警机制真的能响。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-pr-checks-passed.png" alt="PR checks 全部通过"  />
+</p>
+<p>这里有个经验值得记：<strong>给 agent 的 issue 写得越具体（约束、边界、验收标准），产出越省心</strong>。模糊的「帮我加个 CI」和带计费约束、验收标准的 issue，产出质量差很远。</p>
+<h3 id="审查和合并不用出-orca">审查和合并不用出 Orca</h3>
+<p>审 diff、给 agent 提修改意见、合并，全程在 Orca 里：</p>
+<ul>
+<li>Diff viewer 逐行看，有问题直接在那个 worktree 的 agent 会话里说，改完 push 同一个 PR 自动更新</li>
+<li>Checks 面板看 CI 状态，失败可以直接一键把失败的 check 交给 agent 修</li>
+</ul>
+<p>然后是这次最典型的一个误用：合并按钮找不着，右上角那个「提交」按钮还是灰的。</p>
+<p>灰是对的——那是 <strong>git 推送按钮</strong>，没东西可推当然灰。合并入口在 <strong>PR 详情视图里</strong>（从 PR 列表点进去那一页），合并按钮带方式下拉，跟网页版一个逻辑。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-source-control-menu.png" alt="右侧菜单是 git 操作，不是合并入口"  />
+</p>
+<h3 id="merge-方式选-squash别犹豫">merge 方式：选 squash，别犹豫</h3>
+<p>三种方式的区别一句话说清：</p>
+<ul>
+<li><strong>Squash</strong>：整个 PR 压成 master 上一个提交，中间提交全丢弃</li>
+<li><strong>Rebase</strong>：每个提交逐个重放上来，中间提交全保留</li>
+<li><strong>Merge commit</strong>：原样合并，再加一个合并节点，历史变分叉图</li>
+</ul>
+<p>AI agent 的产出场景，squash 是唯一解。agent 的中间提交全是「fix typo」「round 2」这种碎片，没有保留价值。squash 之后一张卡对应 master 上一个干净提交，回滚就是 revert 一条，<code>Closes #n</code> 写在 PR 描述里照样生效。另外两种只在多人协作保留分支拓扑、或你亲手精心整理过提交序列时才有意义。</p>
+<h3 id="仓库设置两个开关分开看">仓库设置：两个开关分开看</h3>
+<ul>
+<li><strong>Automatically delete head branches</strong>：合并后自动删远端分支。开了立即受益，不然二十张卡的分支堆在远端没人清。本地 worktree 不受影响，用完在 Orca 里手动删</li>
+<li><strong>Allow auto-merge</strong>：让 PR 可以设「checks 全绿自动合」。注意这只是解锁功能，不对具体 PR 启用就什么都不会发生。还有，<strong>没有 CI 的时候开了也是摆设</strong>——没有任何 checks 可等。所以顺序是：先开自动删分支，auto-merge 等 CI 上线再说</li>
+</ul>
+<h3 id="一天下来的小结">一天下来的小结</h3>
+<table>
+  <thead>
+      <tr>
+          <th>事项</th>
+          <th>状态</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>issue/PR 模板 + 贡献指南</td>
+          <td>已推送生效</td>
+      </tr>
+      <tr>
+          <td>19 个 issue + milestone + 看板字段</td>
+          <td>全部挂板，GraphQL 逐条核验过</td>
+      </tr>
+      <tr>
+          <td>两条看板自动化</td>
+          <td>默认开启，零配置</td>
+      </tr>
+      <tr>
+          <td>Roadmap 时间线</td>
+          <td>三批次日期已灌入</td>
+      </tr>
+      <tr>
+          <td>CI（agent 自建）</td>
+          <td>已合并生效，双 job 全绿</td>
+      </tr>
+      <tr>
+          <td>完整闭环</td>
+          <td>第一张卡从挑卡到 Done 全自动流转验证通过</td>
+      </tr>
+  </tbody>
+</table>
+<p>最大的感受：这套东西搭完之后，「管理任务」这个动作本身消失了——剩下的就是把卡一张张挪完。工具链各管一段：GitHub Projects 记状态，Orca 管 agent 和 worktree，gh CLI 补一切自动化的缝。</p>
+<p>后面打算把「每天开工先看看板挑两张卡」养成习惯，看板不撒谎，进度不用记。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

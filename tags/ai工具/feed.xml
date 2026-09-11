@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI工具 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/ai%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in AI工具 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/ai%E5%B7%A5%E5%85%B7/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Obsidian &#43; Claude Code 构建 AI 第二大脑实战指南</title>
+      <link>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</link>
+      <pubDate>Wed, 01 Apr 2026 09:34:29 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</guid>
+      <description>&lt;h2 id=&#34;为什么要在-obsidian-里用-claude-code&#34;&gt;为什么要在 Obsidian 里用 Claude Code&lt;/h2&gt;&#xA;&lt;p&gt;说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。&lt;/p&gt;&#xA;&lt;p&gt;不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="为什么要在-obsidian-里用-claude-code">为什么要在 Obsidian 里用 Claude Code</h2>
+<p>说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。</p>
+<p>不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。</p>
+<p>Teresa Torres 在一期播客里分享过她的工作流：Obsidian + 两个终端窗口跑 Claude Code，日常安排、笔记整理、知识管理全交给 AI。但说实话，开两个终端窗口盯着看，体验并不好。如果能直接在 Obsidian 内部跑 Claude Code，那才叫丝滑。</p>
+<p>好在社区已经做了好几个插件来实现这件事。下面介绍三种方案，从易到难，选一个适合你的就行。</p>
+<h2 id="前置条件">前置条件</h2>
+<p>不管你选哪个方案，都需要先安装 Claude Code CLI。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 通过 npm 全局安装</span>
+</span></span><span class="line"><span class="cl">npm install -g @anthropic-ai/claude-code
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl">claude --version
+</span></span></code></pre></div><p>然后需要配置 API Key。去 <a href="https://console.anthropic.com/">Anthropic Console</a> 申请一个，然后设置环境变量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 推荐写到 shell 配置文件里（~/.zshrc 或 ~/.bashrc）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s1">&#39;你的-api-key&#39;</span>
+</span></span></code></pre></div><p>如果你用的是 Claude Code 订阅（而不是 API 按量付费），登录一下就行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">claude login
+</span></span></code></pre></div><p>搞定这些，后面的插件才能正常工作。</p>
+<h2 id="方案一claude-code-integration-插件推荐">方案一：Claude Code Integration 插件（推荐）</h2>
+<p>这是目前功能最完善的方案，来自 <a href="https://github.com/deivid11/obsidian-claude-code-plugin">deivid11/obsidian-claude-code-plugin</a>。它不是简单嵌个终端，而是做了完整的 UI 交互：标签页、会话管理、实时流式输出、变更预览、Diff 对比，基本把 Claude Code 的能力完整搬进了 Obsidian。</p>
+<h3 id="安装">安装</h3>
+<p>这个插件还在审核中，暂时没上社区插件商店，需要通过 BRAT 安装。</p>
+<p><strong>第一步：安装 BRAT</strong></p>
+<p>如果你已经有了就跳过。没有的话：</p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件</li>
+<li>关闭安全模式</li>
+<li>点&quot;浏览&quot;，搜索 &ldquo;BRAT&rdquo;，安装并启用</li>
+</ol>
+<p><strong>第二步：通过 BRAT 安装 Claude Code Integration</strong></p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴仓库地址：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/deivid11/obsidian-claude-code-plugin
+</span></span></code></pre></div></li>
+<li>BRAT 会自动下载最新版本</li>
+<li>回到第三方插件列表，启用 &ldquo;Claude Code Integration&rdquo;</li>
+</ol>
+<h3 id="配置">配置</h3>
+<p>打开 设置 -&gt; Claude Code Integration，核心配置项：</p>
+<ul>
+<li><strong>Backend</strong>：选 Claude Code</li>
+<li><strong>Claude Code Path</strong>：一般会自动检测，检测不到就手动填，比如 <code>/usr/local/bin/claude</code> mac用户一般在 /Users/{username}/.local/bin/claude</li>
+<li><strong>Model</strong>：Sonnet（均衡）、Opus（最强）、Haiku（最快最便宜），日常用 Sonnet 就够了</li>
+<li><strong>Allow Vault Access</strong>：建议开启，这样 Claude 能读写整个 vault 的文件</li>
+<li><strong>Enable Permissionless Mode</strong>：新手建议先关着，这样每次修改前都会让你确认。熟悉了再开</li>
+<li>如果是国内用户，用 claude code 配合 glm 等模型使用，可以在<strong>自定义 API 配置</strong>里配置一遍对应供应商的信息</li>
+</ul>
+<h3 id="日常使用">日常使用</h3>
+<ol>
+<li>点左侧边栏的 Claude 图标，或者 <code>Cmd/Ctrl + P</code> 输入 &ldquo;Open Claude Code Assistant&rdquo;</li>
+<li>在面板里输入你的需求，比如：
+<ul>
+<li>&ldquo;给这篇笔记加个目录&rdquo;</li>
+<li>&ldquo;总结这篇文章的要点&rdquo;</li>
+<li>&ldquo;帮我整理一下这些标签&rdquo;</li>
+<li>&ldquo;用 PlantUML 画一个工作流图&rdquo;</li>
+</ul>
+</li>
+<li>Claude 会实时流式输出结果，你可以看到它在做什么</li>
+<li>如果有文件修改，会弹出预览，你可以选择接受或拒绝</li>
+</ol>
+<p>每个笔记都有独立的会话历史，切换笔记不会丢失上下文。还有个 Sessions 标签页能看到所有会话的汇总。 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100001767.png" alt="Claude Code Integration 插件在 Obsidian 中的使用界面"  />
+</p>
+<h2 id="方案二claude-sidebar-侧边栏">方案二：Claude Sidebar 侧边栏</h2>
+<p>来自 <a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">derek-larson14/obsidian-claude-sidebar</a>，主打一个简洁。它就是在 Obsidian 侧边栏里嵌了一个 Claude Code 终端，不需要额外的 UI，就是原生的 Claude Code 体验。</p>
+<h3 id="安装-1">安装</h3>
+<p>同样通过 BRAT：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/derek-larson14/obsidian-claude-sidebar
+</span></span></code></pre></div></li>
+<li>启用 &ldquo;Claude Sidebar&rdquo;</li>
+</ol>
+<h3 id="使用">使用</h3>
+<p>点侧边栏的机器人图标（或设置快捷键），右侧就会弹出一个终端面板，里面就是 Claude Code。跟你在外部终端里用一模一样，只是不用切窗口了。</p>
+<p>支持多标签页，可以同时开几个对话。简单粗暴，适合已经熟悉 Claude Code 命令行操作的人。
+<strong>因个人已经适应 Claude Code 的终端，又觉得第一种方式比较冗余，还是更喜欢这种侧边栏的操作</strong>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100241568.png" alt="image.png"  />
+</p>
+<h2 id="方案三terminal-插件">方案三：Terminal 插件</h2>
+<p>如果你想要更灵活的控制，可以用 <a href="https://forum.obsidian.md/t/plugin-terminal-integrated-terminals-in-obsidian/52170">Polyware Terminal</a> 插件，在 Obsidian 里直接开一个完整的终端，然后在里面跑 <code>claude</code>。</p>
+<h3 id="安装-2">安装</h3>
+<p>这个插件已经在社区插件商店里了：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; 浏览</li>
+<li>搜索 &ldquo;Terminal&rdquo;，找到 &ldquo;Terminal — Integrated terminals in Obsidian&rdquo;</li>
+<li>安装并启用</li>
+</ol>
+<h3 id="使用-1">使用</h3>
+<ol>
+<li>打开终端面板（左侧边栏或底部面板）</li>
+<li>在终端里输入 <code>claude</code> 回车</li>
+<li>开始对话</li>
+</ol>
+<p>本质上就是在 Obsidian 里开了个终端窗口。你可以自定义主题，让它跟 Obsidian 的外观融合。Yu Lu 在她的 <a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Medium 文章</a>里详细介绍了这种玩法，她管这叫 &ldquo;Vibe Writing&rdquo;——一边在 Obsidian 里写笔记，一边让 AI 在旁边的终端里实时辅助。</p>
+<h2 id="进阶让-claude-更懂你的-vault">进阶：让 Claude 更懂你的 Vault</h2>
+<p>不管用哪个方案，都可以在 vault 根目录创建一个 <code>CLAUDE.md</code> 文件。Claude Code 每次启动都会读取这个文件，作为它的&quot;行为指南&quot;。</p>
+<p>比如我的博客项目里的 <code>CLAUDE.md</code> 就写明了：</p>
+<ul>
+<li>文章的 front matter 格式要求</li>
+<li>图片上传到 CDN，不需要管理本地图片</li>
+<li>部署通过 GitHub Actions 自动完成</li>
+</ul>
+<p>这样 Claude Code 在操作你的文件时，就会遵循这些规则，不会乱来。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>装完插件找不到 Claude Code？</strong></p>
+<p>先确认 CLI 装好了没。在终端里跑 <code>claude --version</code>，如果能输出版本号就说明没问题。如果插件还是报错，去设置里手动指定 Claude Code 的路径。</p>
+<p><strong>Linux 下用 Flatpak/Snap 装的 Obsidian 报错？</strong></p>
+<p>沙盒限制，Obsidian 访问不到系统的 Node.js 和 Claude Code。解决方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Flatpak 用户执行这个</span>
+</span></span><span class="line"><span class="cl">flatpak override --user md.obsidian.Obsidian --filesystem<span class="o">=</span>host
+</span></span></code></pre></div><p>或者装个 <a href="https://flathub.org/apps/com.github.tchx84.Flatseal">Flatseal</a>，在图形界面里给 Obsidian 开文件系统权限。</p>
+<p><strong>API 费用怎么样？</strong></p>
+<p>看你怎么用。日常笔记整理用 Haiku 模型，几乎花不了多少钱。重度使用的话 Sonnet 也还好。具体可以去 <a href="https://console.anthropic.com/">Anthropic Console</a> 查看用量。当然国内的模型现在做的已经不错了，我日常主力使用的是智谱GLM5.1大模型，除了慢点好像没什么别的缺点，此外还会使用 codex 等模型来进行交叉校验。
+蹲蹲
+🙋蹲队友拼智谱 Coding Plan！</p>
+<p>🧩国内顶流编程大模型，20+主流工具全适配，性价比拉满，
+👉立即参与「拼好模」：https://www.bigmodel.cn/glm-coding?ic=CLGJO27TA6</p>
+<h2 id="写在最后">写在最后</h2>
+<p>三种方案，推荐新手直接用方案一（Claude Code Integration），功能最全，UI 体验最好，上手门槛也低。方案二适合已经习惯了命令行的老手。方案三最灵活但需要自己折腾。</p>
+<p>说到底，Obsidian + Claude Code 的组合之所以好用，核心原因是它们共享同一个底层——Markdown 文件。Claude Code 不需要通过什么复杂的 API 去理解你的笔记，它直接读写文件就行了。简单，直接，高效。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/deivid11/obsidian-claude-code-plugin">Claude Code Integration 插件 (GitHub)</a></li>
+<li><a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">Claude Sidebar (Obsidian Forum)</a></li>
+<li><a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Obsidian X Claude Code — A Seamless Vibe Writing Experience (Medium)</a></li>
+<li><a href="https://www.anthropic.com/claude-code">Claude Code 官方网站</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

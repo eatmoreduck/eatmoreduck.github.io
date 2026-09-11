@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Claude on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/en/tags/claude/</link>
+    <description>Recent content in Claude on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 12 Sep 2026 00:16:19 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/tags/claude/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Orca &#43; GitHub Projects: Day One of a Real AI Coding Workflow</title>
+      <link>https://blog.xiaohuangyu.space/en/p/github-projects-orca-agent-workflow/</link>
+      <pubDate>Fri, 11 Sep 2026 23:55:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/github-projects-orca-agent-workflow/</guid>
+      <description>&lt;p&gt;Notes on wiring GitHub Projects and Orca into a working AI coding pipeline, pitfalls included. macOS as the example.&lt;/p&gt;&#xA;&lt;p&gt;Background: I have a side project (panta-log, a local-first voice review tool) whose issue/PR conventions had been sitting in another repo, unused. This time the goal was concrete: a kanban board for tasks, Orca running the agents, and the whole chain of &amp;ldquo;pick a task → develop → test → merge → status transitions itself&amp;rdquo; working end to end within one day.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Notes on wiring GitHub Projects and Orca into a working AI coding pipeline, pitfalls included. macOS as the example.</p>
+<p>Background: I have a side project (panta-log, a local-first voice review tool) whose issue/PR conventions had been sitting in another repo, unused. This time the goal was concrete: a kanban board for tasks, Orca running the agents, and the whole chain of &ldquo;pick a task → develop → test → merge → status transitions itself&rdquo; working end to end within one day.</p>
+<p>Here&rsquo;s what the finished loop looks like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Pick a card (Todo) → open a worktree from it in Orca → agent works (runs tests itself)
+</span></span><span class="line"><span class="cl">→ PR triggers CI → review the diff → squash merge
+</span></span><span class="line"><span class="cl">→ issue closes itself → card moves to Done by itself → remote branch deleted by itself
+</span></span></code></pre></div><h3 id="step-1-getting-the-conventions-in-place">Step 1: getting the conventions in place</h3>
+<p>I copied a set straight from my own boss-zhipin-scraper project: three issue templates (bug/feature/question as YAML forms), a PR template, and a CONTRIBUTING.md, adapted to the new project&rsquo;s stack (uv, pytest, the macOS permission gotchas). Push it and the repo&rsquo;s New issue page immediately serves proper forms. Five minutes, nothing more to say.</p>
+<h3 id="step-2-backlogging-with-the-gh-cli">Step 2: backlogging with the gh CLI</h3>
+<p>The roadmap doc already had six work packages with acceptance criteria, so I just split them into issues. Ground rules:</p>
+<ul>
+<li>Only turn tasks marked &ldquo;needs rework&rdquo; or &ldquo;needs building&rdquo; into issues. Skip what already works — don&rsquo;t pollute the board</li>
+<li>Prefix titles with the task code (WP-A1 and friends) so cards map back to the doc at a glance</li>
+<li>Quote the roadmap&rsquo;s acceptance criteria verbatim in the body, plus a suggested week batch</li>
+<li>Hang everything on a milestone whose description states the exit criteria</li>
+</ul>
+<p>18 issues. Two for loops.</p>
+<h3 id="step-3-the-pitfall-zone--gh-project-cli">Step 3: the pitfall zone — gh project CLI</h3>
+<p>Most board operations can be done from the terminal, but the CLI trips you up at every turn. All of these bit me for real:</p>
+<p><strong>Pitfall 1: <code>gh auth refresh</code> needs <code>-h</code> in non-interactive mode</strong></p>
+<p>Running it through a non-interactive prefix (like Claude Code&rsquo;s <code>!</code>) fails with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">--hostname required when not running interactively
+</span></span></code></pre></div><p>Write it as <code>gh auth refresh -h github.com -s read:project,project</code>. Also note this command blocks on device authorization: run it in the background, fish the one-time code out of the output, enter it at github.com/login/device.</p>
+<p><strong>Pitfall 2: field-create takes <code>--name</code>, not <code>--title</code></strong></p>
+<p><code>gh project field-create --title &quot;Phase&quot;</code> dies with &ldquo;unknown flag&rdquo;. The help text has shown both spellings in different eras; <code>--name</code> is the one that works.</p>
+<p><strong>Pitfall 3: <code>-q</code> requires <code>--format json</code></strong></p>
+<p>The sneakiest one. <code>gh project item-add &lt;n&gt; --owner me --url xxx -q '.id'</code> fails quietly with <code>cannot use --jq without specifying --format json</code>. In a batch script all 18 items die invisibly (stderr swallowed). Correct form:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-add <span class="m">2</span> --owner eatmoreduck --url <span class="s2">&#34;https://github.com/xxx/issues/1&#34;</span> --format json -q <span class="s1">&#39;.id&#39;</span>
+</span></span></code></pre></div><p><strong>Pitfall 4: item-edit uses <code>--project-id</code>, not <code>--owner</code> + <code>--project-number</code></strong></p>
+<p>item-add takes number + owner, then item-edit suddenly wants the project&rsquo;s global ID (a <code>PVT_xxxx</code> string, visible in the project list):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;field-id&gt; --single-select-option-id &lt;option-id&gt;
+</span></span></code></pre></div><p><strong>Pitfall 5: item-list&rsquo;s JSON returns fieldValues as null</strong></p>
+<p>Want to verify your field values landed? <code>gh project item-list --format json</code> returns null for everything — the endpoint simply doesn&rsquo;t return them. GraphQL is the only way to check:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh api graphql -f <span class="nv">query</span><span class="o">=</span><span class="s1">&#39;query($login:String!,$number:Int!){
+</span></span></span><span class="line"><span class="cl"><span class="s1">  user(login:$login){ projectV2(number:$number){
+</span></span></span><span class="line"><span class="cl"><span class="s1">    items(first:30){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">      content{ ... on Issue { number } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      fieldValues(first:20){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">        ... on ProjectV2ItemFieldSingleSelectValue { name field{ ... on ProjectV2FieldCommon { name } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">    } } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">}&#39;</span> -f <span class="nv">login</span><span class="o">=</span>eatmoreduck -F <span class="nv">number</span><span class="o">=</span><span class="m">2</span> --jq <span class="s1">&#39;...&#39;</span>
+</span></span></code></pre></div><p>Two single-select fields (Phase for release stages, Area for modules), 18 cards batch-added with Status/Phase/Area set, plus two date fields for the timeline. One pass.</p>
+<h3 id="orca-easier-than-expected">Orca: easier than expected</h3>
+<p>I expected a GitHub OAuth dance inside Orca. Instead, the integrations page showed GitHub as Connected out of the box — Orca&rsquo;s GitHub integration reads the local gh CLI credentials, so a logged-in gh means already connected. There is no &ldquo;connect and authorize&rdquo; button to find.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-github-connected.png" alt="Orca integrations page showing GitHub already Connected"  />
+</p>
+<p>One small confusion: where&rsquo;s the board? The Tasks page has three tabs — Issues, PRs, Projects. The issue list lives under Issues; the <strong>board lives under the Projects tab</strong>. Right-click any card to create a worktree, and the composer pre-fills the task name and links the issue.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-issue-list.png" alt="The three tabs of Orca&rsquo;s Tasks page"  />
+</p>
+<h3 id="board-automation-on-by-default">Board automation: on by default</h3>
+<p>The engine of the whole loop is two built-in project workflows:</p>
+<ul>
+<li>Item added to project → Set Status = Todo</li>
+<li>When pull request merged → Set Status = Done</li>
+</ul>
+<p>Counter-intuitive bit: both ship <strong>ON the moment the project is created</strong>. I assumed they needed flipping in the web UI and put that on my checklist; when I finally opened the Workflows panel, they&rsquo;d been working all along. Double-checked out of curiosity: gh CLI has no subcommands for workflows at all (<code>gh project --help</code> only covers items and fields), so you can&rsquo;t toggle them from the terminal either way — the project&rsquo;s Workflows panel is the only place to view or adjust them.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-workflow-pr-merged.png" alt="The Pull request merged workflow configuration"  />
+</p>
+<p>Once these are live, the moment a PR merges: the issue closes itself (via Closes #n in the commit), the card moves to Done. No human involved.</p>
+<h3 id="roadmap-timeline-dates-can-be-piped-in-from-the-cli">Roadmap timeline: dates can be piped in from the CLI</h3>
+<p>The timeline view opens blank because no item has dates. The fix:</p>
+<ol>
+<li>Create <code>Start date</code> / <code>Target date</code> date fields</li>
+<li>Point the view toolbar&rsquo;s Date fields at those two</li>
+<li>Pipe the values in per roadmap batch:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;start-field-id&gt; --date <span class="s2">&#34;2026-09-14&#34;</span>
+</span></span></code></pre></div><p>Then the timeline shows real bars, and dragging them reschedules the underlying fields.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-roadmap-timeline.png" alt="The roadmap timeline view"  />
+</p>
+<h3 id="multiple-agents-yes-but-dont-get-greedy">Multiple agents: yes, but don&rsquo;t get greedy</h3>
+<p>Orca&rsquo;s core trick is one task per isolated git worktree, and several agents genuinely do run in parallel without stepping on each other&rsquo;s branches. Verified.</p>
+<p>Hard-won practical notes:</p>
+<ul>
+<li><strong>Avoid file conflicts when picking concurrent cards.</strong> Two tasks touching the same file means the later merge conflicts for sure. Same-subsystem tasks shouldn&rsquo;t run in parallel</li>
+<li><strong>2-3 cards in parallel, merges serial.</strong> The bottleneck is never writing code — it&rsquo;s review. Five agents means five PRs you can&rsquo;t properly review, and blind-merging into your core pipeline is free soloing</li>
+<li>The agents dashboard&rsquo;s three columns (Needs you / Running / Done) are exactly the management surface for this: an agent that stops to ask shows up under &ldquo;Needs you&rdquo;</li>
+</ul>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-agents-dashboard.png" alt="The agents dashboard"  />
+</p>
+<p>Also: Orca does not pull cards off the board by itself. Which cards run and when is still a human decision — and honestly, that&rsquo;s a feature.</p>
+<h3 id="hand-the-ci-to-an-agent-too">Hand the CI to an agent too</h3>
+<p>The repo had no CI, so PR-level automated testing was a gap. My approach: file an issue with the constraints spelled out first — private repo means billable Actions minutes and macOS runners bill at 10x, so the workflow must stay on ubuntu; one workflow file only; no ESLint/mypy. Then open a worktree and hand it to an agent.</p>
+<p>It checked every acceptance box: backend (ruff + 88 tests) and frontend build, both jobs green, about 40 seconds combined. It even hit a real snag and fixed it itself — ubuntu&rsquo;s sounddevice lacks PortAudio, so it added <code>apt-get install libportaudio2</code> to the CI. Best of all, it let the first run go red on purpose before fixing it, proving the failure alarm actually fires.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-pr-checks-passed.png" alt="PR checks all passing"  />
+</p>
+<p>Lesson worth keeping: <strong>the more specific the issue (constraints, boundaries, acceptance criteria), the less babysitting the output needs.</strong> &ldquo;Add me a CI&rdquo; and a fully specified issue produce wildly different results.</p>
+<h3 id="review-and-merge-without-leaving-orca">Review and merge without leaving Orca</h3>
+<p>Diff review, feedback, merging — all in-app:</p>
+<ul>
+<li>Line-by-line review in the diff viewer; if something&rsquo;s off, say so in that worktree&rsquo;s agent session, and the push updates the same PR</li>
+<li>The Checks panel shows CI status, and a failed check can be handed straight to the agent to fix</li>
+</ul>
+<p>Then comes the most instructive misuse of the day: I couldn&rsquo;t find the merge button, and the &ldquo;commit&rdquo; button in the corner was grayed out.</p>
+<p>The gray is correct — that&rsquo;s the <strong>git push button</strong>, and there was nothing left to push. The merge control lives in the <strong>PR detail view</strong> (the page you get by clicking into the PR from the list), with a merge-method dropdown, same logic as the web.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-source-control-menu.png" alt="The right-side menu is git operations, not the merge entry"  />
+</p>
+<h3 id="merge-method-squash-no-hesitation">Merge method: squash, no hesitation</h3>
+<p>One line each:</p>
+<ul>
+<li><strong>Squash</strong>: the whole PR becomes a single commit on master; intermediate commits are discarded</li>
+<li><strong>Rebase</strong>: every commit is replayed individually; all intermediates survive</li>
+<li><strong>Merge commit</strong>: merges as-is plus a merge node; history becomes a graph</li>
+</ul>
+<p>For AI agent output, squash is the only right answer. An agent&rsquo;s intermediate commits are all &ldquo;fix typo&rdquo; and &ldquo;round 2&rdquo; noise with zero archival value. After squashing, one card maps to one clean commit on master, a revert is one command, and <code>Closes #n</code> still works from the PR description. The other two only matter when you need branch topology for team collaboration, or you&rsquo;ve hand-curated a commit series worth preserving.</p>
+<h3 id="repo-settings-two-toggles-two-different-stories">Repo settings: two toggles, two different stories</h3>
+<ul>
+<li><strong>Automatically delete head branches</strong>: auto-deletes the remote branch after merge. Instant benefit — otherwise twenty cards leave twenty dead branches behind. Local worktrees are unaffected; clean those up in Orca when done</li>
+<li><strong>Allow auto-merge</strong>: lets a PR be set to &ldquo;merge when green&rdquo;. Note this only unlocks the feature — nothing happens until you enable it on a specific PR. And <strong>with no CI, it&rsquo;s a no-op</strong> — there are no checks to wait for. So the order is: turn on branch deletion now, auto-merge after CI lands</li>
+</ul>
+<h3 id="end-of-day-one">End of day one</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Item</th>
+          <th>Status</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Issue/PR templates + contributing guide</td>
+          <td>Pushed and live</td>
+      </tr>
+      <tr>
+          <td>19 issues + milestone + board fields</td>
+          <td>All on the board, verified via GraphQL</td>
+      </tr>
+      <tr>
+          <td>Two board automations</td>
+          <td>On by default, zero config</td>
+      </tr>
+      <tr>
+          <td>Roadmap timeline</td>
+          <td>Three batches of dates piped in</td>
+      </tr>
+      <tr>
+          <td>CI (agent-built)</td>
+          <td>Merged and live, both jobs green</td>
+      </tr>
+      <tr>
+          <td>The full loop</td>
+          <td>First card verified from pick-up to Done</td>
+      </tr>
+  </tbody>
+</table>
+<p>The biggest takeaway: once this scaffolding exists, the act of &ldquo;managing tasks&rdquo; disappears — what&rsquo;s left is moving cards one by one. Every tool handles its stretch of the pipe: GitHub Projects keeps the state, Orca handles agents and worktrees, and the gh CLI patches every gap in between.</p>
+<p>The plan from here is to build the habit: open the board first thing each day, pick two cards. The board doesn&rsquo;t lie, so progress doesn&rsquo;t need remembering.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

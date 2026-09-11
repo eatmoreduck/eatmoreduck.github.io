@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>知识管理 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/</link>
+    <description>Recent content in 知识管理 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 22 Jun 2026 19:46:12 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我照着 Karpathy 的 LLM Wiki 模式搭了个 Obsidian 知识库，跑了两个月</title>
+      <link>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</link>
+      <pubDate>Mon, 22 Jun 2026 18:40:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</guid>
+      <description>&lt;h2 id=&#34;karpathy-说的那个模式&#34;&gt;Karpathy 说的那个模式&lt;/h2&gt;&#xA;&lt;p&gt;Karpathy 前段时间在一个 gist 里描述过一种用法：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="karpathy-说的那个模式">Karpathy 说的那个模式</h2>
+<p>Karpathy 前段时间在一个 gist 里描述过一种用法：</p>
+<blockquote>
+<p>系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。</p>
+</blockquote>
+<p>第一次看到这段话的时候，我正好在找一个能跟着学 AI agent 的方法。市面上 agent 教程更新太快，看完就忘，记不住。RAG 那套每次都要重新检索，检索回来的东西还是散的。我想要的是把学过的东西一点点攒下来，攒成一个能往后查、能互相连起来的东西。</p>
+<p>Karpathy 这段话戳中我的地方是：他没把&quot;知识库&quot;说成多玄的事，就是三件事，收原料、LLM 编译成 wiki、人看 Obsidian。我也确实更愿意看 Obsidian 里的双向链接，而不是去某个 AI 产品的对话框里翻历史。</p>
+<p>所以我照着搭了一个。这篇文章记一下它实际长什么样，跑下来哪里好用、哪里卡。</p>
+<h2 id="我的版本长什么样">我的版本长什么样</h2>
+<p>仓库叫 <code>agent-obsidian</code>，是一个标准的 Obsidian vault，目录大概是这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">00-Inbox/              临时想法，没处理的内容
+</span></span><span class="line"><span class="cl">01-Raw/                原始资料，不可改写
+</span></span><span class="line"><span class="cl">02-Wiki/               LLM 维护的知识页
+</span></span><span class="line"><span class="cl">03-Daily-Digest/       每天的信息流总结
+</span></span><span class="line"><span class="cl">04-Projects/           自己的 agent 项目
+</span></span><span class="line"><span class="cl">05-Resources/          阅读清单、工具、论文
+</span></span><span class="line"><span class="cl">06-Risk-Control/       风控相关的资料和日报（我本职做风控）
+</span></span><span class="line"><span class="cl">07-Interview-Prep/     面试题
+</span></span><span class="line"><span class="cl">Templates/             Obsidian 笔记模板
+</span></span><span class="line"><span class="cl">scripts/               Python 脚本
+</span></span><span class="line"><span class="cl">config/                自动化配置
+</span></span><span class="line"><span class="cl">data/                  脚本的结构化输出
+</span></span></code></pre></div><p>核心是三层，和 Karpathy 说的一致：</p>
+<ul>
+<li><strong>原料层</strong>：<code>01-Raw/</code> 和 <code>06-Risk-Control/raw-sources/</code>，原始资料不动，只往里加。</li>
+<li><strong>wiki 层</strong>：<code>02-Wiki/</code>，LLM 编译出来的知识页，人也可以看、也可以改。</li>
+<li><strong>规则层</strong>：仓库根目录的 <code>AGENTS.md</code> 和 <code>CLAUDE.md</code>，告诉 LLM 这个 wiki 怎么维护、哪些目录不能动。</li>
+</ul>
+<p>原料层是事实来源，wiki 是 LLM 的二次产物。这个分工很关键。后面讲为什么。</p>
+<h2 id="一天大概怎么跑">一天大概怎么跑</h2>
+<p>每天早上我会跑一个脚本，把当天的信息源抓下来：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">uv run python3 scripts/collect_daily_sources.py
+</span></span></code></pre></div><p>这个脚本去 GitHub、Hacker News、arXiv 拉 AI agent 相关的内容，存成 <code>01-Raw/daily-sources/2026-06-22.md</code>。原料就是一堆标题加链接加摘要，没经过加工。</p>
+<p>然后我让 Claude Code 读这个原料文件，筛出当天真正值得记的几条，干三件事：</p>
+<ol>
+<li>在 <code>03-Daily-Digest/2026-06-22.md</code> 写一篇短日报。</li>
+<li>把里面值得沉淀的概念补进 <code>02-Wiki/</code> 对应的页面。</li>
+<li>更新 <code>02-Wiki/index.md</code> 和 <code>02-Wiki/log.md</code>。</li>
+</ol>
+<p>这个过程里我几乎不手动编辑 wiki。我做的事是判断：这条值不值得记，这个概念是不是该单独开一页，这个结论我同不同意。</p>
+<p>判断这件事 LLM 替不了。但整理、链接、写索引这种体力活，它干得比我快。</p>
+<h2 id="让它自己每天跑hermes">让它自己每天跑：Hermes</h2>
+<p>手动跑脚本这个事，坚持一周还行，一个月就难了。人会忘，会懒，会某天不想开电脑。所以我把每天这一趟活交给了 Hermes。</p>
+<p>Hermes 是 Nous Research 做的一个开源 agent 运行器，不是这个仓库里的脚本。它干三件事：本地聊天、定时任务（cron）、连各种消息平台（Telegram、飞书、Discord、企业微信）。我主要用的是它的 cron。</p>
+<p>我配了两个定时任务：</p>
+<ul>
+<li>每天 07:00 跑 agent 学习日报，结果推到 Telegram。</li>
+<li>每天 07:30 跑风控日报，错开半小时，避免两个任务同时采集、同时推送。</li>
+</ul>
+<p>cron 到点后，Hermes gateway 会起一个新的 agent session，加载我写好的 skill，在我的仓库目录里把采集、总结、写日报、更新 wiki 这一套全跑完，最后把摘要推到 Telegram。我早上醒来手机上就有一条当天的精华列表。</p>
+<p>整个链路长这样：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/hermes-daily-flow.png" alt="Hermes 每日推送链路"  />
+</p>
+<p>左边是触发，中间是采集和编译，右边是两个出口：一条推到我手机，一条发布到公开站点。</p>
+<p>skill 文件是这个自动化的核心。我的 <code>agent-learning-digest</code> skill 里写死了整个流程：先跑哪个脚本、读哪个文件、选哪类内容、日报写成什么结构、最后还要跑发布脚本。prompt 必须自包含，不能写&quot;接着昨天的&quot;，因为每次 cron 起的都是全新 session，没有上下文。</p>
+<p>这套东西配上之后，我才真正体会到 Karpathy 说的&quot;你几乎不用手动写或编辑&quot;。我现在做的只剩两件：早上看一眼 Telegram 的推送，发现哪条不对或者哪个概念该单独开页，回头跟 Claude 说一声补一下。日常的采集、编译、推送，我完全不碰了。</p>
+<h2 id="为什么不是直接用-rag">为什么不是直接用 RAG</h2>
+<p>我自己试过 RAG 那套，把一堆文档切碎塞进向量库，问的时候检索回来几段。问题是检索回来的东西是碎片，不是知识。你看不到概念之间怎么连，看不到自己一个月前的理解和现在差在哪。</p>
+<p>LLM Wiki 的思路不一样。它把原料一次性编译成结构化的页面，存下来，下次问的时候不用再去捞。LLM 先读 <code>index.md</code> 找到相关页面，再读那个页面，再给你有引用的回答。</p>
+<p>举个具体的例子。我之前攒了一页叫 <code>Context Engineering.md</code>，里面记的是各种 context engineering 的实践案例，像 get-shit-done、dirac、backpack-ontology、tool-output compression 这些。每次我看到新的案例，就让 Claude 读那一页，把新东西补进去，同时更新一下和已有概念的链接。</p>
+<p>这页现在比我脑子里的理解清楚多了。我问&quot;tool-output compression 在哪个项目里用过&quot;，它能直接告诉我，还带原始链接。RAG 做不到这个粒度，因为碎片之间没有结构。</p>
+<h2 id="把日报发出去cloudflare-pages">把日报发出去：Cloudflare Pages</h2>
+<p>Hermes 推到 Telegram 是给我自己看的。但日报这东西我也想公开，给同样在学 agent 的人看。于是加了一条出口：日报写完后，自动发布到一个公开站点。</p>
+<p>链路是这样：digest skill 跑完会调用 <code>publish_public_site.py</code>，这个脚本只把白名单目录（<code>03-Daily-Digest</code>、<code>06-Risk-Control/daily-digest</code>、<code>07-Interview-Prep</code>）里的内容挑出来，生成静态页面，commit 到 GitHub，Cloudflare Pages 检测到 push 后自动构建部署。</p>
+<p>这里最关键的是白名单。我的 vault 里有大量私人内容：项目想法、还没成形的笔记、面试刷题进度、风控业务细节。这些绝对不能发出去。所以发布脚本严格按 channel 白名单走，只挑符合 <code>YYYY-MM-DD.md</code> 命名的日报，不会把整个 vault 发出去。</p>
+<p>更细的一层：日报里有些段落是给自己看的，比如&quot;项目启发&quot;&ldquo;需要深入&quot;&ldquo;明日动作&rdquo;，这些在公开版里会被自动过滤掉。公开的只有外部抓取条目的标题、来源、URL 和摘要。私有想法留在本地，公开的是事实。</p>
+<p>这条链路跑顺之后，我每天什么都不用做，Telegram 收一份，公开站点自动更新一份。Karpathy 说的&quot;完全由 LLM 负责&rdquo;，在我这里是真的实现了。</p>
+<h2 id="规则文件是这套东西的地基">规则文件是这套东西的地基</h2>
+<p>跑下来发现，模型多聪明没那么重要，真正决定这套系统好不好用的是 <code>AGENTS.md</code> 写得多细。</p>
+<p>我的 <code>AGENTS.md</code> 里写了很多硬规则，比如：</p>
+<ul>
+<li><code>01-Raw/</code> 不能改写，只能加最小元数据或修格式。</li>
+<li><code>06-Risk-Control/raw-sources/</code> 完全 immutable。</li>
+<li><code>.obsidian/</code> 除非我明确说，否则不动。</li>
+<li>每个 wiki 页的重要结论必须能追溯到 raw source 或 URL。</li>
+<li>不确定的结论标 <code>待验证</code>。</li>
+<li>不堆长引用，总结加链接。</li>
+<li>新增 wiki 页要同步更新 <code>index.md</code>，加一条 <code>log.md</code>。</li>
+</ul>
+<p>这些规则写死之后，LLM 的行为稳定多了。它不会自作主张去改原始资料，也不会在 wiki 页里堆一堆没出处的判断。</p>
+<p>规则文件这个东西，越具体越好。早期我写得粗，LLM 经常自作主张整理目录，把我没说要动的东西也动了。后来把每个目录的&quot;能做什么不能做什么&quot;写清楚，这种情况就少了。</p>
+<h2 id="哪里还不够好">哪里还不够好</h2>
+<p>跑了两个月，几个明显的问题。</p>
+<p><strong>原料质量决定上限。</strong> 脚本拉下来的东西，很多是水文或者重复的新闻。LLM 编译得再好，原料是垃圾出来的也是垃圾。我现在每天还是要手动过一遍原料，删掉明显没用的。这一步还没法完全自动化。</p>
+<p><strong>wiki 会膨胀。</strong> 概念越攒越多，页面之间链接越织越密。好处是查起来方便，坏处是有时候一个页面连出去二三十个链接，读起来累。我大概每两周得做一次 lint，清掉孤立页面、合并重复概念。这个 lint 也是让 LLM 干，但它判断不准，最后还是我拍板。</p>
+<p><strong>整理和判断的边界会模糊。</strong> 有时候 LLM 编译出来的结论我不认同，但又说不上来哪里不对。这种时候要么改掉，要么标 <code>待验证</code>。但标多了页面就乱了，看着一堆待验证也挺烦。</p>
+<p><strong>多 agent 协作还差。</strong> 现在基本是单 agent 干所有事，收原料、写日报、编 wiki 都它来。我想做的是有专门的 agent 负责不同方向，比如风控的归风控，agent 学习的归 agent 学习。现在靠目录分，但 agent 之间不通信。这块还没想清楚。</p>
+<h2 id="这套东西改变了什么">这套东西改变了什么</h2>
+<p>最大的一点：我不再&quot;读完就忘&quot;了。</p>
+<p>以前看一篇 agent 的文章，当时觉得懂了，过两周细节全忘。现在看一篇，就让 Claude 编译进 wiki，下次再想不起来细节，去 <code>02-Wiki/</code> 里一翻就有，还带着当时的出处。</p>
+<p>第二点：学东西的路径清晰了。<code>index.md</code> 现在是我的导航，想看哪个主题直接点进去。比去搜索引擎从头搜要快，因为这些都是我自己筛过的、和我正在做的事相关的。</p>
+<p>第三点，也是 Karpathy 没明说但我觉得更重要的：<strong>判断力被锻炼了</strong>。每天筛原料、改 wiki、决定哪个概念单独开页，这些动作逼着你对每个信息做一次判断。LLM 帮你整理，但不替你判断。这个判断的过程，是 RAG 给不了的。</p>
+<h2 id="关于做成产品">关于&quot;做成产品&quot;</h2>
+<p>Karpathy 说这里能做成一个真正的产品，不只是脚本。我同意，但我觉得现在还早。</p>
+<p>现在这套东西能跑，是因为我对 Obsidian、Claude Code、Python 脚本都熟，哪里坏了能修。换成不熟的人，配环境、调脚本、写规则文件，门槛不低。</p>
+<p>真正的产品得把这几件事藏起来：原料采集不用写脚本，规则文件有默认模板，wiki 的 lint 和合并自动化，多设备同步不靠 git。Obsidian 本身已经把&quot;看&quot;这件事做得很好了，缺的是&quot;自动喂料 + 自动编译&quot;这一层做得很顺的产品。</p>
+<p>我自己短期内还会继续用现在这堆脚本。它不优雅，但它是我的，每个目录怎么来的我都清楚。这种&quot;自己搭的&quot;感觉，用一个现成产品替代不了。也许这就是为什么 Karpathy 说&quot;产品&quot;而不是&quot;开源工具&quot;。真正顺手的工具，往往是自己改出来的那个。</p>
+<h2 id="给想试的人几句话">给想试的人几句话</h2>
+<p>如果你想照着搭一个，不用一开始就上自动化。最小版本就三步：</p>
+<ol>
+<li>建一个 Obsidian vault，分 <code>raw</code> 和 <code>wiki</code> 两个目录。</li>
+<li>写一个 <code>AGENTS.md</code>，把&quot;什么能改什么不能改&quot;写死。</li>
+<li>找一个能读写文件的 coding agent（Claude Code、Codex 都行），让它读你的 raw，写进 wiki。</li>
+</ol>
+<p>跑一周你就知道哪里别扭了。别扭的地方就是你要改规则文件的地方。这套东西不是搭完就定型的，是边用边长的。</p>
+<p>我那个仓库现在大概有 200 多个 wiki 页，每天还在加。它已经比我任何一个 Notion 库都更有用，因为它是有结构的，而且结构是我和 LLM 一起长出来的，不是套个模板就完事。</p>
+<p>Karpathy 那段话我隔段时间就会翻出来再看一遍。每次看都觉得他说得对，但也觉得他故意把最难的部分没说。让 LLM 真正听话地维护一个 wiki，比让它写一段漂亮代码难多了。代码错了能跑出来看，wiki 错了你可能半年后才发现。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

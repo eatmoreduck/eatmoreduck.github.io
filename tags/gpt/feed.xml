@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>GPT on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/gpt/</link>
+    <description>Recent content in GPT on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/gpt/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我把 Happy Coder 搬到手机上，随时随地写代码</title>
+      <link>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</link>
+      <pubDate>Thu, 02 Apr 2026 19:32:20 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/happy-coder-on-phone-code-anywhere/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;&#xA;&lt;p&gt;最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="起因">起因</h2>
+<p>最近在做一个小小的个人项目，日常开发基本靠 Claude Code + GLM 配合 Codex 做 vibe coding。说实话效率确实高，一个需求扔进去，它哐哐一顿写，我负责 review 和调整就行。</p>
+<p>但有个问题一直困扰我——<strong>我得一直盯着它</strong>。</p>
+<p>Claude Code 不是全自动的，它会频繁地要求你确认权限：这个文件能不能改？这个命令能不能执行？要不要继续？你要是不及时回应，它就停在那里等你。人根本走不开。尤其有些项目涉及到前端，我配置了 playwright mcp 做测试，在 claude 里已经配置&quot;mcp__plugin_playwright*&quot;, 的情况下，仍然需要频繁的去请求权限，常常被确认的逻辑卡住，但又不想配置到用户目录的配置而导致权限放的过大。</p>
+<p>我试过用手机远程连 Mac 的屏幕，想着至少能去倒杯水。但实际用起来太难受了，手机屏幕就那么大，终端界面的字小到看不清，点个按钮都得放大再放大，操作效率约等于零。</p>
+<p>这个问题困扰了我挺久的，直到最近看到了 <strong>Happy Coder</strong>。</p>
+<h2 id="happy-coder-是什么">Happy Coder 是什么</h2>
+<p>简单说，它就是 Claude Code 和 Codex 的手机客户端。</p>
+<p>你在电脑上跑 Claude Code，通过 Happy Coder，你可以用手机实时看到它在干什么，并且能直接在手机上操作——确认权限、输入指令、切换任务，跟坐在电脑前一样。</p>
+<p>几个我觉得比较关键的特点：</p>
+<ul>
+<li><strong>免费开源</strong>，MIT 协议，代码在 GitHub 上</li>
+<li><strong>端到端加密</strong>，你的代码和对话内容经过 AES 加密传输，中继服务器只搬运密文，看不懂你在传什么</li>
+<li><strong>推送通知</strong>，Claude Code 需要你操作的时候会推送到手机</li>
+<li><strong>支持语音</strong>，可以直接说话让它执行命令，不只是语音转文字那种</li>
+<li><strong>多任务并行</strong>，可以同时跑好几个 Claude Code 实例</li>
+</ul>
+<h2 id="安全性聊聊">安全性聊聊</h2>
+<p>看到&quot;把代码传到手机上&quot;这个说法，第一反应肯定是——安全吗？</p>
+<p>我查了一下它的原理，大概是这样的：整个系统分三块——电脑端的 CLI、一个中继服务器（Relay Server）、手机端的 App。你的电脑和手机之间不直接通信，所有数据都经过中继服务器转发。</p>
+<p>但关键是，<strong>中继服务器只搬运加密后的数据块，它自己解不开</strong>。</p>
+<p>具体来说：</p>
+<ul>
+<li>电脑端把 Claude Code 的终端状态用 AES 加密后上传</li>
+<li>手机端拉取加密数据，本地解密后展示</li>
+<li>你在手机上的操作指令反过来，也是加密后上传，电脑端解密执行</li>
+<li>密钥在你扫码配对的时候直接在两个设备之间交换，不经过服务器</li>
+</ul>
+<p>这叫零信任架构——你不需要信任中继服务器的运营者，因为它从头到尾只接触密文。而且整个项目是开源的，加密实现可以自己审计。如果你还是不放心，Relay Server 也是开源的，完全可以自己搭一套。</p>
+<p>对我来说，平时写代码传的是加密密文，比手机远程桌面明文传输终端画面安全多了。</p>
+<h2 id="安装配置">安装配置</h2>
+<p>整个过程不复杂，几分钟搞定。</p>
+<h3 id="电脑端">电脑端</h3>
+<p>先装 CLI 工具：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm i -g happy-coder
+</span></span></code></pre></div><p>装好之后直接运行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">happy claude
+</span></span></code></pre></div><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260402212922578.png" alt="image.png"  />
+</p>
+<p>它会启动一个 Claude Code 的会话，同时把这个会话注册到 Happy 的服务上。你在终端里看到的跟正常用 Claude Code 没什么区别，只是这个会话现在可以被手机端接管了。</p>
+<h3 id="手机端">手机端</h3>
+<p>去应用商店搜 &ldquo;Happy Coder&rdquo; 就行，iOS 和 Android 都有。</p>
+<p>装好打开之后，它会引导你跟电脑端配对。
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260402213755250.png" alt="image.png"  />
+</p>
+<p>配对完成后，你就能在手机上看到电脑上正在跑的 Claude Code 会话了。</p>
+<h3 id="一个小技巧">一个小技巧</h3>
+<p>用了一段时间后发现一个问题——我老是习惯性地敲 <code>claude</code> 而不是 <code>happy claude</code>，等反应过来的时候已经晚了，会话没注册到 Happy 上。</p>
+<p>后来我在 <code>.zshrc</code> 里加了个 alias：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">claude</span><span class="o">=</span><span class="s1">&#39;happy claude&#39;</span>
+</span></span></code></pre></div><p>这样不管敲 <code>claude</code> 还是 <code>happy claude</code>，走的都是 Happy。如果某天 Happy 出问题了想用原版，敲 <code>\claude</code> 加个反斜杠就能跳过 alias。</p>
+<h2 id="实际使用体验">实际使用体验</h2>
+<p>用了几天，说说真实感受。</p>
+<h3 id="终于可以离开电脑了">终于可以离开电脑了</h3>
+<p>这是最大的变化。以前跑个任务，我得坐在那等它弹出确认框。现在手机收到推送，点开看一眼，确认就完事了。去厨房拿个外卖、沙发上躺着，都不耽误干活。</p>
+<h3 id="推送通知是真的好用">推送通知是真的好用</h3>
+<p>Claude Code 需要你输入的时候、代码写完等你 review 的时候、出了什么问题的时候，都会推送通知到手机。这个功能看着不起眼，但实际用起来你会发现——终于不用一直盯着屏幕刷新了。</p>
+<h3 id="语音操作有点惊喜">语音操作有点惊喜</h3>
+<p>本来觉得语音操控 Claude Code 是个噱头，但实际用下来还不错。躺着的时候不想打字，直接说一句&quot;继续&quot;或者&quot;执行&quot;，它就动了。不是简单的语音转文字，是真的语音到动作的执行。</p>
+<h3 id="多任务是真的爽">多任务是真的爽</h3>
+<p>做新项目时的时候，经常前端后端同时改。现在我可以同时开两个 Claude Code 实例，一个改后端规则引擎，一个改前端配置页面，手机上切来切去看进度。以前得一个个排着来，现在并行搞效率高了不少，当然一个 claude 多个 agent 一次性下发任务命令执行也是非常爽的。</p>
+<h3 id="也有不完美的地方">也有不完美的地方</h3>
+<p>说说缺点。毕竟是第三方工具，界面上偶尔会有点卡顿。另外如果你家网络不太好，手机端的响应会有延迟，这个看你自己的网络环境。还有就是语音识别偶尔会抽风，说中文的时候准确率不太稳定（我感觉到了，所以我都用微信语音转文字）。</p>
+<h2 id="适合什么人">适合什么人</h2>
+<p>如果你符合下面任意一条，可以试试：</p>
+<ul>
+<li>用 Claude Code 或 Codex 做主力开发工具，但不想一直坐在电脑前</li>
+<li>经常需要同时跑多个 AI 编程任务</li>
+<li>想在手机上也能随时查看和操控你的编程 session</li>
+<li>对代码安全有要求，需要端到端加密</li>
+</ul>
+<h2 id="写在最后">写在最后</h2>
+<p>Happy Coder 解决的不是什么大问题，它就是帮你把&quot;必须坐在电脑前&quot;这个束缚去掉了。但就是这个小变化，让整个 vibe coding 的体验舒服了很多。</p>
+<p>至少对我来说，终于不用在等确认的时候干坐着了。</p>
+<p>工具地址：<a href="https://happy.engineering/">happy.engineering</a></p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

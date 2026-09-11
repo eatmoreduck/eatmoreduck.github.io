@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>群晖 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E7%BE%A4%E6%99%96/</link>
+    <description>Recent content in 群晖 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E7%BE%A4%E6%99%96/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DXP4800安装SSD</title>
+      <link>https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</link>
+      <pubDate>Fri, 08 Nov 2024 20:12:54 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/dxp4800-add-ssd/</guid>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;关机&lt;/li&gt;&#xA;&lt;li&gt;开盖&lt;/li&gt;&#xA;&lt;li&gt;装 SSD&lt;/li&gt;&#xA;&lt;li&gt;创建 basic 类型储存池&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;创建 basic 类型储存空间，选择Btrfs &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;设置新安装套件到储存池 2 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png&#34; alt=&#34;&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;通过 hyper backup先完成 docker homes 目录的备份 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;备份 docker homes 下的文件到共享文件夹&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。&#xA;如下图所示&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<ol>
+<li>关机</li>
+<li>开盖</li>
+<li>装 SSD</li>
+<li>创建 basic 类型储存池
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082044549.png" alt="image.png"  />
+</li>
+<li>创建 basic 类型储存空间，选择Btrfs <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082056942.png" alt="image.png"  />
+</li>
+<li>设置新安装套件到储存池 2 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082058747.png" alt=""  />
+</li>
+<li>通过 hyper backup先完成 docker homes 目录的备份 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101150.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082101350.png" alt="image.png"  />
+</li>
+</ol>
+<p>备份 docker homes 下的文件到共享文件夹
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082107850.png" alt="image.png"  />
+
+8. 备份完成后，首先把docker、homes三个文件夹清空，然后在控制面板中依此修改每个文件夹的存储位置，让它们保存在固态硬盘上。这里记得要停用docker，否则无法迁移。
+如下图所示
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082140751.png" alt="image.png"  />
+
+先去套件中心停用 container manager ，停用之后，即可直接删除docker 文件夹，homes 也是同理，进入用户群组后选中权限中的 homes 取消勾选
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082142914.png" alt="image.png"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082144024.png" alt="image.png"  />
+</p>
+<p>备份完了按原流程弄回去就行</p>
+<ol start="9">
+<li>原有历史套件搬家，找了个 <a href="https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x">https://github.com/vletroye/SynoPackages/tree/master/DSM%207.x/MODS%20Package%20Manager%207.x</a>
+最后发现还是无法使用，最近才开始用套件，目前装的也不多，直接把原来卸载的都重新来一次，以下页面的服务其实是没法使用的
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202411082220473.png" alt="image.png"  />
+</li>
+</ol>
+<p>完成以上所有操作之后，后续的套件都安装到ssd，无论是打开还是安装的速度都快了许多，后续再配置一个定时任务，定时将 docker 从 SSD 备份到 HHD 即可</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>远程访问系列（一）公网IP</title>
+      <link>https://blog.xiaohuangyu.space/p/wan-to-lan-via-public-ipv4/</link>
+      <pubDate>Wed, 06 Nov 2024 10:25:04 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/wan-to-lan-via-public-ipv4/</guid>
+      <description>&lt;p&gt;最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/dxp4800-synology/&#34;&gt;DXP4800-黑群晖小记&lt;/a&gt; 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。&#xA;网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>最近新入了个 NAS ，设备是绿联 DXP4800，装上黑裙之后，首要的问题是解决最常用的照片文件同步问题，上文已经解决过，参见 <a href="https://blog.xiaohuangyu.space/p/dxp4800-synology/">DXP4800-黑群晖小记</a> 研究了几种外网访问内网设备的方案，在这里做个总结。本文是该系列的开篇，主要介绍各种方案的优缺点和适用场景。
+网上搜索外网访问内网，局域网访问，远程连接，远程访问 docker，基本都可以归类为人不在家，想访问家中的nas 及其他的设备，所以标题暂时起名为远程访问系列</p>
+<h2 id="远程访问方案梳理">远程访问方案梳理</h2>
+<h3 id="1-基于公网-ip-的直接访问方案">1. 基于公网 IP 的直接访问方案</h3>
+<ul>
+<li><strong>优点</strong>：直接利用公网 IP 访问，无需中转，速度快。支持 ipv4/ipv6。</li>
+<li><strong>缺点</strong>：依赖运营商分配公网 IP，安全风险高。</li>
+<li><strong>适用场景</strong>：有公网 IP 的网络环境，如部分企业专线、有公网 IP 的家庭网络。</li>
+</ul>
+<h3 id="2-vpn虚拟专用网络方案">2. VPN（虚拟专用网络）方案</h3>
+<ul>
+<li><strong>优点</strong>：安全加密，可完整访问内网。</li>
+<li><strong>缺点</strong>：需服务器或依赖 Cloudflare 服务，配置复杂。</li>
+<li><strong>适用场景</strong>：企业办公环境。</li>
+<li><strong>软件推荐</strong>：OpenVPN、WireGuard。</li>
+</ul>
+<h3 id="3-内网穿透方案">3. 内网穿透方案</h3>
+<ul>
+<li><strong>优点</strong>：无需公网 IP，配置灵活。</li>
+<li><strong>缺点</strong>：依赖中转服务器，且访问速度与中转服务器带宽有关，需要额外付费，并且可能有延迟。</li>
+<li><strong>适用场景</strong>：临时远程访问，如开发测试。</li>
+<li><strong>软件推荐</strong>：frp、ngrok。</li>
+</ul>
+<h3 id="4-zerotier-异地组网方案">4. ZeroTier 异地组网方案</h3>
+<ul>
+<li><strong>优点</strong>：P2P 连接，配置简单。</li>
+<li><strong>缺点</strong>：免费版限制设备数量，且存在打洞失败几率，但可使用自建 planet 一类的来突破限制（需要服务器）。</li>
+<li><strong>适用场景</strong>：小型组网，如家庭网络。</li>
+</ul>
+<h3 id="5-cloudflare-tunnel-方案">5. Cloudflare Tunnel 方案</h3>
+<ul>
+<li><strong>优点</strong>：安全性高，配置简单。</li>
+<li><strong>缺点</strong>：依赖 Cloudflare 服务，因众所周知的原因速度访问巨慢。</li>
+<li><strong>适用场景</strong>：Web 服务、应用访问。</li>
+</ul>
+<p>个人比较推荐方案 1和方案 4，理由如下</p>
+<ol>
+<li>付费少</li>
+<li>配置相对简单</li>
+<li>打通之后，需要少量配置或无需配置即可实现多设备访问</li>
+</ol>
+<p>本文先介绍如何使用公网 ip 来进行远程访问，本文先假定能够开通 ipv4,具体操作步骤如下</p>
+<h2 id="基于公网-ipv4-的直接访问方案">基于公网 IPV4 的直接访问方案</h2>
+<h2 id="一获取公网ip">一、获取公网IP</h2>
+<h3 id="1-申请公网ip">1. 申请公网IP</h3>
+<ul>
+<li>联系宽带运营商客服申请开通公网IP</li>
+<li>根据运营商政策可能需要更换套餐或支付额外费用</li>
+<li>可能获得的公网IP类型：
+<ul>
+<li>固定IPv4（地址不变，费用较高，一般申请不到）</li>
+<li>动态IPv4（光猫重启后地址可能会变化，所以需要域名配合ddns 解析）</li>
+<li>动态IPv6（现在运营商普遍支持，但需要配合动态 dns 解析）</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-验证公网ip">2. 验证公网IP</h3>
+<ul>
+<li>访问  <a href="https://ip138.com/">https://ip138.com/</a>  或直接百度搜 ip 查询当前 ip</li>
+<li>使用命令行工具检查：
+<ul>
+<li>Windows: ipconfig /all</li>
+<li>Linux/Mac: ifconfig 或 ip addr</li>
+</ul>
+</li>
+<li>注意区分内网IP（192.168.x.x、10.x.x.x等）和公网IP，且注意路由器或光猫是否响应 ping 命令</li>
+</ul>
+<h2 id="二网络环境配置">二、网络环境配置</h2>
+<h3 id="1-光猫设置">1. 光猫设置</h3>
+<ul>
+<li>理想情况：直接在光猫配置端口转发
+<ul>
+<li>需要运营商提供超级管理员密码</li>
+<li>配置较简单，性能较好</li>
+</ul>
+</li>
+<li>现实情况：多数无法获取超级管理员权限，且光猫性能垃圾，多设备连接了之后会异常卡
+<ul>
+<li>需要将光猫改为桥接模式，自己额外接路由器</li>
+<li>可能需要运营商远程协助设置</li>
+</ul>
+</li>
+</ul>
+<h4 id="可能遇到的问题及解决方案">可能遇到的问题及解决方案</h4>
+<ol>
+<li>运营商不给开公网ip =&gt; 投诉</li>
+<li>运营商不给开桥接 =》 投诉</li>
+</ol>
+<h3 id="2-路由器配置">2. 路由器配置</h3>
+<ul>
+<li>选购支持端口转发的路由器</li>
+<li>设置路由器PPPoE拨号
+<ul>
+<li>输入宽带账号密码</li>
+</ul>
+</li>
+<li>配置端口转发
+<ul>
+<li>选择需要转发的内部端口</li>
+<li>设置对应的外部端口</li>
+<li>指定内网设备IP地址</li>
+<li>选择协议类型（TCP/UDP）</li>
+</ul>
+</li>
+</ul>
+<h4 id="可能遇到的问题及解决方案-1">可能遇到的问题及解决方案</h4>
+<ol>
+<li>拿不到宽带账号密码 =》 投诉</li>
+<li>验证自己的路由器是否获取到公网 ip =》 <a href="https://ip138.com">https://ip138.com</a> 看ip 是否与路由器后台 ip 一致，且不为192.168.xxx.xxx ，不为 10.xx.xx.xx</li>
+<li>验证端口转发是否生效  =&gt; 假定获取到的公网ip 为 222.71.193.9  配置的转发为 9999 端口转发到内网 192.168.1.200 机器的 5001 端口，则执行命令</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt; telnet  222.71.193.9 9999   回车
+</span></span><span class="line"><span class="cl">Trying  222.71.193.9...
+</span></span><span class="line"><span class="cl">Connected to  222.71.193.9.
+</span></span><span class="line"><span class="cl">Escape character is &#39;^]&#39;.       (出现这行表示正常，如果没出现则依次排查应用状态，防火墙状态，端口转发是否正确)
+</span></span></code></pre></div><h3 id="3-防火墙设置">3. 防火墙设置</h3>
+<ul>
+<li>路由器防火墙配置
+<ul>
+<li>开放必要端口</li>
+<li>设置访问控制规则</li>
+<li>启用基本安全防护</li>
+</ul>
+</li>
+<li>内网设备防火墙配置
+<ul>
+<li>允许相关端口访问</li>
+<li>配置访问白名单</li>
+<li>启用安全防护措施</li>
+</ul>
+</li>
+</ul>
+<p>完成上述配置之后，在外网可以直接通过 http://公网ip:端口转发外部port 访问相关的 web 应用,此处的 ip 为公网 ip，port 为配置的外网端口转发，假定获取到的公网ip 为 222.71.193.9  配置的转发为 9999 端口转发到内网 192.168.1.200 机器的 5000 端口（群晖默认端口），则访问地址为
+http://222.71.193.9:9999 ，但运营商给的是动态 ip，可能会在某些特定的时候自动改变，或者是在路由器重启时重新分配，重新分配之后，就原来的方式就不能访问了，所以为了使用方便，都希望直接使用某个域名来远程访问内部服务，接下来就需要介绍后续DDNS 了</p>
+<p>DDNS （Dynamic DNS), 熟悉 DNS 的小伙伴都知道 DNS 是将域名转为 IP 地址的服务，直接复习下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> DDNS（动态域名系统）和DNS（域名系统）是两个相关但不同的概念。以下是它们的主要区别：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">### DNS（域名系统）
+</span></span><span class="line"><span class="cl">- **全球性服务**：DNS是一个全球性的服务，它将人类易于记忆的域名转换为计算机使用的IP地址。
+</span></span><span class="line"><span class="cl">- **静态解析**：传统的DNS服务通常用于静态IP地址，即域名与IP地址的映射是固定的，不会随时间变化。
+</span></span><span class="line"><span class="cl">- **分布式系统**：DNS是一个分层的分布式系统，包括根服务器、顶级域名服务器、权威名称服务器和递归服务器。
+</span></span><span class="line"><span class="cl">- **缓存机制**：DNS查询结果通常被缓存，以提高解析速度和减轻DNS服务器的负载。
+</span></span><span class="line"><span class="cl">- **适用于静态IP**：对于拥有静态公网IP的用户或企业来说，传统的DNS服务是合适的。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">### DDNS（动态域名系统）
+</span></span><span class="line"><span class="cl">- **动态IP支持**：DDNS服务允许用户将一个固定的域名与动态变化的IP地址关联起来，特别适用于家庭用户和小型办公室，他们的公网IP地址可能会因为重新连接互联网而变化。
+</span></span><span class="line"><span class="cl">- **自动更新**：DDNS服务会自动检测IP地址的变化，并更新DNS记录，确保域名始终指向当前的IP地址。
+</span></span><span class="line"><span class="cl">- **依赖第三方服务**：DDNS服务通常由第三方提供商提供，用户需要在服务提供商的平台上注册域名，并配置DDNS服务。
+</span></span><span class="line"><span class="cl">- **客户端软件**：用户通常需要在本地网络设备上安装客户端软件，该软件会监测IP地址的变化，并与DDNS服务提供商的服务器通信以更新DNS记录。
+</span></span><span class="line"><span class="cl">- **适用于动态IP**：对于没有静态公网IP的用户来说，DDNS服务是必要的，以便他们能够通过一个固定的域名来访问或管理他们的网络设备。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">总结来说，DNS是一个全球性的域名解析服务，而DDNS是DNS服务的一个扩展，专门为动态IP地址提供域名解析服务。DDNS解决了动态IP地址环境下域名解析的问题，使得用户可以通过一个固定的域名来访问他们的设备，即使这些设备的IP地址可能会变化。
+</span></span></code></pre></div><p>DDNS是直接将域名转化为动态 ip，这样我们配置好之后就直接能用固定的域名访问内网中的各种服务了</p>
+<h2 id="三域名解析配置可选">三、域名解析配置（可选）</h2>
+<h3 id="1-域名准备">1. 域名准备</h3>
+<ul>
+<li>购买域名</li>
+<li>配置DNS服务器</li>
+</ul>
+<h3 id="2-ddns配置">2. DDNS配置</h3>
+<ul>
+<li>选择DDNS软件
+<ul>
+<li>DDNS-GO</li>
+<li>Lucky</li>
+<li>NO-IP</li>
+<li>花生壳</li>
+</ul>
+</li>
+<li>软件配置
+<ul>
+<li>设置域名提供商API，网上教程太多 不过多赘述，参考各个软件官方文档即可</li>
+<li>配置更新间隔</li>
+<li>选择需要解析的域名</li>
+</ul>
+</li>
+<li>运行方式
+<ul>
+<li>物理机直接运行</li>
+<li>Docker容器运行</li>
+<li>路由器插件运行</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-解析验证">3. 解析验证</h3>
+<ul>
+<li>测试域名解析是否正确</li>
+</ul>
+<h4 id="可能遇到的问题及解决方案-2">可能遇到的问题及解决方案</h4>
+<ol>
+<li>测试域名解析是否正确 =&gt;</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">❯ ping 你配置在 ddns 软件里的域名 比如
+</span></span><span class="line"><span class="cl">ping nas.abcdefg.com
+</span></span><span class="line"><span class="cl">PING nas.abcdefg.com (222.71.193.9): 56 data bytes
+</span></span><span class="line"><span class="cl">64 bytes from 222.71.193.9: icmp_seq=0 ttl=50 time=12.410 ms
+</span></span><span class="line"><span class="cl">64 bytes from 222.71.193.9: icmp_seq=1 ttl=50 time=13.020 ms
+</span></span><span class="line"><span class="cl">64 bytes from 222.71.193.9: icmp_seq=2 ttl=50 time=15.120 ms
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">重复出现的 ip与自己公网 ip 一致即可
+</span></span></code></pre></div><p><strong>如果在配置 ddns 之前如果都没问题，但是 ddns 解析有问题，可能需要关注下自己是否使用了相关代理软件，修改代理规则，我曾经遇到过使用 cloudflare 的 dns，同时在路由器上配置了代理，再使用 ddns 时发现 cloudflare 上的 dns 解析一直是解析到某海外 ip，排查之后发现是规则设置的问题</strong></p>
+<h2 id="四测试验证">四、测试验证</h2>
+<p>测试部分，不做过多数据测试，能满足自己要求即可</p>
+<h3 id="1-基础连通性测试">1. 基础连通性测试</h3>
+<ul>
+<li>Ping测试
+<ul>
+<li>ping 公网IP</li>
+<li>ping 域名（如果配置了域名）</li>
+</ul>
+</li>
+<li>端口检测
+<ul>
+<li>使用在线端口检测工具</li>
+<li>telnet测试端口连通性</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-性能测试">2. 性能测试</h3>
+<ul>
+<li>带宽测试</li>
+<li>延迟测试</li>
+<li>稳定性测试</li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>DXP4800-黑群晖小记</title>
+      <link>https://blog.xiaohuangyu.space/p/dxp4800-synology/</link>
+      <pubDate>Sun, 03 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/dxp4800-synology/</guid>
+      <description>&lt;p&gt;黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;绿联nas 关闭watchdog 及修改启动方式教程&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://post.smzdm.com/p/a3xnev8n/](https://post.smzdm.com/p/a3xnev8n/)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;绿联黑群晖&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://post.smzdm.com/p/a07nw4zr/](https://post.smzdm.com/p/a07nw4zr/)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;黑群晖安装教程&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://post.smzdm.com/p/akk9vpkr/](https://post.smzdm.com/p/akk9vpkr/)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2024 年就 10 月黑群晖 nas 教程&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a](https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=c50111db380d4669d222dbf4f28aa85a)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;已解决&#34;&gt;已解决&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;解决视频HEIC不能播放问题，需要安装 AME 套件并激活，参见 &lt;a href=&#34;https://post.smzdm.com/p/a7pw05r9/&#34;&gt;https://post.smzdm.com/p/a7pw05r9/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;更新小红点问题： 更改/etc/host,增加127.0.0.1 update.synology.com（未解决，后续再做）&lt;/li&gt;&#xA;&lt;li&gt;MOV 视频封面不显示问题，升级ffmpeg 套件，从 4 升级到 6 后重建索引解决 ，参见 &lt;a href=&#34;https://blog.csdn.net/qq_44726883/article/details/140429626&#34;&gt;https://blog.csdn.net/qq_44726883/article/details/140429626&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;硬盘灯闪烁问题，不影响使用，故暂不解决，参见&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://www.langog.com/?p=0f263caf-d8a0-4627-b458-7f1df146b88a&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://github.com/miskcoo/ugreen_leds_controller&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;&#xA;&lt;li&gt;群晖信息显示监控 ，ssh 安装 sensors 插件即可，&lt;a href=&#34;https://post.smzdm.com/p/a8xze450/&#34;&gt;https://post.smzdm.com/p/a8xze450/&lt;/a&gt;，后期使用hertzbeat 统一监控（11 月 1 日解决问题 3 后，重建索引时，发现 cpu 温度跟面板温度似乎一样&lt;/li&gt;&#xA;&lt;li&gt;风扇问题，风扇无法自定义调节转速，暂时直接拉风速到 100 参见连接&#xA;&lt;a href=&#34;https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments&#34;&gt;https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;外网访问,zerotier 已打通内外网访问，自建 planet 来搞定外网访问问题&lt;/li&gt;&#xA;&lt;li&gt;公网 ip v4 已开通，ddns-go + 端口转发 + Let’s Encrypt 完成整个网络搭建&lt;/li&gt;&#xA;&lt;li&gt;软件问题，主要设备平台为Android + mac 常用软件下载参考&lt;a href=&#34;https://www.synology.cn/zh-cn/support/download?version=7.2#utilities&#34;&gt;https://www.synology.cn/zh-cn/support/download?version=7.2#utilities&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;nas 内置docker 容器跑&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;del&gt;immich作为群晖相册补充&lt;/del&gt; （因群晖相册已足够，暂时不用）&lt;/li&gt;&#xA;&lt;li&gt;jellyfin&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;2015mac docker容器&#xA;&lt;ol&gt;&#xA;&lt;li&gt;heatzbeat 做为整个局域网的监控&lt;/li&gt;&#xA;&lt;li&gt;alist 挂百度网盘，夸克网盘，阿里云网盘&lt;/li&gt;&#xA;&lt;li&gt;gitlab&lt;/li&gt;&#xA;&lt;li&gt;gitlab-runner&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;经过一系列折腾之后，目前公网访问已经无问题，如果 ddns 挂了，也有自建 zerotier 能作为补充使用，后续考虑加一个 UPS 及两条 512 的 SSD 组 raid1 作为 docker 及虚拟机盘&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>黑群晖安装步骤略，引导盘+ 关闭内置 EMMC 网上教程比较多，不过多赘述，安装参考</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">绿联nas 关闭watchdog 及修改启动方式教程
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[https://post.smzdm.com/p/a3xnev8n/](https://post.smzdm.com/p/a3xnev8n/)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">绿联黑群晖
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[https://post.smzdm.com/p/a07nw4zr/](https://post.smzdm.com/p/a07nw4zr/)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">黑群晖安装教程
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[https://post.smzdm.com/p/akk9vpkr/](https://post.smzdm.com/p/akk9vpkr/)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2024 年就 10 月黑群晖 nas 教程
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;vd_source=c50111db380d4669d222dbf4f28aa85a](https://www.bilibili.com/video/BV1XN2QYWEAi/?spm_id_from=333.337.search-card.all.click&amp;vd_source=c50111db380d4669d222dbf4f28aa85a)
+</span></span></code></pre></div><h2 id="已解决">已解决</h2>
+<ol>
+<li>解决视频HEIC不能播放问题，需要安装 AME 套件并激活，参见 <a href="https://post.smzdm.com/p/a7pw05r9/">https://post.smzdm.com/p/a7pw05r9/</a></li>
+<li>更新小红点问题： 更改/etc/host,增加127.0.0.1 update.synology.com（未解决，后续再做）</li>
+<li>MOV 视频封面不显示问题，升级ffmpeg 套件，从 4 升级到 6 后重建索引解决 ，参见 <a href="https://blog.csdn.net/qq_44726883/article/details/140429626">https://blog.csdn.net/qq_44726883/article/details/140429626</a></li>
+<li>硬盘灯闪烁问题，不影响使用，故暂不解决，参见</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://www.langog.com/?p=0f263caf-d8a0-4627-b458-7f1df146b88a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://github.com/miskcoo/ugreen_leds_controller
+</span></span></code></pre></div><ol start="5">
+<li>群晖信息显示监控 ，ssh 安装 sensors 插件即可，<a href="https://post.smzdm.com/p/a8xze450/">https://post.smzdm.com/p/a8xze450/</a>，后期使用hertzbeat 统一监控（11 月 1 日解决问题 3 后，重建索引时，发现 cpu 温度跟面板温度似乎一样</li>
+<li>风扇问题，风扇无法自定义调节转速，暂时直接拉风速到 100 参见连接
+<a href="https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments">https://post.smzdm.com/p/a0xk4el8/?sort_tab=hot/#comments</a></li>
+<li>外网访问,zerotier 已打通内外网访问，自建 planet 来搞定外网访问问题</li>
+<li>公网 ip v4 已开通，ddns-go + 端口转发 + Let’s Encrypt 完成整个网络搭建</li>
+<li>软件问题，主要设备平台为Android + mac 常用软件下载参考<a href="https://www.synology.cn/zh-cn/support/download?version=7.2#utilities">https://www.synology.cn/zh-cn/support/download?version=7.2#utilities</a></li>
+<li>nas 内置docker 容器跑
+<ol>
+<li><del>immich作为群晖相册补充</del> （因群晖相册已足够，暂时不用）</li>
+<li>jellyfin</li>
+</ol>
+</li>
+<li>2015mac docker容器
+<ol>
+<li>heatzbeat 做为整个局域网的监控</li>
+<li>alist 挂百度网盘，夸克网盘，阿里云网盘</li>
+<li>gitlab</li>
+<li>gitlab-runner</li>
+</ol>
+</li>
+</ol>
+<p>经过一系列折腾之后，目前公网访问已经无问题，如果 ddns 挂了，也有自建 zerotier 能作为补充使用，后续考虑加一个 UPS 及两条 512 的 SSD 组 raid1 作为 docker 及虚拟机盘</p>
+<h2 id="待办">待办</h2>
+<ol>
+<li><del>因使用内置ddns 时出现过梅林固件上的 clash 规则问题，导致 ddns 出现错误的 ip（实际为代理的 ip），后续考虑增加一个软路由</del> （新版 Merlin Clash已支持自定义规则，可以在访问 api.cloudflare.com 时不使用代理）</li>
+<li>公网 ipv4 访问不是很安全，考虑后续将 ddns 迁移到群晖中，直接开ipv6 访问</li>
+<li><del>群晖链路聚合开启</del>  （RAX50 不支持链路聚合，lan 口只能到千兆，跑不满绿联 2.5G 带宽）</li>
+<li>时间机器构建</li>
+<li>mac 常用文件自动备份到群晖任务构建</li>
+<li>冷备份任务构建</li>
+<li>2015mac docker容器配置及配置文件备份</li>
+<li>7 中的关键任务自动同步到群晖防丢失</li>
+<li>考虑将此次黑裙关键步骤细化，落为文档，防丢失</li>
+<li>风扇自动调速脚本配置，目前弄了个简版，后续再配置和优化</li>
+</ol>
+<h2 id="风扇转速脚本待测试">风扇转速脚本（待测试）</h2>
+<p>保存为 fan_control.sh，然后执行脚本</p>
+<p>chmod +x fan_control.sh
+sudo ./fan_control.sh</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">FAN_CONTROL</span><span class="o">=</span><span class="s2">&#34;/sys/devices/platform/it87.2608/hwmon/hwmon2/pwm3&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查必要的命令是否存在</span>
+</span></span><span class="line"><span class="cl"><span class="nb">command</span> -v sensors &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;需要安装 lm-sensors，请先运行: apt-get install lm-sensors&#34;</span><span class="p">;</span> <span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">command</span> -v bc &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;需要安装 bc，请先运行: apt-get install bc&#34;</span><span class="p">;</span> <span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查文件权限和路径</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> ! -w <span class="s2">&#34;</span><span class="nv">$FAN_CONTROL</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;错误: 无法写入风扇控制文件 </span><span class="nv">$FAN_CONTROL</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;请确保以root权限运行此脚本&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查风扇控制模式设置是否成功</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> ! <span class="nb">echo</span> <span class="m">1</span> &gt; /sys/devices/platform/it87.2608/hwmon/hwmon2/pwm3_enable<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;错误: 无法设置风扇控制模式&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化变量</span>
+</span></span><span class="line"><span class="cl"><span class="nb">declare</span> -a <span class="nv">temp_history</span><span class="o">=()</span>
+</span></span><span class="line"><span class="cl"><span class="nv">current_pwm</span><span class="o">=</span><span class="m">85</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NORMAL_INTERVAL</span><span class="o">=</span><span class="m">15</span>
+</span></span><span class="line"><span class="cl"><span class="nv">HIGH_TEMP_INTERVAL</span><span class="o">=</span><span class="m">5</span>
+</span></span><span class="line"><span class="cl"><span class="nv">TEMP_THRESHOLD</span><span class="o">=</span><span class="m">45</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MIN_PWM</span><span class="o">=</span><span class="m">55</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MAX_PWM</span><span class="o">=</span><span class="m">255</span>
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&#34;/var/log/fan_control.log&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建日志文件（如果不存在）</span>
+</span></span><span class="line"><span class="cl">touch <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span> 2&gt;/dev/null <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;错误: 无法创建日志文件&#34;</span><span class="p">;</span> <span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 温度读取函数</span>
+</span></span><span class="line"><span class="cl">get_temp<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">local</span> temp
+</span></span><span class="line"><span class="cl">    <span class="nv">temp</span><span class="o">=</span><span class="k">$(</span>sensors <span class="p">|</span> grep <span class="s2">&#34;Package id 0:&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> tr -d <span class="s1">&#39;+°C&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查温度读取是否成功</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> ! <span class="nv">$temp</span> <span class="o">=</span>~ ^<span class="o">[</span>0-9<span class="o">]</span>+<span class="o">(</span><span class="se">\.</span><span class="o">[</span>0-9<span class="o">]</span>+<span class="o">)</span>?$ <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;错误: 无法正确读取温度&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查温度是否在合理范围内 (-20到100度)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$temp</span><span class="s2"> &lt; -20 || </span><span class="nv">$temp</span><span class="s2"> &gt; 100&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;警告: 温度读数异常: </span><span class="si">${</span><span class="nv">temp</span><span class="si">}</span><span class="s2">°C&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$temp</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设置风扇转速函数</span>
+</span></span><span class="line"><span class="cl">set_fan_speed<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">pwm</span><span class="o">=</span><span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 确保PWM值在有效范围内</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$pwm</span> -lt <span class="nv">$MIN_PWM</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">pwm</span><span class="o">=</span><span class="nv">$MIN_PWM</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$pwm</span> -gt <span class="nv">$MAX_PWM</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">pwm</span><span class="o">=</span><span class="nv">$MAX_PWM</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 尝试设置风扇转速</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> ! <span class="nb">echo</span> <span class="nv">$pwm</span> &gt; <span class="s2">&#34;</span><span class="nv">$FAN_CONTROL</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;错误: 设置风扇转速失败: </span><span class="nv">$pwm</span><span class="s2">&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 主循环</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取CPU温度</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">TEMP</span><span class="o">=</span><span class="k">$(</span>get_temp<span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 温度读取失败，使用保守的风扇设置</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;警告: 温度读取失败，使用默认风扇设置&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        set_fan_speed <span class="m">150</span>
+</span></span><span class="line"><span class="cl">        sleep <span class="nv">$NORMAL_INTERVAL</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 根据温度设置检测间隔</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= </span><span class="nv">$TEMP_THRESHOLD</span><span class="s2">&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">sleep_interval</span><span class="o">=</span><span class="nv">$HIGH_TEMP_INTERVAL</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">sleep_interval</span><span class="o">=</span><span class="nv">$NORMAL_INTERVAL</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 设置目标风扇转速</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &lt; 30&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="nv">$MIN_PWM</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= 30 &amp;&amp; </span><span class="nv">$TEMP</span><span class="s2"> &lt; 35&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="m">85</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= 35 &amp;&amp; </span><span class="nv">$TEMP</span><span class="s2"> &lt; 40&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="m">120</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= 40 &amp;&amp; </span><span class="nv">$TEMP</span><span class="s2"> &lt; 45&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="m">150</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= 45 &amp;&amp; </span><span class="nv">$TEMP</span><span class="s2"> &lt; 50&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="m">180</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= 50 &amp;&amp; </span><span class="nv">$TEMP</span><span class="s2"> &lt; 55&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="m">200</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">((</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$TEMP</span><span class="s2"> &gt;= 55 &amp;&amp; </span><span class="nv">$TEMP</span><span class="s2"> &lt; 60&#34;</span> <span class="p">|</span> bc -l<span class="k">)</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="m">225</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">target_pwm</span><span class="o">=</span><span class="nv">$MAX_PWM</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 平滑过渡</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$target_pwm</span> -gt <span class="nv">$current_pwm</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">current_pwm</span><span class="o">=</span><span class="k">$((</span> current_pwm <span class="o">+</span> <span class="m">8</span> <span class="k">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$target_pwm</span> -lt <span class="nv">$current_pwm</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">current_pwm</span><span class="o">=</span><span class="k">$((</span> current_pwm <span class="o">-</span> <span class="m">3</span> <span class="k">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 确保PWM值在有效范围内并设置风扇转速</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> ! set_fan_speed <span class="nv">$current_pwm</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;错误: 风扇控制失败，等待下次尝试&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        sleep <span class="nv">$NORMAL_INTERVAL</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 记录日志，同时检查日志文件大小</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">log_size</span><span class="o">=</span><span class="k">$(</span>stat -f %z <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> 0<span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$log_size</span> -gt <span class="m">10485760</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>  <span class="c1"># 10MB</span>
+</span></span><span class="line"><span class="cl">        mv <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">.old&#34;</span>
+</span></span><span class="line"><span class="cl">        touch <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$(</span>date <span class="s1">&#39;+%Y-%m-%d %H:%M:%S&#39;</span><span class="k">)</span><span class="s2"> - Temp: </span><span class="si">${</span><span class="nv">TEMP</span><span class="si">}</span><span class="s2">°C, PWM: </span><span class="si">${</span><span class="nv">current_pwm</span><span class="si">}</span><span class="s2">, Interval: </span><span class="si">${</span><span class="nv">sleep_interval</span><span class="si">}</span><span class="s2">s&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 使用trap捕获信号</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">trap</span> <span class="s1">&#39;echo &#34;收到终止信号，设置风扇为默认值并退出...&#34;; set_fan_speed 150; exit 0&#39;</span> SIGTERM SIGINT
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    sleep <span class="nv">$sleep_interval</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></div>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

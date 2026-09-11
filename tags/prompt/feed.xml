@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Prompt on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/prompt/</link>
+    <description>Recent content in Prompt on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 26 Jun 2026 09:52:14 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/prompt/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>给 BOSS直聘抓取工具补了一个收尾：岗位摘要和提示词</title>
+      <link>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-job-summary/</link>
+      <pubDate>Thu, 25 Jun 2026 23:54:36 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-job-summary/</guid>
+      <description>&lt;p&gt;之前把 &lt;a href=&#34;https://github.com/eatmoreduck/boss-zhipin-scraper&#34;&gt;BOSS直聘抓取工具&lt;/a&gt; 开源之后，工具本身已经能把列表、薪资、详情页 JD 拉下来，也能导出 JSON/CSV。&lt;/p&gt;&#xA;&lt;p&gt;但抓完之后还有一个问题：&lt;strong&gt;这些数据怎么用？&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;一开始很容易往一个方向想：既然岗位数据有了，那是不是顺手做一个“简历匹配打分”？把简历扔进去，给每个岗位算一个匹配度，最后排个序。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>之前把 <a href="https://github.com/eatmoreduck/boss-zhipin-scraper">BOSS直聘抓取工具</a> 开源之后，工具本身已经能把列表、薪资、详情页 JD 拉下来，也能导出 JSON/CSV。</p>
+<p>但抓完之后还有一个问题：<strong>这些数据怎么用？</strong></p>
+<p>一开始很容易往一个方向想：既然岗位数据有了，那是不是顺手做一个“简历匹配打分”？把简历扔进去，给每个岗位算一个匹配度，最后排个序。</p>
+<p>这个想法看起来完整，但我最后还是把它砍掉了。今天补的是另一个更轻的东西：<strong>岗位摘要 + 提示词</strong>。</p>
+<h2 id="为什么不做简历匹配打分">为什么不做简历匹配打分</h2>
+<p>不是做不了，而是不太应该放在这个项目里。</p>
+<p>简历匹配打分听起来很有用，但它很容易制造一种假的精确感。比如某个岗位 86 分，另一个岗位 73 分，看起来很像那么回事。可这个分数背后到底代表什么？关键词重合？经历年限？项目相似度？模型的主观判断？</p>
+<p>如果解释不清，这个分数就会误导人。</p>
+<p>而且这个项目一开始的边界很清楚：它是一个 BOSS直聘数据抓取和分析工具。它应该回答的是：</p>
+<ul>
+<li>这个岗位市场现在在招什么</li>
+<li>薪资大概集中在哪</li>
+<li>高频技能是什么</li>
+<li>经验和学历要求是什么</li>
+<li>哪些公司在反复出现</li>
+</ul>
+<p>它不应该变成一个读取本地简历、解析 PDF、调用 LLM、再给你一个“你适合哪个岗位”的半自动决策器。那会把项目复杂度拉高，也会引入隐私和依赖问题。</p>
+<p>所以最后定下来的边界是：<strong>不读简历，不做个人匹配分，只做岗位市场摘要。</strong></p>
+<h2 id="新增了什么">新增了什么</h2>
+<p>这次新增了一个脚本：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scripts/job_summary.py
+</span></span></code></pre></div><p>打包后也可以用入口命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">uv run boss-summary --top <span class="m">15</span>
+</span></span></code></pre></div><p>它做的事情很简单：读取已经抓好的 <code>boss_jobs_*.json</code> 和 <code>boss_details_*.json</code>，然后输出一份聚合摘要。</p>
+<p>比如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">岗位市场摘要: AI Agent @ 上海
+</span></span><span class="line"><span class="cl">列表岗位: 60 条；详情 JD: 20 条
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">薪资区间: 30-60K(12)、40-70K(8)、20-40K(7)
+</span></span><span class="line"><span class="cl">经验要求: 3-5年(24)、5-10年(18)
+</span></span><span class="line"><span class="cl">学历要求: 本科(42)、硕士(9)
+</span></span><span class="line"><span class="cl">地区分布: 浦东新区(15)、徐汇区(8)、闵行区(6)
+</span></span><span class="line"><span class="cl">高频公司: 某某科技(3)、某某智能(2)
+</span></span><span class="line"><span class="cl">技能标签: Python(18)、LLM(15)、RAG(11)、Agent(9)
+</span></span><span class="line"><span class="cl">JD 高频词: Python(16)、LLM(14)、RAG(10)、Agent(9)
+</span></span></code></pre></div><p>然后它会生成一段可以直接复制给模型的提示词，大概是让模型基于这些统计，帮你做：</p>
+<ol>
+<li>简历技能关键词补齐建议</li>
+<li>项目经历和工作经历的改写方向</li>
+<li>面试准备清单</li>
+<li>投递时需要避开的岗位特征</li>
+</ol>
+<p>重点是最后那句要求：<strong>不要虚构经历，只把真实经历改写得更贴近这些岗位。</strong></p>
+<p>这比“给我打个分”要稳得多。</p>
+<h2 id="使用方式">使用方式</h2>
+<p>正常流程是先抓岗位：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --analysis
+</span></span></code></pre></div><p>抓完之后跑摘要：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/job_summary.py --top <span class="m">15</span>
+</span></span></code></pre></div><p>默认会去 <code>~/.boss-zhipin-scraper/job-result</code> 下面找最新的 <code>boss_jobs_*.json</code>，并自动匹配同时间戳或者最新的详情文件。</p>
+<p>如果你想指定文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/job_summary.py <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --input ~/.boss-zhipin-scraper/job-result/boss_jobs_20260625_1200.json <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --details ~/.boss-zhipin-scraper/job-result/boss_details_20260625_1200.json <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --top <span class="m">15</span>
+</span></span></code></pre></div><p>如果只想要提示词：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/job_summary.py --prompt-only
+</span></span></code></pre></div><p>如果只想看摘要：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/job_summary.py --summary-only
+</span></span></code></pre></div><h2 id="这次补了几个边界">这次补了几个边界</h2>
+<p>这类小工具最容易出问题的地方，不是功能写不出来，而是边界不清楚。</p>
+<p>比如详情文件这件事。</p>
+<p>抓取结果里有列表文件，也有详情文件。如果你今天抓了“AI Agent”，昨天抓了“Java 后端”，默认找最新详情文件时就有可能串数据。摘要脚本现在会按 <code>job_id</code> 做过滤：只有属于当前列表的详情，才会进入统计。</p>
+<p>如果你显式传了 <code>--details</code>，但路径写错了，它也不会偷偷 fallback 到最新详情，而是直接报错。这个很重要，因为“静默帮你找另一个文件”看起来贴心，实际会污染分析结果。</p>
+<p>技能统计也补了口径。</p>
+<p>BOSS 列表里的经验和学历在 <code>tags</code>，技能通常在 <code>skills</code> 或 <code>job_labels</code>。一开始如果只看 <code>tags</code>，没有详情页时技能会很空。现在会同时看：</p>
+<ul>
+<li><code>tags</code></li>
+<li><code>skills</code></li>
+<li><code>job_labels</code></li>
+<li>详情页里的 <code>skill_tags</code></li>
+<li>JD 正文里的高频技术词</li>
+</ul>
+<p>还有一些 CLI 边界：</p>
+<ul>
+<li><code>--summary-only</code> 和 <code>--prompt-only</code> 互斥，不能一起传</li>
+<li><code>--top</code> 必须是正整数</li>
+<li>JSON 文件坏了会给明确错误，不直接甩 traceback</li>
+<li>英文关键词匹配加了词边界，避免 <code>Go</code> 命中 <code>Django</code>，<code>AI</code> 命中 <code>AIGC</code></li>
+</ul>
+<p>这些东西都不酷，但很有用。</p>
+<h2 id="我现在更喜欢这种工具形态">我现在更喜欢这种工具形态</h2>
+<p>以前做工具，总想把链路做满：输入简历，抓岗位，算匹配，生成建议，甚至自动投递。</p>
+<p>现在反而更愿意把工具停在一个比较克制的位置。</p>
+<p>数据抓取工具就把数据抓干净；分析脚本就把市场轮廓整理出来；真正要不要投、简历怎么改，还是留给人自己判断。AI 可以参与，但最好是作为辅助阅读和改写的工具，而不是装成一个“打分裁判”。</p>
+<p>这次更新之后，我比较满意的用法是：</p>
+<ol>
+<li>用抓取脚本拉一批目标岗位</li>
+<li>用摘要脚本看市场画像</li>
+<li>把生成的提示词和自己的真实经历一起丢给模型</li>
+<li>人自己判断哪些建议能用，哪些不能用</li>
+</ol>
+<p>这个流程没那么玄学，也不假装特别智能，但它真的能帮人少看很多重复 JD。</p>
+<h2 id="今天收尾">今天收尾</h2>
+<p>今天这版算是给 BOSS直聘抓取工具补上了一个比较自然的下游动作。</p>
+<p>不是大而全的“求职 AI Agent”，也不是简历匹配平台。就是一个简单的抓取后总结：把岗位市场里的重点拎出来，再给你一段可复制的提示词。</p>
+<p>有时候工具做到这里就够了。</p>
+<p>仓库地址：</p>
+<p><a href="https://github.com/eatmoreduck/boss-zhipin-scraper">https://github.com/eatmoreduck/boss-zhipin-scraper</a></p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>博客 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in 博客 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Aug 2026 09:09:10 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E5%8D%9A%E5%AE%A2/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI-助力每一个梦想之二</title>
+      <link>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</link>
+      <pubDate>Thu, 26 Mar 2026 11:07:23 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/ai-helps-every-dream-2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在上一篇 &lt;a href=&#34;https://blog.xiaohuangyu.space/p/ai-empowering-dreams/&#34;&gt;AI-助力每一个梦想&lt;/a&gt; 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。&lt;/p&gt;&#xA;&lt;p&gt;这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言">前言</h2>
+<p>在上一篇 <a href="/p/ai-empowering-dreams/">AI-助力每一个梦想</a> 中，我记录了用 Claude Code 配合 glm5 开发跨平台技能管理工具的经历。</p>
+<p>这一次，我把目标对准了自己的博客。在12小时内，在 AI 的协助下，我完成了一系列以前不敢想或者觉得太麻烦的改造工作。</p>
+<hr>
+<h2 id="改造清单">改造清单</h2>
+<p>先看一下这次完成的改造内容：</p>
+<h3 id="主题更换">主题更换</h3>
+<p>从旧主题更换到 <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a>，这个主题：</p>
+<ul>
+<li>简洁优雅，符合我的审美</li>
+<li>响应式设计，移动端友好</li>
+<li>内置暗色模式</li>
+<li>良好的 SEO 支持</li>
+</ul>
+<p>更换过程涉及大量配置文件的重写：</p>
+<ul>
+<li><code>config/_default/</code> 下的所有配置文件</li>
+<li>首页、归档、友情链接等页面内容</li>
+<li>自定义样式文件</li>
+</ul>
+<p>说实话，如果是自己手动配置，光是研究各个配置项的作用就要花不少时间。但在 cc+glm4.7 的协助下，整个过程顺畅了很多。</p>
+<h3 id="社交媒体集成">社交媒体集成</h3>
+<p>新增了多个社交媒体图标和链接：</p>
+<ul>
+<li>微信（侧边栏二维码）</li>
+<li>GitHub</li>
+<li>哔哩哔哩</li>
+<li>YouTube</li>
+</ul>
+<p>这些图标不是直接用主题自带的，而是我自己从 <a href="https://tabler.io/">Tabler Icons</a> 找的官方 SVG，或者是让 AI 给我找，然后手动添加到项目中，虽然经历过多次的反复，比如微信的 SVG 改对了又给我换错，存在不稳定的情况，但最后我把这条规则直接写入 CLAUDE.md 得以解决</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 微信social media的svg已经固定，不要做改动!
+</span></span></code></pre></div><h3 id="分享按钮优化">分享按钮优化</h3>
+<p>增强了文章分享功能，支持：</p>
+<ul>
+<li>微信</li>
+<li>朋友圈</li>
+<li>知乎</li>
+<li>Twitter</li>
+<li>Facebook</li>
+<li>LinkedIn
+虽然 知乎的分享还有 bug，但目前这个结果我相当满意了，能给到 90 分</li>
+</ul>
+<h3 id="seo-全面优化">SEO 全面优化</h3>
+<p>这部分是我之前一直想做但觉得太复杂的：</p>
+<p><strong>结构化数据</strong>：</p>
+<ul>
+<li>BlogPosting</li>
+<li>FAQPage</li>
+<li>HowTo</li>
+<li>VideoObject</li>
+<li>Review</li>
+<li>SoftwareApplication</li>
+</ul>
+<p><strong>验证配置</strong>：</p>
+<ul>
+<li>Google Search Console 验证码补全</li>
+</ul>
+<p><strong>AI 可发现性</strong>：</p>
+<ul>
+<li>添加 <code>llms.txt</code> 文件，让 AI 工具更容易理解博客内容</li>
+</ul>
+<h3 id="github-actions-性能优化">GitHub Actions 性能优化</h3>
+<p>博客部署使用 GitHub Actions，之前每次构建效率有点低，。</p>
+<p>优化内容：</p>
+<ul>
+<li>升级到 Node.js 24</li>
+<li>添加 Hugo CLI 缓存</li>
+<li>添加 Git Submodule 缓存</li>
+<li>优化 workflow 步骤结构</li>
+</ul>
+<p>构建时间明显缩短了。</p>
+<h3 id="标签系统重构">标签系统重构</h3>
+<p>之前的博客同时使用 <code>categories</code> 和 <code>tags</code>，但实际上 categories 几乎没用，而且两者功能重复。</p>
+<p>重构内容：</p>
+<ul>
+<li>删除所有文章的 categories 字段</li>
+<li>为空标签文章补充标签</li>
+<li>修复拼写错误（ags → tags）</li>
+<li>简化文章创建流程（Obsidian QuickAdd 脚本优化）</li>
+</ul>
+<h3 id="数据分析集成">数据分析集成</h3>
+<p>除了已有的 Google Analytics，新增了 <strong>Cloudflare Web Analytics</strong>：</p>
+<p>优势：</p>
+<ul>
+<li>隐私友好，不使用 Cookie</li>
+<li>轻量级，不影响页面加载速度</li>
+<li>界面简洁直观</li>
+</ul>
+<h3 id="友情链接页面">友情链接页面</h3>
+<p>重新设计了友情链接页面：</p>
+<ul>
+<li>添加社交媒体链接（知乎、B站、YouTube、GitHub）</li>
+<li>添加 RSS 订阅链接</li>
+<li>优化友链交换文案</li>
+<li>启用评论功能（基于 Giscus）</li>
+</ul>
+<p>虽然目前没有一个友链，但还是很希望能多交朋友，多多添加友链～</p>
+<hr>
+<h2 id="工作方式">工作方式</h2>
+<p>这次改造使用的是 <strong>Claude Code</strong>，工作流程大概是：</p>
+<ol>
+<li><strong>提出需求</strong>：告诉 Claude 我想要做什么</li>
+<li><strong>分析方案</strong>：Claude 分析代码库，给出建议</li>
+<li><strong>确认执行</strong>：我确认后，Claude 直接修改代码</li>
+<li><strong>验证结果</strong>：推送代码，查看效果</li>
+</ol>
+<p>整个过程不需要我手动写任何代码，只需要：</p>
+<ul>
+<li>明确自己想要什么</li>
+<li>对 Claude 的建议进行判断和确认</li>
+<li>验证结果是否符合预期</li>
+</ul>
+<hr>
+<h2 id="高强度使用-ai-之后我有很多想法">高强度使用 AI 之后，我有很多想法</h2>
+<h3 id="敢想敢做">敢想敢做</h3>
+<p>以前看到别人博客有各种酷炫功能，自己想加但总觉得太复杂：</p>
+<ul>
+<li>主题配置一大堆参数，看不懂（感觉像是花时间装修，但是实际应该把时间花在内容产出上）</li>
+<li>SEO 结构化数据，完全不会（经过这次了之后，起码知道哪些点需要考虑到）</li>
+<li>GitHub Actions 优化，怕改坏了（这个是重中之重，想当初废了很大劲该坏了很多次部署的 action）</li>
+</ul>
+<p>现在有了 AI 协作，这些都不是障碍。只要说出需求，AI 就能帮你实现。</p>
+<h3 id="时间成本大幅降低">时间成本大幅降低</h3>
+<p>这次改造大概花了 12 小时，但实际操作时间可能只有几个小时：</p>
+<ul>
+<li>大部分时间在等待 GitHub Actions 部署</li>
+<li>真正的思考和决策时间很有限</li>
+</ul>
+<p>如果是自己从零开始研究：</p>
+<ul>
+<li>研究主题配置：可能要几天</li>
+<li>学习 SEO 最佳实践：可能要一周</li>
+<li>优化 GitHub Actions：可能要反复调试</li>
+</ul>
+<h3 id="ai-是副驾驶">AI 是副驾驶</h3>
+<p>AI 不会替代你，但会让你变得更强：</p>
+<ul>
+<li>你仍然需要知道想要什么</li>
+<li>你需要判断 AI 的建议是否合理</li>
+<li>你需要验证结果是否符合预期</li>
+</ul>
+<p>AI 是副驾驶，你是机长。</p>
+<hr>
+<h2 id="下一步">下一步</h2>
+<p>我也给自己立了一个 flag：<strong>每周至少产出一篇博文</strong>。</p>
+<p>借助 AI 的力量，我觉得这个 flag 是可以坚持的。</p>
+<hr>
+<p>AI 让我敢想敢做。以前觉得复杂、麻烦、不想做的事情，现在有了 AI 协作，花一点点时间就能完成。</p>
+<p>这不仅是效率的提升，更是可能性的拓展。</p>
+<p><strong>AI 助力每一个梦想，这不是空话。</strong></p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

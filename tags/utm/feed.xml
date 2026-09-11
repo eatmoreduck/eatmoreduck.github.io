@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>UTM on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/utm/</link>
+    <description>Recent content in UTM on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 04 Jun 2026 16:06:37 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/utm/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Create-Virtual-machine-by-UTM</title>
+      <link>https://blog.xiaohuangyu.space/p/create-virtual-machine-by-utm/</link>
+      <pubDate>Mon, 17 Mar 2025 16:35:30 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/create-virtual-machine-by-utm/</guid>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;下载 App 安装 &lt;a href=&#34;https://mac.getutm.app/&#34;&gt;https://mac.getutm.app/&lt;/a&gt; 并打开&lt;/li&gt;&#xA;&lt;li&gt;创建新的虚拟机 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163729210.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;M1 芯片安装 x86 win10 ,因 cpu 为 arm 架构，故只能选择模拟 &lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163804627.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;创建 windows 虚拟机&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164215439.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;选择自己喜欢的 win10 版本镜像（需提前下载）&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164344728.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;配置硬件参数&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164412790.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164431605.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164609153.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317173946665.png&#34; alt=&#34;image.png&#34;  /&gt;&#xA;&#xA;注意将此处 UEFI 启动关闭，否则每次开机都是重新引导安装&lt;/li&gt;&#xA;&lt;li&gt;后面就是一步步按操作来就行&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+      <content:encoded><![CDATA[<ol>
+<li>下载 App 安装 <a href="https://mac.getutm.app/">https://mac.getutm.app/</a> 并打开</li>
+<li>创建新的虚拟机 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163729210.png" alt="image.png"  />
+</li>
+<li>M1 芯片安装 x86 win10 ,因 cpu 为 arm 架构，故只能选择模拟 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317163804627.png" alt="image.png"  />
+</li>
+<li>创建 windows 虚拟机<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164215439.png" alt="image.png"  />
+</li>
+<li>选择自己喜欢的 win10 版本镜像（需提前下载）
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164344728.png" alt="image.png"  />
+</li>
+<li>配置硬件参数<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164412790.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164431605.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317164609153.png" alt="image.png"  />
+</li>
+<li><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/20250317173946665.png" alt="image.png"  />
+
+注意将此处 UEFI 启动关闭，否则每次开机都是重新引导安装</li>
+<li>后面就是一步步按操作来就行</li>
+</ol>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

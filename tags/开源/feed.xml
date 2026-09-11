@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>开源 on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/%E5%BC%80%E6%BA%90/</link>
+    <description>Recent content in 开源 on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 15 Jun 2026 15:56:19 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/%E5%BC%80%E6%BA%90/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我做了一个 BOSS直聘抓取工具，开源了</title>
+      <link>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</link>
+      <pubDate>Thu, 11 Jun 2026 23:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;&#xA;&lt;p&gt;最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="起因">起因</h2>
+<p>最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。</p>
+<p>但 BOSS直聘有个很烦的东西：<strong>字体反爬</strong>。</p>
+<p>薪资数字在前端显示的不是正常文字，而是用一套自定义字体渲染的。你抓下来看到的是方块或者乱码。很多爬虫教程告诉你去解析 woff 字体文件做映射，但 BOSS直聘的字体是动态生成的，每次访问都不一样，这条路基本走不通。</p>
+<p>后来我发现了一个更简单的办法。</p>
+<h2 id="核心思路绕过前端直接调-api">核心思路：绕过前端，直接调 API</h2>
+<p>BOSS直聘的前端页面用了字体反爬，但它自己的前端代码也要拿到薪资数据来渲染。怎么拿的？通过一个内部 API：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/wapi/zpgeek/search/joblist.json
+</span></span></code></pre></div><p>这个接口返回的 JSON 里有 <code>salaryDesc</code> 字段——<strong>明文薪资</strong>，比如 <code>30-60K·15薪</code>。字体反爬只是前端渲染时加的一层，API 层面根本没有。</p>
+<p>所以思路就简单了：不要去解析 HTML、不要去破解字体，直接调这个 API 就行。</p>
+<p>但问题是这个 API 有 cookie 校验，你得在已登录的 BOSS直聘页面上下文里才能调通。这就引出了技术方案：Chrome CDP。</p>
+<h2 id="技术方案chrome-devtools-protocol">技术方案：Chrome DevTools Protocol</h2>
+<p>CDP（Chrome DevTools Protocol）就是 Chrome 浏览器的远程调试协议。你平时按 F12 打开的 DevTools 就是通过这个协议和 Chrome 通信的。</p>
+<p>用 CDP 可以做到：</p>
+<ol>
+<li>连接到一个正在运行的 Chrome 实例</li>
+<li>在任意页面里执行 JavaScript</li>
+<li>读取页面数据、模拟用户操作</li>
+</ol>
+<p>我们的做法是：</p>
+<ol>
+<li>启动一个开了 CDP 端口的 Chrome（使用 BOSS 专用 profile）</li>
+<li>通过 WebSocket 连接 CDP</li>
+<li>在 BOSS直聘页面里注入 JS，用 <code>XMLHttpRequest</code> 同步调用那个搜索 API</li>
+<li>拿到 JSON 结果，提取明文薪资和其他字段</li>
+</ol>
+<p>整个过程就像你在浏览器控制台里手动敲代码一样，只不过自动化了。</p>
+<h2 id="chrome-profile后来改成了隔离目录">Chrome profile：后来改成了隔离目录</h2>
+<p>这里踩过一个坑。</p>
+<p>最早我想复用自己的 Chrome 登录态，甚至尝试过软链接 profile。这个思路看起来省事，但风险太高：CDP Chrome 如果指向主 Chrome profile，理论上能看到那一整个浏览器环境里的 cookie 和登录态。更糟的是，Chrome 自己也不喜欢多个进程同时碰同一个 profile，容易出现锁冲突或者登录态异常。</p>
+<p>所以现在的方案改成了持久隔离 profile：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.boss-zhipin-scraper/chrome-profile
+</span></span></code></pre></div><p><code>--setup-chrome</code> 会创建或复用这个目录，然后启动一个 BOSS 专用 Chrome。首次使用时，在这个专用 Chrome 里登录 zhipin.com。登录态会留在这个目录里，重启机器后也还在；重复执行 <code>--setup-chrome</code> 不会清空它。</p>
+<p>默认情况下，它不会软链接你的主 Chrome，也不会复制你的 Gmail、GitHub 或其他网站 cookie。只有你显式加 <code>--copy-login-state</code>，才会把主 Chrome 里的 <code>Local State</code> 和 Cookie 相关文件复制到这个隔离 profile。日常使用不建议这么做，手动在专用 Chrome 里登录更干净。</p>
+<h2 id="一行命令抓取">一行命令抓取</h2>
+<p>安装好后，抓取就一行命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --format csv
+</span></span></code></pre></div><p>输出：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">✓ AI Agent运行环境工程师 | 30-60K·15薪 | 上海 | 字节跳动 | 10000人以上
+</span></span><span class="line"><span class="cl">✓ AI Agent 开发实习生 | 300-600元/天 | 上海 | 阿里巴巴集团 | 10000人以上
+</span></span><span class="line"><span class="cl">✓ AI Agent工程师-Java | 35-55K | 上海 | 滴滴 | 1000-9999人
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><h2 id="支持的功能">支持的功能</h2>
+<p><strong>搜索和筛选</strong></p>
+<ul>
+<li>按关键词、城市搜索</li>
+<li>按公司规模、薪资范围、工作经验、学历筛选</li>
+<li>支持分页（每页 30 条，最多 10 页）</li>
+</ul>
+<p><strong>输出格式</strong></p>
+<ul>
+<li>JSON：结构化数据，方便程序处理</li>
+<li>CSV：UTF-8 BOM 编码，Excel 直接打开不乱码</li>
+</ul>
+<p><strong>详情页抓取</strong></p>
+<ul>
+<li>默认会抓每个岗位的完整 JD</li>
+<li>只想抓列表可以加 <code>--no-detail</code></li>
+<li>自动提取技能标签</li>
+<li>进入详情页时会带上列表 API 返回的 <code>securityId</code> / <code>lid</code> 上下文</li>
+</ul>
+<p><strong>增量写入</strong></p>
+<ul>
+<li>每页抓完立即保存，Ctrl+C 中断不丢数据</li>
+<li>按 job_id 去重，重复运行不会产生重复数据</li>
+<li>默认输出到 <code>~/.boss-zhipin-scraper/job-result</code></li>
+</ul>
+<p><strong>合并多次抓取</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 先抓上海的</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --output jobs.json
+</span></span><span class="line"><span class="cl"><span class="c1"># 再抓北京的，合并到同一个文件</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 北京 --pages <span class="m">3</span> --merge jobs.json --output jobs.json
+</span></span></code></pre></div><p><strong>环境检查</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --check
+</span></span></code></pre></div><p>一键检测 Chrome CDP 是否可用、Python 依赖是否齐全、BOSS直聘是否已登录。</p>
+<p><strong>一键启动 Chrome</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --setup-chrome
+</span></span></code></pre></div><p>自动创建或复用隔离 profile，启动 Chrome CDP，然后等待你登录 zhipin.com。脚本会确认搜索接口能返回明文 <code>salaryDesc</code> 后再继续。</p>
+<p><strong>Smoke test</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --smoke-test
+</span></span></code></pre></div><p>这个命令只做一次真实 Chrome/CDP + BOSS 搜索 API 检查，不写结果文件。改代码或者换机器之后，可以先用它确认环境没问题。</p>
+<h2 id="反爬策略">反爬策略</h2>
+<p>BOSS直聘的反爬不弱，做了几件事来降低被封的风险：</p>
+<ul>
+<li>翻页间隔 12-22 秒随机延迟（模拟真人浏览节奏）</li>
+<li>单次最多 10 页（300 条），上限保护</li>
+<li>用真实 Chrome，但只使用 BOSS 专用 profile</li>
+<li>API 请求从页面内发起，和正常浏览行为一致</li>
+<li>默认禁用 DOM fallback，避免字体反爬导致的薪资乱码混进结果。只有显式加 <code>--allow-dom-fallback</code> 才会降级到 DOM 提取</li>
+</ul>
+<h2 id="作为-hermes-agent-skill-使用">作为 Hermes Agent Skill 使用</h2>
+<p>这个工具也打包成了 Hermes Agent Skill。装上之后，你直接跟 AI 说&quot;帮我搜一下上海 AI Agent 岗位&quot;，它会自动检查环境、启动 Chrome、运行抓取、返回结果。</p>
+<p>安装方式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># curl 一键安装</span>
+</span></span><span class="line"><span class="cl">mkdir -p ~/.hermes/skills/data-science/boss-zhipin-scraper/scripts <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">curl -sL https://raw.githubusercontent.com/eatmoreduck/boss-zhipin-scraper/master/SKILL.md <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -o ~/.hermes/skills/data-science/boss-zhipin-scraper/SKILL.md <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">curl -sL https://raw.githubusercontent.com/eatmoreduck/boss-zhipin-scraper/master/scripts/boss_cdp_raw.py <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -o ~/.hermes/skills/data-science/boss-zhipin-scraper/scripts/boss_cdp_raw.py
+</span></span></code></pre></div><h2 id="安装和使用">安装和使用</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 克隆仓库</span>
+</span></span><span class="line"><span class="cl">git clone https://github.com/eatmoreduck/boss-zhipin-scraper.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> boss-zhipin-scraper
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装依赖</span>
+</span></span><span class="line"><span class="cl">pip install -r requirements.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动 Chrome（首次使用）</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --setup-chrome
+</span></span><span class="line"><span class="cl"><span class="c1"># 首次使用时，在弹出的 BOSS 专用 Chrome 里登录 zhipin.com</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查环境</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --check
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始抓取</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --format csv
+</span></span></code></pre></div><h2 id="数据安全">数据安全</h2>
+<p>说几个需要注意的点：</p>
+<ul>
+<li><code>--setup-chrome</code> 默认使用 <code>~/.boss-zhipin-scraper/chrome-profile</code>，不软链接、不复制主 Chrome profile，也不会关闭你的主 Chrome</li>
+<li><code>--copy-login-state</code> 是显式选项，不是默认行为。它会复制主 Chrome 的 Local State 和 Cookie 相关文件到隔离 profile；日常使用更建议在专用 Chrome 里手动登录</li>
+<li>需要清空 BOSS 专用浏览器登录态时，用 <code>--reset-chrome-profile</code></li>
+<li>这个工具仅用于个人求职研究，不要拿去大规模爬取</li>
+<li>尊重 robots.txt 和网站使用条款</li>
+</ul>
+<h2 id="仓库地址">仓库地址</h2>
+<p><a href="https://github.com/eatmoreduck/boss-zhipin-scraper">https://github.com/eatmoreduck/boss-zhipin-scraper</a></p>
+<p>觉得有用的话给个 star。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

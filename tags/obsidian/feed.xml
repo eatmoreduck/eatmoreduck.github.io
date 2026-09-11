@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Obsidian on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/obsidian/</link>
+    <description>Recent content in Obsidian on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 24 Jun 2026 19:47:15 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/obsidian/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hugo&#43;obsidian打造静态博客（二）</title>
+      <link>https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/</link>
+      <pubDate>Wed, 24 Jun 2026 11:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog2/</guid>
+      <description>&lt;p&gt;上一篇聊了为什么选 Obsidian，拖了 2 年终于续上了：怎么让 Obsidian 里写的东西，自动变成一个能访问的网站。&lt;/p&gt;&#xA;&lt;p&gt;先讲流程：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在 Obsidian 里写 Markdown，粘贴图片，保存写完后统一提交&lt;/li&gt;&#xA;&lt;li&gt;推到 GitHub 之后，线上自动重新构建，不用手动操作&lt;/li&gt;&#xA;&lt;li&gt;用自己的域名，不绑死在某一个托管服务上&lt;/li&gt;&#xA;&lt;li&gt;整个过程零服务器零费用（仅域名费，如果用 github pages ，还省去域名费）&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;这套东西的核心是一个**「私有源 + 公开产物」的分层**。&#xA;大概就这么个逻辑&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/Untitled-2026-06-24-1206.png&#34; alt=&#34;Untitled-2026-06-24-1206.png&#34;  /&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>上一篇聊了为什么选 Obsidian，拖了 2 年终于续上了：怎么让 Obsidian 里写的东西，自动变成一个能访问的网站。</p>
+<p>先讲流程：</p>
+<ol>
+<li>在 Obsidian 里写 Markdown，粘贴图片，保存写完后统一提交</li>
+<li>推到 GitHub 之后，线上自动重新构建，不用手动操作</li>
+<li>用自己的域名，不绑死在某一个托管服务上</li>
+<li>整个过程零服务器零费用（仅域名费，如果用 github pages ，还省去域名费）</li>
+</ol>
+<p>这套东西的核心是一个**「私有源 + 公开产物」的分层**。
+大概就这么个逻辑<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/Untitled-2026-06-24-1206.png" alt="Untitled-2026-06-24-1206.png"  />
+</p>
+<h2 id="装-hugo">装 Hugo</h2>
+<p>Hugo 是个用 Go 写的静态站点生成器，特点就一个字：快。我这博客几百篇文章，本地全量构建也就一两秒。</p>
+<p>Mac 上直接 brew：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install hugo
+</span></span></code></pre></div><p>装完看一眼版本，确认有 <code>extended</code> 字样，PaperMod 主题需要它：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo version
+</span></span></code></pre></div><p>要是版本里没有 extended，brew 装的有时候会是精简版，换成 <code>hugo_extended</code> 就行。Windows 用 scoop 或者直接去 release 页面下 exe，这里不展开了。</p>
+<h2 id="初始化站点和目录">初始化站点和目录</h2>
+<p>找个目录建站：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new site blog
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> blog
+</span></span></code></pre></div><p>生成的目录里，我们真正会动的主要是这几个：</p>
+<ul>
+<li><code>content/post/</code> —— 文章放这里</li>
+<li><code>config/_default/</code> —— 配置文件</li>
+<li><code>static/</code> —— favicon、robots.txt 这些静态资源</li>
+<li><code>layouts/</code> —— 自定义模板（覆盖主题用的）</li>
+<li><code>themes/</code> —— 主题</li>
+</ul>
+<p>我自己把配置从默认的一个 <code>config.toml</code> 拆成了 <code>_default/</code> 下一堆小文件（好吧，其实是当时用另一个主题他默认的这种形式，我看能跑得正常就没改了config、params、markup、languages……），拆开之后好维护，找东西也快。当然你嫌麻烦保持一个文件也行，Hugo 两种都吃。</p>
+<h2 id="装-papermod-主题">装 PaperMod 主题</h2>
+<p>主题我用的是 PaperMod，干净、快、该有的功能都有，没花里胡哨的东西。</p>
+<p>我用的是 Hugo module 的方式引入，不是 submodule。区别在于：submodule 是把主题代码塞进你自己的仓库，升级、改起来都重；module 是只记一个引用，主题代码不进你的仓库，CI 构建时自己拉。</p>
+<p>引入就一行命令（前提是你本地装了 Go）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo mod init github.com/eatmoreduck/blog
+</span></span></code></pre></div><p>然后在 <code>config/_default/module.toml</code> 里挂上主题：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">imports</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">path</span> <span class="p">=</span> <span class="s2">&#34;github.com/adityatelange/hugo-PaperMod&#34;</span>
+</span></span></code></pre></div><p>这样主题就是个依赖声明，不在你仓库里占地方。以后想覆盖主题里某个模板，只要在项目自己的 <code>layouts/</code> 下放同名文件，Hugo 会优先用你的，不用动主题源码，升级主题也不会冲突。</p>
+<p>你不想装 Go 的话，用 submodule 也能跑，把主题 <code>git submodule add</code> 进 <code>themes/PaperMod</code> 就行。两种我都用过，最后留了 module，纯粹是因为仓库更干净。</p>
+<h2 id="文章目录怎么放">文章目录怎么放</h2>
+<p>这里有个我踩过坑的地方，重点说一下。</p>
+<p>Hugo 支持两种放法：单文件（<code>xxx.md</code>）和 page bundle（一个文件夹里放 <code>index.md</code> 加图片）。我自己混着用：</p>
+<ul>
+<li>纯文字、没几张图的文章，直接一个 <code>.md</code> 文件，文件名带日期前缀，比如 <code>2024-04-07-xxx.md</code></li>
+<li>图多、或者要做中英双版本的，就开个文件夹，中文版叫 <code>index.md</code>，英文版叫 <code>index.en.md</code>，图放同目录下</li>
+</ul>
+<p>文件夹命名有个原则：<strong>单篇文章的文件夹带日期前缀，系列文件夹不带</strong>。比如「外网访问局域网设备指南」这种系列里有多篇不同文章，就用语义化命名；而某篇独立文章的文件夹就老老实实 <code>2026-03-26-xxx</code> 这样。</p>
+<p>每篇文章开头那段 front matter 是关键，URL 全靠里面的 <code>slug</code> 决定：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;文章标题&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">slug</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;my-article-url&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="ld">2024-04-07T17:23:58</span><span class="m">+08</span><span class="p">:</span><span class="m">00</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">Hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">toc</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">draft</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;一句话摘要，会显示在列表和 SEO 里&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span></code></pre></div><p>几个提醒：slug 一定用英文加横线，别塞中文，不然浏览器一编码 URL 长得没法看；<code>draft: true</code> 是草稿，正式发布前记得改 <code>false</code>，不然线上根本看不到（我自己就因为这个查了半天「为什么文章 404」）。</p>
+<h2 id="用-obsidian-的-quickadd-一键建文">用 Obsidian 的 QuickAdd 一键建文</h2>
+<p>手动写 front matter 比较烦，我照抄网上的，用了QuickAdd 脚本，输入标题、slug、选标签，自动生成带 front matter 的文件。</p>
+<p>脚本在 <code>obs_sctipts/NewPost.js</code>，配合 <code>templates/NewPost.md</code> 模板用。模板长这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{VALUE:articleTitle}}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">slug</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{VALUE:articleSlug}}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{VALUE:articleTimestamp}}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl">{{<span class="l">VALUE:articleTagsFormatted}}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">toc</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">draft</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">description</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span></code></pre></div><p>NewPost.js 脚本长这样，不知道怎么改，可以直接让 AI 帮你改，默认预置了这些东西。反正 AI 改这些很在行，不用人再去多看什么，大体知道流程就行了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">module</span><span class="o">.</span><span class="n">exports</span> <span class="o">=</span> <span class="n">async</span> <span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">QuickAdd</span> <span class="o">=</span> <span class="n">params</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">title</span> <span class="o">=</span> <span class="n">await</span> <span class="n">QuickAdd</span><span class="o">.</span><span class="n">quickAddApi</span><span class="o">.</span><span class="n">inputPrompt</span><span class="p">(</span><span class="s2">&#34;文章标题 (中文)&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">title</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new</span> <span class="n">Notice</span><span class="p">(</span><span class="s2">&#34;请输入文章标题&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">询问一个纯英文的</span> <span class="n">URL</span> <span class="err">路径名，避免中文路径被浏览器转码</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">englishSlug</span> <span class="o">=</span> <span class="n">await</span> <span class="n">QuickAdd</span><span class="o">.</span><span class="n">quickAddApi</span><span class="o">.</span><span class="n">inputPrompt</span><span class="p">(</span><span class="s2">&#34;URL Slug (建议纯英文/数字/横线，如: my-new-post)&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">生成日期前缀（</span><span class="n">YYYY</span><span class="o">-</span><span class="n">MM</span><span class="o">-</span><span class="n">DD</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">datePrefix</span> <span class="o">=</span> <span class="n">QuickAdd</span><span class="o">.</span><span class="n">quickAddApi</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="s1">&#39;YYYY-MM-DD&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">生成文件夹名称：日期前缀</span> <span class="o">+</span> <span class="err">英文</span> <span class="n">Slug</span> <span class="err">或标题清理后的</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">folderBase</span> <span class="o">=</span> <span class="p">(</span><span class="n">englishSlug</span> <span class="o">||</span> <span class="n">title</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">toLowerCase</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">trim</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/</span><span class="p">[</span><span class="o">^</span><span class="n">a</span><span class="o">-</span><span class="n">z0</span><span class="o">-</span><span class="mi">9</span>\<span class="n">u4e00</span><span class="o">-</span>\<span class="n">u9fa5</span>\<span class="n">s</span><span class="o">-</span><span class="p">]</span><span class="o">/</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/</span>\<span class="n">s</span><span class="o">+/</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/-+/</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">folderName</span> <span class="o">=</span> <span class="err">`</span><span class="o">$</span><span class="p">{</span><span class="n">datePrefix</span><span class="p">}</span><span class="o">-$</span><span class="p">{</span><span class="n">folderBase</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">生成最终的文章</span> <span class="n">Slug</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">finalSlug</span> <span class="o">=</span> <span class="p">(</span><span class="n">englishSlug</span> <span class="o">||</span> <span class="n">title</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">toLowerCase</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">trim</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/</span><span class="p">[</span><span class="o">^</span><span class="n">a</span><span class="o">-</span><span class="n">z0</span><span class="o">-</span><span class="mi">9</span>\<span class="n">s</span><span class="o">-</span><span class="p">]</span><span class="o">/</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">//</span> <span class="err">最终</span> <span class="n">Slug</span> <span class="err">过滤掉非</span> <span class="n">ASCII</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/</span>\<span class="n">s</span><span class="o">+/</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/-+/</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">标签选择列表（同时用于分类和标签，简化选择）</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">tagOptions</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;AI&#34;</span><span class="p">,</span> <span class="s2">&#34;Claude&#34;</span><span class="p">,</span> <span class="s2">&#34;GPT&#34;</span><span class="p">,</span> <span class="s2">&#34;LLM&#34;</span><span class="p">,</span> <span class="s2">&#34;ChatGPT&#34;</span><span class="p">,</span> <span class="s2">&#34;Golang&#34;</span><span class="p">,</span> <span class="s2">&#34;Go&#34;</span><span class="p">,</span> <span class="s2">&#34;Java&#34;</span><span class="p">,</span> <span class="s2">&#34;Python&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Hugo&#34;</span><span class="p">,</span> <span class="s2">&#34;Blog&#34;</span><span class="p">,</span> <span class="s2">&#34;Obsidian&#34;</span><span class="p">,</span> <span class="s2">&#34;Git&#34;</span><span class="p">,</span> <span class="s2">&#34;GitHub&#34;</span><span class="p">,</span> <span class="s2">&#34;CI/CD&#34;</span><span class="p">,</span> <span class="s2">&#34;DevOps&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;ZeroTier&#34;</span><span class="p">,</span> <span class="s2">&#34;网络&#34;</span><span class="p">,</span> <span class="s2">&#34;路由器&#34;</span><span class="p">,</span> <span class="s2">&#34;群晖&#34;</span><span class="p">,</span> <span class="s2">&#34;NAS&#34;</span><span class="p">,</span> <span class="s2">&#34;ImmortalWrt&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;工具&#34;</span><span class="p">,</span> <span class="s2">&#34;软件&#34;</span><span class="p">,</span> <span class="s2">&#34;教程&#34;</span><span class="p">,</span> <span class="s2">&#34;生活&#34;</span><span class="p">,</span> <span class="s2">&#34;阅读&#34;</span><span class="p">,</span> <span class="s2">&#34;思考&#34;</span><span class="p">,</span> <span class="s2">&#34;随想&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Markdown&#34;</span><span class="p">,</span> <span class="s2">&#34;写作&#34;</span><span class="p">,</span> <span class="s2">&#34;效率&#34;</span><span class="p">,</span> <span class="s2">&#34;自动化&#34;</span><span class="p">,</span> <span class="s2">&#34;AI工具&#34;</span><span class="p">,</span> <span class="s2">&#34;Prompt&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;编程语言&#34;</span><span class="p">,</span> <span class="s2">&#34;Backend&#34;</span><span class="p">,</span> <span class="s2">&#34;Daily life&#34;</span><span class="p">,</span> <span class="s2">&#34;other&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">defaultTags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;other&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">let</span> <span class="n">tags</span> <span class="o">=</span> <span class="n">await</span> <span class="n">QuickAdd</span><span class="o">.</span><span class="n">quickAddApi</span><span class="o">.</span><span class="n">checkboxPrompt</span><span class="p">(</span><span class="n">tagOptions</span><span class="p">,</span> <span class="n">defaultTags</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nb">typeof</span> <span class="n">tags</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span> <span class="o">||</span> <span class="n">tags</span><span class="o">.</span><span class="n">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tags</span> <span class="o">=</span> <span class="n">defaultTags</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">tagsFormatted</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">t</span> <span class="o">=&gt;</span> <span class="err">`</span>  <span class="o">-</span> <span class="s2">&#34;${t}&#34;</span><span class="err">`</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">注入变量给</span> <span class="n">Obsidian</span> <span class="err">模板</span>
+</span></span><span class="line"><span class="cl">    <span class="n">QuickAdd</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s2">&#34;articleTitle&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">QuickAdd</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s2">&#34;articleSlug&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">finalSlug</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">QuickAdd</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s2">&#34;articleFolderName&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">folderName</span><span class="p">;</span> <span class="o">//</span> <span class="err">文件夹建议用这个</span>
+</span></span><span class="line"><span class="cl">    <span class="n">QuickAdd</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s2">&#34;articleTagsFormatted&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagsFormatted</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">QuickAdd</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s2">&#34;articleTimestamp&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QuickAdd</span><span class="o">.</span><span class="n">quickAddApi</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="s1">&#39;YYYY-MM-DDTHH:mm:ssZ&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&#34;即将创建 Page Bundle:&#34;</span><span class="p">,</span> <span class="n">folderName</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&#34;Article Slug:&#34;</span><span class="p">,</span> <span class="n">finalSlug</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">温馨提示：即使你不填英文</span> <span class="n">Slug</span><span class="err">，代码也会尽量生成一个。</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>脚本会问你标题和 slug，自动拼日期前缀的文件夹名，再把标签格式化好塞进去。配好之后，新建一篇文章就是按个快捷键、填两行的事。</p>
+<p>图片这块我还比较满意，现在用的是 <a href="https://github.com/Kuingsmile/PicList">PicList</a>（PicGo 的增强分支，专门干图床这事），配 Obsidian 的 obsidian-image-auto-upload-plugin 插件。我在 PicList 里把图床指向自己的 GitHub 仓库 <code>picture-repository</code>，CDN 走 jsDelivr，配一次就不用管了，但是后续使用的时候，如果需要上传到图床，用这个功能需要保持 PicList 开着。</p>
+<p>配好之后，这一步对我是透明的：在 Obsidian 里粘贴截图、或者把图拖进来，插件自动把图传到 <code>picture-repository</code>，然后把正文里的本地图片链接替换成 <code>cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/xxx.png</code>。我只管贴图，上传、换链接全是后台自动完成，跟当年在语雀里贴图一个体验，但在自己仓库里，如果有其他的图床，也可以使用其他的图床。我这里图方便，就一直用的是 GitHub，单独开了个仓库做图床。</p>
+<p>你问我为什么图片不和文章放一起、单独开个仓库？因为图走 CDN 后，构建时根本不依赖本地图片文件，博客仓库和部署仓库的体积都小，加载也快。这跟前面说的「私有源 + 公开产物」呼应了撒。</p>
+<h2 id="本地预览">本地预览</h2>
+<p>写完想看看效果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server -D    <span class="c1"># -D 连草稿一起渲染</span>
+</span></span></code></pre></div><p>浏览器开 <code>http://localhost:1313</code> 就能看到。改啥刷新啥，基本是即时的，这也是我前面说 Hugo 快的好处。</p>
+<h2 id="私有源--公开产物为什么要分两个仓库">私有源 + 公开产物：为什么要分两个仓库</h2>
+<p>这是整套架构里我最在意的一环，专门拎出来说。</p>
+<p>我用两个 GitHub 仓库：</p>
+<ul>
+<li><strong><code>blog</code>（私有）</strong>：源码仓库。原始的 <code>.md</code> 文章、Obsidian 的全部笔记、配置、主题引用，全在这。里面可能有还没写完的草稿、私人笔记、甚至一些不想公开的东西。因为私有，随便存。而且我这个仓库比较乱，有的时候会把密码放进去，但是不会放到博文的目录去。这块后续还需要做一些改动</li>
+<li><strong><code>eatmoreduck.github.io</code>（公开）</strong>：部署仓库。里面只有 <code>hugo</code> 编译出来的纯 HTML、CSS、JS。一个 <code>.md</code> 源文件都没有，更没有敏感内容。</li>
+</ul>
+<p>为什么不直接一个仓库搞定？因为博客源文件 ≠ 博客网站。源文件是我的工作台，里面有草稿、有想法、有备忘，公开出去不合适；而网站是给读者看的成品，必须公开。</p>
+<p>分仓之后，私有仓库存一切，公开仓库只接收构建产物——中间那道「构建」就是天然的过滤器，只放干净的成品出去。就算哪天公开仓库被人扒，扒到的也只是 HTML，原始内容还在我私仓里。</p>
+<p>图片我单独开了第三个仓库 <code>picture-repository</code>，公开，专门存图片，前面 PicList 自动上传就是往这里传的，文章里的图都走 jsDelivr CDN。这样构建时不依赖本地图片，部署仓库体积小，加载也快。</p>
+<h2 id="github-actions-自动部署">GitHub Actions 自动部署</h2>
+<p>推一次代码，线上全自动更新。前面说的「私有源 → 公开产物」，就是靠它实现的，这个也是常规操作，如果有自动 commit 的需求，可以使用 Obsidian 相关的插件。</p>
+<p>源码仓库推到 main 分支后，Action 自动跑起来：拉源码、构建、把产物推到部署仓库。workflow 放在 <code>.github/workflows/hugo.yaml</code>，核心两段。</p>
+<p>第一段构建，在 CI runner 上跑 <code>hugo</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">build</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">HUGO_VERSION</span><span class="p">:</span><span class="w"> </span><span class="m">0.157.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">安装 Hugo（extended 版）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">        wget -O hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+</span></span></span><span class="line"><span class="cl"><span class="sd">        sudo dpkg -i hugo.deb</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">构建</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo --gc --minify --baseURL &#34;https://blog.xiaohuangyu.space/&#34;</span><span class="w">
+</span></span></span></code></pre></div><p>因为我用 module 引主题，构建时 Hugo 会自己拉 PaperMod，所以 checkout 不用带 <code>submodules</code>。Hugo 版本写死成 extended，别图省事用精简版，PaperMod 的 SCSS 需要 extended 才能编。</p>
+<p>第二段部署，把产物推到公开的 <code>eatmoreduck.github.io</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l">build</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">personal_token</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.PERSONAL_TOKEN }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">external_repository</span><span class="p">:</span><span class="w"> </span><span class="l">eatmoreduck/eatmoreduck.github.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">force_orphan</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span></code></pre></div><p>几个点解释一下：</p>
+<ul>
+<li><code>external_repository</code> 指向另一个仓库，这就是「跨仓库部署」，构建产物从私仓的 Action 推到公开仓库。</li>
+<li><code>personal_token</code> 是个有 <code>repo</code> 权限的 token，存在私仓的 Secrets 里，用来跨仓库写权限。</li>
+<li><code>force_orphan: true</code> 是关键：让部署仓库每次都是孤儿提交，<strong>清空所有历史</strong>。这样公开仓库永远只有「当前这一份产物」，不保留构建历史，体积不会膨胀，也不暴露之前构建过啥。</li>
+</ul>
+<h2 id="自定义域名走-cloudflare">自定义域名（走 Cloudflare）</h2>
+<p>默认地址是 <code>用户名.github.io</code>，绑自己域名我走的是 Cloudflare，没用 GitHub Pages 自带的域名绑定。</p>
+<p>为什么用 Cloudflare：免费、全球 CDN、自带 HTTPS 和缓存，国内访问也比我直连 GitHub 强。我的 <code>blog.xiaohuangyu.space</code> 实际是 DNS 解析到 Cloudflare、由 Cloudflare 代理回源的。</p>
+<p>大致步骤：</p>
+<ol>
+<li>域名托管到 Cloudflare，把 NS 改成 Cloudflare 的</li>
+<li>加一条 DNS 记录，指向你的 Pages 源（具体是 CNAME 到 GitHub，还是 Cloudflare Pages，看你部署方式）</li>
+<li>在 Cloudflare 开代理（小云朵变橙），HTTPS 自动签发，顺手开缓存</li>
+</ol>
+<p>不用在 GitHub 仓库里放 CNAME 文件，也不用去 Settings → Pages 那一套——域名解析和证书全在 Cloudflare 这边管。整个过程一分钱不花，配置好之后基本不用再碰。</p>
+<h2 id="收尾">收尾</h2>
+<p>整套搭下来，我的日常就是：Obsidian 里写东西，写完手动提交推送，剩下的 GitHub Actions 全包了。线上什么时候更新我都不用管。</p>
+<p>回头看，真正花时间的是前期配主题、调 front matter、把 SEO 那些东西理顺。跑起来之后基本零维护，偶尔升一下 Hugo 版本就行。</p>
+<p>第一篇讲了选型，这篇讲了落地。其实静态博客这事，方案多得很，Hugo 只是我习惯的一套。只要数据攥在自己手里（本地 Markdown + Git），用哪个生成器、托管在哪，随时能换，这才是关键。</p>
+<p>有一个忘记提到的点，写到最后。这个默认生成的文章有个 draft 字段，默认就是 false。如果要发布，要记得把它改成true，我曾经因为这个多次浪费时间。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我照着 Karpathy 的 LLM Wiki 模式搭了个 Obsidian 知识库，跑了两个月</title>
+      <link>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</link>
+      <pubDate>Mon, 22 Jun 2026 18:40:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/karpathy-llm-wiki-obsidian/</guid>
+      <description>&lt;h2 id=&#34;karpathy-说的那个模式&#34;&gt;Karpathy 说的那个模式&lt;/h2&gt;&#xA;&lt;p&gt;Karpathy 前段时间在一个 gist 里描述过一种用法：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="karpathy-说的那个模式">Karpathy 说的那个模式</h2>
+<p>Karpathy 前段时间在一个 gist 里描述过一种用法：</p>
+<blockquote>
+<p>系统从多个数据源收集原始数据，LLM 把它们编译成 .md 格式的 wiki 文档，之后你可以通过 CLI 让 LLM 对这个 wiki 做问答、逐步完善。所有内容在 Obsidian 里看。你几乎不用手动写或编辑 wiki，这都交给 LLM。他认为这里完全可以做成一个真正的产品，而不只是一堆脚本。</p>
+</blockquote>
+<p>第一次看到这段话的时候，我正好在找一个能跟着学 AI agent 的方法。市面上 agent 教程更新太快，看完就忘，记不住。RAG 那套每次都要重新检索，检索回来的东西还是散的。我想要的是把学过的东西一点点攒下来，攒成一个能往后查、能互相连起来的东西。</p>
+<p>Karpathy 这段话戳中我的地方是：他没把&quot;知识库&quot;说成多玄的事，就是三件事，收原料、LLM 编译成 wiki、人看 Obsidian。我也确实更愿意看 Obsidian 里的双向链接，而不是去某个 AI 产品的对话框里翻历史。</p>
+<p>所以我照着搭了一个。这篇文章记一下它实际长什么样，跑下来哪里好用、哪里卡。</p>
+<h2 id="我的版本长什么样">我的版本长什么样</h2>
+<p>仓库叫 <code>agent-obsidian</code>，是一个标准的 Obsidian vault，目录大概是这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">00-Inbox/              临时想法，没处理的内容
+</span></span><span class="line"><span class="cl">01-Raw/                原始资料，不可改写
+</span></span><span class="line"><span class="cl">02-Wiki/               LLM 维护的知识页
+</span></span><span class="line"><span class="cl">03-Daily-Digest/       每天的信息流总结
+</span></span><span class="line"><span class="cl">04-Projects/           自己的 agent 项目
+</span></span><span class="line"><span class="cl">05-Resources/          阅读清单、工具、论文
+</span></span><span class="line"><span class="cl">06-Risk-Control/       风控相关的资料和日报（我本职做风控）
+</span></span><span class="line"><span class="cl">07-Interview-Prep/     面试题
+</span></span><span class="line"><span class="cl">Templates/             Obsidian 笔记模板
+</span></span><span class="line"><span class="cl">scripts/               Python 脚本
+</span></span><span class="line"><span class="cl">config/                自动化配置
+</span></span><span class="line"><span class="cl">data/                  脚本的结构化输出
+</span></span></code></pre></div><p>核心是三层，和 Karpathy 说的一致：</p>
+<ul>
+<li><strong>原料层</strong>：<code>01-Raw/</code> 和 <code>06-Risk-Control/raw-sources/</code>，原始资料不动，只往里加。</li>
+<li><strong>wiki 层</strong>：<code>02-Wiki/</code>，LLM 编译出来的知识页，人也可以看、也可以改。</li>
+<li><strong>规则层</strong>：仓库根目录的 <code>AGENTS.md</code> 和 <code>CLAUDE.md</code>，告诉 LLM 这个 wiki 怎么维护、哪些目录不能动。</li>
+</ul>
+<p>原料层是事实来源，wiki 是 LLM 的二次产物。这个分工很关键。后面讲为什么。</p>
+<h2 id="一天大概怎么跑">一天大概怎么跑</h2>
+<p>每天早上我会跑一个脚本，把当天的信息源抓下来：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">uv run python3 scripts/collect_daily_sources.py
+</span></span></code></pre></div><p>这个脚本去 GitHub、Hacker News、arXiv 拉 AI agent 相关的内容，存成 <code>01-Raw/daily-sources/2026-06-22.md</code>。原料就是一堆标题加链接加摘要，没经过加工。</p>
+<p>然后我让 Claude Code 读这个原料文件，筛出当天真正值得记的几条，干三件事：</p>
+<ol>
+<li>在 <code>03-Daily-Digest/2026-06-22.md</code> 写一篇短日报。</li>
+<li>把里面值得沉淀的概念补进 <code>02-Wiki/</code> 对应的页面。</li>
+<li>更新 <code>02-Wiki/index.md</code> 和 <code>02-Wiki/log.md</code>。</li>
+</ol>
+<p>这个过程里我几乎不手动编辑 wiki。我做的事是判断：这条值不值得记，这个概念是不是该单独开一页，这个结论我同不同意。</p>
+<p>判断这件事 LLM 替不了。但整理、链接、写索引这种体力活，它干得比我快。</p>
+<h2 id="让它自己每天跑hermes">让它自己每天跑：Hermes</h2>
+<p>手动跑脚本这个事，坚持一周还行，一个月就难了。人会忘，会懒，会某天不想开电脑。所以我把每天这一趟活交给了 Hermes。</p>
+<p>Hermes 是 Nous Research 做的一个开源 agent 运行器，不是这个仓库里的脚本。它干三件事：本地聊天、定时任务（cron）、连各种消息平台（Telegram、飞书、Discord、企业微信）。我主要用的是它的 cron。</p>
+<p>我配了两个定时任务：</p>
+<ul>
+<li>每天 07:00 跑 agent 学习日报，结果推到 Telegram。</li>
+<li>每天 07:30 跑风控日报，错开半小时，避免两个任务同时采集、同时推送。</li>
+</ul>
+<p>cron 到点后，Hermes gateway 会起一个新的 agent session，加载我写好的 skill，在我的仓库目录里把采集、总结、写日报、更新 wiki 这一套全跑完，最后把摘要推到 Telegram。我早上醒来手机上就有一条当天的精华列表。</p>
+<p>整个链路长这样：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/hermes-daily-flow.png" alt="Hermes 每日推送链路"  />
+</p>
+<p>左边是触发，中间是采集和编译，右边是两个出口：一条推到我手机，一条发布到公开站点。</p>
+<p>skill 文件是这个自动化的核心。我的 <code>agent-learning-digest</code> skill 里写死了整个流程：先跑哪个脚本、读哪个文件、选哪类内容、日报写成什么结构、最后还要跑发布脚本。prompt 必须自包含，不能写&quot;接着昨天的&quot;，因为每次 cron 起的都是全新 session，没有上下文。</p>
+<p>这套东西配上之后，我才真正体会到 Karpathy 说的&quot;你几乎不用手动写或编辑&quot;。我现在做的只剩两件：早上看一眼 Telegram 的推送，发现哪条不对或者哪个概念该单独开页，回头跟 Claude 说一声补一下。日常的采集、编译、推送，我完全不碰了。</p>
+<h2 id="为什么不是直接用-rag">为什么不是直接用 RAG</h2>
+<p>我自己试过 RAG 那套，把一堆文档切碎塞进向量库，问的时候检索回来几段。问题是检索回来的东西是碎片，不是知识。你看不到概念之间怎么连，看不到自己一个月前的理解和现在差在哪。</p>
+<p>LLM Wiki 的思路不一样。它把原料一次性编译成结构化的页面，存下来，下次问的时候不用再去捞。LLM 先读 <code>index.md</code> 找到相关页面，再读那个页面，再给你有引用的回答。</p>
+<p>举个具体的例子。我之前攒了一页叫 <code>Context Engineering.md</code>，里面记的是各种 context engineering 的实践案例，像 get-shit-done、dirac、backpack-ontology、tool-output compression 这些。每次我看到新的案例，就让 Claude 读那一页，把新东西补进去，同时更新一下和已有概念的链接。</p>
+<p>这页现在比我脑子里的理解清楚多了。我问&quot;tool-output compression 在哪个项目里用过&quot;，它能直接告诉我，还带原始链接。RAG 做不到这个粒度，因为碎片之间没有结构。</p>
+<h2 id="把日报发出去cloudflare-pages">把日报发出去：Cloudflare Pages</h2>
+<p>Hermes 推到 Telegram 是给我自己看的。但日报这东西我也想公开，给同样在学 agent 的人看。于是加了一条出口：日报写完后，自动发布到一个公开站点。</p>
+<p>链路是这样：digest skill 跑完会调用 <code>publish_public_site.py</code>，这个脚本只把白名单目录（<code>03-Daily-Digest</code>、<code>06-Risk-Control/daily-digest</code>、<code>07-Interview-Prep</code>）里的内容挑出来，生成静态页面，commit 到 GitHub，Cloudflare Pages 检测到 push 后自动构建部署。</p>
+<p>这里最关键的是白名单。我的 vault 里有大量私人内容：项目想法、还没成形的笔记、面试刷题进度、风控业务细节。这些绝对不能发出去。所以发布脚本严格按 channel 白名单走，只挑符合 <code>YYYY-MM-DD.md</code> 命名的日报，不会把整个 vault 发出去。</p>
+<p>更细的一层：日报里有些段落是给自己看的，比如&quot;项目启发&quot;&ldquo;需要深入&quot;&ldquo;明日动作&rdquo;，这些在公开版里会被自动过滤掉。公开的只有外部抓取条目的标题、来源、URL 和摘要。私有想法留在本地，公开的是事实。</p>
+<p>这条链路跑顺之后，我每天什么都不用做，Telegram 收一份，公开站点自动更新一份。Karpathy 说的&quot;完全由 LLM 负责&rdquo;，在我这里是真的实现了。</p>
+<h2 id="规则文件是这套东西的地基">规则文件是这套东西的地基</h2>
+<p>跑下来发现，模型多聪明没那么重要，真正决定这套系统好不好用的是 <code>AGENTS.md</code> 写得多细。</p>
+<p>我的 <code>AGENTS.md</code> 里写了很多硬规则，比如：</p>
+<ul>
+<li><code>01-Raw/</code> 不能改写，只能加最小元数据或修格式。</li>
+<li><code>06-Risk-Control/raw-sources/</code> 完全 immutable。</li>
+<li><code>.obsidian/</code> 除非我明确说，否则不动。</li>
+<li>每个 wiki 页的重要结论必须能追溯到 raw source 或 URL。</li>
+<li>不确定的结论标 <code>待验证</code>。</li>
+<li>不堆长引用，总结加链接。</li>
+<li>新增 wiki 页要同步更新 <code>index.md</code>，加一条 <code>log.md</code>。</li>
+</ul>
+<p>这些规则写死之后，LLM 的行为稳定多了。它不会自作主张去改原始资料，也不会在 wiki 页里堆一堆没出处的判断。</p>
+<p>规则文件这个东西，越具体越好。早期我写得粗，LLM 经常自作主张整理目录，把我没说要动的东西也动了。后来把每个目录的&quot;能做什么不能做什么&quot;写清楚，这种情况就少了。</p>
+<h2 id="哪里还不够好">哪里还不够好</h2>
+<p>跑了两个月，几个明显的问题。</p>
+<p><strong>原料质量决定上限。</strong> 脚本拉下来的东西，很多是水文或者重复的新闻。LLM 编译得再好，原料是垃圾出来的也是垃圾。我现在每天还是要手动过一遍原料，删掉明显没用的。这一步还没法完全自动化。</p>
+<p><strong>wiki 会膨胀。</strong> 概念越攒越多，页面之间链接越织越密。好处是查起来方便，坏处是有时候一个页面连出去二三十个链接，读起来累。我大概每两周得做一次 lint，清掉孤立页面、合并重复概念。这个 lint 也是让 LLM 干，但它判断不准，最后还是我拍板。</p>
+<p><strong>整理和判断的边界会模糊。</strong> 有时候 LLM 编译出来的结论我不认同，但又说不上来哪里不对。这种时候要么改掉，要么标 <code>待验证</code>。但标多了页面就乱了，看着一堆待验证也挺烦。</p>
+<p><strong>多 agent 协作还差。</strong> 现在基本是单 agent 干所有事，收原料、写日报、编 wiki 都它来。我想做的是有专门的 agent 负责不同方向，比如风控的归风控，agent 学习的归 agent 学习。现在靠目录分，但 agent 之间不通信。这块还没想清楚。</p>
+<h2 id="这套东西改变了什么">这套东西改变了什么</h2>
+<p>最大的一点：我不再&quot;读完就忘&quot;了。</p>
+<p>以前看一篇 agent 的文章，当时觉得懂了，过两周细节全忘。现在看一篇，就让 Claude 编译进 wiki，下次再想不起来细节，去 <code>02-Wiki/</code> 里一翻就有，还带着当时的出处。</p>
+<p>第二点：学东西的路径清晰了。<code>index.md</code> 现在是我的导航，想看哪个主题直接点进去。比去搜索引擎从头搜要快，因为这些都是我自己筛过的、和我正在做的事相关的。</p>
+<p>第三点，也是 Karpathy 没明说但我觉得更重要的：<strong>判断力被锻炼了</strong>。每天筛原料、改 wiki、决定哪个概念单独开页，这些动作逼着你对每个信息做一次判断。LLM 帮你整理，但不替你判断。这个判断的过程，是 RAG 给不了的。</p>
+<h2 id="关于做成产品">关于&quot;做成产品&quot;</h2>
+<p>Karpathy 说这里能做成一个真正的产品，不只是脚本。我同意，但我觉得现在还早。</p>
+<p>现在这套东西能跑，是因为我对 Obsidian、Claude Code、Python 脚本都熟，哪里坏了能修。换成不熟的人，配环境、调脚本、写规则文件，门槛不低。</p>
+<p>真正的产品得把这几件事藏起来：原料采集不用写脚本，规则文件有默认模板，wiki 的 lint 和合并自动化，多设备同步不靠 git。Obsidian 本身已经把&quot;看&quot;这件事做得很好了，缺的是&quot;自动喂料 + 自动编译&quot;这一层做得很顺的产品。</p>
+<p>我自己短期内还会继续用现在这堆脚本。它不优雅，但它是我的，每个目录怎么来的我都清楚。这种&quot;自己搭的&quot;感觉，用一个现成产品替代不了。也许这就是为什么 Karpathy 说&quot;产品&quot;而不是&quot;开源工具&quot;。真正顺手的工具，往往是自己改出来的那个。</p>
+<h2 id="给想试的人几句话">给想试的人几句话</h2>
+<p>如果你想照着搭一个，不用一开始就上自动化。最小版本就三步：</p>
+<ol>
+<li>建一个 Obsidian vault，分 <code>raw</code> 和 <code>wiki</code> 两个目录。</li>
+<li>写一个 <code>AGENTS.md</code>，把&quot;什么能改什么不能改&quot;写死。</li>
+<li>找一个能读写文件的 coding agent（Claude Code、Codex 都行），让它读你的 raw，写进 wiki。</li>
+</ol>
+<p>跑一周你就知道哪里别扭了。别扭的地方就是你要改规则文件的地方。这套东西不是搭完就定型的，是边用边长的。</p>
+<p>我那个仓库现在大概有 200 多个 wiki 页，每天还在加。它已经比我任何一个 Notion 库都更有用，因为它是有结构的，而且结构是我和 LLM 一起长出来的，不是套个模板就完事。</p>
+<p>Karpathy 那段话我隔段时间就会翻出来再看一遍。每次看都觉得他说得对，但也觉得他故意把最难的部分没说。让 LLM 真正听话地维护一个 wiki，比让它写一段漂亮代码难多了。代码错了能跑出来看，wiki 错了你可能半年后才发现。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Obsidian &#43; Claude Code 构建 AI 第二大脑实战指南</title>
+      <link>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</link>
+      <pubDate>Wed, 01 Apr 2026 09:34:29 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/obsidian-claude-code-ai-second-brain-guide/</guid>
+      <description>&lt;h2 id=&#34;为什么要在-obsidian-里用-claude-code&#34;&gt;为什么要在 Obsidian 里用 Claude Code&lt;/h2&gt;&#xA;&lt;p&gt;说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。&lt;/p&gt;&#xA;&lt;p&gt;不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="为什么要在-obsidian-里用-claude-code">为什么要在 Obsidian 里用 Claude Code</h2>
+<p>说到底就一句话：Obsidian 的笔记全是 Markdown，Claude Code 原生理解 Markdown。</p>
+<p>不需要复制粘贴，不需要来回切换窗口。Claude Code 直接读写你 vault 里的文件，它知道你的笔记结构、你的标签体系、你的双链关系。这比在任何聊天窗口里丢一段文字让 AI 帮你改要高效得多。</p>
+<p>Teresa Torres 在一期播客里分享过她的工作流：Obsidian + 两个终端窗口跑 Claude Code，日常安排、笔记整理、知识管理全交给 AI。但说实话，开两个终端窗口盯着看，体验并不好。如果能直接在 Obsidian 内部跑 Claude Code，那才叫丝滑。</p>
+<p>好在社区已经做了好几个插件来实现这件事。下面介绍三种方案，从易到难，选一个适合你的就行。</p>
+<h2 id="前置条件">前置条件</h2>
+<p>不管你选哪个方案，都需要先安装 Claude Code CLI。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 通过 npm 全局安装</span>
+</span></span><span class="line"><span class="cl">npm install -g @anthropic-ai/claude-code
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl">claude --version
+</span></span></code></pre></div><p>然后需要配置 API Key。去 <a href="https://console.anthropic.com/">Anthropic Console</a> 申请一个，然后设置环境变量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 推荐写到 shell 配置文件里（~/.zshrc 或 ~/.bashrc）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s1">&#39;你的-api-key&#39;</span>
+</span></span></code></pre></div><p>如果你用的是 Claude Code 订阅（而不是 API 按量付费），登录一下就行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">claude login
+</span></span></code></pre></div><p>搞定这些，后面的插件才能正常工作。</p>
+<h2 id="方案一claude-code-integration-插件推荐">方案一：Claude Code Integration 插件（推荐）</h2>
+<p>这是目前功能最完善的方案，来自 <a href="https://github.com/deivid11/obsidian-claude-code-plugin">deivid11/obsidian-claude-code-plugin</a>。它不是简单嵌个终端，而是做了完整的 UI 交互：标签页、会话管理、实时流式输出、变更预览、Diff 对比，基本把 Claude Code 的能力完整搬进了 Obsidian。</p>
+<h3 id="安装">安装</h3>
+<p>这个插件还在审核中，暂时没上社区插件商店，需要通过 BRAT 安装。</p>
+<p><strong>第一步：安装 BRAT</strong></p>
+<p>如果你已经有了就跳过。没有的话：</p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件</li>
+<li>关闭安全模式</li>
+<li>点&quot;浏览&quot;，搜索 &ldquo;BRAT&rdquo;，安装并启用</li>
+</ol>
+<p><strong>第二步：通过 BRAT 安装 Claude Code Integration</strong></p>
+<ol>
+<li>打开 Obsidian 设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴仓库地址：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/deivid11/obsidian-claude-code-plugin
+</span></span></code></pre></div></li>
+<li>BRAT 会自动下载最新版本</li>
+<li>回到第三方插件列表，启用 &ldquo;Claude Code Integration&rdquo;</li>
+</ol>
+<h3 id="配置">配置</h3>
+<p>打开 设置 -&gt; Claude Code Integration，核心配置项：</p>
+<ul>
+<li><strong>Backend</strong>：选 Claude Code</li>
+<li><strong>Claude Code Path</strong>：一般会自动检测，检测不到就手动填，比如 <code>/usr/local/bin/claude</code> mac用户一般在 /Users/{username}/.local/bin/claude</li>
+<li><strong>Model</strong>：Sonnet（均衡）、Opus（最强）、Haiku（最快最便宜），日常用 Sonnet 就够了</li>
+<li><strong>Allow Vault Access</strong>：建议开启，这样 Claude 能读写整个 vault 的文件</li>
+<li><strong>Enable Permissionless Mode</strong>：新手建议先关着，这样每次修改前都会让你确认。熟悉了再开</li>
+<li>如果是国内用户，用 claude code 配合 glm 等模型使用，可以在<strong>自定义 API 配置</strong>里配置一遍对应供应商的信息</li>
+</ul>
+<h3 id="日常使用">日常使用</h3>
+<ol>
+<li>点左侧边栏的 Claude 图标，或者 <code>Cmd/Ctrl + P</code> 输入 &ldquo;Open Claude Code Assistant&rdquo;</li>
+<li>在面板里输入你的需求，比如：
+<ul>
+<li>&ldquo;给这篇笔记加个目录&rdquo;</li>
+<li>&ldquo;总结这篇文章的要点&rdquo;</li>
+<li>&ldquo;帮我整理一下这些标签&rdquo;</li>
+<li>&ldquo;用 PlantUML 画一个工作流图&rdquo;</li>
+</ul>
+</li>
+<li>Claude 会实时流式输出结果，你可以看到它在做什么</li>
+<li>如果有文件修改，会弹出预览，你可以选择接受或拒绝</li>
+</ol>
+<p>每个笔记都有独立的会话历史，切换笔记不会丢失上下文。还有个 Sessions 标签页能看到所有会话的汇总。 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100001767.png" alt="Claude Code Integration 插件在 Obsidian 中的使用界面"  />
+</p>
+<h2 id="方案二claude-sidebar-侧边栏">方案二：Claude Sidebar 侧边栏</h2>
+<p>来自 <a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">derek-larson14/obsidian-claude-sidebar</a>，主打一个简洁。它就是在 Obsidian 侧边栏里嵌了一个 Claude Code 终端，不需要额外的 UI，就是原生的 Claude Code 体验。</p>
+<h3 id="安装-1">安装</h3>
+<p>同样通过 BRAT：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; BRAT -&gt; Add Beta Plugin</li>
+<li>粘贴：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/derek-larson14/obsidian-claude-sidebar
+</span></span></code></pre></div></li>
+<li>启用 &ldquo;Claude Sidebar&rdquo;</li>
+</ol>
+<h3 id="使用">使用</h3>
+<p>点侧边栏的机器人图标（或设置快捷键），右侧就会弹出一个终端面板，里面就是 Claude Code。跟你在外部终端里用一模一样，只是不用切窗口了。</p>
+<p>支持多标签页，可以同时开几个对话。简单粗暴，适合已经熟悉 Claude Code 命令行操作的人。
+<strong>因个人已经适应 Claude Code 的终端，又觉得第一种方式比较冗余，还是更喜欢这种侧边栏的操作</strong>
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/20260401100241568.png" alt="image.png"  />
+</p>
+<h2 id="方案三terminal-插件">方案三：Terminal 插件</h2>
+<p>如果你想要更灵活的控制，可以用 <a href="https://forum.obsidian.md/t/plugin-terminal-integrated-terminals-in-obsidian/52170">Polyware Terminal</a> 插件，在 Obsidian 里直接开一个完整的终端，然后在里面跑 <code>claude</code>。</p>
+<h3 id="安装-2">安装</h3>
+<p>这个插件已经在社区插件商店里了：</p>
+<ol>
+<li>设置 -&gt; 第三方插件 -&gt; 浏览</li>
+<li>搜索 &ldquo;Terminal&rdquo;，找到 &ldquo;Terminal — Integrated terminals in Obsidian&rdquo;</li>
+<li>安装并启用</li>
+</ol>
+<h3 id="使用-1">使用</h3>
+<ol>
+<li>打开终端面板（左侧边栏或底部面板）</li>
+<li>在终端里输入 <code>claude</code> 回车</li>
+<li>开始对话</li>
+</ol>
+<p>本质上就是在 Obsidian 里开了个终端窗口。你可以自定义主题，让它跟 Obsidian 的外观融合。Yu Lu 在她的 <a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Medium 文章</a>里详细介绍了这种玩法，她管这叫 &ldquo;Vibe Writing&rdquo;——一边在 Obsidian 里写笔记，一边让 AI 在旁边的终端里实时辅助。</p>
+<h2 id="进阶让-claude-更懂你的-vault">进阶：让 Claude 更懂你的 Vault</h2>
+<p>不管用哪个方案，都可以在 vault 根目录创建一个 <code>CLAUDE.md</code> 文件。Claude Code 每次启动都会读取这个文件，作为它的&quot;行为指南&quot;。</p>
+<p>比如我的博客项目里的 <code>CLAUDE.md</code> 就写明了：</p>
+<ul>
+<li>文章的 front matter 格式要求</li>
+<li>图片上传到 CDN，不需要管理本地图片</li>
+<li>部署通过 GitHub Actions 自动完成</li>
+</ul>
+<p>这样 Claude Code 在操作你的文件时，就会遵循这些规则，不会乱来。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>装完插件找不到 Claude Code？</strong></p>
+<p>先确认 CLI 装好了没。在终端里跑 <code>claude --version</code>，如果能输出版本号就说明没问题。如果插件还是报错，去设置里手动指定 Claude Code 的路径。</p>
+<p><strong>Linux 下用 Flatpak/Snap 装的 Obsidian 报错？</strong></p>
+<p>沙盒限制，Obsidian 访问不到系统的 Node.js 和 Claude Code。解决方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Flatpak 用户执行这个</span>
+</span></span><span class="line"><span class="cl">flatpak override --user md.obsidian.Obsidian --filesystem<span class="o">=</span>host
+</span></span></code></pre></div><p>或者装个 <a href="https://flathub.org/apps/com.github.tchx84.Flatseal">Flatseal</a>，在图形界面里给 Obsidian 开文件系统权限。</p>
+<p><strong>API 费用怎么样？</strong></p>
+<p>看你怎么用。日常笔记整理用 Haiku 模型，几乎花不了多少钱。重度使用的话 Sonnet 也还好。具体可以去 <a href="https://console.anthropic.com/">Anthropic Console</a> 查看用量。当然国内的模型现在做的已经不错了，我日常主力使用的是智谱GLM5.1大模型，除了慢点好像没什么别的缺点，此外还会使用 codex 等模型来进行交叉校验。
+蹲蹲
+🙋蹲队友拼智谱 Coding Plan！</p>
+<p>🧩国内顶流编程大模型，20+主流工具全适配，性价比拉满，
+👉立即参与「拼好模」：https://www.bigmodel.cn/glm-coding?ic=CLGJO27TA6</p>
+<h2 id="写在最后">写在最后</h2>
+<p>三种方案，推荐新手直接用方案一（Claude Code Integration），功能最全，UI 体验最好，上手门槛也低。方案二适合已经习惯了命令行的老手。方案三最灵活但需要自己折腾。</p>
+<p>说到底，Obsidian + Claude Code 的组合之所以好用，核心原因是它们共享同一个底层——Markdown 文件。Claude Code 不需要通过什么复杂的 API 去理解你的笔记，它直接读写文件就行了。简单，直接，高效。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/deivid11/obsidian-claude-code-plugin">Claude Code Integration 插件 (GitHub)</a></li>
+<li><a href="https://forum.obsidian.md/t/claude-code-from-the-sidebar/109634">Claude Sidebar (Obsidian Forum)</a></li>
+<li><a href="https://littlecheesecake.medium.com/obsidian-x-claude-code-a-seamless-vibe-writing-experience-1a4c2a074017">Obsidian X Claude Code — A Seamless Vibe Writing Experience (Medium)</a></li>
+<li><a href="https://www.anthropic.com/claude-code">Claude Code 官方网站</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>hugo&#43;obsidian打造最强博客（一）</title>
+      <link>https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/</link>
+      <pubDate>Tue, 20 Feb 2024 16:27:01 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/hugo-obsidian-static-blog1/</guid>
+      <description>&lt;h2 id=&#34;笔记软件选择原则&#34;&gt;笔记软件选择原则&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;拒绝云服务，数据留存本地，本机运行，使用github/gitee 私仓来进行笔记储存&lt;/li&gt;&#xA;&lt;li&gt;拒绝专有格式，使用通用的标记型语言&lt;/li&gt;&#xA;&lt;li&gt;开源&lt;/li&gt;&#xA;&lt;li&gt;跨平台&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;本地笔记格式选择&#34;&gt;本地笔记格式选择&lt;/h2&gt;&#xA;&lt;p&gt;这个自是不必多说，首选MarkDown格式，方便各类软件编辑，关于此格式，参见wiki &lt;a href=&#34;https://zh.wikipedia.org/wiki/Markdown&#34;&gt;https://zh.wikipedia.org/wiki/Markdown&lt;/a&gt;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="笔记软件选择原则">笔记软件选择原则</h2>
+<ol>
+<li>拒绝云服务，数据留存本地，本机运行，使用github/gitee 私仓来进行笔记储存</li>
+<li>拒绝专有格式，使用通用的标记型语言</li>
+<li>开源</li>
+<li>跨平台</li>
+</ol>
+<h2 id="本地笔记格式选择">本地笔记格式选择</h2>
+<p>这个自是不必多说，首选MarkDown格式，方便各类软件编辑，关于此格式，参见wiki <a href="https://zh.wikipedia.org/wiki/Markdown">https://zh.wikipedia.org/wiki/Markdown</a></p>
+<p><strong>Markdown</strong>是一种<a href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80" title="轻量级标记语言">轻量级标记语言</a>，创始人为<a href="https://zh.wikipedia.org/wiki/%E7%B4%84%E7%BF%B0%C2%B7%E6%A0%BC%E9%AD%AF%E4%BC%AF" title="约翰·格鲁伯">约翰·格鲁伯</a>。它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的<a href="https://zh.wikipedia.org/wiki/XHTML">XHTML</a>（或者<a href="https://zh.wikipedia.org/wiki/HTML" title="HTML">HTML</a>）文档。<a href="https://zh.wikipedia.org/wiki/Markdown#cite_note-md-4">[4]</a>这种语言吸收了很多在<a href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6" title="电子邮件">电子邮件</a>中已有的纯文本标记的特性。</p>
+<p>由于Markdown的轻量化、易读易写特性，并且对于图片，图表、数学式都有支持，目前许多网站都广泛使用Markdown来撰写帮助文档或是用于<a href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E8%AE%BA%E5%9D%9B" title="网络论坛">论坛</a>上发表消息。如<a href="https://zh.wikipedia.org/wiki/GitHub" title="GitHub">GitHub</a>、<a href="https://zh.wikipedia.org/wiki/Reddit" title="Reddit">Reddit</a>、<a href="https://zh.wikipedia.org/wiki/Discord" title="Discord">Discord</a>、<a href="https://zh.wikipedia.org/wiki/Diaspora_%28%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%29" title="Diaspora (社交网络)">Diaspora</a>、<a href="https://zh.wikipedia.org/wiki/Stack_Exchange" title="Stack Exchange">Stack Exchange</a>、<a href="https://zh.wikipedia.org/wiki/OpenStreetMap" title="OpenStreetMap">OpenStreetMap</a> 、<a href="https://zh.wikipedia.org/wiki/SourceForge" title="SourceForge">SourceForge</a>、<a href="https://zh.wikipedia.org/wiki/%E7%AE%80%E4%B9%A6" title="简书">简书</a>等，甚至还能被用来撰写<a href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E6%9B%B8" title="电子书">电子书</a>。</p>
+<h2 id="笔记格式软件选择">笔记格式软件选择</h2>
+<p>截止2024年2月20日，比较流行的MarkDown 编辑软件有如下几个选项</p>
+<ol>
+<li>语雀</li>
+<li>Typora</li>
+<li>VSCode</li>
+<li>Obsidian</li>
+</ol>
+<h2 id="逐个分析不选用软件的原因">逐个分析不选用软件的原因</h2>
+<h4 id="语雀">语雀</h4>
+<p>语雀导入MarkDown方便，但导出功能并不是特别强大，MarkDown导入后，基本与语雀编辑器绑定，语雀官方文档上，有同学提出了希望能直接导出全知识库，但语雀团队并未提供相关支持。
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041502909.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041502909.png" alt="image.png"  />
+
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041503941.png" alt="image.png"  />
+</p>
+<p>原本我是语雀深度用户，团队内部使用语雀写文档，平时也是使用语雀做笔记，再配合chrome 的SimpRead 插件，方便的进行网上文章摘抄</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041523141.png" alt="image.png"  />
+</p>
+<p>但2023年10月23日，语雀挂了8小时，我为此还发了朋友圈，那时候就想切换到其他笔记软件，墨迹了几个月，终于开始干这事儿了
+<img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/WechatIMG5.jpg" alt="WechatIMG5.jpg"  />
+</p>
+<h4 id="typora">Typora</h4>
+<p>1.0.0 之后开始收费，付费用户也可以选择此方案</p>
+<h4 id="vscode">VSCode</h4>
+<p>严格来说不是专为markdown 准备的，但配合插件使用可以实现较强的功能，开源，安装插件之后也能实现很好的写作效果，但个人习惯原因，不是很喜欢此方式，还是更偏向于使用专门的编辑器来进行编辑</p>
+<h4 id="obsidian">Obsidian</h4>
+<p>接下来Obsidian 隆重登场，Obsidian的优势</p>
+<ol>
+<li>开源</li>
+<li>原生Markdown 编辑，就算倒闭了，或者收费了，也方便迁移到其他平台</li>
+<li>插件市场活跃，配合Template插件，Image auto update plugin 以及Picgo 图床软件能实现不输语雀的编辑体验</li>
+<li>配合github 的workflow ，推送完代码之后，自动构建静态博客</li>
+<li>配合vercel 及自定义域名，代码推送到github 之后，自动部署到自己的网站</li>
+</ol>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository/blog/202403041432583.png" alt="image.png"  />
+</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
