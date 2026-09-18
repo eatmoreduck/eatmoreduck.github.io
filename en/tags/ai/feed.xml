@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/en/tags/ai/</link>
+    <description>Recent content in AI on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 16 Sep 2026 15:27:18 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/tags/ai/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>After 100 Merged PRs: My Multi-Agent Workflow Grew Into a Complete System</title>
+      <link>https://blog.xiaohuangyu.space/en/p/multi-agent-quality-guardrails-en/</link>
+      <pubDate>Tue, 15 Sep 2026 01:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/multi-agent-quality-guardrails-en/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://blog.xiaohuangyu.space/en/p/github-projects-orca-agent-workflow-en/&#34;&gt;My last post&lt;/a&gt; covered day one of wiring up a multi-agent coding workflow with GitHub Projects and Orca — that day it merely &lt;em&gt;ran&lt;/em&gt;. This is the five-days-later sequel: it has grown into a complete system. Numbers first: 122 commits, 111 merged PRs, 127 issues filed. The six work packages of V0.1 MVP for my side project (panta-log, a local-first voice journaling tool) are all shipped.&lt;/p&gt;&#xA;&lt;p&gt;No chronological diary here — this post breaks down the system&amp;rsquo;s full feature set, layer by layer. Every layer was forced into existence by a real, stepped-in pit, and the pits are included.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><a href="/en/p/github-projects-orca-agent-workflow-en/">My last post</a> covered day one of wiring up a multi-agent coding workflow with GitHub Projects and Orca — that day it merely <em>ran</em>. This is the five-days-later sequel: it has grown into a complete system. Numbers first: 122 commits, 111 merged PRs, 127 issues filed. The six work packages of V0.1 MVP for my side project (panta-log, a local-first voice journaling tool) are all shipped.</p>
+<p>No chronological diary here — this post breaks down the system&rsquo;s full feature set, layer by layer. Every layer was forced into existence by a real, stepped-in pit, and the pits are included.</p>
+<h3 id="board-layer-from-task-list-to-automated-task-system">Board Layer: From Task List to Automated Task System</h3>
+<p>The board from the last post was a notepad. This round it grew four automated organs. The foundation is one equation: one issue = one worktree = one PR — a card walks a full loop from start to merge, and everything below orbits it.</p>
+<p><strong>Epic cards + sub-issues (official sub-issue API)</strong>. One epic card per initiative; children attached via the official API; the parent page auto-displays a progress bar; closing a child auto-checks it. Hand-written <code>- [ ] #N</code> tasklists are deprecated — zero automation, and we really did end up hand-closing two epic cards after all their children were done. Then we wrote a 30-line GitHub Action: <strong>when the last child closes, the epic auto-closes</strong>. Epic lifecycle now requires zero manual bookkeeping.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-epic-subissue-progress.png" alt="Epic and sub-issue progress bar"  />
+</p>
+<p>Before shipping, this Action hit a wall no test can see: for <code>issues</code> events, GitHub only honors the version of a workflow that lives on the default branch. On a PR branch it can be perfectly written and pass every local dry-run — no event fires, silently, no error anywhere. The &ldquo;close the parent&rdquo; action itself therefore couldn&rsquo;t be verified inside a PR; it had to merge to master and wait for the first real epic to graduate. Verification loops for CI-config changes are born half-missing.</p>
+<p><strong>Card-creation script</strong>. The pitfall of manual issue creation: 14 new cards all missed board enrollment and field values — board filters went blind overnight. Now every card goes through the script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scripts/new-issue.sh --title <span class="s2">&#34;xxx&#34;</span> --body-file card.md <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --type bug --phase <span class="m">1</span> --area backend --priority P1 --labels area/hotkey
+</span></span></code></pre></div><p>One command: issue creation (type label + @me assignee) → board enrollment → Status=Todo → Phase/Area/Priority/Milestone. Compliance by construction, not by memory.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-projects-todolist.png" alt="The card script in action: 9 cards in the Todo view, every field populated"  />
+</p>
+<p><strong>Three automated transitions</strong>: PR squash-merged → issue auto-closes → card auto-moves to Done; master CI red → an alarm card is auto-opened and auto-closed on recovery; last sub-issue closed → parent epic auto-closes. Plus a <strong>stop-line gate</strong>: when master is red, other PRs fail fast (a <code>area/ci</code> label bypasses for fix PRs). The board went from &ldquo;task tombstone&rdquo; to &ldquo;live scheduler.&rdquo;</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-projects-board.png" alt="status_board: Todo 14 / In Progress 1 / Done 89"  />
+</p>
+<p><strong>Claim protocol</strong> (anti-collision): before starting, set the card to In Progress as a claim marker and scan for an open PR on the same card. This rule was collided into existence — two sessions started the same card and the second branch got an automatic <code>-2</code> suffix:</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-collision-branch-suffix.png" alt="Same-card collision, automatic -2 suffix"  />
+</p>
+<h3 id="execution-layer-multi-instance-isolation">Execution Layer: Multi-Instance Isolation</h3>
+<p>One problem the last post left open: while the production instance was dogfooding, another session needed its own instance to verify code — but the single-instance lock, port, and data directory were all hard-wired to one copy. The only options were mutual murder.</p>
+<p>The fix: give each instance an identity. <code>PANTA_DATA_DIR</code> relocates the entire data directory (locks, database, logs); <code>PANTA_PORT</code> moves the port:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scripts/dev.sh                                                    <span class="c1"># production</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PANTA_DATA_DIR</span><span class="o">=</span>~/.pantalog-dev <span class="nv">PANTA_PORT</span><span class="o">=</span><span class="m">9787</span> scripts/dev.sh     <span class="c1"># test</span>
+</span></span></code></pre></div><p>Two instances run in parallel, invisible to each other. Without the env vars, behavior is byte-identical to before — single-instance protection intact. Test instances don&rsquo;t register the global hotkey by default (two instances fighting over a system hotkey has no winners).</p>
+<h3 id="ci-layer-handing-review-cant-keep-up-to-machines">CI Layer: Handing &ldquo;Review Can&rsquo;t Keep Up&rdquo; to Machines</h3>
+<p>This is the most substantial layer. The honest context: with multiple agents delivering in parallel, PRs arrive faster than I can read diffs, and many PRs were merged after a glance at the description — unknown whether tests existed, unknown whether assertions meant anything. The fix is not reviewing harder (diligence doesn&rsquo;t scale); it&rsquo;s mechanizing every mechanizable part of review.</p>
+<p>One premise first: the repo sits on GitHub&rsquo;s free tier, where branch protection is unavailable — the API returns 403. With native required checks off the table, &ldquo;nothing red enters master&rdquo; can&rsquo;t be delegated to the platform; it has to be self-built in two layers. Whatever machines can hard-gate goes into CI (all the gates below are that layer). What machines can&rsquo;t gate — like &ldquo;did you actually look at the checks before merging&rdquo; — becomes written red-line protocol in CONTRIBUTING.md, the traffic rules every session reads before starting.</p>
+<p><strong>The coverage trio</strong>:</p>
+<ol>
+<li>Automatic coverage comments on every PR — visible numbers are themselves a constraint:</li>
+</ol>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-coverage-pr-comment.png" alt="Automatic coverage comment on PR"  />
+</p>
+<ol start="2">
+<li><strong>Baseline ratchet</strong>: <code>--cov-fail-under</code> floors overall coverage — it may only rise (71.5 → 79, pushed up by debt repayment and tested fixes)</li>
+<li><strong>diff-cover incremental gate</strong>: changed/new lines in a PR require ≥80% test touch rate, or CI goes red and the PR cannot merge. Legacy zero-coverage modules aren&rsquo;t chased; but new code without tests is physically locked out</li>
+</ol>
+<p>Coverage answers &ldquo;do tests exist,&rdquo; not &ldquo;what the tests actually cover.&rdquo; The most painful one was the database-upgrade path: the suite starts every case from a fresh <code>create_all</code> database — all green — while real users&rsquo; old databases had zero upgrade coverage and crashed on launch. A fresh database can never catch a migration bug. The rule since: any schema change must ship an &ldquo;old-db in-place upgrade&rdquo; test — build with the old schema, run the migration, assert the result; new-database verification doesn&rsquo;t count.</p>
+<p><strong>Three frontend ratchets</strong> (same philosophy: cap the legacy, enforce the new): no new ts-ignore, per-file line caps, i18n key parity between locales. Plus the oxlint+oxfmt baseline — the frontend now matches the backend&rsquo;s Ruff governance.</p>
+<p><strong>Ops details</strong>: hard <code>timeout-minutes</code> per job (the 360-minute default would burn per-minute private billing on any hung build), concurrency cancellation of stale runs, ubuntu-only runners (macOS&rsquo;s 10x rate is unaffordable on per-minute private billing), and the auto-following &ldquo;master CI red&rdquo; alarm card:</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-master-ci-alarm.png" alt="master CI red auto-alarm card"  />
+</p>
+<p><strong>Red-line protocol: the part tests will never catch.</strong> Gates govern code, not process. Of the pits that actually cost work over these five days, not one could have been intercepted by a test:</p>
+<ul>
+<li><strong>Merging on red</strong>: master went red twice, both times from merging PRs that were still red. One was genuinely spooky — green locally, red in CI — until it traced back to pytest hitting a UTC boundary that only triggers around 8 a.m. Beijing time. First red line since: <code>gh pr checks</code> all green before any merge; date-related test failures get the timezone suspected before the code.</li>
+<li><strong>Duplicate fixes</strong>: master went red once and two sessions started fixing the same problem concurrently; the first to land merged, the second&rsquo;s work was scrapped wholesale. Since then, check the board and the latest run before touching a fix.</li>
+<li><strong>Fixing inherited errors per-card</strong>: branches cut from a red master carry the error into every worktree. The correct move is to fix master once, then rebase each in-flight branch — the inherited error vanishes with the rebase. Fixing the same master bug inside N cards is fixing one bug N times.</li>
+<li><strong>Web-UI bypasses</strong>: PR conflicts must be resolved locally — rebase, run green, push with <code>--force-with-lease</code>. &ldquo;Resolving&rdquo; a conflict by editing files in the GitHub web UI skips local tests on the way into master.</li>
+</ul>
+<p>All five rules (plus stop-line: master red means no merges and no new cards) live in CONTRIBUTING.md under &ldquo;CI red-line rules&rdquo; — required reading before any session starts.</p>
+<h3 id="infra-layer-infrastructure-taught-by-crashes">Infra Layer: Infrastructure Taught by Crashes</h3>
+<p><strong>Disk logs</strong>. The trigger was a morning triple crash: 16 backed-up tasks re-queued on startup, each spawning a thread into the local transcription model; MLX&rsquo;s thread-bound GPU stream threw a C++ exception at the Metal layer; the main process died instantly, bypassing all Python cleanup; the subprocess UI window became an orphan — still open, backend gone. During investigation we discovered logs were terminal-only: a crash left no evidence. The fixed system has three layers: rotating backend logs, frontend error-reporting logs, and test-process isolation (never polluting user logs).</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-crash-log.png" alt="Triple-crash log scene"  />
+</p>
+<p>The logs paid for themselves on their first case: diagnosing &ldquo;transcription feels stuck&rdquo; — the logs proved three stacked causes (batch serial queuing, same-day aggregation re-triggered N times, GLM occasionally returning malformed JSON), each fixed in its own card.</p>
+<p><strong>Transcription worker subprocess</strong>. Transcription saturates the GPU and starves the API thread of the Python global lock. Moved into a dedicated subprocess, the main process always responds, and subprocess exit releases the Metal cache wholesale. With one hard constraint: if the parent dies, the child dies (getppid watchdog) — force-quitting the app means everything stops; interrupted tasks are re-queued on next launch, losing nothing.</p>
+<p><strong>Import content validation</strong>. 23 leftover fake WAVs from testing (2 KB of the letter &ldquo;x&rdquo;) got ingested as real recordings and only failed at transcription with a wall of error. Now: file-header magic bytes + ffprobe decodability probing — garbage stops at the door. Alongside it, a duration cap: overlong recordings are stored as <code>too_long</code> awaiting manual transcription, never clogging the queue.</p>
+<h3 id="the-most-valuable-lesson-the-ai-drifted-from-product-intent">The Most Valuable Lesson: The AI Drifted from Product Intent</h3>
+<p>The finding worth an entire section — and it isn&rsquo;t technical. While reviewing, I realized every processed recording triggered one LLM call generating an &ldquo;AI review draft&rdquo; (score, mood, next step) plus a same-day aggregation — while my product spec says: <strong>recording-level output is transcription plus structured extraction; the daily review is &ldquo;a synthesis of the day&rsquo;s multiple recordings,&rdquo; viewed on the review page</strong>. The document is explicit. The implementation had invented an extra layer out of thin air.</p>
+<p>The cost list: doubled LLM calls (blew through the daily quota), an unwanted draft block on every timeline card, a misleading &ldquo;transcribing&rdquo; state, a lengthened queue. It sat in the codebase for days — neither the agent that wrote it nor me accepting its PR noticed.</p>
+<p>Agents don&rsquo;t self-audit against the spec — that verification is on me. The correction card was opened and closed within the same day: recording-level keeps transcription + extraction only (facts/plans/ideas/problems — the commitment loop&rsquo;s data source); AI review returns to daily-level aggregation with debounce; prompts are centralized and eval-gated.</p>
+<h3 id="reflection-quality-in-the-ai-era">Reflection: Quality in the AI Era</h3>
+<p>Five days in, I have a much more concrete answer to &ldquo;if AI writes the code, what do I do?&rdquo; The right answer to &ldquo;review can&rsquo;t keep up&rdquo; is not reviewing harder; diligence does not scale. Mechanize what can be mechanized: coverage ratchets block untested code, diff-cover blocks untested changes, lint and guards block style drift. Machines hold the floor. Humans hold what machines cannot — whether a feature should exist, whether it&rsquo;s any good, whether it&rsquo;s what I actually wanted.</p>
+<p>Multi-agent parallelism is the same: coordination cost is real. With five sessions running, collisions, stolen issue numbers, and trampled working directories all happen — conventions and scripts are not bureaucracy; they sink coordination cost from human memory into machine execution.</p>
+<p>Next step: V0.1&rsquo;s exit criterion is 14 consecutive days of dogfooding (record → next-day check-off loop). Guardrails are up. Now for the actual using.</p>
+<hr>
+<p>Data as of 2026-09-16, at publishing: 122 commits / 111 merged PRs / 127 issues; coverage 71.5% → 79.6% with the baseline ratchet in effect; all work done by multiple Claude Code agents in parallel Orca worktrees.</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Orca &#43; GitHub Projects: Day One of a Real AI Coding Workflow</title>
+      <link>https://blog.xiaohuangyu.space/en/p/github-projects-orca-agent-workflow-en/</link>
+      <pubDate>Fri, 11 Sep 2026 23:55:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/github-projects-orca-agent-workflow-en/</guid>
+      <description>&lt;p&gt;Notes on wiring GitHub Projects and Orca into a working AI coding pipeline, pitfalls included. macOS as the example.&lt;/p&gt;&#xA;&lt;p&gt;Background: I have a side project (panta-log, a local-first voice review tool) whose issue/PR conventions had been sitting in another repo, unused. This time the goal was concrete: a kanban board for tasks, Orca running the agents, and the whole chain of &amp;ldquo;pick a task → develop → test → merge → status transitions itself&amp;rdquo; working end to end within one day.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Notes on wiring GitHub Projects and Orca into a working AI coding pipeline, pitfalls included. macOS as the example.</p>
+<p>Background: I have a side project (panta-log, a local-first voice review tool) whose issue/PR conventions had been sitting in another repo, unused. This time the goal was concrete: a kanban board for tasks, Orca running the agents, and the whole chain of &ldquo;pick a task → develop → test → merge → status transitions itself&rdquo; working end to end within one day.</p>
+<p>Here&rsquo;s what the finished loop looks like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Pick a card (Todo) → open a worktree from it in Orca → agent works (runs tests itself)
+</span></span><span class="line"><span class="cl">→ PR triggers CI → review the diff → squash merge
+</span></span><span class="line"><span class="cl">→ issue closes itself → card moves to Done by itself → remote branch deleted by itself
+</span></span></code></pre></div><h3 id="step-1-getting-the-conventions-in-place">Step 1: getting the conventions in place</h3>
+<p>I copied a set straight from my own boss-zhipin-scraper project: three issue templates (bug/feature/question as YAML forms), a PR template, and a CONTRIBUTING.md, adapted to the new project&rsquo;s stack (uv, pytest, the macOS permission gotchas). Push it and the repo&rsquo;s New issue page immediately serves proper forms. Five minutes, nothing more to say.</p>
+<h3 id="step-2-backlogging-with-the-gh-cli">Step 2: backlogging with the gh CLI</h3>
+<p>The roadmap doc already had six work packages with acceptance criteria, so I just split them into issues. Ground rules:</p>
+<ul>
+<li>Only turn tasks marked &ldquo;needs rework&rdquo; or &ldquo;needs building&rdquo; into issues. Skip what already works — don&rsquo;t pollute the board</li>
+<li>Prefix titles with the task code (WP-A1 and friends) so cards map back to the doc at a glance</li>
+<li>Quote the roadmap&rsquo;s acceptance criteria verbatim in the body, plus a suggested week batch</li>
+<li>Hang everything on a milestone whose description states the exit criteria</li>
+</ul>
+<p>18 issues. Two for loops.</p>
+<h3 id="step-3-the-pitfall-zone--gh-project-cli">Step 3: the pitfall zone — gh project CLI</h3>
+<p>Most board operations can be done from the terminal, but the CLI trips you up at every turn. All of these bit me for real:</p>
+<p><strong>Pitfall 1: <code>gh auth refresh</code> needs <code>-h</code> in non-interactive mode</strong></p>
+<p>Running it through a non-interactive prefix (like Claude Code&rsquo;s <code>!</code>) fails with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">--hostname required when not running interactively
+</span></span></code></pre></div><p>Write it as <code>gh auth refresh -h github.com -s read:project,project</code>. Also note this command blocks on device authorization: run it in the background, fish the one-time code out of the output, enter it at github.com/login/device.</p>
+<p><strong>Pitfall 2: field-create takes <code>--name</code>, not <code>--title</code></strong></p>
+<p><code>gh project field-create --title &quot;Phase&quot;</code> dies with &ldquo;unknown flag&rdquo;. The help text has shown both spellings in different eras; <code>--name</code> is the one that works.</p>
+<p><strong>Pitfall 3: <code>-q</code> requires <code>--format json</code></strong></p>
+<p>The sneakiest one. <code>gh project item-add &lt;n&gt; --owner me --url xxx -q '.id'</code> fails quietly with <code>cannot use --jq without specifying --format json</code>. In a batch script all 18 items die invisibly (stderr swallowed). Correct form:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-add <span class="m">2</span> --owner eatmoreduck --url <span class="s2">&#34;https://github.com/xxx/issues/1&#34;</span> --format json -q <span class="s1">&#39;.id&#39;</span>
+</span></span></code></pre></div><p><strong>Pitfall 4: item-edit uses <code>--project-id</code>, not <code>--owner</code> + <code>--project-number</code></strong></p>
+<p>item-add takes number + owner, then item-edit suddenly wants the project&rsquo;s global ID (a <code>PVT_xxxx</code> string, visible in the project list):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;field-id&gt; --single-select-option-id &lt;option-id&gt;
+</span></span></code></pre></div><p><strong>Pitfall 5: item-list&rsquo;s JSON returns fieldValues as null</strong></p>
+<p>Want to verify your field values landed? <code>gh project item-list --format json</code> returns null for everything — the endpoint simply doesn&rsquo;t return them. GraphQL is the only way to check:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh api graphql -f <span class="nv">query</span><span class="o">=</span><span class="s1">&#39;query($login:String!,$number:Int!){
+</span></span></span><span class="line"><span class="cl"><span class="s1">  user(login:$login){ projectV2(number:$number){
+</span></span></span><span class="line"><span class="cl"><span class="s1">    items(first:30){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">      content{ ... on Issue { number } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      fieldValues(first:20){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">        ... on ProjectV2ItemFieldSingleSelectValue { name field{ ... on ProjectV2FieldCommon { name } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">    } } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">}&#39;</span> -f <span class="nv">login</span><span class="o">=</span>eatmoreduck -F <span class="nv">number</span><span class="o">=</span><span class="m">2</span> --jq <span class="s1">&#39;...&#39;</span>
+</span></span></code></pre></div><p>Two single-select fields (Phase for release stages, Area for modules), 18 cards batch-added with Status/Phase/Area set, plus two date fields for the timeline. One pass.</p>
+<h3 id="orca-easier-than-expected">Orca: easier than expected</h3>
+<p>I expected a GitHub OAuth dance inside Orca. Instead, the integrations page showed GitHub as Connected out of the box — Orca&rsquo;s GitHub integration reads the local gh CLI credentials, so a logged-in gh means already connected. There is no &ldquo;connect and authorize&rdquo; button to find.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-github-connected.png" alt="Orca integrations page showing GitHub already Connected"  />
+</p>
+<p>One small confusion: where&rsquo;s the board? The Tasks page has three tabs — Issues, PRs, Projects. The issue list lives under Issues; the <strong>board lives under the Projects tab</strong>. Right-click any card to create a worktree, and the composer pre-fills the task name and links the issue.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-issue-list.png" alt="The three tabs of Orca&rsquo;s Tasks page"  />
+</p>
+<h3 id="board-automation-on-by-default">Board automation: on by default</h3>
+<p>The engine of the whole loop is two built-in project workflows:</p>
+<ul>
+<li>Item added to project → Set Status = Todo</li>
+<li>When pull request merged → Set Status = Done</li>
+</ul>
+<p>Counter-intuitive bit: both ship <strong>ON the moment the project is created</strong>. I assumed they needed flipping in the web UI and put that on my checklist; when I finally opened the Workflows panel, they&rsquo;d been working all along. Double-checked out of curiosity: gh CLI has no subcommands for workflows at all (<code>gh project --help</code> only covers items and fields), so you can&rsquo;t toggle them from the terminal either way — the project&rsquo;s Workflows panel is the only place to view or adjust them.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-workflow-pr-merged.png" alt="The Pull request merged workflow configuration"  />
+</p>
+<p>Once these are live, the moment a PR merges: the issue closes itself (via Closes #n in the commit), the card moves to Done. No human involved.</p>
+<h3 id="roadmap-timeline-dates-can-be-piped-in-from-the-cli">Roadmap timeline: dates can be piped in from the CLI</h3>
+<p>The timeline view opens blank because no item has dates. The fix:</p>
+<ol>
+<li>Create <code>Start date</code> / <code>Target date</code> date fields</li>
+<li>Point the view toolbar&rsquo;s Date fields at those two</li>
+<li>Pipe the values in per roadmap batch:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;start-field-id&gt; --date <span class="s2">&#34;2026-09-14&#34;</span>
+</span></span></code></pre></div><p>Then the timeline shows real bars, and dragging them reschedules the underlying fields.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-roadmap-timeline.png" alt="The roadmap timeline view"  />
+</p>
+<h3 id="multiple-agents-yes-but-dont-get-greedy">Multiple agents: yes, but don&rsquo;t get greedy</h3>
+<p>Orca&rsquo;s core trick is one task per isolated git worktree, and several agents genuinely do run in parallel without stepping on each other&rsquo;s branches. Verified.</p>
+<p>Hard-won practical notes:</p>
+<ul>
+<li><strong>Avoid file conflicts when picking concurrent cards.</strong> Two tasks touching the same file means the later merge conflicts for sure. Same-subsystem tasks shouldn&rsquo;t run in parallel</li>
+<li><strong>2-3 cards in parallel, merges serial.</strong> The bottleneck is never writing code — it&rsquo;s review. Five agents means five PRs you can&rsquo;t properly review, and blind-merging into your core pipeline is free soloing</li>
+<li>The agents dashboard&rsquo;s three columns (Needs you / Running / Done) are exactly the management surface for this: an agent that stops to ask shows up under &ldquo;Needs you&rdquo;</li>
+</ul>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-agents-dashboard.png" alt="The agents dashboard"  />
+</p>
+<p>Also: Orca does not pull cards off the board by itself. Which cards run and when is still a human decision — and honestly, that&rsquo;s a feature.</p>
+<h3 id="hand-the-ci-to-an-agent-too">Hand the CI to an agent too</h3>
+<p>The repo had no CI, so PR-level automated testing was a gap. My approach: file an issue with the constraints spelled out first — private repo means billable Actions minutes and macOS runners bill at 10x, so the workflow must stay on ubuntu; one workflow file only; no ESLint/mypy. Then open a worktree and hand it to an agent.</p>
+<p>It checked every acceptance box: backend (ruff + 88 tests) and frontend build, both jobs green, about 40 seconds combined. It even hit a real snag and fixed it itself — ubuntu&rsquo;s sounddevice lacks PortAudio, so it added <code>apt-get install libportaudio2</code> to the CI. Best of all, it let the first run go red on purpose before fixing it, proving the failure alarm actually fires.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-pr-checks-passed.png" alt="PR checks all passing"  />
+</p>
+<p>Lesson worth keeping: <strong>the more specific the issue (constraints, boundaries, acceptance criteria), the less babysitting the output needs.</strong> &ldquo;Add me a CI&rdquo; and a fully specified issue produce wildly different results.</p>
+<h3 id="review-and-merge-without-leaving-orca">Review and merge without leaving Orca</h3>
+<p>Diff review, feedback, merging — all in-app:</p>
+<ul>
+<li>Line-by-line review in the diff viewer; if something&rsquo;s off, say so in that worktree&rsquo;s agent session, and the push updates the same PR</li>
+<li>The Checks panel shows CI status, and a failed check can be handed straight to the agent to fix</li>
+</ul>
+<p>Then comes the most instructive misuse of the day: I couldn&rsquo;t find the merge button, and the &ldquo;commit&rdquo; button in the corner was grayed out.</p>
+<p>The gray is correct — that&rsquo;s the <strong>git push button</strong>, and there was nothing left to push. The merge control lives in the <strong>PR detail view</strong> (the page you get by clicking into the PR from the list), with a merge-method dropdown, same logic as the web.</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-source-control-menu.png" alt="The right-side menu is git operations, not the merge entry"  />
+</p>
+<h3 id="merge-method-squash-no-hesitation">Merge method: squash, no hesitation</h3>
+<p>One line each:</p>
+<ul>
+<li><strong>Squash</strong>: the whole PR becomes a single commit on master; intermediate commits are discarded</li>
+<li><strong>Rebase</strong>: every commit is replayed individually; all intermediates survive</li>
+<li><strong>Merge commit</strong>: merges as-is plus a merge node; history becomes a graph</li>
+</ul>
+<p>For AI agent output, squash is the only right answer. An agent&rsquo;s intermediate commits are all &ldquo;fix typo&rdquo; and &ldquo;round 2&rdquo; noise with zero archival value. After squashing, one card maps to one clean commit on master, a revert is one command, and <code>Closes #n</code> still works from the PR description. The other two only matter when you need branch topology for team collaboration, or you&rsquo;ve hand-curated a commit series worth preserving.</p>
+<h3 id="repo-settings-two-toggles-two-different-stories">Repo settings: two toggles, two different stories</h3>
+<ul>
+<li><strong>Automatically delete head branches</strong>: auto-deletes the remote branch after merge. Instant benefit — otherwise twenty cards leave twenty dead branches behind. Local worktrees are unaffected; clean those up in Orca when done</li>
+<li><strong>Allow auto-merge</strong>: lets a PR be set to &ldquo;merge when green&rdquo;. Note this only unlocks the feature — nothing happens until you enable it on a specific PR. And <strong>with no CI, it&rsquo;s a no-op</strong> — there are no checks to wait for. So the order is: turn on branch deletion now, auto-merge after CI lands</li>
+</ul>
+<h3 id="end-of-day-one">End of day one</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Item</th>
+          <th>Status</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Issue/PR templates + contributing guide</td>
+          <td>Pushed and live</td>
+      </tr>
+      <tr>
+          <td>19 issues + milestone + board fields</td>
+          <td>All on the board, verified via GraphQL</td>
+      </tr>
+      <tr>
+          <td>Two board automations</td>
+          <td>On by default, zero config</td>
+      </tr>
+      <tr>
+          <td>Roadmap timeline</td>
+          <td>Three batches of dates piped in</td>
+      </tr>
+      <tr>
+          <td>CI (agent-built)</td>
+          <td>Merged and live, both jobs green</td>
+      </tr>
+      <tr>
+          <td>The full loop</td>
+          <td>First card verified from pick-up to Done</td>
+      </tr>
+  </tbody>
+</table>
+<p>The biggest takeaway: once this scaffolding exists, the act of &ldquo;managing tasks&rdquo; disappears — what&rsquo;s left is moving cards one by one. Every tool handles its stretch of the pipe: GitHub Projects keeps the state, Orca handles agents and worktrees, and the gh CLI patches every gap in between.</p>
+<p>The plan from here is to build the habit: open the board first thing each day, pick two cards. The board doesn&rsquo;t lie, so progress doesn&rsquo;t need remembering.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
