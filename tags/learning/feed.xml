@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Learning on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/learning/</link>
+    <description>Recent content in Learning on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 20 Sep 2026 22:49:58 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/learning/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>初探苏格拉底式学习法：后端工程师和 AI 初识 Jev 无嘴模型</title>
+      <link>https://blog.xiaohuangyu.space/p/socratic-method-jev-ai-learning/</link>
+      <pubDate>Sun, 20 Sep 2026 16:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/socratic-method-jev-ai-learning/</guid>
+      <description>&lt;p&gt;我有个老毛病收藏即学会。每天刷社区推文、微信群和 GitHub 趋势榜，新概念看着都眼熟，合上电脑却半天讲不出一句整话。&lt;/p&gt;&#xA;&lt;p&gt;前两天看到有一个 rust 博主讲苏格拉底学习法，督促孩子学习，今天正好接触到一个新词叫 jev 模型。心里完全没有概念，就想尝试一下使用这种学习方法，看能不能留下点印象。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>我有个老毛病收藏即学会。每天刷社区推文、微信群和 GitHub 趋势榜，新概念看着都眼熟，合上电脑却半天讲不出一句整话。</p>
+<p>前两天看到有一个 rust 博主讲苏格拉底学习法，督促孩子学习，今天正好接触到一个新词叫 jev 模型。心里完全没有概念，就想尝试一下使用这种学习方法，看能不能留下点印象。</p>
+<h2 id="什么是苏格拉底式学习法">什么是苏格拉底式学习法？</h2>
+<p>苏格拉底把自己的教学方式比作「精神产婆术」（Maieutics）。他认为知识不是导师灌给学生的，而是本来就藏在学习者的认知里，导师要做的是用连续的提问、反诘和边界测试，引导学习者自己把结论推出来。</p>
+<p>这套方法通常包含四个循环递进的环节：</p>
+<ol>
+<li><strong>破</strong>（反讽与质疑）：打破「我以为我知道」的错觉，暴露概念断层。</li>
+<li><strong>引</strong>（概念澄清与降维）：剥掉包装，回到最基本的事实。</li>
+<li><strong>立</strong>（产婆式引导与主动输出）：角色互换，学习者用自己的语言解释新系统。</li>
+<li><strong>结</strong>（边界检验与实战落地）：放到极端的业务场景里，推演失效模式和代价。</li>
+</ol>
+<h2 id="第一幕破冰不再只是听讲">第一幕：破冰——不再只是听讲</h2>
+<p>对话最初始于一个缩写。</p>
+<p>我问「Agent 领域的 JEV 是什么」，AI 的第一反应是经济学里的「杰文斯悖论」（Jevons Paradox），大谈模型成本降低如何引发算力总消耗暴涨。</p>
+<p>按正常流程，这就是一次平平无奇的问答。但我接着甩出两篇技术链接——TypeSafe 发布的 Jev 和开源复现 Laya，顺手立了规矩：</p>
+<blockquote>
+<p>咱们用苏格拉底式的学习法，先给我讲一遍，我再跟你讲。</p>
+</blockquote>
+<p>这句规矩立完，对话关系就反过来了，两个立竿见影的变化：</p>
+<p>一是把命名搞清楚了。模型叫 Jev 是在致敬杰文斯，作者想终结的，就是大模型在自动化链路里的浪费。</p>
+<p>二是状态变了。知道等会儿要自己复述，听的时候就不是随便浏览，而是下意识在拆对方的逻辑。</p>
+<h2 id="第二幕搭桥拿熟悉的东西打底">第二幕：搭桥——拿熟悉的东西打底</h2>
+<p>交流过程中，技术群里几句黑话摆到了台面上：</p>
+<ul>
+<li>「Jev 都快赶上 NLP 了。」</li>
+<li>「中科大团队在用符号主义做类似的事。」</li>
+<li>「Agent 做 HOOTL 必须要有靠谱的路由判断。」</li>
+</ul>
+<p>这一堆名词硬背很快会累。苏格拉底式的做法是拿你已经熟的东西打底。</p>
+<p>作为一个写 Java 后端、碰过规则引擎、特征平台和模型部署的工程师，我试着把 NLP 拉回自己的战场：</p>
+<blockquote>
+<p>我可以把 NLP 理解为一个模型吗？它不像规则引擎那样写死包含什么就是 A，而是做了分词、权重与特征计算，最后给出一个近似度分箱，指定输出 ABCD 其中的某个类别？</p>
+</blockquote>
+<p>这么一类比，黑话就好懂了：</p>
+<ul>
+<li>规则引擎（符号主义）：确定性高、执行只需 0.1ms，但泛化极差，规则累加后极其容易冲突。</li>
+<li>大语言模型（LLM）：泛化极强，但拿来路由判断就是大炮打蚊子——耗时数秒、按 Token 计费，还老报 JSON 解析异常。</li>
+<li>Jev / Laya（无嘴模型）：把文本生成能力剥掉，直接做多分类和概率分布输出。</li>
+</ul>
+<p>群友那句话的意思其实很简单：大模型自由生成文本这一路试下来，大家发现 Agent 的意图路由和控制流，还是应该交给快、便宜、结果确定的判别式模型。</p>
+<h2 id="第三幕交锋我来讲你来挑刺">第三幕：交锋——我来讲，你来挑刺</h2>
+<p>进入苏格拉底学习法的核心环节：角色互换，我上场输出，AI 负责挑刺。</p>
+<p>我用自己的话总结了它的三个特性：</p>
+<ol>
+<li>底层结构：不同于大模型不断拼接 JSON 字符串并返回 string，Jev 更像直接在结构体的 Value 里填值，原生不会出现格式错乱。</li>
+<li>OLTP 时刻：OLAP 对应耗时长的离线扫描，OLTP 对应低延迟与即席查询；它让模型具备了高并发、毫秒级响应的能力。</li>
+<li>置信度：大模型的置信度可能存在虚构或误判，而 Jev 给出的置信度更接近统计概率。</li>
+</ol>
+<p>AI 接着往下追问，把这三点都往底层压了一层。</p>
+<h3 id="gpu-上发生了什么权重只搬一次">GPU 上发生了什么：权重只搬一次</h3>
+<p>大模型生成（Decode 循环）受限于显存带宽（Memory Bandwidth Bound）。每吐出一个字符，GPU 就要把数十 GB 的模型权重完整读一遍，生成 100 个字符的 JSON，权重就被循环读了 100 遍。</p>
+<p>无嘴模型只有一次 Prefill，没有 Decode 阶段：输入编码完成后，直接通过打分头完成矩阵运算，权重只读一次。耗时从 2000ms 降到 70ms，而且因为不生成 Token，边际成本趋近于零。</p>
+<h3 id="oltp-的门槛能否进同步链路">OLTP 的门槛：能否「进同步链路」</h3>
+<p>并发高只是结果，延迟才决定它能用在架构的哪一层。</p>
+<p>Web 网关的同步超时预算通常在 200ms 以内，耗时 2～5 秒的大模型只能以异步 Agent 或后台批处理的形式存在；而 70ms 的 Jev 第一次有资格作为基础 RPC 模块，直接嵌进核心业务的同步调用栈。</p>
+<h3 id="置信度confidence-校准概率calibrated-probability">置信度（Confidence）≠ 校准概率（Calibrated Probability）</h3>
+<p>大模型在 JSON 里吐出的 <code>confidence: 0.9</code> 往往是顺嘴一说，不代表真实命中率；而 Jev 通过 RLCD（真值评分规则强化学习）训练，概率在统计意义上是校准的——系统报 85% 的时候，历史样本的真实命中率就是 85%。</p>
+<h2 id="第四幕落地放到业务里算账">第四幕：落地——放到业务里算账</h2>
+<p>技术不经业务场景过一遍，就还是玩具。我们把讨论推进到两个具体场景：金融借贷反欺诈与智能客服。</p>
+<h3 id="阈值怎么定从代价算出来">阈值怎么定：从代价算出来</h3>
+<p>在借贷风控中，很多人习惯凭直觉写 <code>if (probability &gt; 0.8)</code>。但依据统计决策理论（Chow&rsquo;s Rule）：</p>
+<p>若漏报一次真实欺诈损失 500 元（
+
+  
+    <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">Cost_{FN} = 500</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">FN</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">500</span></span></span></span>
+  
+
+），误杀一个正常用户仅补偿 5 元券（
+
+  
+    <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">Cost_{FP} = 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span>
+  
+
+），最优的决策阈值计算如下：</p>
+
+
+  
+    <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Threshold</mtext><mo>=</mo><mfrac><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub></mrow><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mo>+</mo><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub></mrow></mfrac><mo>=</mo><mfrac><mn>5</mn><mrow><mn>5</mn><mo>+</mo><mn>500</mn></mrow></mfrac><mo>≈</mo><mn>0.0099</mn></mrow><annotation encoding="application/x-tex">\text{Threshold} = \frac{Cost_{FP}}{Cost_{FP} + Cost_{FN}} = \frac{5}{5 + 500} \approx 0.0099</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Threshold</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1963em;vertical-align:-0.836em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">FN</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0908em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">500</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.0099</span></span></span></span></span>
+  
+
+<p>只要这笔交易的欺诈概率超过 1%，系统就必须触发干预。这套算法能用的前提，是模型输出的概率真的校准；概率虚高，公式就是摆设。</p>
+<h3 id="架构上三层漏斗层层过滤">架构上：三层漏斗，层层过滤</h3>
+<p>灰色地带的请求怎么办？靠单一模型包办不现实，分三层处理：</p>
+<ul>
+<li>第一层，硬规则。黑名单命中、设备指纹复现这类确定性事实，规则引擎 0.1ms 内出结果，直接放行或拦截，不用惊动任何模型。</li>
+<li>第二层，判别式打分。剩余流量全部交给 Jev 这类无嘴模型，70ms 出校准概率，按上面的代价阈值同步决策，覆盖绝大多数请求。</li>
+<li>第三层，灰色地带兜底。分数落在临界区间的少数请求，丢给大模型做异步的补充研判，或者直接转人工。LLM 在这里只处理最难的那一小撮，贵得起了。</li>
+</ul>
+<p>智能客服是同一个故事。日常客服 query 里大部分是「查账单」「改收货地址」这样的高频意图，无嘴模型毫秒级完成路由，直接调对应工具；只有真正需要理解复杂上下文的请求才升级给 LLM。延迟和 Token 成本同时降下来，路由准确率反而比让大模型「先理解一下再回答」更稳。</p>
+<h2 id="尾声">尾声</h2>
+<p>复盘整场对话，我感觉到了学习方式的反转：先让它讲给我听，再由我讲给它听，最后让它站在对面挑刺。</p>
+<p>它讲不出基本原理的地方，是它也在猜；我讲不顺的地方，是我概念断层的位置；它挑出来的刺，就是还没被检验过的边界。</p>
+<p>两个小时下来，收藏夹一篇文章都没多，但合上电脑，我还能讲清楚它为什么快、阈值为什么这么算。「收藏即学会」和「真学会」之间，仍然有一道巨大的鸿沟，但最起码我回答了几个问题之后，真相逐渐浮出水面。</p>
+<h2 id="回到最初的问题什么是-jev-模型">回到最初的问题：什么是 Jev 模型？</h2>
+<p>Jev模型是专门用来做<strong>状态判断和意图路由</strong>的‘无嘴模型’。它彻底去掉了逐字生成文本的解码过程，只做单次前向计算，输入一段状态和自定义题目，<strong>70毫秒直接返回类型安全、经过数学校准的概率分布</strong>。本质上就是把以前大模型慢吞吞拼 JSON 的‘智能 if-else’，变成了毫秒级、零幻觉的通用分类器。
+简单说，它就是一个<strong>把嘴缝上了的大模型</strong>。它不会聊天写作文，专门用来在 70 毫秒内做选择题和打分，输出真实的概率，给 Agent 和业务系统当极速的‘小脑’和路由开关。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
