@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Open-Source on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/open-source/</link>
+    <description>Recent content in Open-Source on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 11 Oct 2026 23:39:42 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/open-source/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>刷了三天AI短剧，我一怒之下做了个全网最癫的不烧心skill</title>
+      <link>https://blog.xiaohuangyu.space/p/bushaoxin-skill/</link>
+      <pubDate>Sun, 11 Oct 2026 21:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/bushaoxin-skill/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;项目地址：https://github.com/eatmoreduck/bushaoxin （MIT 开源，一句话安装）&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;凌晨两点四十七分。&lt;/p&gt;&#xA;&lt;p&gt;手机屏幕冷白的光打在脸上。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>项目地址：https://github.com/eatmoreduck/bushaoxin （MIT 开源，一句话安装）</p>
+</blockquote>
+<p>凌晨两点四十七分。</p>
+<p>手机屏幕冷白的光打在脸上。</p>
+<p>手指机械地往上一滑，屏幕里又是一个胡子拉碴的中年男人，系着油腻的粗布围裙，单手扶着案板，眼神笃定地看着镜头，语气慢得像在数米粒：</p>
+<p>“面贵是贵了点，但吃了不烧心。”</p>
+<p>再滑一次，还是他。这次换成了卖盒饭，手里的菜勺顿在半空：“宁可少挣点，也不能坏了规矩。”</p>
+<p>再滑一次，他甚至改行卖上了软件激活码，依然面不改色：“不怕亏钱吗？怕，更怕账本不清。”</p>
+<p>整整三天，我的信息流被这个“良心掌柜”彻底包圆了。闭上眼，耳朵里全是他在敲算盘；睁开眼，天花板上仿佛都悬着五个大字——《规矩不能坏》。</p>
+<p>到第四天，我的精神状态终于彻底失常了。</p>
+<p>中午十二点十五分，点外卖看到一份28块钱的猪脚饭，心里冷不丁冒出一句：“怕人嫌贵？怕。更怕卤汁不是当天熬的。”</p>
+<p>下午两点半开需求评审会，产品经理拍着桌子问“这个功能明天能不能上线”，我嘴皮子一抽，差点脱口而出：“不好意思，一次接不了这么多单。”</p>
+<p>晚上回家辅导孩子写作业，看着满桌子的练习册，我甚至想语重心长地拍拍他的肩膀：“剩下怎么办？要完成，人不能没良心。明天怎么办？先做。”</p>
+<p>我疯了。</p>
+<p>但凡你最近刷过短视频，你大概率也跟我一样，在被这套“规矩体”连环轰炸的边缘疯狂试探。</p>
+<hr>
+<h2 id="22万部短剧全网只记住了一句台词">22万部短剧，全网只记住了一句台词</h2>
+<p>这个在全网病毒式蔓延的梗，起源于2026年9月底。</p>
+<p>红果短剧等平台上，突然井喷了海量由AI批量生成的市井短剧。这些短剧就像同一个模具里倒出来的塑料小人：主角永远是在街角摆摊三十年的“良心掌柜”，卖包子、卖盒饭、卖猪脚饭，后来甚至演化出卖卡密的小老板。</p>
+<p>剧情永远是同一个模板：良心掌柜坚持用新鲜材料、账目分明，哪怕价格贵一点也绝不妥协；隔壁黑心同行大搞科技与狠活和价格战；掌柜咬牙苦撑，最后顾客吃坏肚子认清真相，纷纷回流，良心大获全胜。</p>
+<p>因为是AI流水线批量跑出来的剧本，编剧连台词都懒得换，改个商品名就敢发一部。</p>
+<p>结果，这些高度同质化的流水线台词，在抖音上硬生生被冲出了破13亿播放的超级话题。</p>
+<p>一句“贵是贵了点”，后面必定有人接着对暗号：“但用了不烧心”。</p>
+<p>网友们瞬间把这套台词解构成了席卷全网的“万物皆可不烧心”。写代码、谈恋爱、职场对线、健身打卡，任何场景套上规矩体，荒诞感和喜剧效果立刻拉满。小学生不想写作业，会一脸沉痛地对妈妈说：“不好意思，一次接不了这么多单。”</p>
+<p>央媒专门下场点名：二十二万部流水线短剧，观众唯一记住的竟然只有同一句话。这是对粗制滥造AI内容的绝妙讽刺。</p>
+<p>在这个到处充斥着降本增效、以次充好、互相糊弄的时代，大家疯狂转发的背后，本质上并不是多喜欢粗糙的AI短剧，而是借着这个荒诞的壳子，宣泄打工人内心深处对“靠谱、不坑人、有底线”的极度渴望。</p>
+<p>既然人人都在玩梗，既然这股风气怎么躲都躲不掉——</p>
+<p>那为什么不把它做进终端里，让AI亲自下场当掌柜？</p>
+<hr>
+<h2 id="一怒之下我手搓了一个不烧心skill">一怒之下，我手搓了一个不烧心skill</h2>
+<p>折腾了一个晚上，我把这套台词体系封装成了一个专给 Claude Code / Agent Skills 使用的开源玩梗工具——<strong>bushaoxin（不烧心文学生成器）</strong>。</p>
+<p>开源协议直接给的 MIT，完全免费，纯粹整活。</p>
+<p>这个 skill 的核心人设极其纯粹：让 AI 扮演那位在街角做了三十年小买卖的“良心掌柜”。</p>
+<p>不管你让它卖什么——卖面条、卖卡密、卖网课、卖代码，甚至卖真心，掌柜的规矩永远只有一套：材料必须是当天进的，账目必须一笔一笔算清楚，宁可少赚点，绝不能坏了规矩。说话慢、短、笃定，哪怕世界毁灭也绝不激动。</p>
+<p>在它的人设底层，死死焊接着几条雷打不动的硬规矩：
+“规矩高于钱——宁可少挣点，也不能坏了规矩”；
+“只接拿得住的——这么大个单不接吗？不好意思，一次接不了这么多单”；
+“稳字诀——不是我稳，是不能慌，一慌就容易做错事”；
+还有那句终极的“问是好事——怕没人问，不怕人多问”。</p>
+<p>任何文案只要丢进去，出来全是一股老陈醋配大骨汤的陈年老铺味。</p>
+<p>口说无凭，直接看真实输出。</p>
+<hr>
+<h2 id="现场验货万物皆可规矩体">现场验货：万物皆可规矩体</h2>
+<p>装上这个不烧心skill之后，你的 AI 说话画风瞬间突变。</p>
+<p>比如，让它给程序员写一条朋友圈：</p>
+<blockquote>
+<p>需求是接了。但只接自己拿得住的。代码贵是贵了点——工时是工时，账是账。规矩不能坏，先做。</p>
+</blockquote>
+<p>这短短两句话发到群里，那种被需求按在地上摩擦却依然保持体面的老程序员风骨，瞬间立住了。</p>
+<p>再比如，让它以不烧心文学的口吻评价一门割韭菜的网课：</p>
+<blockquote>
+<p>贵是贵了点。但学完不烧心。账一笔一笔记清楚，谁的问题谁负责。慢慢来，别慌，一慌就容易学岔。</p>
+</blockquote>
+<p>不攻击、不阴阳，语气平淡得像在递一碗温水，但每一个字都在暗中敲打浮躁的心态。</p>
+<p>再让它老老实实写个面馆招牌：</p>
+<blockquote>
+<p>面贵是贵了点。
+怕人说值不上？怕。更怕汤不是当天吊的。
+天天都要吃的东西，讲究的就是个实在。
+规矩不能坏。</p>
+</blockquote>
+<p>什么是专业？这就是做了三十年老生意的底气。</p>
+<hr>
+<h2 id="杀手级设计吐槽就是遥控器">杀手级设计：吐槽就是遥控器</h2>
+<p>如果只是机械吐出几句台词，那顶多算个模板生成器，根本配不上掌柜的灵魂。</p>
+<p>这个 skill 最绝的地方，在于我给它设计的一套<strong>动态火候调节系统</strong>。</p>
+<p>日常使用时，它默认是中火（四五句标准规矩体）。但你也可以随时指定火候：</p>
+<ul>
+<li><strong>微火</strong>：点到为止，一两句收工，寡淡中透着深沉；</li>
+<li><strong>大火</strong>：信条连发，六到八句连珠炮轰，浓度直接拉满；</li>
+<li><strong>掌柜附体</strong>：AI 直接切换人格，不再是文案工具，而是掌柜搬着马扎跟你唠嗑，连续多轮对话打死都不跳出人设。</li>
+</ul>
+<p>但最爽的还不是手动选档位，而是<strong>升降火反馈机制</strong>。</p>
+<p>你根本不需要背任何参数命令，<strong>你的吐槽就是它的遥控器</strong>。</p>
+<p>如果你觉得味儿太冲、快被油烟熏晕了，直接在聊天框里冲它喊：
+“太烧了！”
+“烧了烧了！”
+或者“降降火”。</p>
+<p>它不仅会自动把火候降下一档重新输出，还会顶着掌柜的人设轻描淡写地回你一句：</p>
+<p><strong>“嫌烧？那我收火。”</strong></p>
+<p>不解释、不辩解，神情淡漠地收火重做。要是你连喊两次“太烧了”，系统会自动判定你快被烤焦了，瞬间直落微火。</p>
+<p>反过来，如果你觉得文案不过瘾，回一句“淡了”、“没味儿”或者“不得劲”，掌柜立刻加柴添火，下一秒就是六到八句连珠炮的信条轰炸。</p>
+<p>这种被短剧掌柜拿捏得死死的人性交互，才是这个 skill 最上头的精髓所在。</p>
+<hr>
+<h2 id="一句话安装即插即用">一句话安装，即插即用</h2>
+<p>整个工具没有任何冗长复杂的配置步骤。</p>
+<p>如果你在用 Claude Code，只需要复制下面这行指令，原样丢给它即可：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">帮我安装这个 skill：https://github.com/eatmoreduck/bushaoxin
+</span></span></code></pre></div><p>Claude Code 会自动把仓库拉取下来并完成注册。</p>
+<p>如果你习惯用网页版，打开 claude.ai 的 Settings → Capabilities → Skills 直接上传即可；同样，它也原生兼容 Claude API 和各种 Agent SDK。</p>
+<hr>
+<h2 id="规矩不能坏先做">规矩不能坏，先做</h2>
+<p>从流水线短剧里提炼出来的荒诞台词，最后变成了开发者终端里一个能让人会心一笑的玩具。</p>
+<p>技术是新的，但人们对真诚、靠谱、踏实的渴望，从来都是旧的。</p>
+<p>明天怎么办？先做。</p>
+<p>项目完全开源，欢迎大家去 GitHub 仓库围观顺手点个 Star：
+<a href="https://github.com/eatmoreduck/bushaoxin">https://github.com/eatmoreduck/bushaoxin</a></p>
+<p>抢得走 star，抢不走人心。工具好不好用，装完便知——贵是贵了点，但用了绝对不烧心。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>jev-jarvis-mac v0.6.0 发布：QQ 支持、微信 4.x 人工校准、狗头军师话术</title>
+      <link>https://blog.xiaohuangyu.space/p/jev-jarvis-v060/</link>
+      <pubDate>Thu, 24 Sep 2026 12:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/jev-jarvis-v060/</guid>
+      <description>&lt;p&gt;jev-jarvis 是贴在微信边上的 macOS 悬浮窗：消息一进来，它告诉你三件事——对方什么意思（8 类意图）、有没有雷（风险 0–9 + 行动建议）、该怎么回（按话术给候选，点「填入」直接进输入框），发不发永远你自己按发送键。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>jev-jarvis 是贴在微信边上的 macOS 悬浮窗：消息一进来，它告诉你三件事——对方什么意思（8 类意图）、有没有雷（风险 0–9 + 行动建议）、该怎么回（按话术给候选，点「填入」直接进输入框），发不发永远你自己按发送键。</p>
+<p>v0.6.0 是目前跨度最大的一版：微信 4.x 识别不准有了根治方案，QQ（QQNT）也能用了，面板加了两个实用按钮，话术库迎来狗头军师。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-demo.gif" alt="demo：微信消息实时识别，候选回复一键填入"  />
+</p>
+<h2 id="微信-4x-识别不准的根治方案人工校准">微信 4.x 识别不准的根治方案：人工校准</h2>
+<p>新版微信联系人列表能拖宽、聊天窗能拖成独立小窗，自动识别经常漏消息、把列表摘要当正文。v0.6.0 加了手动校准：点右上角校准图标，在同一张截图上框两个区——<strong>绿框罩住整个消息流，蓝框罩住输入区</strong>，预览识别通过后一次保存。</p>
+<p>按你框选的真实气泡整理消息，识别准确度大幅提高：短句不再被当杂字丢掉、多行正文完整合并、左右归属更准。窗口挪动不用重画，改动内部布局再校准一次就行。零样本回归口径下 8 类意图准确率 86.4%（22 条、只看单条消息的无上下文测试），校准主要收益在消息整理这一层。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-first-run-hint.png" alt="打开 app 时，点击右上角校准图标以手动校准"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-calibration.png" alt="校准界面：绿框罩住消息识别区域，蓝框罩住输入区域，底部「预览识别 → 确认并启用」"  />
+</p>
+<h2 id="qqqqnt也能用了">QQ（QQNT）也能用了</h2>
+<p>同一个悬浮窗，谁在前台读谁、给谁填。QQ 走系统无障碍树直接读消息——不截图、不 OCR、不解密，纯只读的底线不变；「填入」同样只写不发送。第一次读 QQ 时授一下「辅助功能」权限就行。</p>
+<h2 id="两个按钮立刻分析重新生成推荐回答">两个按钮：立刻分析、重新生成推荐回答</h2>
+<p>面板底部新增两个按钮：前者重新读屏做完整分析，后者沿用当前判断只重跑候选——换个话术点一下，几秒出新一批。另外填入完成后鼠标会自动回到你原来的位置，换话术不用再去捞鼠标。</p>
+<h2 id="新话术狗头军师恋爱三件套还有夸夸">新话术：狗头军师·恋爱三件套，还有夸夸</h2>
+<p>恋爱向三件套——稳健、会撩、抽离，外加无脑夸的「夸夸」，下拉即换。加上原来的高情商、贴吧老哥、阴阳怪气等，内置共 14 种，每种候选条数 1—5 可调。自定义话术也加了最低质量门槛：描述太糊会拒绝加载并提示怎么写，不再悄悄失效。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-recognition.png" alt="识别效果实拍：左侧微信消息实时框选标注，右侧面板狗头军师置顶给出 55% 候选"  />
+</p>
+<h2 id="自带-key不配也能用">自带 key，不配也能用</h2>
+<p>判断 · Jev、生成 · OpenAI 兼容（DeepSeek、智谱、本地 Ollama 都行）、生成 · Anthropic 兼容，三组密钥各管各的，配法见仓库 README。不配也能用：判断跑本地模型（约 3.8 GB，已支持纯离线加载，下载不可达自动切国内镜像），生成层有内置共享 key。</p>
+<h2 id="安装与升级">安装与升级</h2>
+<p>需要 macOS 13+（Apple Silicon）。GitHub 找 <a href="https://github.com/jev-chat/jev-chat-jarvis-mac">jev-chat/jev-chat-jarvis-mac</a>，Releases 下载 v0.6.0 的 zip，拖进「应用程序」，第一次右键 → 打开（没做公证，只需这一次）。读微信授「屏幕录制」，读 QQ 和「填入」授「辅助功能」。老用户直接覆盖安装，配置和校准数据都不受影响。MIT 开源。</p>
+<h2 id="反馈">反馈</h2>
+<p>交流群、微信、公众号的入口都在仓库 <a href="https://github.com/jev-chat/jev-chat-jarvis-mac">jev-chat/jev-chat-jarvis-mac</a> 的 README 文末「交流反馈」，进去就能找到；以后有新版本也会在群里和公众号通知。bug 和建议走 GitHub Issues。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我做了一个 BOSS直聘抓取工具，开源了</title>
+      <link>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</link>
+      <pubDate>Thu, 11 Jun 2026 23:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;&#xA;&lt;p&gt;最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="起因">起因</h2>
+<p>最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。</p>
+<p>但 BOSS直聘有个很烦的东西：<strong>字体反爬</strong>。</p>
+<p>薪资数字在前端显示的不是正常文字，而是用一套自定义字体渲染的。你抓下来看到的是方块或者乱码。很多爬虫教程告诉你去解析 woff 字体文件做映射，但 BOSS直聘的字体是动态生成的，每次访问都不一样，这条路基本走不通。</p>
+<p>后来我发现了一个更简单的办法。</p>
+<h2 id="核心思路绕过前端直接调-api">核心思路：绕过前端，直接调 API</h2>
+<p>BOSS直聘的前端页面用了字体反爬，但它自己的前端代码也要拿到薪资数据来渲染。怎么拿的？通过一个内部 API：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/wapi/zpgeek/search/joblist.json
+</span></span></code></pre></div><p>这个接口返回的 JSON 里有 <code>salaryDesc</code> 字段——<strong>明文薪资</strong>，比如 <code>30-60K·15薪</code>。字体反爬只是前端渲染时加的一层，API 层面根本没有。</p>
+<p>所以思路就简单了：不要去解析 HTML、不要去破解字体，直接调这个 API 就行。</p>
+<p>但问题是这个 API 有 cookie 校验，你得在已登录的 BOSS直聘页面上下文里才能调通。这就引出了技术方案：Chrome CDP。</p>
+<h2 id="技术方案chrome-devtools-protocol">技术方案：Chrome DevTools Protocol</h2>
+<p>CDP（Chrome DevTools Protocol）就是 Chrome 浏览器的远程调试协议。你平时按 F12 打开的 DevTools 就是通过这个协议和 Chrome 通信的。</p>
+<p>用 CDP 可以做到：</p>
+<ol>
+<li>连接到一个正在运行的 Chrome 实例</li>
+<li>在任意页面里执行 JavaScript</li>
+<li>读取页面数据、模拟用户操作</li>
+</ol>
+<p>我们的做法是：</p>
+<ol>
+<li>启动一个开了 CDP 端口的 Chrome（使用 BOSS 专用 profile）</li>
+<li>通过 WebSocket 连接 CDP</li>
+<li>在 BOSS直聘页面里注入 JS，用 <code>XMLHttpRequest</code> 同步调用那个搜索 API</li>
+<li>拿到 JSON 结果，提取明文薪资和其他字段</li>
+</ol>
+<p>整个过程就像你在浏览器控制台里手动敲代码一样，只不过自动化了。</p>
+<h2 id="chrome-profile后来改成了隔离目录">Chrome profile：后来改成了隔离目录</h2>
+<p>这里踩过一个坑。</p>
+<p>最早我想复用自己的 Chrome 登录态，甚至尝试过软链接 profile。这个思路看起来省事，但风险太高：CDP Chrome 如果指向主 Chrome profile，理论上能看到那一整个浏览器环境里的 cookie 和登录态。更糟的是，Chrome 自己也不喜欢多个进程同时碰同一个 profile，容易出现锁冲突或者登录态异常。</p>
+<p>所以现在的方案改成了持久隔离 profile：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.boss-zhipin-scraper/chrome-profile
+</span></span></code></pre></div><p><code>--setup-chrome</code> 会创建或复用这个目录，然后启动一个 BOSS 专用 Chrome。首次使用时，在这个专用 Chrome 里登录 zhipin.com。登录态会留在这个目录里，重启机器后也还在；重复执行 <code>--setup-chrome</code> 不会清空它。</p>
+<p>默认情况下，它不会软链接你的主 Chrome，也不会复制你的 Gmail、GitHub 或其他网站 cookie。只有你显式加 <code>--copy-login-state</code>，才会把主 Chrome 里的 <code>Local State</code> 和 Cookie 相关文件复制到这个隔离 profile。日常使用不建议这么做，手动在专用 Chrome 里登录更干净。</p>
+<h2 id="一行命令抓取">一行命令抓取</h2>
+<p>安装好后，抓取就一行命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --format csv
+</span></span></code></pre></div><p>输出：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">✓ AI Agent运行环境工程师 | 30-60K·15薪 | 上海 | 字节跳动 | 10000人以上
+</span></span><span class="line"><span class="cl">✓ AI Agent 开发实习生 | 300-600元/天 | 上海 | 阿里巴巴集团 | 10000人以上
+</span></span><span class="line"><span class="cl">✓ AI Agent工程师-Java | 35-55K | 上海 | 滴滴 | 1000-9999人
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><h2 id="支持的功能">支持的功能</h2>
+<p><strong>搜索和筛选</strong></p>
+<ul>
+<li>按关键词、城市搜索</li>
+<li>按公司规模、薪资范围、工作经验、学历筛选</li>
+<li>支持分页（每页 30 条，最多 10 页）</li>
+</ul>
+<p><strong>输出格式</strong></p>
+<ul>
+<li>JSON：结构化数据，方便程序处理</li>
+<li>CSV：UTF-8 BOM 编码，Excel 直接打开不乱码</li>
+</ul>
+<p><strong>详情页抓取</strong></p>
+<ul>
+<li>默认会抓每个岗位的完整 JD</li>
+<li>只想抓列表可以加 <code>--no-detail</code></li>
+<li>自动提取技能标签</li>
+<li>进入详情页时会带上列表 API 返回的 <code>securityId</code> / <code>lid</code> 上下文</li>
+</ul>
+<p><strong>增量写入</strong></p>
+<ul>
+<li>每页抓完立即保存，Ctrl+C 中断不丢数据</li>
+<li>按 job_id 去重，重复运行不会产生重复数据</li>
+<li>默认输出到 <code>~/.boss-zhipin-scraper/job-result</code></li>
+</ul>
+<p><strong>合并多次抓取</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 先抓上海的</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --output jobs.json
+</span></span><span class="line"><span class="cl"><span class="c1"># 再抓北京的，合并到同一个文件</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 北京 --pages <span class="m">3</span> --merge jobs.json --output jobs.json
+</span></span></code></pre></div><p><strong>环境检查</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --check
+</span></span></code></pre></div><p>一键检测 Chrome CDP 是否可用、Python 依赖是否齐全、BOSS直聘是否已登录。</p>
+<p><strong>一键启动 Chrome</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --setup-chrome
+</span></span></code></pre></div><p>自动创建或复用隔离 profile，启动 Chrome CDP，然后等待你登录 zhipin.com。脚本会确认搜索接口能返回明文 <code>salaryDesc</code> 后再继续。</p>
+<p><strong>Smoke test</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --smoke-test
+</span></span></code></pre></div><p>这个命令只做一次真实 Chrome/CDP + BOSS 搜索 API 检查，不写结果文件。改代码或者换机器之后，可以先用它确认环境没问题。</p>
+<h2 id="反爬策略">反爬策略</h2>
+<p>BOSS直聘的反爬不弱，做了几件事来降低被封的风险：</p>
+<ul>
+<li>翻页间隔 12-22 秒随机延迟（模拟真人浏览节奏）</li>
+<li>单次最多 10 页（300 条），上限保护</li>
+<li>用真实 Chrome，但只使用 BOSS 专用 profile</li>
+<li>API 请求从页面内发起，和正常浏览行为一致</li>
+<li>默认禁用 DOM fallback，避免字体反爬导致的薪资乱码混进结果。只有显式加 <code>--allow-dom-fallback</code> 才会降级到 DOM 提取</li>
+</ul>
+<h2 id="作为-hermes-agent-skill-使用">作为 Hermes Agent Skill 使用</h2>
+<p>这个工具也打包成了 Hermes Agent Skill。装上之后，你直接跟 AI 说&quot;帮我搜一下上海 AI Agent 岗位&quot;，它会自动检查环境、启动 Chrome、运行抓取、返回结果。</p>
+<p>安装方式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># curl 一键安装</span>
+</span></span><span class="line"><span class="cl">mkdir -p ~/.hermes/skills/data-science/boss-zhipin-scraper/scripts <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">curl -sL https://raw.githubusercontent.com/eatmoreduck/boss-zhipin-scraper/master/SKILL.md <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -o ~/.hermes/skills/data-science/boss-zhipin-scraper/SKILL.md <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">curl -sL https://raw.githubusercontent.com/eatmoreduck/boss-zhipin-scraper/master/scripts/boss_cdp_raw.py <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -o ~/.hermes/skills/data-science/boss-zhipin-scraper/scripts/boss_cdp_raw.py
+</span></span></code></pre></div><h2 id="安装和使用">安装和使用</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 克隆仓库</span>
+</span></span><span class="line"><span class="cl">git clone https://github.com/eatmoreduck/boss-zhipin-scraper.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> boss-zhipin-scraper
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装依赖</span>
+</span></span><span class="line"><span class="cl">pip install -r requirements.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动 Chrome（首次使用）</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --setup-chrome
+</span></span><span class="line"><span class="cl"><span class="c1"># 首次使用时，在弹出的 BOSS 专用 Chrome 里登录 zhipin.com</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查环境</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --check
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始抓取</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --format csv
+</span></span></code></pre></div><h2 id="数据安全">数据安全</h2>
+<p>说几个需要注意的点：</p>
+<ul>
+<li><code>--setup-chrome</code> 默认使用 <code>~/.boss-zhipin-scraper/chrome-profile</code>，不软链接、不复制主 Chrome profile，也不会关闭你的主 Chrome</li>
+<li><code>--copy-login-state</code> 是显式选项，不是默认行为。它会复制主 Chrome 的 Local State 和 Cookie 相关文件到隔离 profile；日常使用更建议在专用 Chrome 里手动登录</li>
+<li>需要清空 BOSS 专用浏览器登录态时，用 <code>--reset-chrome-profile</code></li>
+<li>这个工具仅用于个人求职研究，不要拿去大规模爬取</li>
+<li>尊重 robots.txt 和网站使用条款</li>
+</ul>
+<h2 id="仓库地址">仓库地址</h2>
+<p><a href="https://github.com/eatmoreduck/boss-zhipin-scraper">https://github.com/eatmoreduck/boss-zhipin-scraper</a></p>
+<p>觉得有用的话给个 star。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>LLM on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/en/tags/llm/</link>
+    <description>Recent content in LLM on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Sep 2026 22:49:58 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/tags/llm/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trying the Socratic Method with AI: A Backend Engineer Meets Jev, the Mouthless Model</title>
+      <link>https://blog.xiaohuangyu.space/en/p/socratic-method-jev-ai-learning-en/</link>
+      <pubDate>Sun, 20 Sep 2026 16:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/socratic-method-jev-ai-learning-en/</guid>
+      <description>&lt;p&gt;An old habit of mine: bookmarking as learning. I scroll through community posts, group chats, and GitHub trending every day, and every new term looks familiar — until I close the laptop and find I can hardly string a single full sentence together.&lt;/p&gt;&#xA;&lt;p&gt;A few days ago I came across a Rust blogger explaining the Socratic method, using it to guide his kid&amp;rsquo;s studying. Today I ran into a new term, the Jev model, with absolutely no concept of what it was — so I figured I&amp;rsquo;d try this learning method on it and see if anything sticks.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>An old habit of mine: bookmarking as learning. I scroll through community posts, group chats, and GitHub trending every day, and every new term looks familiar — until I close the laptop and find I can hardly string a single full sentence together.</p>
+<p>A few days ago I came across a Rust blogger explaining the Socratic method, using it to guide his kid&rsquo;s studying. Today I ran into a new term, the Jev model, with absolutely no concept of what it was — so I figured I&rsquo;d try this learning method on it and see if anything sticks.</p>
+<h2 id="what-is-the-socratic-method">What is the Socratic method?</h2>
+<p>Socrates compared his teaching to &ldquo;maieutics,&rdquo; the art of midwifery. Knowledge, in his view, is not poured into a student by the teacher; it already lies in what the learner knows. The teacher&rsquo;s job is to draw it out through relentless questioning, rebuttal, and boundary-testing.</p>
+<p>The method usually runs through four looping stages:</p>
+<ol>
+<li><strong>Break</strong> (irony and doubt): shatter the illusion of &ldquo;I already know this,&rdquo; and expose the gaps.</li>
+<li><strong>Bridge</strong> (clarification and reduction): strip off the packaging and get back to basic facts.</li>
+<li><strong>Build</strong> (guided output): swap roles, and have the learner explain the new system in their own words.</li>
+<li><strong>Bound</strong> (testing against reality): push into extreme business scenarios to probe failure modes and costs.</li>
+</ol>
+<h2 id="act-1-breaking-the-ice--not-just-listening">Act 1: Breaking the ice — not just listening</h2>
+<p>The conversation started with an acronym.</p>
+<p>I asked what &ldquo;JEV in the Agent space&rdquo; was, and the AI&rsquo;s first answer was the Jevons Paradox from economics, going on about how cheaper inference inflates total compute consumption.</p>
+<p>A normal tutoring flow would have left it at that: one unremarkable Q&amp;A. Instead, I threw in two technical links — Jev by TypeSafe and the open-source reproduction Laya — and set the rules:</p>
+<blockquote>
+<p>Let&rsquo;s do this Socratic style. You explain it to me first, then I explain it back to you.</p>
+</blockquote>
+<p>That rule flipped the whole conversation, with two immediate effects.</p>
+<p>First, the naming made sense: Jev is a nod to Jevons — what the author wants to end is the waste of large models burning tokens in automated pipelines.</p>
+<p>Second, my state changed. Knowing I&rsquo;d have to retell it, I stopped browsing passively and started taking the AI&rsquo;s explanation apart as I listened.</p>
+<h2 id="act-2-anchor-new-terms-to-what-you-know">Act 2: Anchor new terms to what you know</h2>
+<p>A few lines of group-chat jargon came up during the session:</p>
+<ul>
+<li>&ldquo;Jev is basically NLP again.&rdquo;</li>
+<li>&ldquo;The USTC team is doing something similar with symbolism.&rdquo;</li>
+<li>&ldquo;Agents doing HOOTL need a solid routing decision.&rdquo;</li>
+</ul>
+<p>Memorizing a wall of terms gets tiring fast. The Socratic move is to anchor the new on what you already know cold.</p>
+<p>As an engineer with a Java backend, rules engine, feature platform, and model serving background, I tried to pull NLP back onto my home turf:</p>
+<blockquote>
+<p>Can I think of NLP as a model? Not a rules engine that hard-codes &ldquo;if it contains X, it&rsquo;s A,&rdquo; but something that tokenizes, computes weights and features, and finally bins the similarity and picks one of the categories A through D?</p>
+</blockquote>
+<p>With that framing, the jargon made sense:</p>
+<ul>
+<li>Rules engine (symbolism): highly deterministic, executes in 0.1ms, but generalizes terribly and accumulates conflicting rules.</li>
+<li>Large language model (LLM): generalizes well, but using it for routing is a cannon shooting mosquitoes — seconds of latency, per-token billing, and chronic JSON parse errors.</li>
+<li>Jev / Laya (the mouthless model): strips out text generation entirely and just outputs classifications and probability distributions.</li>
+</ul>
+<p>What the group chat was really saying is simple: after trying free-form text generation for everything, people have found that agent intent routing and control flow should go back to discriminative models — fast, cheap, and deterministic.</p>
+<h2 id="act-3-the-crossfire--i-explain-you-poke-holes">Act 3: The crossfire — I explain, you poke holes</h2>
+<p>Now for the core of the method: swap roles. I go on stage; the AI critiques.</p>
+<p>I summarized its three properties in my own words:</p>
+<ol>
+<li>Internal structure: instead of concatenating JSON strings and returning text, Jev feels like filling values directly into a struct — malformed output can&rsquo;t happen by construction.</li>
+<li>The OLTP moment: OLAP is the long offline scan; OLTP is low latency and ad-hoc queries. This gives the model high concurrency and millisecond responses.</li>
+<li>Confidence: an LLM&rsquo;s confidence can be invented or mistaken, while Jev&rsquo;s scores behave much closer to real statistical probability.</li>
+</ol>
+<p>The AI kept pushing, taking each point down to the hardware and the math.</p>
+<h3 id="what-happens-on-the-gpu-the-weights-move-once">What happens on the GPU: the weights move once</h3>
+<p>LLM generation (the decode loop) is memory-bandwidth bound. Every single token produced means reading tens of gigabytes of model weights through memory one more time. Generate a 100-character JSON, and the weights got read 100 times.</p>
+<p>A mouthless model runs a single prefill, with no decode stage: after encoding the input, a scoring head does the final matrix math, and the weights move exactly once. Latency drops from 2000ms to 70ms, and since no tokens are generated, marginal cost approaches zero.</p>
+<h3 id="the-oltp-gate-fitting-inside-the-synchronous-path">The OLTP gate: fitting inside the synchronous path</h3>
+<p>High concurrency is an outcome; latency decides which layer of the architecture you can sit in.</p>
+<p>Web gateways typically budget under 200ms for synchronous calls. A model that takes 2–5 seconds can only exist as an async agent or a background batch job. A 70ms model is, for the first time, qualified to sit inside the core synchronous call stack as a basic RPC component.</p>
+<h3 id="confidence-is-not-calibrated-probability">Confidence is not calibrated probability</h3>
+<p>The <code>confidence: 0.9</code> an LLM emits in its JSON is said in passing, not a real hit rate. Jev is trained with RLCD (reinforcement learning from calibrated rules), so its probabilities are statistically calibrated: when the system says 85%, the real hit rate over historical samples is 85%.</p>
+<h2 id="act-4-ground-it-in-real-business">Act 4: Ground it in real business</h2>
+<p>A technique that hasn&rsquo;t been through real business scenarios is still a toy. We pushed the discussion into two concrete cases: loan anti-fraud and customer support.</p>
+<h3 id="how-to-set-the-threshold-derive-it-from-cost">How to set the threshold: derive it from cost</h3>
+<p>In loan risk control, people love to write <code>if (probability &gt; 0.8)</code> by gut feeling. But statistical decision theory (Chow&rsquo;s rule) says otherwise:</p>
+<p>Suppose a missed fraud costs 500 yuan (
+
+  
+    <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">Cost_{FN} = 500</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">FN</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">500</span></span></span></span>
+  
+
+) while falsely blocking a legit user only costs a 5-yuan coupon (
+
+  
+    <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">Cost_{FP} = 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span>
+  
+
+). The optimal decision threshold is:</p>
+
+
+  
+    <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Threshold</mtext><mo>=</mo><mfrac><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub></mrow><mrow><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mo>+</mo><mi>C</mi><mi>o</mi><mi>s</mi><msub><mi>t</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub></mrow></mfrac><mo>=</mo><mfrac><mn>5</mn><mrow><mn>5</mn><mo>+</mo><mn>500</mn></mrow></mfrac><mo>≈</mo><mn>0.0099</mn></mrow><annotation encoding="application/x-tex">\text{Threshold} = \frac{Cost_{FP}}{Cost_{FP} + Cost_{FN}} = \frac{5}{5 + 500} \approx 0.0099</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Threshold</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1963em;vertical-align:-0.836em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">FN</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0908em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">500</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.0099</span></span></span></span></span>
+  
+
+<p>If the fraud probability of a transaction exceeds roughly 1%, the system must intervene. And this math only works if the model&rsquo;s probabilities are genuinely calibrated — inflated confidence turns the formula into decoration.</p>
+<h3 id="the-architecture-a-three-tier-funnel-filtering-layer-by-layer">The architecture: a three-tier funnel, filtering layer by layer</h3>
+<p>What about the gray zone? A single model can&rsquo;t cover it all. Split it into three tiers:</p>
+<ul>
+<li>Tier one, hard rules. Blacklist hits and device fingerprints are deterministic facts; the rules engine answers in 0.1ms and blocks or allows directly, no model needed.</li>
+<li>Tier two, discriminative scoring. The remaining traffic goes to a mouthless model like Jev: 70ms for a calibrated probability, decided synchronously against the cost threshold above. This covers the vast majority of requests.</li>
+<li>Tier three, gray-zone fallback. The few requests landing near the decision boundary get handed to an LLM for asynchronous deeper review, or straight to a human. The LLM only sees the hardest sliver, which makes its price acceptable.</li>
+</ul>
+<p>Customer support is the same story. Most queries are high-frequency intents like &ldquo;check my bill&rdquo; or &ldquo;change my address&rdquo;; the mouthless model routes them in milliseconds and triggers the right tool. Only requests that genuinely need deep context escalate to the LLM. Latency and token cost drop at the same time, and routing accuracy is steadier than asking a big model to &ldquo;understand first, then answer.&rdquo;</p>
+<h2 id="epilogue">Epilogue</h2>
+<p>Looking back at the whole session, what I felt was a reversal of the way of learning: first it taught me, then I taught it, and finally it stood across the table poking holes.</p>
+<p>Where it couldn&rsquo;t reduce things to basic principles, it was guessing too. Where I couldn&rsquo;t explain smoothly was exactly where my understanding had gaps. The holes it poked were the boundaries nobody had tested.</p>
+<p>Two hours later, my bookmarks folder hasn&rsquo;t grown by a single item, but I can still explain why the model is fast and why the threshold is what it is. There&rsquo;s still a huge gap between &ldquo;bookmarking as learning&rdquo; and actually learning — but at least, after answering a few questions myself, things started to come into focus.</p>
+<h2 id="back-to-the-original-question-what-is-the-jev-model">Back to the original question: what is the Jev model?</h2>
+<p>Jev is a mouthless model built specifically for <strong>state judgment and intent routing</strong>. It removes the token-by-token decode process entirely and does a single forward pass: you feed it a state and a custom question, and <strong>70ms later it returns a type-safe, mathematically calibrated probability distribution</strong>. In essence, it turns what used to be a large model slowly concatenating JSON — a &ldquo;smart if-else&rdquo; — into a millisecond-grade, hallucination-free general-purpose classifier.</p>
+<p>Simply put, it&rsquo;s <strong>a large model with its mouth sewn shut</strong>. It can&rsquo;t chat or write essays; it answers multiple-choice questions and scores options within 70 milliseconds, outputting real probabilities — a lightning-fast &ldquo;cerebellum&rdquo; and routing switch for agents and business systems.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

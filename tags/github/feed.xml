@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>GitHub on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/github/</link>
+    <description>Recent content in GitHub on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 17 Sep 2026 11:54:26 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/github/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>百个 PR 之后：我的多 Agent 开发工作流长成了完整体系</title>
+      <link>https://blog.xiaohuangyu.space/p/multi-agent-quality-guardrails/</link>
+      <pubDate>Tue, 15 Sep 2026 01:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/multi-agent-quality-guardrails/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://blog.xiaohuangyu.space/p/github-projects-orca-agent-workflow/&#34;&gt;上一篇&lt;/a&gt;写了用 GitHub Projects + Orca 把多 Agent 编程工作流跑通的第一天——那天只是「能跑」。这一篇是五天后的续集：它已经长成一个完整的体系。先放数字：122 次提交、111 个 PR 合并、127 张 issue，side project（panta-log，本地优先的语音复盘工具）V0.1 MVP 六个工作包全部收官。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><a href="/p/github-projects-orca-agent-workflow/">上一篇</a>写了用 GitHub Projects + Orca 把多 Agent 编程工作流跑通的第一天——那天只是「能跑」。这一篇是五天后的续集：它已经长成一个完整的体系。先放数字：122 次提交、111 个 PR 合并、127 张 issue，side project（panta-log，本地优先的语音复盘工具）V0.1 MVP 六个工作包全部收官。</p>
+<p>这篇不讲过程，把这套工作流现在的功能点按层拆开。每一层都是踩坑踩出来的，坑也照写。</p>
+<h3 id="看板层从能记任务到自动流转的任务系统">看板层：从「能记任务」到「自动流转的任务系统」</h3>
+<p>上一篇的看板只能算记事本，这一轮它长出了四处自动化。地基是一条约定：一个 issue = 一个 worktree = 一个 PR，一张卡从开工到合并走完整闭环，下面的自动化都围着它转。</p>
+<p><strong>主卡 + 子卡（官方 sub-issue）</strong>。一个专项一张主卡，拆出的子卡用 GitHub 官方 sub-issue API 挂接，父卡页面自动显示进度条，子卡关闭自动勾选。之前手写 <code>- [ ] #N</code> tasklist 的做法废弃——它没有任何联动，最后一个子卡关了父卡还傻开着（这个坑真踩过：两个专项主卡都手动收的尾）。后来干脆写了个 30 行的 Action：<strong>最后一个子卡关闭时自动关闭父卡</strong>，专项生命周期零手动维护。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-epic-subissue-progress.png" alt="主卡子卡进度条"  />
+</p>
+<p>这个 Action 上线前还撞了一堵测试永远测不出的墙：<code>issues</code> 事件的 workflow，GitHub 只认默认分支上的版本。PR 分支里写得再对、本地 dry-run 全过，事件就是不派发——静默的，连报错都没有。「关父卡」这个动作因此没法在 PR 里真实验证，只能合进 master，等第一张收官的专项卡来检验。改 CI 配置类的东西，验证闭环天生缺一半。</p>
+<p><strong>建卡脚本</strong>。手工建 issue 的坑：14 张新卡全部漏挂看板、漏设字段——看板过滤直接失灵。现在建卡一律走脚本：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scripts/new-issue.sh --title <span class="s2">&#34;xxx&#34;</span> --body-file card.md <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --type bug --phase <span class="m">1</span> --area backend --priority P1 --labels area/hotkey
+</span></span></code></pre></div><p>一条命令完成：issue 创建（含类型标签 + @me 指派）→ 挂板 → Status=Todo → Phase/Area/Priority/Milestone。建卡即合规，不靠记性。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-projects-todolist.png" alt="建卡脚本效果：Todo 视图 9 张卡，状态/标签/优先级全部有值"  />
+</p>
+<p><strong>三条自动流转</strong>：PR squash 合并 → issue 自动关 → 卡片自动进 Done；master CI 变红 → 自动开一张「master CI 红」跟卡，恢复绿自动关；最后一个子卡关闭 → 父专项卡自动关闭。加上 master 红时其他 PR 的<strong>停线门禁</strong>（快速失败，修复类 PR 打 <code>area/ci</code> 标签放行），看板从「任务的墓志铭」变成了「活的调度器」——这句是合并当天写的，现在看依然成立。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-projects-board.png" alt="status_board 三列：Todo 14 / In Progress 1 / Done 89"  />
+</p>
+<p><strong>认领协议</strong>（防撞车）：开工前必须先把卡片置 In Progress 占坑 + 扫一眼有没有同卡的 open PR。这条是被撞出来的——两个会话同时开工一张卡，第二个的分支自动加了 <code>-2</code> 后缀：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-collision-branch-suffix.png" alt="同卡撞车，分支自动 -2 后缀"  />
+</p>
+<h3 id="执行层多实例隔离测试与正式互不打架">执行层：多实例隔离，测试与正式互不打架</h3>
+<p>上一篇没解决的一个问题：正式实例在自测，另一个会话要起实例验证代码——单实例锁、端口、数据目录全绑死一份，只能互相杀。</p>
+<p>解法是给实例一个身份：<code>PANTA_DATA_DIR</code> 环境变量把数据目录（锁、数据库、日志）整体搬走，<code>PANTA_PORT</code> 换端口：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scripts/dev.sh                                                    <span class="c1"># 正式实例</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PANTA_DATA_DIR</span><span class="o">=</span>~/.pantalog-dev <span class="nv">PANTA_PORT</span><span class="o">=</span><span class="m">9787</span> scripts/dev.sh     <span class="c1"># 测试实例</span>
+</span></span></code></pre></div><p>两个实例并行互不知道对方存在。不设环境变量时行为与原来完全一致，单实例防护不削弱。测试实例默认不注册全局热键（双实例抢系统热键没有赢家）。</p>
+<h3 id="ci-层把review-跟不上交给机器">CI 层：把「review 跟不上」交给机器</h3>
+<p>这是整个体系里最实的一层。先把丑话说在前面：多 agent 并行交付，PR 产生的速度远超我读 diff 的速度，很多 PR 我是扫一眼描述就合并的，并不确定测试是否存在、断言是否有效。解法不是更认真地 review（不可扩展），是把 review 里能机械化的部分全机械化。</p>
+<p>还有一个前提得先交代：仓库在 GitHub 免费套餐上，分支保护配不了，API 实测 403。原生 required checks 用不了，「不让红的进 master」就没法交给平台，只能自己造两层：机器能硬卡的做进 CI（下面这些门禁全是）；机器管不了的，比如「合并前到底看没看 checks」，写成红线协议塞进 CONTRIBUTING.md，当每个会话的交通规则。</p>
+<p><strong>覆盖率三件套</strong>：</p>
+<ol>
+<li>PR 自动评论覆盖率变化——数字可见本身就有约束力：</li>
+</ol>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-coverage-pr-comment.png" alt="PR 覆盖率自动评论"  />
+</p>
+<ol start="2">
+<li><strong>基线棘轮</strong>：<code>--cov-fail-under</code> 把全量覆盖率封底，只许升不许降（71.5 一路涨到 79，因为还债和带测试的修复在推高它）</li>
+<li><strong>diff-cover 增量门禁</strong>：PR 改动/新增的行强制测试触达 ≥80%，否则红、无法合并——存量零覆盖不追缴，新代码没测试就物理上进不来</li>
+</ol>
+<p>覆盖率只回答「有没有测试」，回答不了「测试测的是什么」。最疼的一次来自旧库升级：测试套件每个用例都从 <code>create_all</code> 建新库开始，全绿；用户手里的旧库升级路径零覆盖，一启动就崩——新库永远测不出迁移 bug。此后立了铁律：动 schema 必须附「旧库就地升级」测试，用旧 schema 建库、跑迁移、断言结果，新库验证不算数。</p>
+<p><strong>前端三道棘轮</strong>（思路同源：存量封顶、增量达标）：禁新增 ts-ignore、单文件行数封顶、i18n 双语 key 一致性。加上 oxlint+oxfmt 基线，前端从零约束追平了后端 Ruff 的治理水平。</p>
+<p><strong>运维细节</strong>：每个 job 硬超时（默认 360 分钟，挂死一次烧穿私库按分钟计费的额度）、concurrency 取消旧 run、runner 只用 ubuntu（私库按分钟计费，macOS 十倍费率用不起）、master 红自动跟卡：</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-master-ci-alarm.png" alt="master CI 红自动跟卡"  />
+</p>
+<p><strong>红线协议：测试永远测不出的那部分</strong>。门禁管代码，管不住流程。五天里真正造成损失的坑，没有一个能被测试拦住：</p>
+<ul>
+<li><strong>带红合并</strong>：master 变红过两次，都是 PR 还红着就合造成的。其中一次特别迷惑——本地全绿、CI 红，最后查清是 pytest 撞了 UTC 边界，北京早 8 点前后才触发。此后第一条红线：<code>gh pr checks</code> 全绿才许合并；日期相关的测试失败，先怀疑时区再怀疑代码。</li>
+<li><strong>重复修</strong>：master 红了一次，两个会话同时开工修同一个问题，先落地的合了，后落地的整个作废重做。此后修前必看板 + 最新 run，确认没有别人在修同一张卡。</li>
+<li><strong>继承错误逐卡修</strong>：master 红时切出去的新分支，错误跟着进每个 worktree。正解是修完 master 后各自 rebase，继承的错误随 rebase 消失；在多张卡里各自修同一个 master 问题，等于把一个 bug 修 N 遍。</li>
+<li><strong>网页绕行</strong>：PR 冲突必须在本地 rebase 解决、跑绿、<code>--force-with-lease</code> 推回。在 GitHub 网页上手改文件「绕过」冲突，等于跳过本地测试直接进 master。</li>
+</ul>
+<p>五条规则（还有一条「master 红就停线：不合并、不开新卡」）全写在 CONTRIBUTING.md 的「CI 红线规则」里，每个会话开工前必读。</p>
+<h3 id="基建层崩溃教出来的基础设施">基建层：崩溃教出来的基础设施</h3>
+<p><strong>日志落盘</strong>。起因是某天早上的一场三连崩：启动时 16 条积压任务批量补投，每条各起线程调本地转写模型，MLX 的 GPU stream 线程绑定、并发直接 Metal 层 C++ 异常 → 主进程当场死亡 → 不走任何清理逻辑 → 子进程 UI 窗口成孤儿还开着。排查时发现日志只在终端，崩了连现场都没留下。修完之后日志体系是三层：后端轮转落盘、前端错误上报落盘、测试进程隔离（不污染用户日志）。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/guardrails-crash-log.png" alt="三连崩日志现场"  />
+</p>
+<p>日志第一次派上用场就值回票价：排查「转写卡很久」——从日志实锤三个叠加原因（批量串行排队、同日期聚合被重复触发 N 次、GLM 偶发返回不合规 JSON），顺手各修各的卡。</p>
+<p><strong>转写 worker 子进程</strong>。转写是 GPU 满载的重活，还持有 Python 全局锁把 API 线程饿死。挪进独立子进程后主进程永远响应，子进程退出连显存缓存一起释放。配套硬约束：父死子退（getppid 看门狗）——强退程序就是全停，转写中的任务重启后自动补投，不丢数据。</p>
+<p><strong>导入内容校验</strong>。测试残留的 23 个假 WAV（内容是 2048 个字母 x）被当真导入，直到转写才报一坨错。现在文件头魔数 + ffprobe 可解码探测，垃圾在门口被拦。配套还有时长上限：超长录音入库标 <code>too_long</code> 待手动转写，不再占用队列。</p>
+<h3 id="最有价值的一课ai-实现跑偏了产品意图">最有价值的一课：AI 实现跑偏了产品意图</h3>
+<p>五天里最值得写的发现不是技术问题。复盘时我意识到：每条录音处理完都会调一次 LLM 生成「AI 回顾草稿」（评分、心情、下一步），还会触发一次当日汇总——而我的产品文档写的是：<strong>录音级只做转写和结构化提取；每日回顾是「当天多条语音的合并」，在复盘页看</strong>。文档白纸黑字，实现凭空多出一层。</p>
+<p>代价清单：LLM 调用量翻倍（当天额度打爆）、时间线多了没人要的草稿块、状态机多了误导性的「转写中」、队列被拉长。它存在了好几天，写它的 agent 没发现，验收它的我也没发现。</p>
+<p>教训：agent 写完不会自己拿产品文档对照，这个验收动作只能人做。修正卡当天开、当天关：录音级只留转写 + 提取（事实/计划/想法/问题，承诺闭环的数据源），AI 回顾回归日级聚合（带防抖），prompt 集中管理与评测联动。</p>
+<h3 id="反思ai-时代的质量观">反思：AI 时代的质量观</h3>
+<p>五天下来，对「AI 写代码，人干什么」有了具体得多的答案。「review 跟不上」的正确解法不是更认真地 review，认真不可扩展。能机械化的部分全机械化：覆盖率棘轮挡住没有测试的代码，diff-cover 挡住改了没测的行，lint 和 guards 挡住风格漂移。下限交给机器，人只管机器管不了的那部分——这个功能该不该有，做得好不好，是不是我想要的。</p>
+<p>多 agent 并行同理：协调成本是真实的。五个会话同时开工时，撞车、抢号、互相污染工作区都会发生——规范和脚本不是官僚主义，是把协调成本从人肉记忆挪进脚本。</p>
+<p>下一步：V0.1 的退出条件是连续 14 天真机自测（录音 → 次日勾选闭环）。护栏立完了，接下来该真用了。</p>
+<hr>
+<p>数据截至 2026-09-16 定稿：122 commits / 111 merged PRs / 127 issues；覆盖率 71.5% → 79.6% 且基线棘轮持续生效；全部工作由多个 Claude Code agent 在 Orca worktree 中并行完成。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Orca &#43; GitHub Projects：跑通 AI 编程工作流的第一天</title>
+      <link>https://blog.xiaohuangyu.space/p/github-projects-orca-agent-workflow/</link>
+      <pubDate>Fri, 11 Sep 2026 23:55:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/github-projects-orca-agent-workflow/</guid>
+      <description>&lt;p&gt;记录下用 GitHub Projects + Orca 把 AI 编程工作流跑通的过程，踩的坑都在里面，以 macOS 为例。&lt;/p&gt;&#xA;&lt;p&gt;背景：手头有个 side project（panta-log，本地优先的语音复盘工具），之前 issue/PR 规范一直躺在另一个项目里没落地。这次目标很明确：看板管任务，Orca 跑 agent，一天之内把「领任务 → 开发 → 测试 → 合并 → 状态自动流转」整条链跑通。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>记录下用 GitHub Projects + Orca 把 AI 编程工作流跑通的过程，踩的坑都在里面，以 macOS 为例。</p>
+<p>背景：手头有个 side project（panta-log，本地优先的语音复盘工具），之前 issue/PR 规范一直躺在另一个项目里没落地。这次目标很明确：看板管任务，Orca 跑 agent，一天之内把「领任务 → 开发 → 测试 → 合并 → 状态自动流转」整条链跑通。</p>
+<p>先看最终跑通后的闭环长什么样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">看板挑卡(Todo) → Orca 从卡片开 worktree → agent 干活（自跑测试）
+</span></span><span class="line"><span class="cl">→ PR 触发 CI → 审 diff → squash merge
+</span></span><span class="line"><span class="cl">→ issue 自动关闭 → 看板卡片自动进 Done → 远端分支自动删除
+</span></span></code></pre></div><h3 id="第一步规范落地">第一步：规范落地</h3>
+<p>直接从自己的 boss-zhipin-scraper 项目抄了一套：issue 模板（bug/feature/question 三个 yml）、PR 模板、CONTRIBUTING.md，改成新项目的技术栈（uv、pytest、macOS 权限那些禁忌）。推上去之后仓库的 New issue 页面就有中文表单了，这步没什么好说的，五分钟的事。</p>
+<h3 id="第二步用-gh-cli-批量建-backlog">第二步：用 gh CLI 批量建 backlog</h3>
+<p>Roadmap 文档里本来就有六个工作包、带验收标准，照着拆就行。原则：</p>
+<ul>
+<li>只把「需改造」和「需新建」的任务建成 issue，已经能用的不建，别污染看板</li>
+<li>标题带上任务编号（WP-A1 这种），看板上一眼能对回文档</li>
+<li>正文直接引用 roadmap 的验收标准原文，再加一句建议批次（第几周做）</li>
+<li>全部挂到 milestone 上，milestone 描述里写清退出条件</li>
+</ul>
+<p>18 个 issue，两个 for 循环的事。</p>
+<h3 id="第三步踩坑重灾区gh-project-cli">第三步：踩坑重灾区——gh project CLI</h3>
+<p>Projects 的操作大部分能用命令行做，但命令的坑一个接一个，全是实际踩出来的：</p>
+<p><strong>坑 1：<code>gh auth refresh</code> 非交互执行必须加 <code>-h</code></strong></p>
+<p>在 Claude Code 里用 <code>!</code> 前缀跑命令是非交互模式，直接报错：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">--hostname required when not running interactively
+</span></span></code></pre></div><p>要写成 <code>gh auth refresh -h github.com -s read:project,project</code>。另外这个命令要设备授权，进程会卡在那等浏览器确认，放后台跑，从输出里把 one-time code 捞出来，去 github.com/login/device 输入就行。</p>
+<p><strong>坑 2：field-create 的参数是 <code>--name</code>，不是 <code>--title</code></strong></p>
+<p><code>gh project field-create --title &quot;Phase&quot;</code> 会直接 unknown flag。帮助文档里两种写法都出现过，以 <code>--name</code> 为准。</p>
+<p><strong>坑 3：<code>-q</code> 必须配 <code>--format json</code></strong></p>
+<p>这条最阴险。<code>gh project item-add &lt;n&gt; --owner me --url xxx -q '.id'</code> 会静默失败，报错是 <code>cannot use --jq without specifying --format json</code>。批量脚本里 18 个 item 全挂了还看不到原因（stderr 被吞了）。正确写法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-add <span class="m">2</span> --owner eatmoreduck --url <span class="s2">&#34;https://github.com/xxx/issues/1&#34;</span> --format json -q <span class="s1">&#39;.id&#39;</span>
+</span></span></code></pre></div><p><strong>坑 4：item-edit 用的是 <code>--project-id</code>，不是 <code>--owner</code> + <code>--project-number</code></strong></p>
+<p>前面 item-add 都是 number + owner 的组合，到 item-edit 突然变了，要用项目全局 ID（形如 <code>PVT_xxxx</code>，project list 里能看到）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;field-id&gt; --single-select-option-id &lt;option-id&gt;
+</span></span></code></pre></div><p><strong>坑 5：item-list 的 JSON 里 fieldValues 是 null</strong></p>
+<p>挂完板想核对字段值，<code>gh project item-list --format json</code> 返回的 fieldValues 全是 null，不是没设置上，是这接口压根不返回。想验证只能上 GraphQL：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh api graphql -f <span class="nv">query</span><span class="o">=</span><span class="s1">&#39;query($login:String!,$number:Int!){
+</span></span></span><span class="line"><span class="cl"><span class="s1">  user(login:$login){ projectV2(number:$number){
+</span></span></span><span class="line"><span class="cl"><span class="s1">    items(first:30){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">      content{ ... on Issue { number } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      fieldValues(first:20){ nodes{
+</span></span></span><span class="line"><span class="cl"><span class="s1">        ... on ProjectV2ItemFieldSingleSelectValue { name field{ ... on ProjectV2FieldCommon { name } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">      } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">    } } } }
+</span></span></span><span class="line"><span class="cl"><span class="s1">}&#39;</span> -f <span class="nv">login</span><span class="o">=</span>eatmoreduck -F <span class="nv">number</span><span class="o">=</span><span class="m">2</span> --jq <span class="s1">&#39;...&#39;</span>
+</span></span></code></pre></div><p>建两个单选字段（Phase 对应版本分期、Area 对应模块），18 张卡批量挂板、设 Status/Phase/Area，再建两个日期字段给时间线用。一次搞定。</p>
+<h3 id="orca-接入比想象的省事">Orca 接入：比想象的省事</h3>
+<p>本来以为要在 Orca 里走一遍 GitHub OAuth，结果打开集成页面发现 GitHub 已经是 Connected 状态。原因是 Orca 的 GitHub 集成直接读本机 gh CLI 的登录凭据，gh 登录过就算接好了，根本不存在「连接并授权」按钮。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-github-connected.png" alt="Orca 集成页 GitHub 已显示 Connected"  />
+</p>
+<p>还有个小迷惑：想找看板找不到。Orca 的「任务」页面顶部有三个标签——议题、PR、项目。issue 列表在「议题」里，<strong>看板在「项目」标签里</strong>，从卡片右键就能创建 worktree，composer 会自动预填任务名并链接 issue。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-issue-list.png" alt="Orca 任务页的三个标签"  />
+</p>
+<h3 id="看板自动化两条规则默认就是开的">看板自动化：两条规则，默认就是开的</h3>
+<p>闭环的引擎是 Project 自带的两条工作流：</p>
+<ul>
+<li>Item added to project → Set Status = Todo（新卡自动入列）</li>
+<li>When pull request merged → Set Status = Done（合并自动流转）</li>
+</ul>
+<p>有个反直觉的地方：这两条<strong>项目创建出来就是 On 的状态</strong>，什么都不用配。我一开始以为得去网页设置里手动开，还专门写进了待办清单，后来打开 Workflows 面板一看，人家早就在干活了。查了一圈才确认 gh CLI 压根没有管理 Workflows 的子命令（<code>gh project --help</code> 里只有增删改查 item 和 field），所以这东西既没法命令行关掉也没法命令行开，只能去项目页面的 Workflows 面板查看和调整。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-workflow-pr-merged.png" alt="Pull request merged 工作流配置"  />
+</p>
+<p>它们生效之后，merge PR 的瞬间：issue 自动关（commit 里写了 Closes #n）、卡片自动进 Done，全程无感。</p>
+<h3 id="roadmap-时间线日期值可以命令行灌">Roadmap 时间线：日期值可以命令行灌</h3>
+<p>时间线视图打开一片空白，因为每个 item 都没有日期。做法：</p>
+<ol>
+<li>建 <code>Start date</code> / <code>Target date</code> 两个日期字段</li>
+<li>视图工具栏的 Date fields 里把起止指向这两个字段</li>
+<li>日期值按 roadmap 的执行批次用命令灌：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh project item-edit --id &lt;item-id&gt; --project-id PVT_xxxx <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --field-id &lt;start-field-id&gt; --date <span class="s2">&#34;2026-09-14&#34;</span>
+</span></span></code></pre></div><p>灌完时间线上就是一根根条了，之后直接拖拽调期，字段值会跟着变。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/github-project-roadmap-timeline.png" alt="Roadmap 时间线视图"  />
+</p>
+<h3 id="多开-agent可以但别贪">多开 agent：可以，但别贪</h3>
+<p>Orca 的核心玩法就是一个任务一个独立 git worktree，几个 agent 并行互不踩分支。实测确实如此，两个任务同时跑，互不干扰。</p>
+<p>但有几个实际经验：</p>
+<ul>
+<li><strong>挑卡要避开文件冲突</strong>。两个任务都改同一个文件，后合的必然冲突。同子系统的任务（比如都动转写模块的）别并行</li>
+<li><strong>并行 2-3 张，merge 串行</strong>。瓶颈根本不在写代码，在 review。一口气开五个 agent，五个 PR 堆在那里你审不过来，盲合进核心管线等于裸奔</li>
+<li>智能体仪表盘三列（需要你 / 工作中 / 已完成）就是多开时的管理面板，agent 停下来等确认会出现在「需要你」列</li>
+</ul>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-agents-dashboard.png" alt="智能体仪表盘"  />
+</p>
+<p>另外 Orca 不会自动从看板领卡派活，挑哪张卡什么时候开还是人说了算。这反而是好事。</p>
+<h3 id="ci-也扔给-agent-建">CI 也扔给 agent 建</h3>
+<p>仓库没有 CI，PR 级的自动测试就是空的。我的做法是先提一个 issue 把约束写死：私有仓库 Actions 分钟数计费、macOS runner 按 10 倍费率所以必须锁 ubuntu runner、只加一个 workflow 文件、不引入 ESLint/mypy。然后开个 worktree 交给 agent。</p>
+<p>结果它把验收标准全打勾了：backend（ruff + 88 个测试）和 frontend build 双 job 全绿，合计 40 秒出头。中间还自己踩坑自己修——ubuntu 的 sounddevice 缺 PortAudio 依赖，它在 CI 里补了 <code>apt-get install libportaudio2</code>。更绝的是第一轮它故意看着 CI 红了一次才修，验证失败报警机制真的能响。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-pr-checks-passed.png" alt="PR checks 全部通过"  />
+</p>
+<p>这里有个经验值得记：<strong>给 agent 的 issue 写得越具体（约束、边界、验收标准），产出越省心</strong>。模糊的「帮我加个 CI」和带计费约束、验收标准的 issue，产出质量差很远。</p>
+<h3 id="审查和合并不用出-orca">审查和合并不用出 Orca</h3>
+<p>审 diff、给 agent 提修改意见、合并，全程在 Orca 里：</p>
+<ul>
+<li>Diff viewer 逐行看，有问题直接在那个 worktree 的 agent 会话里说，改完 push 同一个 PR 自动更新</li>
+<li>Checks 面板看 CI 状态，失败可以直接一键把失败的 check 交给 agent 修</li>
+</ul>
+<p>然后是这次最典型的一个误用：合并按钮找不着，右上角那个「提交」按钮还是灰的。</p>
+<p>灰是对的——那是 <strong>git 推送按钮</strong>，没东西可推当然灰。合并入口在 <strong>PR 详情视图里</strong>（从 PR 列表点进去那一页），合并按钮带方式下拉，跟网页版一个逻辑。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/orca-source-control-menu.png" alt="右侧菜单是 git 操作，不是合并入口"  />
+</p>
+<h3 id="merge-方式选-squash别犹豫">merge 方式：选 squash，别犹豫</h3>
+<p>三种方式的区别一句话说清：</p>
+<ul>
+<li><strong>Squash</strong>：整个 PR 压成 master 上一个提交，中间提交全丢弃</li>
+<li><strong>Rebase</strong>：每个提交逐个重放上来，中间提交全保留</li>
+<li><strong>Merge commit</strong>：原样合并，再加一个合并节点，历史变分叉图</li>
+</ul>
+<p>AI agent 的产出场景，squash 是唯一解。agent 的中间提交全是「fix typo」「round 2」这种碎片，没有保留价值。squash 之后一张卡对应 master 上一个干净提交，回滚就是 revert 一条，<code>Closes #n</code> 写在 PR 描述里照样生效。另外两种只在多人协作保留分支拓扑、或你亲手精心整理过提交序列时才有意义。</p>
+<h3 id="仓库设置两个开关分开看">仓库设置：两个开关分开看</h3>
+<ul>
+<li><strong>Automatically delete head branches</strong>：合并后自动删远端分支。开了立即受益，不然二十张卡的分支堆在远端没人清。本地 worktree 不受影响，用完在 Orca 里手动删</li>
+<li><strong>Allow auto-merge</strong>：让 PR 可以设「checks 全绿自动合」。注意这只是解锁功能，不对具体 PR 启用就什么都不会发生。还有，<strong>没有 CI 的时候开了也是摆设</strong>——没有任何 checks 可等。所以顺序是：先开自动删分支，auto-merge 等 CI 上线再说</li>
+</ul>
+<h3 id="一天下来的小结">一天下来的小结</h3>
+<table>
+  <thead>
+      <tr>
+          <th>事项</th>
+          <th>状态</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>issue/PR 模板 + 贡献指南</td>
+          <td>已推送生效</td>
+      </tr>
+      <tr>
+          <td>19 个 issue + milestone + 看板字段</td>
+          <td>全部挂板，GraphQL 逐条核验过</td>
+      </tr>
+      <tr>
+          <td>两条看板自动化</td>
+          <td>默认开启，零配置</td>
+      </tr>
+      <tr>
+          <td>Roadmap 时间线</td>
+          <td>三批次日期已灌入</td>
+      </tr>
+      <tr>
+          <td>CI（agent 自建）</td>
+          <td>已合并生效，双 job 全绿</td>
+      </tr>
+      <tr>
+          <td>完整闭环</td>
+          <td>第一张卡从挑卡到 Done 全自动流转验证通过</td>
+      </tr>
+  </tbody>
+</table>
+<p>最大的感受：这套东西搭完之后，「管理任务」这个动作本身消失了——剩下的就是把卡一张张挪完。工具链各管一段：GitHub Projects 记状态，Orca 管 agent 和 worktree，gh CLI 补一切自动化的缝。</p>
+<p>后面打算把「每天开工先看看板挑两张卡」养成习惯，看板不撒谎，进度不用记。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

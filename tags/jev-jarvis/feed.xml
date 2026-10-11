@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Jev-Jarvis on eatmoreduck&#39;s Blog</title>
+    <link>https://blog.xiaohuangyu.space/tags/jev-jarvis/</link>
+    <description>Recent content in Jev-Jarvis on eatmoreduck&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 11 Oct 2026 23:39:42 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/jev-jarvis/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>jev-jarvis-mac v0.6.0 发布：QQ 支持、微信 4.x 人工校准、狗头军师话术</title>
+      <link>https://blog.xiaohuangyu.space/p/jev-jarvis-v060/</link>
+      <pubDate>Thu, 24 Sep 2026 12:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/jev-jarvis-v060/</guid>
+      <description>&lt;p&gt;jev-jarvis 是贴在微信边上的 macOS 悬浮窗：消息一进来，它告诉你三件事——对方什么意思（8 类意图）、有没有雷（风险 0–9 + 行动建议）、该怎么回（按话术给候选，点「填入」直接进输入框），发不发永远你自己按发送键。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>jev-jarvis 是贴在微信边上的 macOS 悬浮窗：消息一进来，它告诉你三件事——对方什么意思（8 类意图）、有没有雷（风险 0–9 + 行动建议）、该怎么回（按话术给候选，点「填入」直接进输入框），发不发永远你自己按发送键。</p>
+<p>v0.6.0 是目前跨度最大的一版：微信 4.x 识别不准有了根治方案，QQ（QQNT）也能用了，面板加了两个实用按钮，话术库迎来狗头军师。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-demo.gif" alt="demo：微信消息实时识别，候选回复一键填入"  />
+</p>
+<h2 id="微信-4x-识别不准的根治方案人工校准">微信 4.x 识别不准的根治方案：人工校准</h2>
+<p>新版微信联系人列表能拖宽、聊天窗能拖成独立小窗，自动识别经常漏消息、把列表摘要当正文。v0.6.0 加了手动校准：点右上角校准图标，在同一张截图上框两个区——<strong>绿框罩住整个消息流，蓝框罩住输入区</strong>，预览识别通过后一次保存。</p>
+<p>按你框选的真实气泡整理消息，识别准确度大幅提高：短句不再被当杂字丢掉、多行正文完整合并、左右归属更准。窗口挪动不用重画，改动内部布局再校准一次就行。零样本回归口径下 8 类意图准确率 86.4%（22 条、只看单条消息的无上下文测试），校准主要收益在消息整理这一层。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-first-run-hint.png" alt="打开 app 时，点击右上角校准图标以手动校准"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-calibration.png" alt="校准界面：绿框罩住消息识别区域，蓝框罩住输入区域，底部「预览识别 → 确认并启用」"  />
+</p>
+<h2 id="qqqqnt也能用了">QQ（QQNT）也能用了</h2>
+<p>同一个悬浮窗，谁在前台读谁、给谁填。QQ 走系统无障碍树直接读消息——不截图、不 OCR、不解密，纯只读的底线不变；「填入」同样只写不发送。第一次读 QQ 时授一下「辅助功能」权限就行。</p>
+<h2 id="两个按钮立刻分析重新生成推荐回答">两个按钮：立刻分析、重新生成推荐回答</h2>
+<p>面板底部新增两个按钮：前者重新读屏做完整分析，后者沿用当前判断只重跑候选——换个话术点一下，几秒出新一批。另外填入完成后鼠标会自动回到你原来的位置，换话术不用再去捞鼠标。</p>
+<h2 id="新话术狗头军师恋爱三件套还有夸夸">新话术：狗头军师·恋爱三件套，还有夸夸</h2>
+<p>恋爱向三件套——稳健、会撩、抽离，外加无脑夸的「夸夸」，下拉即换。加上原来的高情商、贴吧老哥、阴阳怪气等，内置共 14 种，每种候选条数 1—5 可调。自定义话术也加了最低质量门槛：描述太糊会拒绝加载并提示怎么写，不再悄悄失效。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-recognition.png" alt="识别效果实拍：左侧微信消息实时框选标注，右侧面板狗头军师置顶给出 55% 候选"  />
+</p>
+<h2 id="自带-key不配也能用">自带 key，不配也能用</h2>
+<p>判断 · Jev、生成 · OpenAI 兼容（DeepSeek、智谱、本地 Ollama 都行）、生成 · Anthropic 兼容，三组密钥各管各的，配法见仓库 README。不配也能用：判断跑本地模型（约 3.8 GB，已支持纯离线加载，下载不可达自动切国内镜像），生成层有内置共享 key。</p>
+<h2 id="安装与升级">安装与升级</h2>
+<p>需要 macOS 13+（Apple Silicon）。GitHub 找 <a href="https://github.com/jev-chat/jev-chat-jarvis-mac">jev-chat/jev-chat-jarvis-mac</a>，Releases 下载 v0.6.0 的 zip，拖进「应用程序」，第一次右键 → 打开（没做公证，只需这一次）。读微信授「屏幕录制」，读 QQ 和「填入」授「辅助功能」。老用户直接覆盖安装，配置和校准数据都不受影响。MIT 开源。</p>
+<h2 id="反馈">反馈</h2>
+<p>交流群、微信、公众号的入口都在仓库 <a href="https://github.com/jev-chat/jev-chat-jarvis-mac">jev-chat/jev-chat-jarvis-mac</a> 的 README 文末「交流反馈」，进去就能找到；以后有新版本也会在群里和公众号通知。bug 和建议走 GitHub Issues。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
