@@ -1,0 +1,71 @@
+# ZeroTier 指南原中文 slug 换英文 slug 后的 301 跳转（源路径需 URL 编码）
+/p/zerotier-planet-%E7%BB%84%E7%BD%91%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E8%B7%B5/ /p/zerotier-planet-guide/ 301
+
+# 2026-09 GSC 404 报告的老 URL 修复：改名文章 301 到新地址
+/p/recommend-hot-software/ /p/mac-dev-software-list/ 301
+/p/install-immortalwrt-in-synology/ /en/p/install-immortalwrt-in-synology/ 301
+/p/obsidianclaude-code-build-an-ai-second-brain-10-times-more-efficiently/ /p/obsidian-claude-code-ai-second-brain-guide/ 301
+/p/ai-%E5%8A%A9%E5%8A%9B%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%A2%A6%E6%83%B3/ /p/ai-helps-every-dream-2/ 301
+# Orca 工作流英文版 slug 按规范补 -en 后缀，老 URL 301（2026-09-16）
+/en/p/github-projects-orca-agent-workflow/ /en/p/github-projects-orca-agent-workflow-en/ 301
+# 旧 categories 分类入口（本站只用 tags）
+/categories/ /tags/ 301
+/en/categories/ /en/tags/ 301
+/categories/tools/ /tags/ 301
+
+# 2026-09-16 GSC 404 修复：老 slug / 拼错 URL 301 到现地址
+/p/hugo-obsidian-stagic-blog1/ /p/hugo-obsidian-static-blog1/ 301
+/p/karpathy/ /p/karpathy-llm-wiki-obsidian/ 301
+/p/my-software-stack-1/ /p/my-software-stack-2026/ 301
+/posts/orca-github-projects-ai-workflow/ /p/github-projects-orca-agent-workflow/ 301
+
+# 2026-09-17 tags 全量改英文：旧 tag 页 301（源路径 URL 编码）
+/tags/%E5%8D%9A%E5%AE%A2/ /tags/blog/ 301
+/tags/%E5%B0%8F%E7%88%B1%E9%9F%B3%E5%93%8D/ /tags/xiaoai-speaker/ 301
+/tags/%E5%B7%A5%E5%85%B7/ /tags/tools/ 301
+/en/tags/%E5%B7%A5%E5%85%B7/ /en/tags/tools/ 301
+/tags/%E5%BC%80%E6%BA%90/ /tags/open-source/ 301
+/tags/%E6%80%9D%E8%80%83/ /tags/thinking/ 301
+/tags/%E6%8A%80%E8%83%BD/ /tags/claude-skills/ 301
+/tags/%E6%95%88%E7%8E%87/ /tags/productivity/ 301
+/tags/%E6%95%99%E7%A8%8B/ /tags/tutorial/ 301
+/tags/%E6%95%B0%E7%A0%81/ /tags/hardware/ 301
+/tags/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/ /tags/smart-home/ 301
+/tags/%E6%B1%82%E8%81%8C/ /tags/career/ 301
+/tags/%E6%B5%8B%E8%AF%95/ /tags/testing/ 301
+/tags/%E7%88%AC%E8%99%AB/ /tags/web-scraping/ 301
+/tags/%E7%94%9F%E6%B4%BB/ /tags/life/ 301
+/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/ /tags/knowledge-management/ 301
+/tags/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/ /tags/system/ 301
+/tags/%E7%BB%84%E7%BD%91/ /tags/network/ 301
+/tags/%E7%BD%91%E7%BB%9C/ /tags/network/ 301
+/tags/%E7%BE%A4%E6%99%96/ /tags/synology/ 301
+/en/tags/%E7%BE%A4%E6%99%96/ /en/tags/synology/ 301
+/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/ /tags/career/ 301
+/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/ /tags/automation/ 301
+/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/ /tags/vm/ 301
+/en/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/ /en/tags/vm/ 301
+/tags/%E8%AF%81%E4%B9%A6/ /tags/certification/ 301
+/en/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/ /en/tags/router/ 301
+/tags/%E8%BD%AF%E4%BB%B6/ /tags/software/ 301
+/tags/%E9%9A%8F%E6%83%B3/ /tags/thinking/ 301
+/tags/other/ /tags/ 301
+/tags/boss%E7%9B%B4%E8%81%98/ /tags/boss-zhipin/ 301
+/tags/ai%E5%B7%A5%E5%85%B7/ /tags/ai-tools/ 301
+/tags/golang/ /tags/go/ 301
+/en/tags/blogging/ /en/tags/blog/ 301
+
+# CI/CD tag 并入 DevOps（原 tag 仅存在于草稿文，转正后自动生效）
+/tags/ci/ /tags/devops/ 301
+
+# 2026-09-17 公众号「阅读原文」踩坑兜底：手写 URL 照抄 content 目录写成 /post/<slug>/，真实结构是 /p/<slug>/
+# 裸列表页 /post/ 是构建产物真实存在（不在 sitemap），单独 301 到首页；/p/ 裸路径是 404，不能全量 splat
+/post/ / 301
+/post/* /p/:splat 301
+/en/post/ /en/ 301
+/en/post/* /en/p/:splat 301
+
+# 2026-09-24 GSC 404 修复：碎碎念两篇老中文 slug；职业发展 tag 页 301 已有但 feed.xml 是精确匹配需单独补
+/p/4-%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/ /p/april-musings/ 301
+/p/56%E6%9C%88%E7%A2%8E%E7%A2%8E%E5%BF%B5/ /p/may-june-musings/ 301
+/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/feed.xml /tags/career/feed.xml 301

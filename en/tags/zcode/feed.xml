@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ZCode on eatmoreduck 多吃鸭&#39;s Blog | AI Tools in Practice and Risk-Control R&amp;D</title>
+    <link>https://blog.xiaohuangyu.space/en/tags/zcode/</link>
+    <description>Recent content in ZCode on eatmoreduck 多吃鸭&#39;s Blog | AI Tools in Practice and Risk-Control R&amp;D</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 12 Nov 2026 07:12:33 -0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/tags/zcode/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why Orca Took Two Months to Support ZCode: The Blocker Was Evidence, Not Code</title>
+      <link>https://blog.xiaohuangyu.space/en/p/orca-zcode-harness-two-months-en/</link>
+      <pubDate>Mon, 02 Nov 2026 10:40:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/orca-zcode-harness-two-months-en/</guid>
+      <description>&lt;p&gt;Last week I found a card in Orca&amp;rsquo;s settings: GLM Coding Plan, plan site set to Zhipu BigModel, API key showing Saved, and three usage rows underneath — 5-hour window at 5%, weekly at 92%, MCP monthly at 26%.&lt;/p&gt;&#xA;&lt;p&gt;I paused. Since when did Orca support ZCode as an agent?&lt;/p&gt;&#xA;&lt;p&gt;Following that thread turned out to be more interesting than &amp;ldquo;they added an agent.&amp;rdquo; From the first issue to the release, 63 days passed, and six separate PRs were all closed without merging. What finally landed the work was Z.ai open-sourcing ZCode on September 20.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Last week I found a card in Orca&rsquo;s settings: GLM Coding Plan, plan site set to Zhipu BigModel, API key showing Saved, and three usage rows underneath — 5-hour window at 5%, weekly at 92%, MCP monthly at 26%.</p>
+<p>I paused. Since when did Orca support ZCode as an agent?</p>
+<p>Following that thread turned out to be more interesting than &ldquo;they added an agent.&rdquo; From the first issue to the release, 63 days passed, and six separate PRs were all closed without merging. What finally landed the work was Z.ai open-sourcing ZCode on September 20.</p>
+<p>One note before we start: I wrote about ZCode&rsquo;s privacy problems earlier (the encrypted snapshot thing). This post is only about integration. Two separate questions — whether a tool can be wired into another tool, and whether it uploads your files behind your back.</p>
+<h2 id="timeline-two-months-stuck-five-days-after-the-source-dropped">Timeline: two months stuck, five days after the source dropped</h2>
+<p>In UTC:</p>
+<table>
+  <thead>
+      <tr>
+          <th>When</th>
+          <th>What happened</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>July 25</td>
+          <td>Issue <a href="https://github.com/stablyai/orca/issues/10564">#10564</a> asks for ZCode as a first-class agent</td>
+      </tr>
+      <tr>
+          <td>July 26</td>
+          <td>First PR, #10654, opened</td>
+      </tr>
+      <tr>
+          <td>Mid-August to mid-September</td>
+          <td>#13965, #14556, #16227, #16228 all opened and all closed unmerged</td>
+      </tr>
+      <tr>
+          <td>September 20</td>
+          <td>One more attempt, #21756</td>
+      </tr>
+      <tr>
+          <td><strong>September 20, later that day</strong></td>
+          <td><strong>Z.ai open-sources <a href="https://github.com/zai-org/ZCode">zai-org/ZCode</a> under Apache-2.0</strong></td>
+      </tr>
+      <tr>
+          <td>September 25</td>
+          <td>PR <a href="https://github.com/stablyai/orca/pull/22464">#22464</a> merges to main</td>
+      </tr>
+      <tr>
+          <td><strong>September 26, 22:36 UTC</strong></td>
+          <td><strong>v1.4.214 ships — ZCode becomes a first-class harness</strong></td>
+      </tr>
+      <tr>
+          <td>September 27</td>
+          <td>The site changelog lists &ldquo;ZCode agent harness&rdquo; as the headline of v1.4.215</td>
+      </tr>
+  </tbody>
+</table>
+<p>One detail worth noting: v1.4.214 and v1.4.215 are one day apart because 1.4.215 is 1.4.214 plus a single profile fix. The site changelog picked the later number, which is why the &ldquo;official&rdquo; announcement reads September 27.</p>
+<p>Follow-ups filled in the rest:</p>
+<ul>
+<li><strong>v1.4.218</strong>: ZCode session history lands in AI Vault, Coding Plan quota appears in usage</li>
+<li><strong>v1.4.221</strong>: you can link a GLM Coding Plan without installing ZCode at all (that is the card in my screenshot)</li>
+<li><strong>v1.4.229</strong>: sign-in reuses the existing setup terminal, conversations read in recorded order</li>
+<li><strong>v1.4.232</strong>: the GLM key can be stored on a remote host</li>
+</ul>
+<h2 id="the-real-blocker-evidence-not-code">The real blocker: evidence, not code</h2>
+<p>The PR writeup makes it clear that the six earlier attempts died on two things nobody could prove.</p>
+<p>The first was <strong>provenance</strong>. Review on #21756 objected that <code>zcode</code> might just be an unofficial third-party client, and labeling it as Z.ai&rsquo;s agent would be inaccurate. Before the source was public, nobody could answer that — you could only point at some binary on someone&rsquo;s machine and say &ldquo;probably fine.&rdquo;</p>
+<p>The second was worse: <strong>do the hooks actually fire?</strong></p>
+<p>ZCode supports hooks in <code>~/.zcode/cli/config.json</code>, and there was an open bug report (zai-org/feedback#32) saying configured hooks never fired. Orca&rsquo;s whole status system rests on hooks — the sidebar dot, the action-required badge, the completion notification all depend on the agent POSTing lifecycle events. If hooks never fire, wiring ZCode in gives you a panel that permanently reads &ldquo;idle.&rdquo;</p>
+<p>Every one of those six PRs built its state machine on the assumption that hooks work. And you cannot code-review an assumption.</p>
+<p>Open-sourcing answered both questions at once. Five days later, the PR author put it plainly:</p>
+<blockquote>
+<p>written against the real source (agent CLI 0.16.9) rather than guessed at.</p>
+</blockquote>
+<h2 id="six-things-reading-the-source-changed">Six things reading the source changed</h2>
+<p>The #22464 writeup lists six findings that changed the implementation after reading the source. This is the most informative part of the whole story — nearly every one of them is a place where somebody had already guessed wrong.</p>
+<p><strong>One: ZCode&rsquo;s hook payloads already carry Claude-compatible aliases.</strong></p>
+<p>Next to its own camelCase fields, ZCode&rsquo;s hook runner writes a Claude-shaped set: <code>hook_event_name</code>, <code>session_id</code>, <code>tool_name</code>, <code>tool_input</code>, <code>transcript_path</code>, <code>last_assistant_message</code>. The source comments say this is deliberate.</p>
+<p>So Orca needed no new parser. ZCode routes through the existing Claude-compatible vendor path and only needs its own identity. That also explains why six PRs kept churning the same code: everyone assumed a separate adapter layer was required. It wasn&rsquo;t.</p>
+<p><strong>Two: <code>hooks.enabled</code> defaults to <code>false</code>.</strong></p>
+<p>That is the actual cause of &ldquo;configured hooks never fire.&rdquo; Declaring <code>hooks.events</code> isn&rsquo;t enough; the runtime was never switched on. Orca&rsquo;s installer sets the flag, and if a user later turns it back off, the status check reports <code>partial</code> instead of pretending everything is fine.</p>
+<p>In short: <strong>nothing was broken. It was never plugged in.</strong></p>
+<p><strong>Three: <code>PermissionRequest</code> only fires once the approval card is already on screen.</strong></p>
+<p>This one is valuable. The event races the user&rsquo;s answer and can never fire for an auto-approved call — so it&rsquo;s a trustworthy signal that the pane is blocked.</p>
+<p>Compare that to agents where the equivalent event fires along several paths and you end up guessing with timeouts.</p>
+<p><strong>Four: ZCode&rsquo;s clarification tool is literally <code>AskUserQuestion</code>, with Claude&rsquo;s exact shape.</strong></p>
+<p>A <code>questions</code> array, an <code>options</code> array. Orca reuses its existing question card with zero new UI.</p>
+<p><strong>Five: it renames its own process to <code>zcode-cli</code>.</strong></p>
+<p>So process recognition cannot match the launch command. Without the source, you find this out from users reporting &ldquo;the pane won&rsquo;t detect the agent.&rdquo;</p>
+<p><strong>Six: it emits no OSC title at all, and its banner animates forever.</strong></p>
+<p>Terminal programs normally write their title with an OSC sequence, and agents use that to decide what&rsquo;s running. ZCode sends none, and repaints its banner continuously.</p>
+<p>So readiness can&rsquo;t wait for the screen to go quiet; it waits for the composer box to appear. The PR even keeps a test that pins down the negative result, so nobody re-attempts screen scraping.</p>
+<h2 id="local-test-the-desktop-apps-bundled-cli-cant-open-a-tui">Local test: the desktop app&rsquo;s bundled CLI can&rsquo;t open a TUI</h2>
+<p>Since I was already in the weeds, I checked my own machine.</p>
+<ul>
+<li>Orca: <strong>1.4.245</strong></li>
+<li>ZCode desktop: <strong>3.17.1</strong></li>
+<li><code>zcode</code> on PATH: <strong>none</strong></li>
+</ul>
+<p>That last one is the point. The ZCode desktop app ships an engine inside the bundle:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs --version
+</span></span><span class="line"><span class="cl"><span class="c1"># 0.17.1</span>
+</span></span></code></pre></div><p>The version prints. Everything looks fine. Then try to open a session:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs tui
+</span></span><span class="line"><span class="cl"><span class="c1"># Error: Cannot find package &#39;@zcode/tui&#39; imported from</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs</span>
+</span></span></code></pre></div><p>The reason is simple: <strong>the desktop build ships the engine without the text interface</strong>, because it draws its own window and never needs one. Version, <code>doctor</code>, one-shot prompts all work. Only sessions fail — and sessions are exactly what Orca wants.</p>
+<p>Orca later added a specific notice for this (PR #22730). It deliberately does not match the &ldquo;TUI requires an interactive terminal&rdquo; message, because that string is localized and Chinese users would never hit the rule; it matches Node&rsquo;s module-resolution error, <code>Cannot find package '@zcode/tui'</code>, which is never translated.</p>
+<p>So the official requirement is written plainly in the docs: <strong>install a <code>zcode</code> build with a terminal UI.</strong> A terminal build, not the desktop app.</p>
+<h2 id="another-trap-which-file-the-hooks-live-in">Another trap: which file the hooks live in</h2>
+<p>Orca&rsquo;s docs say it writes hooks into <code>~/.zcode/cli/config.json</code>. On my machine that file is 565 bytes with no <code>hooks</code> section and no <code>setting.json</code> next to it.</p>
+<p>That&rsquo;s expected — I never installed the CLI, so the installer never ran.</p>
+<p>But a Windows user&rsquo;s report in the issue is worth remembering: current <code>zcode-app-cli</code> (3.15.x and later) <strong>no longer reads hooks from <code>config.json</code></strong>. That file is now a legacy/migration source; <code>~/.zcode/cli/setting.json</code> is what actually takes effect. He hand-wrote the same hook structure into <code>setting.json</code>, the startup log&rsquo;s <code>hookCount</code> went from 0 to normal, and events started firing.</p>
+<p>The same report has three more details:</p>
+<ul>
+<li><code>zcode login zai</code> completing OAuth is not enough. For <code>account:*</code> providers the CLI additionally requires a Coding Plan API-key credential; with browser auth alone, every turn fails with <code>Model creation failed</code>. You have to run <code>/login</code> in the TUI, pick &ldquo;Z.AI Coding Plan API Key,&rdquo; and paste the key.</li>
+<li>With the desktop app running, it periodically rewrites <code>~/.zcode/v2/provider_config.json</code> and clobbers manual model selection. Quit it before configuring the CLI.</li>
+<li>ZCode records usage locally in <code>~/.zcode/cli/db/db.sqlite</code>, so Orca can track quota without touching any undocumented billing endpoint.</li>
+</ul>
+<h2 id="how-to-actually-use-this">How to actually use this</h2>
+<p>Two cases. Don&rsquo;t mix them up.</p>
+<p><strong>You only want quota and history</strong>: the desktop app is enough. The GLM Coding Plan link added in v1.4.221 is independent — no CLI needed. Save the key and you get the 5-hour, weekly, and MCP usage rows. The 92% in my screenshot came from that path.</p>
+<p><strong>You want ZCode running as an agent inside an Orca pane</strong>: install a <code>zcode</code> that has a TUI. The official route is building the command-line distribution from <code>zai-org/ZCode</code> (<code>pnpm build:zcode</code>, which installs to <code>~/.zcode/runtime</code> and links into <code>~/.local/bin</code>). There&rsquo;s also a community <code>zcode-app-cli</code> that extracts the runtime from a pinned desktop release and wraps a TUI around it; people have reported it working on both macOS and Windows in that issue thread.</p>
+<p>After installing, check two things: <code>command -v zcode</code> points at the new install, and <code>~/.zcode/cli/setting.json</code> contains all seven events — <code>SessionStart</code>, <code>UserPromptSubmit</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PostToolUseFailure</code>, <code>PermissionRequest</code>, <code>Stop</code>.</p>
+<h2 id="one-last-thing">One last thing</h2>
+<p>What gets me about this story isn&rsquo;t &ldquo;another agent got wired up.&rdquo; It&rsquo;s what blocked it for two months.</p>
+<p>None of those six PRs were rejected for bad code. They were rejected on <strong>the form of the argument</strong>: you say it should work, but you can&rsquo;t show evidence.</p>
+<p>Anyone who maintains an open-source project knows this loop — someone files an issue, someone says &ldquo;works on my machine,&rdquo; and nobody can prove it will work on yours. What moves things is rarely more enthusiasm. It&rsquo;s a source tree someone else can check.</p>
+<p>On that note, I checked the quota while writing this. Weekly is at 92%. If you&rsquo;re planning to run anything heavy, wait for next week.</p>
+<hr>
+<p>References:</p>
+<ul>
+<li>Orca issue <a href="https://github.com/stablyai/orca/issues/10564">#10564</a>, PRs <a href="https://github.com/stablyai/orca/pull/22464">#22464</a> and <a href="https://github.com/stablyai/orca/pull/22730">#22730</a></li>
+<li>Docs: <a href="https://www.onorca.dev/docs/agents/supported">https://www.onorca.dev/docs/agents/supported</a>, <a href="https://www.onorca.dev/docs/agents/usage-tracking">https://www.onorca.dev/docs/agents/usage-tracking</a></li>
+<li>Z.ai&rsquo;s open-source repo: <a href="https://github.com/zai-org/ZCode">https://github.com/zai-org/ZCode</a> (Apache-2.0)</li>
+</ul>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

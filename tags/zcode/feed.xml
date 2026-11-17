@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ZCode on eatmoreduck 多吃鸭的博客｜AI 工具实战与风控研发</title>
+    <link>https://blog.xiaohuangyu.space/tags/zcode/</link>
+    <description>Recent content in ZCode on eatmoreduck 多吃鸭的博客｜AI 工具实战与风控研发</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 12 Nov 2026 07:12:33 -0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/zcode/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Orca 拖了两个月才支持 ZCode：卡的不是代码，是证据</title>
+      <link>https://blog.xiaohuangyu.space/p/orca-zcode-harness-two-months/</link>
+      <pubDate>Mon, 02 Nov 2026 10:40:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/orca-zcode-harness-two-months/</guid>
+      <description>&lt;p&gt;上周在 Orca 的设置里翻到一张卡片：GLM Coding Plan，Plan site 选到智谱 BigModel，API key 显示 Saved，下面三行额度——5 小时窗口用了 5%，周额度 92%，MCP 月度 26%。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>上周在 Orca 的设置里翻到一张卡片：GLM Coding Plan，Plan site 选到智谱 BigModel，API key 显示 Saved，下面三行额度——5 小时窗口用了 5%，周额度 92%，MCP 月度 26%。</p>
+<p>我先愣了下：ZCode 什么时候成了 Orca 支持的 agent 了？</p>
+<p>顺着这条线翻下去，发现这事比&quot;加一个 agent&quot;有味道得多。从有人提 issue 到版本发布，中间隔了 <strong>63 天</strong>，前后<strong>六次 PR 全部没合入</strong>。而真正让 PR 落地的，是 9 月 20 日 Z.ai 把 ZCode 开源这件事。</p>
+<p>先把话说在前面：我上一篇写过 ZCode 的隐私问题（<code>.enc</code> 快照那件事），这篇只谈集成，两件事不冲突。工具能不能被别的工具接上，和它背后传不传文件，是两个问题。</p>
+<h2 id="时间线卡了两个月开源五天就合">时间线：卡了两个月，开源五天就合</h2>
+<p>按北京时间算：</p>
+<table>
+  <thead>
+      <tr>
+          <th>时间</th>
+          <th>发生了什么</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>7 月 25 日</td>
+          <td>issue <a href="https://github.com/stablyai/orca/issues/10564">#10564</a> 提出：把 ZCode 加成一等 agent</td>
+      </tr>
+      <tr>
+          <td>7 月 26 日</td>
+          <td>第一个 PR #10654 提交</td>
+      </tr>
+      <tr>
+          <td>8 月中到 9 月中</td>
+          <td>#13965、#14556、#16227、#16228 陆续提交，全部关闭未合入</td>
+      </tr>
+      <tr>
+          <td>9 月 20 日</td>
+          <td>再试一次，#21756 提交</td>
+      </tr>
+      <tr>
+          <td><strong>9 月 20 日晚</strong></td>
+          <td><strong>Z.ai 开源 <a href="https://github.com/zai-org/ZCode">zai-org/ZCode</a></strong>（Apache-2.0）</td>
+      </tr>
+      <tr>
+          <td>9 月 25 日 17:17</td>
+          <td>PR <a href="https://github.com/stablyai/orca/pull/22464">#22464</a> 合入 main</td>
+      </tr>
+      <tr>
+          <td><strong>9 月 27 日清晨</strong></td>
+          <td><strong>v1.4.214 发布，ZCode 首次作为一等 harness 上线</strong></td>
+      </tr>
+      <tr>
+          <td>9 月 27 日</td>
+          <td>官网 changelog 把「ZCode agent harness」列为 v1.4.215 的头条</td>
+      </tr>
+  </tbody>
+</table>
+<p>注意一个细节：GitHub 上 1.4.214 的发布时间是 9 月 26 日 22:36 UTC，换算成北京时间是 27 日凌晨。所以国内看这事，就是 9 月 27 日一次性上线的。</p>
+<p>之后还有几波补丁，都是在把周边补齐：</p>
+<ul>
+<li><strong>v1.4.218</strong>：ZCode 会话历史进 AI Vault，Coding Plan 额度进 usage</li>
+<li><strong>v1.4.221</strong>：不装 ZCode 也能单独绑 GLM Coding Plan（就是你现在看到的那张卡）</li>
+<li><strong>v1.4.229</strong>：登录复用已有的 setup 终端，会话按记录顺序读</li>
+<li><strong>v1.4.232</strong>：GLM key 可以存在远端 host 上</li>
+</ul>
+<h2 id="真卡点不是代码是证据">真卡点：不是代码，是证据</h2>
+<p>看 PR 正文才知道，前面那六次尝试死在两个无法自证的问题上。</p>
+<p>第一个是<strong>来路</strong>。#21756 的评审里有人明确反对：<code>zcode</code> 到底算不算 Z.ai 官方的东西？如果它只是个第三方客户端，Orca 把它标成 Z.ai 的 agent 就是不准确的。这个问题在官方开源之前，谁也答不上来——你只能指着某个用户装的二进制说&quot;应该是吧&quot;。</p>
+<p>第二个更致命：<strong>hooks 到底会不会触发</strong>。</p>
+<p>ZCode 支持在 <code>~/.zcode/cli/config.json</code> 里配 hooks，官方也有个 issue（zai-org/feedback#32）在抱怨&quot;配好了 hook 但从来不触发&quot;。Orca 的整个状态系统就建立在 hook 上——侧栏的状态点、action required 徽章、完成通知，全靠 agent 主动 POST 心跳。如果 hook 不触发，Orca 接上去就是一个永远显示&quot;空闲&quot;的假面板。</p>
+<p>前面六次 PR 的状态机，全都建立在&quot;hook 应该会触发&quot;这个假设上。而假设是没法 code review 的。</p>
+<p>9 月 20 日 Z.ai 开源之后，这两条同时有了答案。五天后的 PR 里，作者写了一句很实在的话：</p>
+<blockquote>
+<p>用真实源码（agent CLI 0.16.9）来写，而不是靠猜。</p>
+</blockquote>
+<h2 id="读源码读出来的六个事实">读源码读出来的六个事实</h2>
+<p>#22464 的 PR 正文里列了六条&quot;读了源码之后改变了实现&quot;的发现。这部分是我觉得整件事里最有信息量的地方，几乎每一条都对应一个别人猜错过的坑。</p>
+<p><strong>一、ZCode 的 hook 输出本来就带 Claude 兼容别名。</strong></p>
+<p>它的 hook runner 在自己那套 camelCase 字段旁边，额外写了一份 Claude 形状的别名：<code>hook_event_name</code>、<code>session_id</code>、<code>tool_name</code>、<code>tool_input</code>、<code>transcript_path</code>、<code>last_assistant_message</code>。源码注释里说这是有意为之。</p>
+<p>结果就是 Orca 不用写新的解析器，ZCode 直接走已有的 Claude 兼容通道，只需要补一个身份标识。这也解释了为什么之前六次 PR 都在同一块地方反复改——大家都以为需要一个独立适配层，其实不需要。</p>
+<p><strong>二、<code>hooks.enabled</code> 默认是 <code>false</code>。</strong></p>
+<p>这是那条&quot;hook 从来不触发&quot;的真正原因。写 <code>hooks.events</code> 不够，运行时压根没打开开关。Orca 的安装器会把它置成 <code>true</code>，而且如果用户后来手动关回去，状态检查会报 <code>partial</code>，而不是假装一切正常。</p>
+<p>一句话总结：<strong>不是坏了，是没通电。</strong></p>
+<p><strong>三、<code>PermissionRequest</code> 只在审批卡已经显示在屏幕上时才触发。</strong></p>
+<p>这条价值很高。它意味着这个事件天然抢在用户回答之前，也不可能为自动批准的调用误触发——所以可以当作&quot;面板被阻塞了&quot;的可信信号。换句话说是免检的。</p>
+<p>对比某些其它 agent，同类事件会在各种路径上乱响，你只能靠超时去猜。</p>
+<p><strong>四、ZCode 的澄清工具就叫 <code>AskUserQuestion</code>，形状和 Claude 的一模一样。</strong></p>
+<p><code>questions</code> 数组、<code>options</code> 数组。所以 Orca 现有那张问题卡直接复用，没写一行新 UI。</p>
+<p><strong>五、它会把进程名改成 <code>zcode-cli</code>。</strong></p>
+<p>所以进程识别不能拿启动命令去匹配。这个坑如果不读源码，就得靠用户报&quot;面板检测不到 agent&quot;来发现。</p>
+<p><strong>六、它不输出 OSC 标题，而且 banner 永远在动。</strong></p>
+<p>终端程序通常用 OSC 序列把标题写出来，agent 就靠这个判断&quot;现在在跑什么&quot;。ZCode 一个都不发，banner 还一直重绘。</p>
+<p>于是就绪判断不能等&quot;屏幕安静下来&quot;，得等 composer 那个输入框出现。PR 里还专门留了一个测试，把这个负面结论钉住，防止后来的人再试一次屏幕抓取。</p>
+<h2 id="本机实测桌面版自带的-cli-跑不了-tui">本机实测：桌面版自带的 CLI 跑不了 TUI</h2>
+<p>既然聊到这儿，我把本机的环境对了一遍。</p>
+<ul>
+<li>Orca：<strong>1.4.245</strong></li>
+<li>ZCode 桌面版：<strong>3.17.1</strong></li>
+<li>本机 PATH 里的 <code>zcode</code>：<strong>没有</strong></li>
+</ul>
+<p>第三条是关键。ZCode 桌面版其实自带一份引擎，就在应用包里：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs --version
+</span></span><span class="line"><span class="cl"><span class="c1"># 0.17.1</span>
+</span></span></code></pre></div><p>版本号能打出来，看着一切正常。但真去开一个会话：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs tui
+</span></span><span class="line"><span class="cl"><span class="c1"># Error: Cannot find package &#39;@zcode/tui&#39; imported from</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs</span>
+</span></span></code></pre></div><p>原因不复杂：<strong>桌面版打包引擎的时候，把文本界面那块裁掉了</strong>，因为它自己画窗口，不需要 TUI。版本号、<code>doctor</code>、一次性 prompt 全都能跑，唯独开不了会话——而 Orca 要的正好就是会话。</p>
+<p>Orca 后来专门为这个情况加了一个提示（PR #22730）。它不去匹配&quot;TUI 需要交互式终端&quot;这句报错，因为那句话会被本地化，中文环境里就匹配不上了；它匹配的是 Node 的模块解析错误——<code>Cannot find package '@zcode/tui'</code>，这句不会被翻译。</p>
+<p>也就是说，Orca 官方对 ZCode 的要求写得很直白：<strong>install a <code>zcode</code> build with a terminal UI</strong>。要装的是带 TUI 的 <code>zcode</code>，不是桌面版。</p>
+<h2 id="还有一个坑hooks-到底写进哪个文件">还有一个坑：hooks 到底写进哪个文件</h2>
+<p>Orca 文档说它会把 hooks 写进 <code>~/.zcode/cli/config.json</code>。但我翻本机这个文件，只有 565 字节，里面没有 <code>hooks</code> 段，旁边也没有 <code>setting.json</code>。</p>
+<p>原因是我根本没装 CLI，所以安装器没跑过——这算正常。</p>
+<p>但 issue 里有个 Windows 用户的实测报告更值得记：现在的 <code>zcode-app-cli</code>（3.15.x 之后）<strong>已经不从 <code>config.json</code> 读 hooks 了</strong>，那个文件降级成了&quot;legacy / migration source&quot;，真正生效的是 <code>~/.zcode/cli/setting.json</code>。他手工把同样形状的 hooks 段写进 <code>setting.json</code>，日志里 <code>hookCount</code> 立刻从 0 变成正常值，事件开始触发。</p>
+<p>同一份报告里还有三个细节：</p>
+<ul>
+<li><code>zcode login zai</code> 的 OAuth 走完了不等于能用。CLI 对 <code>account:*</code> 这类 provider 额外要求一份 Coding Plan 的 API-key 凭证，只有浏览器授权的话，每一轮都会报 <code>Model creation failed</code>。得在 TUI 里 <code>/login</code>，选「Z.AI Coding Plan API Key」，把 key 贴进去。</li>
+<li>桌面版开着的时候，会周期性重写 <code>~/.zcode/v2/provider_config.json</code>，把你手改的模型选择冲掉。调 CLI 之前先把桌面版退掉。</li>
+<li>ZCode 的用量记在本地 <code>~/.zcode/cli/db/db.sqlite</code> 里，所以 Orca 做额度统计不需要碰什么未公开的计费接口。</li>
+</ul>
+<h2 id="你现在要怎么用">你现在要怎么用</h2>
+<p>分两种情况，别看混了。</p>
+<p><strong>只想看额度和历史</strong>：装桌面版就够了。绑 GLM Coding Plan 的那条路（v1.4.221 加的）是独立的，不需要 CLI，key 存进去就能读到 5 小时、周、MCP 三档用量。你现在截图上那个 92% 就是这条路读出来的。</p>
+<p><strong>想在 Orca 面板里真的把 ZCode 当 agent 跑</strong>：得另装带 TUI 的 <code>zcode</code>。官方给的路径是自己从 <code>zai-org/ZCode</code> 构建命令行发行包（<code>pnpm build:zcode</code>，装到 <code>~/.zcode/runtime</code> 并软链到 <code>~/.local/bin</code>）；社区有个 <code>zcode-app-cli</code>，把运行时从固定版本的桌面版里提出来再套一层 TUI，也能跑，issue 里 mac 和 Windows 都有人实测通过。</p>
+<p>装完确认两件事：<code>command -v zcode</code> 指到你新装的那份，然后 <code>~/.zcode/cli/setting.json</code> 里能看到 7 个事件——<code>SessionStart</code>、<code>UserPromptSubmit</code>、<code>PreToolUse</code>、<code>PostToolUse</code>、<code>PostToolUseFailure</code>、<code>PermissionRequest</code>、<code>Stop</code>。</p>
+<h2 id="最后">最后</h2>
+<p>这件事让我觉得有意思的不是&quot;又一个 agent 被接上了&quot;，而是那个卡了两个月的东西。</p>
+<p>六次 PR 里没有一次是因为代码写得太差被拒的。被拒的是<strong>论证方式</strong>：你说它应该能工作，但拿不出证据。等源码公开，同样的工作五天就落地了。</p>
+<p>做开源项目的人可能都熟悉这个循环——有人提 issue，有人说&quot;我这边能跑&quot;，但没人能证明它在你机器上也会跑。最后能推动事情的往往不是更多热情，而是一份可复核的源码。</p>
+<p>顺一句，写这篇的时候看了一眼额度：周额度已经 92% 了。真要拿它跑重活，等下周。</p>
+<hr>
+<p>参考：</p>
+<ul>
+<li>Orca issue <a href="https://github.com/stablyai/orca/issues/10564">#10564</a>、PR <a href="https://github.com/stablyai/orca/pull/22464">#22464</a>、<a href="https://github.com/stablyai/orca/pull/22730">#22730</a></li>
+<li>官方文档：<a href="https://www.onorca.dev/docs/agents/supported">https://www.onorca.dev/docs/agents/supported</a>、<a href="https://www.onorca.dev/docs/agents/usage-tracking">https://www.onorca.dev/docs/agents/usage-tracking</a></li>
+<li>Z.ai 开源仓库：<a href="https://github.com/zai-org/ZCode">https://github.com/zai-org/ZCode</a>（Apache-2.0）</li>
+</ul>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Java on eatmoreduck 多吃鸭&#39;s Blog | AI Tools in Practice and Risk-Control R&amp;D</title>
+    <link>https://blog.xiaohuangyu.space/en/tags/java/</link>
+    <description>Recent content in Java on eatmoreduck 多吃鸭&#39;s Blog | AI Tools in Practice and Risk-Control R&amp;D</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 17 Nov 2026 23:59:14 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/en/tags/java/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Two Dots That Made Spring Boot Skip an Entire Configuration Tree</title>
+      <link>https://blog.xiaohuangyu.space/en/p/spring-boot-configtree-dotdot-en/</link>
+      <pubDate>Tue, 17 Nov 2026 20:13:44 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/en/p/spring-boot-configtree-dotdot-en/</guid>
+      <description>&lt;p&gt;My pull request #52666 was merged into Spring Boot. You can run into the same bug setting up your own project. In my Spring Boot 4.0.9 repro, I put &lt;code&gt;app/&lt;/code&gt; and &lt;code&gt;config/&lt;/code&gt; side by side, ran the program from &lt;code&gt;app/&lt;/code&gt;, and set this one line in &lt;code&gt;application.properties&lt;/code&gt;. &lt;a href=&#34;https://github.com/spring-projects/spring-boot/pull/52666&#34;&gt;Spring Boot PR #52666&lt;/a&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-properties&#34; data-lang=&#34;properties&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;spring.config.import&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;configtree:../config/&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The directory existed and the import raised no error, but &lt;code&gt;demo.banner&lt;/code&gt; was missing. I changed the import to an absolute path to the same directory, and the value came back. An application with a fallback value can keep running until you notice it’s doing something unexpected.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>My pull request #52666 was merged into Spring Boot. You can run into the same bug setting up your own project. In my Spring Boot 4.0.9 repro, I put <code>app/</code> and <code>config/</code> side by side, ran the program from <code>app/</code>, and set this one line in <code>application.properties</code>. <a href="https://github.com/spring-projects/spring-boot/pull/52666">Spring Boot PR #52666</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-properties" data-lang="properties"><span class="line"><span class="cl"><span class="na">spring.config.import</span><span class="o">=</span><span class="s">configtree:../config/</span>
+</span></span></code></pre></div><p>The directory existed and the import raised no error, but <code>demo.banner</code> was missing. I changed the import to an absolute path to the same directory, and the value came back. An application with a fallback value can keep running until you notice it’s doing something unexpected.</p>
+<h2 id="how-i-found-it">How I found it</h2>
+<p>I was reading Spring Boot’s external configuration code to see where it handles unusual paths. In a configuration tree, each file supplies a value and its path supplies the key. A file named <code>demo.banner</code> containing <code>hello-configtree</code> gives you a property named <code>demo.banner</code>. Nested directories become dot-separated parts of the key. <a href="https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.files.configtree">Spring Boot configuration tree documentation</a></p>
+<p>I noticed a filter that skipped a file if any path segment started with <code>..</code>. That makes sense for internal entries like Kubernetes’ <code>..data</code>. What caught my eye was that the code passed the full path to the filter. What would happen if the two dots were outside the configuration directory, as in <code>../config/</code>? I reduced the question to one file and two paths to the same directory.</p>
+<h2 id="reproduce-the-configtree-bug-on-spring-boot-409">Reproduce the configtree bug on Spring Boot 4.0.9</h2>
+<p>I ran this on macOS with JDK 21 and Spring Boot <strong>4.0.9</strong> from Maven Central. The program uses Spring Boot’s Config Data loading path. It doesn’t need a web server.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p configtree-demo/app configtree-demo/config
+</span></span><span class="line"><span class="cl"><span class="nb">printf</span> <span class="s1">&#39;%s\n&#39;</span> hello-configtree &gt; configtree-demo/config/demo.banner
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> configtree-demo/app
+</span></span></code></pre></div><p>Create <code>pom.xml</code> in <code>app/</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>example<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>configtree-demo<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;dependencies&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;artifactId&gt;</span>spring-boot<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;version&gt;</span>4.0.9<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/dependencies&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/project&gt;</span>
+</span></span></code></pre></div><p>Then create <code>Demo.java</code> alongside it. The fallback makes it obvious when the property is missing.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.env.StandardEnvironment</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Demo</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StandardEnvironment</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConfigDataEnvironmentPostProcessor</span><span class="p">.</span><span class="na">applyTo</span><span class="p">(</span><span class="n">env</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;demo.banner=&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&#34;demo.banner&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&lt;missing&gt;&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Run both imports from <code>app/</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mvn -q dependency:build-classpath -Dmdep.outputFile<span class="o">=</span>classpath.txt
+</span></span><span class="line"><span class="cl">javac -cp <span class="s2">&#34;</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo.java
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java -Dspring.config.import<span class="o">=</span>configtree:../config/ <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -cp <span class="s2">&#34;.:</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo
+</span></span><span class="line"><span class="cl"><span class="c1"># demo.banner=&lt;missing&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java <span class="s2">&#34;-Dspring.config.import=configtree:</span><span class="k">$(</span><span class="nb">cd</span> ../config <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> -P<span class="k">)</span><span class="s2">/&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -cp <span class="s2">&#34;.:</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo
+</span></span><span class="line"><span class="cl"><span class="c1"># demo.banner=hello-configtree</span>
+</span></span></code></pre></div><p>The JVM flag makes the two runs easy to compare. I also tested the <code>application.properties</code> version shown above and got the same result. This non-wildcard import resolves the relative path from the process’s working directory and requires a trailing slash.</p>
+<h2 id="where-the-files-went-missing">Where the files went missing</h2>
+<p><code>ConfigTreeConfigDataResource</code> calls <code>Paths.get(path).toAbsolutePath()</code>. In this case, that prepends the working directory and leaves the <code>..</code> segment in place. The directory exists, so the loader goes on to create a <code>ConfigTreePropertySource</code>. <a href="https://github.com/spring-projects/spring-boot/blob/5b88a2ad273ea810ae0aa56cf8819bac33521e95/core/spring-boot/src/main/java/org/springframework/boot/context/config/ConfigTreeConfigDataResource.java#L23-L38">Path handling before the fix</a></p>
+<p>The old code filters the full path in the <code>Files.find</code> predicate before it makes the path relative to the configuration root. Every visited file has the same <code>app/../config/</code> prefix. Its <code>..</code> segment matches <code>startsWith(&quot;..&quot;)</code>, so every file is skipped. The property source exists, but its property map is empty. <a href="https://github.com/spring-projects/spring-boot/blob/5b88a2ad273ea810ae0aa56cf8819bac33521e95/core/spring-boot/src/main/java/org/springframework/boot/env/ConfigTreePropertySource.java#L200-L247">File discovery before the fix</a></p>
+<h2 id="what-changed-upstream">What changed upstream</h2>
+<p>The merged code uses the <code>Files.find</code> predicate to select regular files and symbolic links and keeps following links. It then calls <code>sourceDirectory.relativize(path)</code> to get a path within the tree. <code>getName(relativePath)</code> checks for the same two-dot prefix. If a segment inside the tree matches, it returns <code>null</code> and the property isn’t registered. For the example above, it sees <code>demo.banner</code> and registers it. <a href="https://github.com/spring-projects/spring-boot/blob/aff28f4f77acc49c3f7d1bf4725d841a21ddf6e1/core/spring-boot/src/main/java/org/springframework/boot/env/ConfigTreePropertySource.java#L201-L245">Merged implementation</a></p>
+<p>I compiled <code>ConfigTreePropertySource</code> from each of the two upstream commits and swapped just that class on the same 4.0.9 classpath. The old class printed <code>&lt;missing&gt;</code> for the relative path, and the merged class printed <code>hello-configtree</code>. I also tested a normally named link, <code>linked.banner</code>, pointing to <code>..data/linked.banner</code>. The merged code read the link’s value and listed only <code>demo.banner</code> and <code>linked.banner</code>, so the internal entry wasn’t registered separately.</p>
+<p>The upstream regression test writes a file named <code>a</code>, reaches its directory through <code>&lt;name&gt;/../&lt;name&gt;</code>, and asserts that <code>getPropertyNames()</code> returns exactly <code>a</code>. <a href="https://github.com/spring-projects/spring-boot/blob/aff28f4f77acc49c3f7d1bf4725d841a21ddf6e1/core/spring-boot/src/test/java/org/springframework/boot/env/ConfigTreePropertySourceTests.java#L96-L114">Regression test</a></p>
+<p>The fix was merged into <code>4.0.x</code> on November 13, 2026 (China Standard Time). The PR is assigned to the <code>4.0.10</code> milestone. If you hit the issue on your current version, using an absolute import path without <code>..</code> works around it.</p>
+<h2 id="come-talk-about-open-source">Come talk about open source</h2>
+<p>I’d like to write up the Drools bug involving capitalized annotations next. If you’re reading source code, preparing an upstream PR, or stuck on a reproduction, come talk about it in the WeChat group. <strong>Scan the code to add me on WeChat with “进群” in your friend request</strong>, and I’ll send you an invitation.</p>
+<img src="https://www.eatmoreduck.com/assets/wechat-personal-qr.png" alt="Scan to add eatmoreduck on WeChat and request a group invitation" width="220" height="220" loading="lazy">
+<p>For more write-ups, you can also follow the <strong>多吃鸭</strong> WeChat public account.</p>
+<img src="https://www.eatmoreduck.com/assets/official-account.jpg" alt="QR code for the 多吃鸭 WeChat public account" width="220" height="220" loading="lazy">
+<p><a href="https://www.eatmoreduck.com/">eatmoreduck 多吃鸭</a></p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

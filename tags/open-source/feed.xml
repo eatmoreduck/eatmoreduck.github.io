@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Open-Source on eatmoreduck 多吃鸭的博客｜AI 工具实战与风控研发</title>
+    <link>https://blog.xiaohuangyu.space/tags/open-source/</link>
+    <description>Recent content in Open-Source on eatmoreduck 多吃鸭的博客｜AI 工具实战与风控研发</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 17 Nov 2026 23:59:14 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/open-source/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>两个点，让 Spring Boot 漏读了整个配置目录</title>
+      <link>https://blog.xiaohuangyu.space/p/spring-boot-configtree-dotdot/</link>
+      <pubDate>Tue, 17 Nov 2026 20:13:44 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/spring-boot-configtree-dotdot/</guid>
+      <description>&lt;p&gt;我提交的 PR #52666 被 Spring Boot 合并了。这个坑自己配项目时就可能碰到。我用 Spring Boot 4.0.9 复现时，把应用放在 &lt;code&gt;app/&lt;/code&gt;，把要读的配置放在同一级的 &lt;code&gt;config/&lt;/code&gt;，从 &lt;code&gt;app/&lt;/code&gt; 启动。在 &lt;code&gt;application.properties&lt;/code&gt; 里只写这一行。&lt;a href=&#34;https://github.com/spring-projects/spring-boot/pull/52666&#34;&gt;Spring Boot PR #52666&lt;/a&gt;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>我提交的 PR #52666 被 Spring Boot 合并了。这个坑自己配项目时就可能碰到。我用 Spring Boot 4.0.9 复现时，把应用放在 <code>app/</code>，把要读的配置放在同一级的 <code>config/</code>，从 <code>app/</code> 启动。在 <code>application.properties</code> 里只写这一行。<a href="https://github.com/spring-projects/spring-boot/pull/52666">Spring Boot PR #52666</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-properties" data-lang="properties"><span class="line"><span class="cl"><span class="na">spring.config.import</span><span class="o">=</span><span class="s">configtree:../config/</span>
+</span></span></code></pre></div><p>目录在，导入阶段也没抛异常，<code>demo.banner</code> 却读不到。我把 <code>../config/</code> 换成指向同一处的绝对路径，就改了这一行，值回来了。假如这个属性有默认值，程序还可能继续跑，直到结果不对才发现配置没读进来。</p>
+<h2 id="我怎么注意到这两个点">我怎么注意到这两个点</h2>
+<p>那天我在翻 Spring Boot 的外部配置源码，读到了配置树把「文件路径」变成「属性名」的地方。用过 Kubernetes 挂载配置的话，<code>configtree:</code> 这写法可能很眼熟：一个文件对应一个值。例如文件叫 <code>demo.banner</code>，里面写着 <code>hello-configtree</code>，就能从 <code>Environment</code> 里取到 <code>demo.banner</code>。子目录也会成为属性名的一部分。<a href="https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.files.configtree">Spring Boot 配置树文档</a></p>
+<p>我看到扫描文件时有一条过滤规则，路径里某一段只要以 <code>..</code> 开头就跳过。想到 Kubernetes 目录里会有 <code>..data</code>，这条规则很好理解。顺着调用往上看，我才发现传进去的是整条访问路径。</p>
+<p>这里就有个问题：如果两个点出现在配置目录<strong>外面</strong>呢？比如从应用目录写 <code>../config/</code>。我把问题缩成一个文件，用两种写法指向同一处，看 Spring 实际读出什么。</p>
+<h2 id="用-spring-boot-409-复现-configtree-漏读">用 Spring Boot 4.0.9 复现 configtree 漏读</h2>
+<p>下面用 macOS、JDK 21 和 Spring Boot <strong>4.0.9</strong> 跑过。不需要启动 Web 服务，只跑 Spring Boot 自己的 Config Data 加载流程。</p>
+<p>先建目录。后面的命令都在 <code>app/</code> 运行。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p configtree-demo/app configtree-demo/config
+</span></span><span class="line"><span class="cl"><span class="nb">printf</span> <span class="s1">&#39;%s\n&#39;</span> hello-configtree &gt; configtree-demo/config/demo.banner
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> configtree-demo/app
+</span></span></code></pre></div><p>在 <code>app/</code> 下新建 <code>pom.xml</code>，只加 Spring Boot 这一项依赖：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>example<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>configtree-demo<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;dependencies&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;artifactId&gt;</span>spring-boot<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;version&gt;</span>4.0.9<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/dependencies&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/project&gt;</span>
+</span></span></code></pre></div><p>再建 <code>Demo.java</code>。我特意加了 <code>&lt;missing&gt;</code> 这个默认值，一眼就能看出属性有没有被导入。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.env.StandardEnvironment</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Demo</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StandardEnvironment</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConfigDataEnvironmentPostProcessor</span><span class="p">.</span><span class="na">applyTo</span><span class="p">(</span><span class="n">env</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;demo.banner=&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&#34;demo.banner&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&lt;missing&gt;&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mvn -q dependency:build-classpath -Dmdep.outputFile<span class="o">=</span>classpath.txt
+</span></span><span class="line"><span class="cl">javac -cp <span class="s2">&#34;</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo.java
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java -Dspring.config.import<span class="o">=</span>configtree:../config/ <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -cp <span class="s2">&#34;.:</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo
+</span></span><span class="line"><span class="cl"><span class="c1"># demo.banner=&lt;missing&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java <span class="s2">&#34;-Dspring.config.import=configtree:</span><span class="k">$(</span><span class="nb">cd</span> ../config <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> -P<span class="k">)</span><span class="s2">/&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -cp <span class="s2">&#34;.:</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo
+</span></span><span class="line"><span class="cl"><span class="c1"># demo.banner=hello-configtree</span>
+</span></span></code></pre></div><p>这里用 JVM 参数是为了方便对照。开头的 <code>application.properties</code> 写法也实测过，结果一样。这个非通配符路径从进程工作目录解析，末尾的 <code>/</code> 保留。</p>
+<h2 id="目录找到了文件是在下一步丢的">目录找到了，文件是在下一步丢的</h2>
+<p><code>ConfigTreeConfigDataResource</code> 会对传入的路径调用 <code>toAbsolutePath()</code>。在这次测试里，它在前面补上了工作目录，<code>..</code> 仍留在路径里。系统照样能找到目录，Loader 的存在性检查顺利通过。<a href="https://github.com/spring-projects/spring-boot/blob/5b88a2ad273ea810ae0aa56cf8819bac33521e95/core/spring-boot/src/main/java/org/springframework/boot/context/config/ConfigTreeConfigDataResource.java#L23-L38">路径解析源码</a></p>
+<p>接着 <code>ConfigTreePropertySource</code> 用 <code>Files.find</code> 遍历。旧版会先检查<strong>整条访问路径</strong>，然后才把通过筛选的路径转成相对于配置根目录的路径。假设例子建在 <code>/demo</code> 下，候选文件的路径长这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">/demo/configtree-demo/app/../config/demo.banner
+</span></span><span class="line"><span class="cl">                          ^^
+</span></span></code></pre></div><p>这一段刚好满足 <code>element.toString().startsWith(&quot;..&quot;)</code>。而且每个候选文件都带着同样的路径前缀，整棵树没有一个文件通过筛选。结果是配置源创建成功，属性表却是空的。<a href="https://github.com/spring-projects/spring-boot/blob/5b88a2ad273ea810ae0aa56cf8819bac33521e95/core/spring-boot/src/main/java/org/springframework/boot/env/ConfigTreePropertySource.java#L200-L247">修复前的筛选逻辑</a></p>
+<h2 id="最后修的是检查范围">最后修的是检查范围</h2>
+<p>合入版让 <code>Files.find</code> 先按文件类型选出普通文件或符号链接，接着用 <code>sourceDirectory.relativize(path)</code> 得到树内路径，对上面的例子就是 <code>demo.banner</code>。隐藏项规则放进 <code>getName(relativePath)</code>。树内任意一段以 <code>..</code> 开头，<code>getName</code> 返回 <code>null</code>，那条属性就跳过。<a href="https://github.com/spring-projects/spring-boot/blob/aff28f4f77acc49c3f7d1bf4725d841a21ddf6e1/core/spring-boot/src/main/java/org/springframework/boot/env/ConfigTreePropertySource.java#L201-L245">合入后的实现</a></p>
+<p>这样，拿 <code>..</code> 找目录不会再把整个目录的文件筛掉，目录里面的 <code>..data</code> 仍按原规则处理。我在同一套 4.0.9 依赖里，把修复前和修复后源码各编译一次，只替换 <code>ConfigTreePropertySource</code> 做对照。相对路径前者输出 <code>&lt;missing&gt;</code>，后者输出 <code>hello-configtree</code>。再放一个 <code>..data/linked.banner</code> 和一个指向它的 <code>linked.banner</code>，修复版能读到正常链接，但不会把 <code>..data</code> 里的文件另外注册一遍。</p>
+<p>上游回归测试也很直接：临时目录里写一个 <code>a</code>，再用 <code>&lt;目录名&gt;/../&lt;目录名&gt;</code> 指到同一处，检查 <code>getPropertyNames()</code> 是否只返回 <code>a</code>。<a href="https://github.com/spring-projects/spring-boot/blob/aff28f4f77acc49c3f7d1bf4725d841a21ddf6e1/core/spring-boot/src/test/java/org/springframework/boot/env/ConfigTreePropertySourceTests.java#L96-L114">合入的回归测试</a></p>
+<p>这处修复在 11 月 13 日（北京时间）合进了 <code>4.0.x</code>，PR 的里程碑是 <code>4.0.10</code>。还在用受影响版本、眼下需要让配置生效的话，可以先把导入地址换成不含 <code>..</code> 的实际绝对路径。</p>
+<h2 id="来群里聊开源">来群里聊开源</h2>
+<p>下次想写的是 Drools 那次大写注解被忽略的问题。你如果也在翻源码、想提一个上游 PR，或者手里正好有个复现卡住了，欢迎来群里聊。<strong>微信扫码加我，备注「进群」</strong>，我拉你进来。</p>
+<img src="https://www.eatmoreduck.com/assets/wechat-personal-qr.png" alt="扫码加多吃鸭的个人微信，备注进群" width="220" height="220" loading="lazy">
+<p>想看后续的开源复盘，也可以扫码关注公众号 <strong>多吃鸭</strong>。</p>
+<img src="https://www.eatmoreduck.com/assets/official-account.jpg" alt="微信公众号「多吃鸭」二维码" width="220" height="220" loading="lazy">
+<p><a href="https://www.eatmoreduck.com/">eatmoreduck 多吃鸭</a></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Orca 拖了两个月才支持 ZCode：卡的不是代码，是证据</title>
+      <link>https://blog.xiaohuangyu.space/p/orca-zcode-harness-two-months/</link>
+      <pubDate>Mon, 02 Nov 2026 10:40:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/orca-zcode-harness-two-months/</guid>
+      <description>&lt;p&gt;上周在 Orca 的设置里翻到一张卡片：GLM Coding Plan，Plan site 选到智谱 BigModel，API key 显示 Saved，下面三行额度——5 小时窗口用了 5%，周额度 92%，MCP 月度 26%。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>上周在 Orca 的设置里翻到一张卡片：GLM Coding Plan，Plan site 选到智谱 BigModel，API key 显示 Saved，下面三行额度——5 小时窗口用了 5%，周额度 92%，MCP 月度 26%。</p>
+<p>我先愣了下：ZCode 什么时候成了 Orca 支持的 agent 了？</p>
+<p>顺着这条线翻下去，发现这事比&quot;加一个 agent&quot;有味道得多。从有人提 issue 到版本发布，中间隔了 <strong>63 天</strong>，前后<strong>六次 PR 全部没合入</strong>。而真正让 PR 落地的，是 9 月 20 日 Z.ai 把 ZCode 开源这件事。</p>
+<p>先把话说在前面：我上一篇写过 ZCode 的隐私问题（<code>.enc</code> 快照那件事），这篇只谈集成，两件事不冲突。工具能不能被别的工具接上，和它背后传不传文件，是两个问题。</p>
+<h2 id="时间线卡了两个月开源五天就合">时间线：卡了两个月，开源五天就合</h2>
+<p>按北京时间算：</p>
+<table>
+  <thead>
+      <tr>
+          <th>时间</th>
+          <th>发生了什么</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>7 月 25 日</td>
+          <td>issue <a href="https://github.com/stablyai/orca/issues/10564">#10564</a> 提出：把 ZCode 加成一等 agent</td>
+      </tr>
+      <tr>
+          <td>7 月 26 日</td>
+          <td>第一个 PR #10654 提交</td>
+      </tr>
+      <tr>
+          <td>8 月中到 9 月中</td>
+          <td>#13965、#14556、#16227、#16228 陆续提交，全部关闭未合入</td>
+      </tr>
+      <tr>
+          <td>9 月 20 日</td>
+          <td>再试一次，#21756 提交</td>
+      </tr>
+      <tr>
+          <td><strong>9 月 20 日晚</strong></td>
+          <td><strong>Z.ai 开源 <a href="https://github.com/zai-org/ZCode">zai-org/ZCode</a></strong>（Apache-2.0）</td>
+      </tr>
+      <tr>
+          <td>9 月 25 日 17:17</td>
+          <td>PR <a href="https://github.com/stablyai/orca/pull/22464">#22464</a> 合入 main</td>
+      </tr>
+      <tr>
+          <td><strong>9 月 27 日清晨</strong></td>
+          <td><strong>v1.4.214 发布，ZCode 首次作为一等 harness 上线</strong></td>
+      </tr>
+      <tr>
+          <td>9 月 27 日</td>
+          <td>官网 changelog 把「ZCode agent harness」列为 v1.4.215 的头条</td>
+      </tr>
+  </tbody>
+</table>
+<p>注意一个细节：GitHub 上 1.4.214 的发布时间是 9 月 26 日 22:36 UTC，换算成北京时间是 27 日凌晨。所以国内看这事，就是 9 月 27 日一次性上线的。</p>
+<p>之后还有几波补丁，都是在把周边补齐：</p>
+<ul>
+<li><strong>v1.4.218</strong>：ZCode 会话历史进 AI Vault，Coding Plan 额度进 usage</li>
+<li><strong>v1.4.221</strong>：不装 ZCode 也能单独绑 GLM Coding Plan（就是你现在看到的那张卡）</li>
+<li><strong>v1.4.229</strong>：登录复用已有的 setup 终端，会话按记录顺序读</li>
+<li><strong>v1.4.232</strong>：GLM key 可以存在远端 host 上</li>
+</ul>
+<h2 id="真卡点不是代码是证据">真卡点：不是代码，是证据</h2>
+<p>看 PR 正文才知道，前面那六次尝试死在两个无法自证的问题上。</p>
+<p>第一个是<strong>来路</strong>。#21756 的评审里有人明确反对：<code>zcode</code> 到底算不算 Z.ai 官方的东西？如果它只是个第三方客户端，Orca 把它标成 Z.ai 的 agent 就是不准确的。这个问题在官方开源之前，谁也答不上来——你只能指着某个用户装的二进制说&quot;应该是吧&quot;。</p>
+<p>第二个更致命：<strong>hooks 到底会不会触发</strong>。</p>
+<p>ZCode 支持在 <code>~/.zcode/cli/config.json</code> 里配 hooks，官方也有个 issue（zai-org/feedback#32）在抱怨&quot;配好了 hook 但从来不触发&quot;。Orca 的整个状态系统就建立在 hook 上——侧栏的状态点、action required 徽章、完成通知，全靠 agent 主动 POST 心跳。如果 hook 不触发，Orca 接上去就是一个永远显示&quot;空闲&quot;的假面板。</p>
+<p>前面六次 PR 的状态机，全都建立在&quot;hook 应该会触发&quot;这个假设上。而假设是没法 code review 的。</p>
+<p>9 月 20 日 Z.ai 开源之后，这两条同时有了答案。五天后的 PR 里，作者写了一句很实在的话：</p>
+<blockquote>
+<p>用真实源码（agent CLI 0.16.9）来写，而不是靠猜。</p>
+</blockquote>
+<h2 id="读源码读出来的六个事实">读源码读出来的六个事实</h2>
+<p>#22464 的 PR 正文里列了六条&quot;读了源码之后改变了实现&quot;的发现。这部分是我觉得整件事里最有信息量的地方，几乎每一条都对应一个别人猜错过的坑。</p>
+<p><strong>一、ZCode 的 hook 输出本来就带 Claude 兼容别名。</strong></p>
+<p>它的 hook runner 在自己那套 camelCase 字段旁边，额外写了一份 Claude 形状的别名：<code>hook_event_name</code>、<code>session_id</code>、<code>tool_name</code>、<code>tool_input</code>、<code>transcript_path</code>、<code>last_assistant_message</code>。源码注释里说这是有意为之。</p>
+<p>结果就是 Orca 不用写新的解析器，ZCode 直接走已有的 Claude 兼容通道，只需要补一个身份标识。这也解释了为什么之前六次 PR 都在同一块地方反复改——大家都以为需要一个独立适配层，其实不需要。</p>
+<p><strong>二、<code>hooks.enabled</code> 默认是 <code>false</code>。</strong></p>
+<p>这是那条&quot;hook 从来不触发&quot;的真正原因。写 <code>hooks.events</code> 不够，运行时压根没打开开关。Orca 的安装器会把它置成 <code>true</code>，而且如果用户后来手动关回去，状态检查会报 <code>partial</code>，而不是假装一切正常。</p>
+<p>一句话总结：<strong>不是坏了，是没通电。</strong></p>
+<p><strong>三、<code>PermissionRequest</code> 只在审批卡已经显示在屏幕上时才触发。</strong></p>
+<p>这条价值很高。它意味着这个事件天然抢在用户回答之前，也不可能为自动批准的调用误触发——所以可以当作&quot;面板被阻塞了&quot;的可信信号。换句话说是免检的。</p>
+<p>对比某些其它 agent，同类事件会在各种路径上乱响，你只能靠超时去猜。</p>
+<p><strong>四、ZCode 的澄清工具就叫 <code>AskUserQuestion</code>，形状和 Claude 的一模一样。</strong></p>
+<p><code>questions</code> 数组、<code>options</code> 数组。所以 Orca 现有那张问题卡直接复用，没写一行新 UI。</p>
+<p><strong>五、它会把进程名改成 <code>zcode-cli</code>。</strong></p>
+<p>所以进程识别不能拿启动命令去匹配。这个坑如果不读源码，就得靠用户报&quot;面板检测不到 agent&quot;来发现。</p>
+<p><strong>六、它不输出 OSC 标题，而且 banner 永远在动。</strong></p>
+<p>终端程序通常用 OSC 序列把标题写出来，agent 就靠这个判断&quot;现在在跑什么&quot;。ZCode 一个都不发，banner 还一直重绘。</p>
+<p>于是就绪判断不能等&quot;屏幕安静下来&quot;，得等 composer 那个输入框出现。PR 里还专门留了一个测试，把这个负面结论钉住，防止后来的人再试一次屏幕抓取。</p>
+<h2 id="本机实测桌面版自带的-cli-跑不了-tui">本机实测：桌面版自带的 CLI 跑不了 TUI</h2>
+<p>既然聊到这儿，我把本机的环境对了一遍。</p>
+<ul>
+<li>Orca：<strong>1.4.245</strong></li>
+<li>ZCode 桌面版：<strong>3.17.1</strong></li>
+<li>本机 PATH 里的 <code>zcode</code>：<strong>没有</strong></li>
+</ul>
+<p>第三条是关键。ZCode 桌面版其实自带一份引擎，就在应用包里：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs --version
+</span></span><span class="line"><span class="cl"><span class="c1"># 0.17.1</span>
+</span></span></code></pre></div><p>版本号能打出来，看着一切正常。但真去开一个会话：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs tui
+</span></span><span class="line"><span class="cl"><span class="c1"># Error: Cannot find package &#39;@zcode/tui&#39; imported from</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># /Applications/ZCode.app/Contents/Resources/glm/zcode.cjs</span>
+</span></span></code></pre></div><p>原因不复杂：<strong>桌面版打包引擎的时候，把文本界面那块裁掉了</strong>，因为它自己画窗口，不需要 TUI。版本号、<code>doctor</code>、一次性 prompt 全都能跑，唯独开不了会话——而 Orca 要的正好就是会话。</p>
+<p>Orca 后来专门为这个情况加了一个提示（PR #22730）。它不去匹配&quot;TUI 需要交互式终端&quot;这句报错，因为那句话会被本地化，中文环境里就匹配不上了；它匹配的是 Node 的模块解析错误——<code>Cannot find package '@zcode/tui'</code>，这句不会被翻译。</p>
+<p>也就是说，Orca 官方对 ZCode 的要求写得很直白：<strong>install a <code>zcode</code> build with a terminal UI</strong>。要装的是带 TUI 的 <code>zcode</code>，不是桌面版。</p>
+<h2 id="还有一个坑hooks-到底写进哪个文件">还有一个坑：hooks 到底写进哪个文件</h2>
+<p>Orca 文档说它会把 hooks 写进 <code>~/.zcode/cli/config.json</code>。但我翻本机这个文件，只有 565 字节，里面没有 <code>hooks</code> 段，旁边也没有 <code>setting.json</code>。</p>
+<p>原因是我根本没装 CLI，所以安装器没跑过——这算正常。</p>
+<p>但 issue 里有个 Windows 用户的实测报告更值得记：现在的 <code>zcode-app-cli</code>（3.15.x 之后）<strong>已经不从 <code>config.json</code> 读 hooks 了</strong>，那个文件降级成了&quot;legacy / migration source&quot;，真正生效的是 <code>~/.zcode/cli/setting.json</code>。他手工把同样形状的 hooks 段写进 <code>setting.json</code>，日志里 <code>hookCount</code> 立刻从 0 变成正常值，事件开始触发。</p>
+<p>同一份报告里还有三个细节：</p>
+<ul>
+<li><code>zcode login zai</code> 的 OAuth 走完了不等于能用。CLI 对 <code>account:*</code> 这类 provider 额外要求一份 Coding Plan 的 API-key 凭证，只有浏览器授权的话，每一轮都会报 <code>Model creation failed</code>。得在 TUI 里 <code>/login</code>，选「Z.AI Coding Plan API Key」，把 key 贴进去。</li>
+<li>桌面版开着的时候，会周期性重写 <code>~/.zcode/v2/provider_config.json</code>，把你手改的模型选择冲掉。调 CLI 之前先把桌面版退掉。</li>
+<li>ZCode 的用量记在本地 <code>~/.zcode/cli/db/db.sqlite</code> 里，所以 Orca 做额度统计不需要碰什么未公开的计费接口。</li>
+</ul>
+<h2 id="你现在要怎么用">你现在要怎么用</h2>
+<p>分两种情况，别看混了。</p>
+<p><strong>只想看额度和历史</strong>：装桌面版就够了。绑 GLM Coding Plan 的那条路（v1.4.221 加的）是独立的，不需要 CLI，key 存进去就能读到 5 小时、周、MCP 三档用量。你现在截图上那个 92% 就是这条路读出来的。</p>
+<p><strong>想在 Orca 面板里真的把 ZCode 当 agent 跑</strong>：得另装带 TUI 的 <code>zcode</code>。官方给的路径是自己从 <code>zai-org/ZCode</code> 构建命令行发行包（<code>pnpm build:zcode</code>，装到 <code>~/.zcode/runtime</code> 并软链到 <code>~/.local/bin</code>）；社区有个 <code>zcode-app-cli</code>，把运行时从固定版本的桌面版里提出来再套一层 TUI，也能跑，issue 里 mac 和 Windows 都有人实测通过。</p>
+<p>装完确认两件事：<code>command -v zcode</code> 指到你新装的那份，然后 <code>~/.zcode/cli/setting.json</code> 里能看到 7 个事件——<code>SessionStart</code>、<code>UserPromptSubmit</code>、<code>PreToolUse</code>、<code>PostToolUse</code>、<code>PostToolUseFailure</code>、<code>PermissionRequest</code>、<code>Stop</code>。</p>
+<h2 id="最后">最后</h2>
+<p>这件事让我觉得有意思的不是&quot;又一个 agent 被接上了&quot;，而是那个卡了两个月的东西。</p>
+<p>六次 PR 里没有一次是因为代码写得太差被拒的。被拒的是<strong>论证方式</strong>：你说它应该能工作，但拿不出证据。等源码公开，同样的工作五天就落地了。</p>
+<p>做开源项目的人可能都熟悉这个循环——有人提 issue，有人说&quot;我这边能跑&quot;，但没人能证明它在你机器上也会跑。最后能推动事情的往往不是更多热情，而是一份可复核的源码。</p>
+<p>顺一句，写这篇的时候看了一眼额度：周额度已经 92% 了。真要拿它跑重活，等下周。</p>
+<hr>
+<p>参考：</p>
+<ul>
+<li>Orca issue <a href="https://github.com/stablyai/orca/issues/10564">#10564</a>、PR <a href="https://github.com/stablyai/orca/pull/22464">#22464</a>、<a href="https://github.com/stablyai/orca/pull/22730">#22730</a></li>
+<li>官方文档：<a href="https://www.onorca.dev/docs/agents/supported">https://www.onorca.dev/docs/agents/supported</a>、<a href="https://www.onorca.dev/docs/agents/usage-tracking">https://www.onorca.dev/docs/agents/usage-tracking</a></li>
+<li>Z.ai 开源仓库：<a href="https://github.com/zai-org/ZCode">https://github.com/zai-org/ZCode</a>（Apache-2.0）</li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>刷了三天AI短剧，我一怒之下做了个全网最癫的不烧心skill</title>
+      <link>https://blog.xiaohuangyu.space/p/bushaoxin-skill/</link>
+      <pubDate>Sun, 11 Oct 2026 21:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/bushaoxin-skill/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;项目地址：https://github.com/eatmoreduck/bushaoxin （MIT 开源，一句话安装）&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;凌晨两点四十七分。&lt;/p&gt;&#xA;&lt;p&gt;手机屏幕冷白的光打在脸上。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>项目地址：https://github.com/eatmoreduck/bushaoxin （MIT 开源，一句话安装）</p>
+</blockquote>
+<p>凌晨两点四十七分。</p>
+<p>手机屏幕冷白的光打在脸上。</p>
+<p>手指机械地往上一滑，屏幕里又是一个胡子拉碴的中年男人，系着油腻的粗布围裙，单手扶着案板，眼神笃定地看着镜头，语气慢得像在数米粒：</p>
+<p>“面贵是贵了点，但吃了不烧心。”</p>
+<p>再滑一次，还是他。这次换成了卖盒饭，手里的菜勺顿在半空：“宁可少挣点，也不能坏了规矩。”</p>
+<p>再滑一次，他甚至改行卖上了软件激活码，依然面不改色：“不怕亏钱吗？怕，更怕账本不清。”</p>
+<p>整整三天，我的信息流被这个“良心掌柜”彻底包圆了。闭上眼，耳朵里全是他在敲算盘；睁开眼，天花板上仿佛都悬着五个大字——《规矩不能坏》。</p>
+<p>到第四天，我的精神状态终于彻底失常了。</p>
+<p>中午十二点十五分，点外卖看到一份28块钱的猪脚饭，心里冷不丁冒出一句：“怕人嫌贵？怕。更怕卤汁不是当天熬的。”</p>
+<p>下午两点半开需求评审会，产品经理拍着桌子问“这个功能明天能不能上线”，我嘴皮子一抽，差点脱口而出：“不好意思，一次接不了这么多单。”</p>
+<p>晚上回家辅导孩子写作业，看着满桌子的练习册，我甚至想语重心长地拍拍他的肩膀：“剩下怎么办？要完成，人不能没良心。明天怎么办？先做。”</p>
+<p>我疯了。</p>
+<p>但凡你最近刷过短视频，你大概率也跟我一样，在被这套“规矩体”连环轰炸的边缘疯狂试探。</p>
+<hr>
+<h2 id="22万部短剧全网只记住了一句台词">22万部短剧，全网只记住了一句台词</h2>
+<p>这个在全网病毒式蔓延的梗，起源于2026年9月底。</p>
+<p>红果短剧等平台上，突然井喷了海量由AI批量生成的市井短剧。这些短剧就像同一个模具里倒出来的塑料小人：主角永远是在街角摆摊三十年的“良心掌柜”，卖包子、卖盒饭、卖猪脚饭，后来甚至演化出卖卡密的小老板。</p>
+<p>剧情永远是同一个模板：良心掌柜坚持用新鲜材料、账目分明，哪怕价格贵一点也绝不妥协；隔壁黑心同行大搞科技与狠活和价格战；掌柜咬牙苦撑，最后顾客吃坏肚子认清真相，纷纷回流，良心大获全胜。</p>
+<p>因为是AI流水线批量跑出来的剧本，编剧连台词都懒得换，改个商品名就敢发一部。</p>
+<p>结果，这些高度同质化的流水线台词，在抖音上硬生生被冲出了破13亿播放的超级话题。</p>
+<p>一句“贵是贵了点”，后面必定有人接着对暗号：“但用了不烧心”。</p>
+<p>网友们瞬间把这套台词解构成了席卷全网的“万物皆可不烧心”。写代码、谈恋爱、职场对线、健身打卡，任何场景套上规矩体，荒诞感和喜剧效果立刻拉满。小学生不想写作业，会一脸沉痛地对妈妈说：“不好意思，一次接不了这么多单。”</p>
+<p>央媒专门下场点名：二十二万部流水线短剧，观众唯一记住的竟然只有同一句话。这是对粗制滥造AI内容的绝妙讽刺。</p>
+<p>在这个到处充斥着降本增效、以次充好、互相糊弄的时代，大家疯狂转发的背后，本质上并不是多喜欢粗糙的AI短剧，而是借着这个荒诞的壳子，宣泄打工人内心深处对“靠谱、不坑人、有底线”的极度渴望。</p>
+<p>既然人人都在玩梗，既然这股风气怎么躲都躲不掉——</p>
+<p>那为什么不把它做进终端里，让AI亲自下场当掌柜？</p>
+<hr>
+<h2 id="一怒之下我手搓了一个不烧心skill">一怒之下，我手搓了一个不烧心skill</h2>
+<p>折腾了一个晚上，我把这套台词体系封装成了一个专给 Claude Code / Agent Skills 使用的开源玩梗工具——<strong>bushaoxin（不烧心文学生成器）</strong>。</p>
+<p>开源协议直接给的 MIT，完全免费，纯粹整活。</p>
+<p>这个 skill 的核心人设极其纯粹：让 AI 扮演那位在街角做了三十年小买卖的“良心掌柜”。</p>
+<p>不管你让它卖什么——卖面条、卖卡密、卖网课、卖代码，甚至卖真心，掌柜的规矩永远只有一套：材料必须是当天进的，账目必须一笔一笔算清楚，宁可少赚点，绝不能坏了规矩。说话慢、短、笃定，哪怕世界毁灭也绝不激动。</p>
+<p>在它的人设底层，死死焊接着几条雷打不动的硬规矩：
+“规矩高于钱——宁可少挣点，也不能坏了规矩”；
+“只接拿得住的——这么大个单不接吗？不好意思，一次接不了这么多单”；
+“稳字诀——不是我稳，是不能慌，一慌就容易做错事”；
+还有那句终极的“问是好事——怕没人问，不怕人多问”。</p>
+<p>任何文案只要丢进去，出来全是一股老陈醋配大骨汤的陈年老铺味。</p>
+<p>口说无凭，直接看真实输出。</p>
+<hr>
+<h2 id="现场验货万物皆可规矩体">现场验货：万物皆可规矩体</h2>
+<p>装上这个不烧心skill之后，你的 AI 说话画风瞬间突变。</p>
+<p>比如，让它给程序员写一条朋友圈：</p>
+<blockquote>
+<p>需求是接了。但只接自己拿得住的。代码贵是贵了点——工时是工时，账是账。规矩不能坏，先做。</p>
+</blockquote>
+<p>这短短两句话发到群里，那种被需求按在地上摩擦却依然保持体面的老程序员风骨，瞬间立住了。</p>
+<p>再比如，让它以不烧心文学的口吻评价一门割韭菜的网课：</p>
+<blockquote>
+<p>贵是贵了点。但学完不烧心。账一笔一笔记清楚，谁的问题谁负责。慢慢来，别慌，一慌就容易学岔。</p>
+</blockquote>
+<p>不攻击、不阴阳，语气平淡得像在递一碗温水，但每一个字都在暗中敲打浮躁的心态。</p>
+<p>再让它老老实实写个面馆招牌：</p>
+<blockquote>
+<p>面贵是贵了点。
+怕人说值不上？怕。更怕汤不是当天吊的。
+天天都要吃的东西，讲究的就是个实在。
+规矩不能坏。</p>
+</blockquote>
+<p>什么是专业？这就是做了三十年老生意的底气。</p>
+<hr>
+<h2 id="杀手级设计吐槽就是遥控器">杀手级设计：吐槽就是遥控器</h2>
+<p>如果只是机械吐出几句台词，那顶多算个模板生成器，根本配不上掌柜的灵魂。</p>
+<p>这个 skill 最绝的地方，在于我给它设计的一套<strong>动态火候调节系统</strong>。</p>
+<p>日常使用时，它默认是中火（四五句标准规矩体）。但你也可以随时指定火候：</p>
+<ul>
+<li><strong>微火</strong>：点到为止，一两句收工，寡淡中透着深沉；</li>
+<li><strong>大火</strong>：信条连发，六到八句连珠炮轰，浓度直接拉满；</li>
+<li><strong>掌柜附体</strong>：AI 直接切换人格，不再是文案工具，而是掌柜搬着马扎跟你唠嗑，连续多轮对话打死都不跳出人设。</li>
+</ul>
+<p>但最爽的还不是手动选档位，而是<strong>升降火反馈机制</strong>。</p>
+<p>你根本不需要背任何参数命令，<strong>你的吐槽就是它的遥控器</strong>。</p>
+<p>如果你觉得味儿太冲、快被油烟熏晕了，直接在聊天框里冲它喊：
+“太烧了！”
+“烧了烧了！”
+或者“降降火”。</p>
+<p>它不仅会自动把火候降下一档重新输出，还会顶着掌柜的人设轻描淡写地回你一句：</p>
+<p><strong>“嫌烧？那我收火。”</strong></p>
+<p>不解释、不辩解，神情淡漠地收火重做。要是你连喊两次“太烧了”，系统会自动判定你快被烤焦了，瞬间直落微火。</p>
+<p>反过来，如果你觉得文案不过瘾，回一句“淡了”、“没味儿”或者“不得劲”，掌柜立刻加柴添火，下一秒就是六到八句连珠炮的信条轰炸。</p>
+<p>这种被短剧掌柜拿捏得死死的人性交互，才是这个 skill 最上头的精髓所在。</p>
+<hr>
+<h2 id="一句话安装即插即用">一句话安装，即插即用</h2>
+<p>整个工具没有任何冗长复杂的配置步骤。</p>
+<p>如果你在用 Claude Code，只需要复制下面这行指令，原样丢给它即可：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">帮我安装这个 skill：https://github.com/eatmoreduck/bushaoxin
+</span></span></code></pre></div><p>Claude Code 会自动把仓库拉取下来并完成注册。</p>
+<p>如果你习惯用网页版，打开 claude.ai 的 Settings → Capabilities → Skills 直接上传即可；同样，它也原生兼容 Claude API 和各种 Agent SDK。</p>
+<hr>
+<h2 id="规矩不能坏先做">规矩不能坏，先做</h2>
+<p>从流水线短剧里提炼出来的荒诞台词，最后变成了开发者终端里一个能让人会心一笑的玩具。</p>
+<p>技术是新的，但人们对真诚、靠谱、踏实的渴望，从来都是旧的。</p>
+<p>明天怎么办？先做。</p>
+<p>项目完全开源，欢迎大家去 GitHub 仓库围观顺手点个 Star：
+<a href="https://github.com/eatmoreduck/bushaoxin">https://github.com/eatmoreduck/bushaoxin</a></p>
+<p>抢得走 star，抢不走人心。工具好不好用，装完便知——贵是贵了点，但用了绝对不烧心。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>jev-jarvis-mac v0.6.0 发布：QQ 支持、微信 4.x 人工校准、狗头军师话术</title>
+      <link>https://blog.xiaohuangyu.space/p/jev-jarvis-v060/</link>
+      <pubDate>Thu, 24 Sep 2026 12:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/jev-jarvis-v060/</guid>
+      <description>&lt;p&gt;jev-jarvis 是贴在微信边上的 macOS 悬浮窗：消息一进来，它告诉你三件事——对方什么意思（8 类意图）、有没有雷（风险 0–9 + 行动建议）、该怎么回（按话术给候选，点「填入」直接进输入框），发不发永远你自己按发送键。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>jev-jarvis 是贴在微信边上的 macOS 悬浮窗：消息一进来，它告诉你三件事——对方什么意思（8 类意图）、有没有雷（风险 0–9 + 行动建议）、该怎么回（按话术给候选，点「填入」直接进输入框），发不发永远你自己按发送键。</p>
+<p>v0.6.0 是目前跨度最大的一版：微信 4.x 识别不准有了根治方案，QQ（QQNT）也能用了，面板加了两个实用按钮，话术库迎来狗头军师。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-demo.gif" alt="demo：微信消息实时识别，候选回复一键填入"  />
+</p>
+<h2 id="微信-4x-识别不准的根治方案人工校准">微信 4.x 识别不准的根治方案：人工校准</h2>
+<p>新版微信联系人列表能拖宽、聊天窗能拖成独立小窗，自动识别经常漏消息、把列表摘要当正文。v0.6.0 加了手动校准：点右上角校准图标，在同一张截图上框两个区——<strong>绿框罩住整个消息流，蓝框罩住输入区</strong>，预览识别通过后一次保存。</p>
+<p>按你框选的真实气泡整理消息，识别准确度大幅提高：短句不再被当杂字丢掉、多行正文完整合并、左右归属更准。窗口挪动不用重画，改动内部布局再校准一次就行。零样本回归口径下 8 类意图准确率 86.4%（22 条、只看单条消息的无上下文测试），校准主要收益在消息整理这一层。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-first-run-hint.png" alt="打开 app 时，点击右上角校准图标以手动校准"  />
+</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-calibration.png" alt="校准界面：绿框罩住消息识别区域，蓝框罩住输入区域，底部「预览识别 → 确认并启用」"  />
+</p>
+<h2 id="qqqqnt也能用了">QQ（QQNT）也能用了</h2>
+<p>同一个悬浮窗，谁在前台读谁、给谁填。QQ 走系统无障碍树直接读消息——不截图、不 OCR、不解密，纯只读的底线不变；「填入」同样只写不发送。第一次读 QQ 时授一下「辅助功能」权限就行。</p>
+<h2 id="两个按钮立刻分析重新生成推荐回答">两个按钮：立刻分析、重新生成推荐回答</h2>
+<p>面板底部新增两个按钮：前者重新读屏做完整分析，后者沿用当前判断只重跑候选——换个话术点一下，几秒出新一批。另外填入完成后鼠标会自动回到你原来的位置，换话术不用再去捞鼠标。</p>
+<h2 id="新话术狗头军师恋爱三件套还有夸夸">新话术：狗头军师·恋爱三件套，还有夸夸</h2>
+<p>恋爱向三件套——稳健、会撩、抽离，外加无脑夸的「夸夸」，下拉即换。加上原来的高情商、贴吧老哥、阴阳怪气等，内置共 14 种，每种候选条数 1—5 可调。自定义话术也加了最低质量门槛：描述太糊会拒绝加载并提示怎么写，不再悄悄失效。</p>
+<p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/eatmoreduck/picture-repository@master/blog/jev-v060-recognition.png" alt="识别效果实拍：左侧微信消息实时框选标注，右侧面板狗头军师置顶给出 55% 候选"  />
+</p>
+<h2 id="自带-key不配也能用">自带 key，不配也能用</h2>
+<p>判断 · Jev、生成 · OpenAI 兼容（DeepSeek、智谱、本地 Ollama 都行）、生成 · Anthropic 兼容，三组密钥各管各的，配法见仓库 README。不配也能用：判断跑本地模型（约 3.8 GB，已支持纯离线加载，下载不可达自动切国内镜像），生成层有内置共享 key。</p>
+<h2 id="安装与升级">安装与升级</h2>
+<p>需要 macOS 13+（Apple Silicon）。GitHub 找 <a href="https://github.com/jev-chat/jev-chat-jarvis-mac">jev-chat/jev-chat-jarvis-mac</a>，Releases 下载 v0.6.0 的 zip，拖进「应用程序」，第一次右键 → 打开（没做公证，只需这一次）。读微信授「屏幕录制」，读 QQ 和「填入」授「辅助功能」。老用户直接覆盖安装，配置和校准数据都不受影响。MIT 开源。</p>
+<h2 id="反馈">反馈</h2>
+<p>交流群、微信、公众号的入口都在仓库 <a href="https://github.com/jev-chat/jev-chat-jarvis-mac">jev-chat/jev-chat-jarvis-mac</a> 的 README 文末「交流反馈」，进去就能找到；以后有新版本也会在群里和公众号通知。bug 和建议走 GitHub Issues。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我做了一个 BOSS直聘抓取工具，开源了</title>
+      <link>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</link>
+      <pubDate>Thu, 11 Jun 2026 23:30:00 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/boss-zhipin-scraper-open-source/</guid>
+      <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;&#xA;&lt;p&gt;最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="起因">起因</h2>
+<p>最近在看机会，天天刷 BOSS直聘。刷多了就想：这些职位数据能不能批量拉下来分析一下？比如哪些技能出现频率最高、不同城市的薪资分布、哪些公司在招 AI Agent 方向的人。</p>
+<p>但 BOSS直聘有个很烦的东西：<strong>字体反爬</strong>。</p>
+<p>薪资数字在前端显示的不是正常文字，而是用一套自定义字体渲染的。你抓下来看到的是方块或者乱码。很多爬虫教程告诉你去解析 woff 字体文件做映射，但 BOSS直聘的字体是动态生成的，每次访问都不一样，这条路基本走不通。</p>
+<p>后来我发现了一个更简单的办法。</p>
+<h2 id="核心思路绕过前端直接调-api">核心思路：绕过前端，直接调 API</h2>
+<p>BOSS直聘的前端页面用了字体反爬，但它自己的前端代码也要拿到薪资数据来渲染。怎么拿的？通过一个内部 API：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/wapi/zpgeek/search/joblist.json
+</span></span></code></pre></div><p>这个接口返回的 JSON 里有 <code>salaryDesc</code> 字段——<strong>明文薪资</strong>，比如 <code>30-60K·15薪</code>。字体反爬只是前端渲染时加的一层，API 层面根本没有。</p>
+<p>所以思路就简单了：不要去解析 HTML、不要去破解字体，直接调这个 API 就行。</p>
+<p>但问题是这个 API 有 cookie 校验，你得在已登录的 BOSS直聘页面上下文里才能调通。这就引出了技术方案：Chrome CDP。</p>
+<h2 id="技术方案chrome-devtools-protocol">技术方案：Chrome DevTools Protocol</h2>
+<p>CDP（Chrome DevTools Protocol）就是 Chrome 浏览器的远程调试协议。你平时按 F12 打开的 DevTools 就是通过这个协议和 Chrome 通信的。</p>
+<p>用 CDP 可以做到：</p>
+<ol>
+<li>连接到一个正在运行的 Chrome 实例</li>
+<li>在任意页面里执行 JavaScript</li>
+<li>读取页面数据、模拟用户操作</li>
+</ol>
+<p>我们的做法是：</p>
+<ol>
+<li>启动一个开了 CDP 端口的 Chrome（使用 BOSS 专用 profile）</li>
+<li>通过 WebSocket 连接 CDP</li>
+<li>在 BOSS直聘页面里注入 JS，用 <code>XMLHttpRequest</code> 同步调用那个搜索 API</li>
+<li>拿到 JSON 结果，提取明文薪资和其他字段</li>
+</ol>
+<p>整个过程就像你在浏览器控制台里手动敲代码一样，只不过自动化了。</p>
+<h2 id="chrome-profile后来改成了隔离目录">Chrome profile：后来改成了隔离目录</h2>
+<p>这里踩过一个坑。</p>
+<p>最早我想复用自己的 Chrome 登录态，甚至尝试过软链接 profile。这个思路看起来省事，但风险太高：CDP Chrome 如果指向主 Chrome profile，理论上能看到那一整个浏览器环境里的 cookie 和登录态。更糟的是，Chrome 自己也不喜欢多个进程同时碰同一个 profile，容易出现锁冲突或者登录态异常。</p>
+<p>所以现在的方案改成了持久隔离 profile：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.boss-zhipin-scraper/chrome-profile
+</span></span></code></pre></div><p><code>--setup-chrome</code> 会创建或复用这个目录，然后启动一个 BOSS 专用 Chrome。首次使用时，在这个专用 Chrome 里登录 zhipin.com。登录态会留在这个目录里，重启机器后也还在；重复执行 <code>--setup-chrome</code> 不会清空它。</p>
+<p>默认情况下，它不会软链接你的主 Chrome，也不会复制你的 Gmail、GitHub 或其他网站 cookie。只有你显式加 <code>--copy-login-state</code>，才会把主 Chrome 里的 <code>Local State</code> 和 Cookie 相关文件复制到这个隔离 profile。日常使用不建议这么做，手动在专用 Chrome 里登录更干净。</p>
+<h2 id="一行命令抓取">一行命令抓取</h2>
+<p>安装好后，抓取就一行命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --format csv
+</span></span></code></pre></div><p>输出：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">✓ AI Agent运行环境工程师 | 30-60K·15薪 | 上海 | 字节跳动 | 10000人以上
+</span></span><span class="line"><span class="cl">✓ AI Agent 开发实习生 | 300-600元/天 | 上海 | 阿里巴巴集团 | 10000人以上
+</span></span><span class="line"><span class="cl">✓ AI Agent工程师-Java | 35-55K | 上海 | 滴滴 | 1000-9999人
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><h2 id="支持的功能">支持的功能</h2>
+<p><strong>搜索和筛选</strong></p>
+<ul>
+<li>按关键词、城市搜索</li>
+<li>按公司规模、薪资范围、工作经验、学历筛选</li>
+<li>支持分页（每页 30 条，最多 10 页）</li>
+</ul>
+<p><strong>输出格式</strong></p>
+<ul>
+<li>JSON：结构化数据，方便程序处理</li>
+<li>CSV：UTF-8 BOM 编码，Excel 直接打开不乱码</li>
+</ul>
+<p><strong>详情页抓取</strong></p>
+<ul>
+<li>默认会抓每个岗位的完整 JD</li>
+<li>只想抓列表可以加 <code>--no-detail</code></li>
+<li>自动提取技能标签</li>
+<li>进入详情页时会带上列表 API 返回的 <code>securityId</code> / <code>lid</code> 上下文</li>
+</ul>
+<p><strong>增量写入</strong></p>
+<ul>
+<li>每页抓完立即保存，Ctrl+C 中断不丢数据</li>
+<li>按 job_id 去重，重复运行不会产生重复数据</li>
+<li>默认输出到 <code>~/.boss-zhipin-scraper/job-result</code></li>
+</ul>
+<p><strong>合并多次抓取</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 先抓上海的</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --output jobs.json
+</span></span><span class="line"><span class="cl"><span class="c1"># 再抓北京的，合并到同一个文件</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 北京 --pages <span class="m">3</span> --merge jobs.json --output jobs.json
+</span></span></code></pre></div><p><strong>环境检查</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --check
+</span></span></code></pre></div><p>一键检测 Chrome CDP 是否可用、Python 依赖是否齐全、BOSS直聘是否已登录。</p>
+<p><strong>一键启动 Chrome</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --setup-chrome
+</span></span></code></pre></div><p>自动创建或复用隔离 profile，启动 Chrome CDP，然后等待你登录 zhipin.com。脚本会确认搜索接口能返回明文 <code>salaryDesc</code> 后再继续。</p>
+<p><strong>Smoke test</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --smoke-test
+</span></span></code></pre></div><p>这个命令只做一次真实 Chrome/CDP + BOSS 搜索 API 检查，不写结果文件。改代码或者换机器之后，可以先用它确认环境没问题。</p>
+<h2 id="反爬策略">反爬策略</h2>
+<p>BOSS直聘的反爬不弱，做了几件事来降低被封的风险：</p>
+<ul>
+<li>翻页间隔 12-22 秒随机延迟（模拟真人浏览节奏）</li>
+<li>单次最多 10 页（300 条），上限保护</li>
+<li>用真实 Chrome，但只使用 BOSS 专用 profile</li>
+<li>API 请求从页面内发起，和正常浏览行为一致</li>
+<li>默认禁用 DOM fallback，避免字体反爬导致的薪资乱码混进结果。只有显式加 <code>--allow-dom-fallback</code> 才会降级到 DOM 提取</li>
+</ul>
+<h2 id="作为-hermes-agent-skill-使用">作为 Hermes Agent Skill 使用</h2>
+<p>这个工具也打包成了 Hermes Agent Skill。装上之后，你直接跟 AI 说&quot;帮我搜一下上海 AI Agent 岗位&quot;，它会自动检查环境、启动 Chrome、运行抓取、返回结果。</p>
+<p>安装方式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># curl 一键安装</span>
+</span></span><span class="line"><span class="cl">mkdir -p ~/.hermes/skills/data-science/boss-zhipin-scraper/scripts <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">curl -sL https://raw.githubusercontent.com/eatmoreduck/boss-zhipin-scraper/master/SKILL.md <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -o ~/.hermes/skills/data-science/boss-zhipin-scraper/SKILL.md <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">curl -sL https://raw.githubusercontent.com/eatmoreduck/boss-zhipin-scraper/master/scripts/boss_cdp_raw.py <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -o ~/.hermes/skills/data-science/boss-zhipin-scraper/scripts/boss_cdp_raw.py
+</span></span></code></pre></div><h2 id="安装和使用">安装和使用</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 克隆仓库</span>
+</span></span><span class="line"><span class="cl">git clone https://github.com/eatmoreduck/boss-zhipin-scraper.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> boss-zhipin-scraper
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装依赖</span>
+</span></span><span class="line"><span class="cl">pip install -r requirements.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动 Chrome（首次使用）</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --setup-chrome
+</span></span><span class="line"><span class="cl"><span class="c1"># 首次使用时，在弹出的 BOSS 专用 Chrome 里登录 zhipin.com</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查环境</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --check
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始抓取</span>
+</span></span><span class="line"><span class="cl">python3 scripts/boss_cdp_raw.py --keyword <span class="s2">&#34;AI Agent&#34;</span> --city 上海 --pages <span class="m">3</span> --format csv
+</span></span></code></pre></div><h2 id="数据安全">数据安全</h2>
+<p>说几个需要注意的点：</p>
+<ul>
+<li><code>--setup-chrome</code> 默认使用 <code>~/.boss-zhipin-scraper/chrome-profile</code>，不软链接、不复制主 Chrome profile，也不会关闭你的主 Chrome</li>
+<li><code>--copy-login-state</code> 是显式选项，不是默认行为。它会复制主 Chrome 的 Local State 和 Cookie 相关文件到隔离 profile；日常使用更建议在专用 Chrome 里手动登录</li>
+<li>需要清空 BOSS 专用浏览器登录态时，用 <code>--reset-chrome-profile</code></li>
+<li>这个工具仅用于个人求职研究，不要拿去大规模爬取</li>
+<li>尊重 robots.txt 和网站使用条款</li>
+</ul>
+<h2 id="仓库地址">仓库地址</h2>
+<p><a href="https://github.com/eatmoreduck/boss-zhipin-scraper">https://github.com/eatmoreduck/boss-zhipin-scraper</a></p>
+<p>觉得有用的话给个 star。</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

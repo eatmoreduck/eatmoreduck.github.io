@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Spring Boot on eatmoreduck 多吃鸭的博客｜AI 工具实战与风控研发</title>
+    <link>https://blog.xiaohuangyu.space/tags/spring-boot/</link>
+    <description>Recent content in Spring Boot on eatmoreduck 多吃鸭的博客｜AI 工具实战与风控研发</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 17 Nov 2026 23:59:14 +0800</lastBuildDate>
+    <atom:link href="https://blog.xiaohuangyu.space/tags/spring-boot/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>两个点，让 Spring Boot 漏读了整个配置目录</title>
+      <link>https://blog.xiaohuangyu.space/p/spring-boot-configtree-dotdot/</link>
+      <pubDate>Tue, 17 Nov 2026 20:13:44 +0800</pubDate>
+      <guid>https://blog.xiaohuangyu.space/p/spring-boot-configtree-dotdot/</guid>
+      <description>&lt;p&gt;我提交的 PR #52666 被 Spring Boot 合并了。这个坑自己配项目时就可能碰到。我用 Spring Boot 4.0.9 复现时，把应用放在 &lt;code&gt;app/&lt;/code&gt;，把要读的配置放在同一级的 &lt;code&gt;config/&lt;/code&gt;，从 &lt;code&gt;app/&lt;/code&gt; 启动。在 &lt;code&gt;application.properties&lt;/code&gt; 里只写这一行。&lt;a href=&#34;https://github.com/spring-projects/spring-boot/pull/52666&#34;&gt;Spring Boot PR #52666&lt;/a&gt;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>我提交的 PR #52666 被 Spring Boot 合并了。这个坑自己配项目时就可能碰到。我用 Spring Boot 4.0.9 复现时，把应用放在 <code>app/</code>，把要读的配置放在同一级的 <code>config/</code>，从 <code>app/</code> 启动。在 <code>application.properties</code> 里只写这一行。<a href="https://github.com/spring-projects/spring-boot/pull/52666">Spring Boot PR #52666</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-properties" data-lang="properties"><span class="line"><span class="cl"><span class="na">spring.config.import</span><span class="o">=</span><span class="s">configtree:../config/</span>
+</span></span></code></pre></div><p>目录在，导入阶段也没抛异常，<code>demo.banner</code> 却读不到。我把 <code>../config/</code> 换成指向同一处的绝对路径，就改了这一行，值回来了。假如这个属性有默认值，程序还可能继续跑，直到结果不对才发现配置没读进来。</p>
+<h2 id="我怎么注意到这两个点">我怎么注意到这两个点</h2>
+<p>那天我在翻 Spring Boot 的外部配置源码，读到了配置树把「文件路径」变成「属性名」的地方。用过 Kubernetes 挂载配置的话，<code>configtree:</code> 这写法可能很眼熟：一个文件对应一个值。例如文件叫 <code>demo.banner</code>，里面写着 <code>hello-configtree</code>，就能从 <code>Environment</code> 里取到 <code>demo.banner</code>。子目录也会成为属性名的一部分。<a href="https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.files.configtree">Spring Boot 配置树文档</a></p>
+<p>我看到扫描文件时有一条过滤规则，路径里某一段只要以 <code>..</code> 开头就跳过。想到 Kubernetes 目录里会有 <code>..data</code>，这条规则很好理解。顺着调用往上看，我才发现传进去的是整条访问路径。</p>
+<p>这里就有个问题：如果两个点出现在配置目录<strong>外面</strong>呢？比如从应用目录写 <code>../config/</code>。我把问题缩成一个文件，用两种写法指向同一处，看 Spring 实际读出什么。</p>
+<h2 id="用-spring-boot-409-复现-configtree-漏读">用 Spring Boot 4.0.9 复现 configtree 漏读</h2>
+<p>下面用 macOS、JDK 21 和 Spring Boot <strong>4.0.9</strong> 跑过。不需要启动 Web 服务，只跑 Spring Boot 自己的 Config Data 加载流程。</p>
+<p>先建目录。后面的命令都在 <code>app/</code> 运行。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p configtree-demo/app configtree-demo/config
+</span></span><span class="line"><span class="cl"><span class="nb">printf</span> <span class="s1">&#39;%s\n&#39;</span> hello-configtree &gt; configtree-demo/config/demo.banner
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> configtree-demo/app
+</span></span></code></pre></div><p>在 <code>app/</code> 下新建 <code>pom.xml</code>，只加 Spring Boot 这一项依赖：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>example<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>configtree-demo<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;dependencies&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;artifactId&gt;</span>spring-boot<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;version&gt;</span>4.0.9<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/dependencies&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/project&gt;</span>
+</span></span></code></pre></div><p>再建 <code>Demo.java</code>。我特意加了 <code>&lt;missing&gt;</code> 这个默认值，一眼就能看出属性有没有被导入。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.env.StandardEnvironment</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Demo</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StandardEnvironment</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConfigDataEnvironmentPostProcessor</span><span class="p">.</span><span class="na">applyTo</span><span class="p">(</span><span class="n">env</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;demo.banner=&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&#34;demo.banner&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&lt;missing&gt;&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mvn -q dependency:build-classpath -Dmdep.outputFile<span class="o">=</span>classpath.txt
+</span></span><span class="line"><span class="cl">javac -cp <span class="s2">&#34;</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo.java
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java -Dspring.config.import<span class="o">=</span>configtree:../config/ <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -cp <span class="s2">&#34;.:</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo
+</span></span><span class="line"><span class="cl"><span class="c1"># demo.banner=&lt;missing&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java <span class="s2">&#34;-Dspring.config.import=configtree:</span><span class="k">$(</span><span class="nb">cd</span> ../config <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> -P<span class="k">)</span><span class="s2">/&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -cp <span class="s2">&#34;.:</span><span class="k">$(</span>cat classpath.txt<span class="k">)</span><span class="s2">&#34;</span> Demo
+</span></span><span class="line"><span class="cl"><span class="c1"># demo.banner=hello-configtree</span>
+</span></span></code></pre></div><p>这里用 JVM 参数是为了方便对照。开头的 <code>application.properties</code> 写法也实测过，结果一样。这个非通配符路径从进程工作目录解析，末尾的 <code>/</code> 保留。</p>
+<h2 id="目录找到了文件是在下一步丢的">目录找到了，文件是在下一步丢的</h2>
+<p><code>ConfigTreeConfigDataResource</code> 会对传入的路径调用 <code>toAbsolutePath()</code>。在这次测试里，它在前面补上了工作目录，<code>..</code> 仍留在路径里。系统照样能找到目录，Loader 的存在性检查顺利通过。<a href="https://github.com/spring-projects/spring-boot/blob/5b88a2ad273ea810ae0aa56cf8819bac33521e95/core/spring-boot/src/main/java/org/springframework/boot/context/config/ConfigTreeConfigDataResource.java#L23-L38">路径解析源码</a></p>
+<p>接着 <code>ConfigTreePropertySource</code> 用 <code>Files.find</code> 遍历。旧版会先检查<strong>整条访问路径</strong>，然后才把通过筛选的路径转成相对于配置根目录的路径。假设例子建在 <code>/demo</code> 下，候选文件的路径长这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">/demo/configtree-demo/app/../config/demo.banner
+</span></span><span class="line"><span class="cl">                          ^^
+</span></span></code></pre></div><p>这一段刚好满足 <code>element.toString().startsWith(&quot;..&quot;)</code>。而且每个候选文件都带着同样的路径前缀，整棵树没有一个文件通过筛选。结果是配置源创建成功，属性表却是空的。<a href="https://github.com/spring-projects/spring-boot/blob/5b88a2ad273ea810ae0aa56cf8819bac33521e95/core/spring-boot/src/main/java/org/springframework/boot/env/ConfigTreePropertySource.java#L200-L247">修复前的筛选逻辑</a></p>
+<h2 id="最后修的是检查范围">最后修的是检查范围</h2>
+<p>合入版让 <code>Files.find</code> 先按文件类型选出普通文件或符号链接，接着用 <code>sourceDirectory.relativize(path)</code> 得到树内路径，对上面的例子就是 <code>demo.banner</code>。隐藏项规则放进 <code>getName(relativePath)</code>。树内任意一段以 <code>..</code> 开头，<code>getName</code> 返回 <code>null</code>，那条属性就跳过。<a href="https://github.com/spring-projects/spring-boot/blob/aff28f4f77acc49c3f7d1bf4725d841a21ddf6e1/core/spring-boot/src/main/java/org/springframework/boot/env/ConfigTreePropertySource.java#L201-L245">合入后的实现</a></p>
+<p>这样，拿 <code>..</code> 找目录不会再把整个目录的文件筛掉，目录里面的 <code>..data</code> 仍按原规则处理。我在同一套 4.0.9 依赖里，把修复前和修复后源码各编译一次，只替换 <code>ConfigTreePropertySource</code> 做对照。相对路径前者输出 <code>&lt;missing&gt;</code>，后者输出 <code>hello-configtree</code>。再放一个 <code>..data/linked.banner</code> 和一个指向它的 <code>linked.banner</code>，修复版能读到正常链接，但不会把 <code>..data</code> 里的文件另外注册一遍。</p>
+<p>上游回归测试也很直接：临时目录里写一个 <code>a</code>，再用 <code>&lt;目录名&gt;/../&lt;目录名&gt;</code> 指到同一处，检查 <code>getPropertyNames()</code> 是否只返回 <code>a</code>。<a href="https://github.com/spring-projects/spring-boot/blob/aff28f4f77acc49c3f7d1bf4725d841a21ddf6e1/core/spring-boot/src/test/java/org/springframework/boot/env/ConfigTreePropertySourceTests.java#L96-L114">合入的回归测试</a></p>
+<p>这处修复在 11 月 13 日（北京时间）合进了 <code>4.0.x</code>，PR 的里程碑是 <code>4.0.10</code>。还在用受影响版本、眼下需要让配置生效的话，可以先把导入地址换成不含 <code>..</code> 的实际绝对路径。</p>
+<h2 id="来群里聊开源">来群里聊开源</h2>
+<p>下次想写的是 Drools 那次大写注解被忽略的问题。你如果也在翻源码、想提一个上游 PR，或者手里正好有个复现卡住了，欢迎来群里聊。<strong>微信扫码加我，备注「进群」</strong>，我拉你进来。</p>
+<img src="https://www.eatmoreduck.com/assets/wechat-personal-qr.png" alt="扫码加多吃鸭的个人微信，备注进群" width="220" height="220" loading="lazy">
+<p>想看后续的开源复盘，也可以扫码关注公众号 <strong>多吃鸭</strong>。</p>
+<img src="https://www.eatmoreduck.com/assets/official-account.jpg" alt="微信公众号「多吃鸭」二维码" width="220" height="220" loading="lazy">
+<p><a href="https://www.eatmoreduck.com/">eatmoreduck 多吃鸭</a></p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
